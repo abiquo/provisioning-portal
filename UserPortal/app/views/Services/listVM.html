@@ -1,0 +1,14 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+<h1>Displaying Virtual machines for ${vA}</h1>
+
+
+<ul>
+%{
+     for (vm in vmList.name) { 
+}%
+     <li><a href ="@{Services.vmDetails(vm)}">${vm}</a></li>
+%{
+     }
+}%
+</ul>

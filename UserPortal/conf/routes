@@ -1,0 +1,21 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                   	Services.login_page
+GET		/services/connect						Services.connect
+GET 	/services/listvdc						Services.listVDC
+GET 	/services/listva/{vdc}					Services.listVA
+GET 	/services/listvm/{va}					Services.listVM
+GET		/services/vmDetails/{vm}				Services.vmDetails
+#GET     /UserPortal								Application.index
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+
+#*       /{controller}/{action}                  {controller}.{action}

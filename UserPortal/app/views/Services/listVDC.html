@@ -1,0 +1,36 @@
+#{extends 'main.html' /}
+#{extends 'main.css' /}
+#{set title:'Home' /}
+
+<style type="text/css">
+    
+  ul.navbar {
+  display: inline;
+    position: absolute;
+    top: 2em;
+    left: 1em;
+    width: 9em }
+    li
+    {
+   float: left;
+	border: 1px solid;
+	border-bottom-width: 0;
+	margin: 0 0.5em 0 0;;
+    }
+    li a {
+	padding: 0 1em;
+}
+  </style>
+<h1>Displaying Virtual Datacenter for ${username} </h1>
+
+
+<ul class = "vdclist">
+%{
+     for (vdc in vdc_list.name) { 
+}%
+     <li><a href ="@{Services.listVA(vdc)}">${vdc}</a></li>
+     
+%{
+     }
+}%
+</ul>

@@ -1,0 +1,10 @@
+# Application dependencies
+
+require:
+    - play
+    
+ repositories:
+ -jclouds
+ 	    type: iBiblio
+        root: "https://oss.sonatype.org/content/repositories/snapshots"
+        

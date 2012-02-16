@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+<h1>Displaying details for Virtual Machine : ${vm}</h1> <br />
+<h3> RAM : ${ram} </h3>
+<h3>CPU : ${cpu}</h3>
+<h3>Hard Disk : ${hd}</h3>
+<h3>Template path : ${template_path}</h3>
+<img src="${template_path}" /> 
+<h3>Attached Volumes :
+
+<ul>
+%{
+     for (vol in vols) { 
+}%
+     <h3>${vol}</h3>
+%{
+     }
+}%
+</ul>
+</h3>

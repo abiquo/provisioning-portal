@@ -1,0 +1,14 @@
+#{extends 'main.html' /}
+#{set title:'List Virtual Appliance(s)' /}
+<h1>Displaying Virtual Appliances for ${vdc} </h1>
+
+
+<ul>
+%{
+     for (va in vaList.name) { 
+}%
+     <li><a href ="@{Services.listVM(va)}">${va}</a></li>
+%{
+     }
+}%
+</ul>
