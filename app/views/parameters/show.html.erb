@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @parameter.name %>
+</p>
+
+<p>
+  <b>Api:</b>
+  <%= @parameter.api_id %>
+</p>
+
+<p>
+  <b>Visible:</b>
+  <%= @parameter.visible %>
+</p>
+
+<p>
+  <b>Unit:</b>
+  <%= @parameter.unit %>
+</p>
+
+<p>
+  <b>Min:</b>
+  <%= @parameter.min %>
+</p>
+
+<p>
+  <b>Max:</b>
+  <%= @parameter.max %>
+</p>
+
+<p>
+  <b>Interval:</b>
+  <%= @parameter.interval %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @parameter.value %>
+</p>
+
+<p>
+  <b>Unit price:</b>
+  <%= @parameter.unit_price %>
+</p>
+
+
+<%= link_to 'Edit', edit_parameter_path(@parameter) %> |
+<%= link_to 'Back', parameters_path %>

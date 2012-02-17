@@ -1,0 +1,2 @@
+module VirtualDatacentersHelper
+end

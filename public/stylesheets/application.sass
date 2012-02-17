@@ -1,0 +1,218 @@
+body
+  font-size: 14px
+  font-family: "Helvetica Neue", "Arial", sans-serif
+  line-height: 1.6em
+  background: #999
+
+h1, h2, h3
+  font-family: "Helvetica Neue", "Arial", sans-serif
+
+h1
+  padding: 0
+  margin-top: 0
+  margin-bottom: 1em
+
+#page
+  background: white url(/images/page_background.png) top center repeat-x
+  -moz-border-radius: 10px
+  -webkit-border-radius: 10px
+  border-radius: 10px
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 1px 2px rgba(0, 0, 0, 0.6), 0 1px 10px rgba(0, 0, 0, 0.3)
+  width: 960px
+  padding: 20px
+  margin: 0 auto
+
+.no-boxshadow #page
+  border-width: 1px 1px 2px
+  border-style: solid
+  border-color: white #666 #333 #888
+  
+#library_appliances
+  border: 1px solid #999
+  overflow: auto
+  height: 30em
+  ul
+    list-style: none
+    padding: 0
+    margin: 0
+    li
+      a
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1)
+        display: block
+        padding: 1em 2em 1em 1em
+        cursor: pointer
+        background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 100%)
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.1)))
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%)
+        background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%)
+        background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%)
+        background: linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%)
+        border-bottom: 1px solid #999
+        &:hover
+          background-color: #eee
+        &.selected
+          background-color: #379
+          *
+            color: white
+        h3
+          margin-top: 0
+        img
+          float: left
+          margin-right: 2em
+        .price
+          float: right
+          border: 1px solid #222
+          padding: 0.1em 0.7em
+          -moz-border-radius: 5px
+          -webkit-border-radius: 5px
+          border-radius: 5px
+          background: #444
+          color: #ddd
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3), inset 1px 1px 0 rgba(255, 255, 255, 0.2), inset -1px -1px 0 rgba(255, 255, 255, 0.1)
+          span
+            font-weight: bold
+            color: white
+            letter-spacing: 0.1em
+        &:after
+          content: ""
+          display: block
+          clear: both
+        
+#selected_appliance
+  font-weight: bold
+
+.fields, .show_enterprise
+  border: 1px solid #999
+  border-radius: 0.8em
+  padding: 2em 4em 2em 0
+  margin: 2em 0
+
+ul.parameters
+  margin-top: 2.5em
+
+fieldset
+  border: none
+  margin: 0
+  padding: 0
+
+label
+  margin-left: 4em
+  abbr
+    margin-left: 0.4em
+    color: #ff9900
+    font-size: 1.2em
+
+form
+  ul, ol
+    list-style: none
+    padding-left: 0
+    margin-left: 0
+  ul li, ol li
+    margin-top: 1.2em
+
+label
+  display: block
+  float: left
+  width: 12em
+
+.slider
+  float: left
+  width: 27em
+  margin-right: 1em
+
+input
+  font-family: "Helvetica Neue", "Arial", sans-serif
+  font-size: 1em
+  margin-right: 5px
+  border-width: 1px
+  border-style: solid
+  border-color: #999 #DDD #DDD #999
+  padding: 3px
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.1)
+  &[type=text], &[type=email]
+    width: 15em
+  &[type=number]
+    width: 3.5em
+    border: none
+    text-align: right
+    box-shadow: none
+    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button
+      -webkit-appearance: none
+      margin: 0
+
+.error input
+  border-width: 1px
+  border-style: solid
+  border-color: #933 #FBB #FBB #933
+  background: #FFEFEF
+  padding: 3px
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.1)
+
+.inline-errors
+  display: inline
+  margin-left: 1em
+  color: #933
+
+.price
+  float: right
+
+.total_price
+  float: right
+  margin-right: 4em
+  font-weight: bold
+
+input#total_price
+  width: 4em
+  font-weight: bold
+
+.alert, .notice
+  border-style: solid
+  border-width: 2px 0 2px
+  padding: 0.7em 1.4em
+
+.alert
+  border-color: #993300
+  background: #ffddcc
+  color: #662200
+
+.notice
+  border-color: #339900
+  background: #ddffcc
+  color: #226600
+
+.enterprise_name
+  margin-bottom: 3em
+
+.show_enterprise
+  margin-bottom: 2em
+  label
+    font-weight: bold
+  div
+    width: 50%
+  .params
+    float: left
+  .details
+    float: right
+  &:after
+    content: ""
+    display: block
+    clear: both
+  ul
+    list-style: none
+    margin-left: 0
+    padding-left: 0
+
+.details ul
+  list-style: none
+  margin-left: 0
+  padding-left: 0
+
+#provisioning_buttons
+  margin-top: 2em
+  &:after
+    content: ""
+    display: block
+    clear: both
+  form
+    float: left
+    margin-right: 1em

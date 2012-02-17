@@ -1,0 +1,25 @@
+%h2 Configuration
+
+= semantic_form_for @configuration, :url => admin_configuration_index_path do |f|
+  %ul
+    - @configuration.configuration_groups.each do |cg|
+      %li= link_to cg.label, '#' + cg.name
+  = f.semantic_fields_for :configuration_groups do |cg|
+    = field_set_tag "", :class => "inputs", :id => cg.object.name do
+      %h3= cg.object.label
+      %ol
+        = cg.semantic_fields_for :configuration_values do |cv|
+          - case cv.object.field_type
+          - when "heading"
+            %li
+              %h4= cv.object.label
+          - when "select_function"
+            = cv.input :value, :as => :select, :label => cv.object.label, :collection => eval(cv.object.options)
+            .help_text= q m cv.object.help_text if cv.object.help_text
+          - else
+            = cv.input :value, :as => cv.object.field_type.to_sym, :label => cv.object.label, :collection => cv.object.options
+            .help_text= q m cv.object.help_text if cv.object.help_text
+  %fieldset{ :class => :buttons }
+    %ol
+      %li{ :class => :commit }
+        = f.submit "Update Configuration"

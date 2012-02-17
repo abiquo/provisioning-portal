@@ -1,0 +1,33 @@
+%h2 Pricing
+
+= form_for @enterprise, :url => admin_parameters_path do |f|
+  %table{ :class => "parameters" }
+    %thead
+      %tr
+        %th Name
+        %th Visible
+        %th Unit
+        %th Min
+        %th Max
+        %th Step
+        %th Default
+        %th Unit Price
+        %th Min Free?
+        %th API Multiplier
+    %tbody
+      = f.fields_for :parameters do |p|
+        %tr
+          %td= p.text_field :name, :readonly => "readonly"
+          %td= p.check_box :visible
+          %td= p.text_field :unit, :class => "unit"
+          %td= p.number_field :min
+          %td= p.number_field :max
+          %td= p.number_field :interval
+          %td= p.number_field :value
+          %td= p.number_field :unit_price
+          %td= p.check_box :include_first
+          %td= p.number_field :api_mult, :class => "api_mult"
+  %fieldset{ :class => :buttons }
+    %ol
+      %li{ :class => :commit }
+        = f.submit "Update Pricing"

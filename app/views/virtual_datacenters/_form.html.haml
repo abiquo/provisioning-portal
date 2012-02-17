@@ -1,0 +1,24 @@
+- semantic_form_for @virtual_datacenter do |f|
+  .fields
+    = f.inputs do
+      - unless not session[:get].nil? and session[:get][:datacenter]
+        = f.input :datacenter_id, :as => :select, :collection => @datacenters
+      - else
+        = f.input :datacenter_id, :as => :hidden
+      - unless not session[:get].nil? and session[:get][:hypervisor]
+        = f.input :hypervisor, :as => :select, :collection => hypervisor_list(@datacenter)
+      - else
+        = f.input :hypervisor, :as => :hidden
+      = f.input :name, :label => "VDC Name"
+    = f.semantic_fields_for :user do |u|
+      = u.inputs do
+        - unless not session[:get].nil? and session[:get][:username]
+          = u.input :first_name
+          = u.input :last_name
+          = u.input :email_address
+        - else
+          = u.input :first_name, :as => :hidden
+          = u.input :last_name, :as => :hidden
+          = u.input :email_address, :as => :hidden
+        = u.input :username, :as => :hidden
+  = f.submit "Create Virtual Datacenter"

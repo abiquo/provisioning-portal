@@ -1,0 +1,9 @@
+= q m @app_config['home_page_body']
+
+#provisioning_buttons
+  - if $app_config['provision_enterprises'] == "1"
+    = button_to $app_config['enterprises_button_text'], new_enterprise_path, :method => :get
+  - if $app_config['provision_datacenters'] == "1"
+    = button_to $app_config['datacenters_button_text'], new_virtual_datacenter_path, :method => :get
+  - if $app_config['provision_appliances'] == "1"
+    = button_to $app_config['appliances_button_text'], new_appliance_path, :method => :get

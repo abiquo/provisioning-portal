@@ -1,0 +1,7 @@
+= q m @app_config['appliances_page_body']
+
+#library_appliances
+  %ul
+    = render :partial => "library_appliance", :collection => @library_appliances
+    
+= render :partial => "form"

@@ -1,0 +1,6 @@
+#user
+  %strong= current_admin_user.email
+  |
+  = link_to "Change Password", edit_password_admin_admin_user_path
+  |
+  = link_to "Logout", destroy_admin_user_session_path, :method => :delete

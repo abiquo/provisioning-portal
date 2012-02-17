@@ -1,0 +1,13 @@
+%h2 Provisions &rarr; Appliances
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Status
+      %th First Name
+      %th Last Name
+      %th Email Address
+      %th
+  %tbody
+    = render :partial => "appliance", :collection => @appliances

@@ -1,0 +1,13 @@
+%h2 Appliance Library
+
+%table
+  %thead
+    %tr
+      %th
+      %th Name
+      %th Price
+      %th
+  %tbody
+    = render :partial => "library_appliance", :collection => @library_appliances
+    
+%p= link_to raw("New Appliance &plus;"), new_admin_library_appliance_path

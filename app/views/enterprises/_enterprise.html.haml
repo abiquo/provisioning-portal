@@ -1,0 +1,22 @@
+.show_enterprise
+  .params
+    %ul= render :partial => "show_parameter", :collection => enterprise.parameters
+
+  .details
+    %ul
+      %li
+        %p
+          %label Enterprise Name:
+          = enterprise.name
+      %li
+        %p
+          %label First Name:
+          = enterprise.first_name
+      %li
+        %p
+          %label Last Name:
+          = enterprise.last_name
+      %li
+        %p
+          %label Email Address:
+          = enterprise.email_address

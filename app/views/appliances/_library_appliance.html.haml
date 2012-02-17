@@ -1,0 +1,8 @@
+%li
+  %a.appliance{ "data-library-appliance-id" => library_appliance.id }
+    = image_tag library_appliance.icon(:normal)
+    .price
+      %span= number_to_currency library_appliance.price
+      per month
+    %h3= library_appliance.name
+    %p= library_appliance.description

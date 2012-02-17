@@ -1,0 +1,9 @@
+development:
+  access_key_id: AKIAIOREGHENNAVRPFYA
+  secret_access_key: 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
+test:
+  access_key_id: AKIAIOREGHENNAVRPFYA
+  secret_access_key: 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
+production:
+  access_key_id: AKIAIOREGHENNAVRPFYA
+  secret_access_key: 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

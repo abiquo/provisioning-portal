@@ -1,0 +1,14 @@
+%nav{ :role => "navigation" }
+  %ul
+    %li
+      = link_to raw("Provisioning &darr;"), '#'
+      %ul
+        %li= link_to raw("Provisioning &darr;"), '#', :class => "header"
+        %li= link_to "Enterprises", admin_enterprises_path, :class => (params[:controller] == "admin/enterprises" ? "selected" : nil)
+        %li= link_to "VDCs", admin_virtual_datacenters_path, :class => (params[:controller] == "admin/virtual_datacenters" ? "selected" : nil)
+        %li= link_to "Appliances", admin_appliances_path, :class => (params[:controller] == "admin/appliances" ? "selected" : nil)
+    %li= link_to "Pricing", admin_parameters_path, :class => (params[:controller] == "admin/parameters" ? "selected" : nil)
+    %li= link_to "Appliances", admin_library_appliances_path, :class => (params[:controller] == "admin/library_appliances" ? "selected" : nil)
+    %li= link_to "Admin Users", admin_admin_users_path, :class => (params[:controller] == "admin/admin_users" ? "selected" : nil)
+    %li= link_to "Configuration", admin_configuration_index_path, :class => (params[:controller] == "admin/configuration" ? "selected" : nil)
+    %li= link_to "Portal", root_path, :target => "_blank"

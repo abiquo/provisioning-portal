@@ -1,0 +1,4 @@
+= q m $app_config['completion_page_body'].gsub('{object}', @virtual_datacenter.label)
+
+- if $app_config['completion_page_show_login'] == '1'
+  = render :partial => "credentials", :locals => { :virtual_datacenter => @virtual_datacenter }

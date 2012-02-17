@@ -1,0 +1,335 @@
+body
+  font-size: 14px
+  font-family: "Helvetica Neue", "Arial", sans-serif
+  line-height: 1.6em
+  background: #999
+  padding: 0
+  margin: 0
+
+#page, #login
+  background: white url(/images/page_background.png) top center repeat-x
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 1px 2px rgba(0, 0, 0, 0.6), 0 1px 10px rgba(0, 0, 0, 0.3)
+  padding: 20px
+
+.no-boxshadow
+  #page, #login
+    border-width: 1px 1px 2px
+    border-style: solid
+    border-color: white #666 #333 #888
+
+#login
+  width: 35em
+  margin: 5em auto 0
+  h1
+    text-align: center
+
+a
+  color: #37C
+  text-decoration: none
+  &:hover
+    color: #39f
+
+header
+  &:after
+    content: ""
+    display: block
+    clear: both
+  h1
+    padding: 0
+    margin-top: 0
+    float: left
+    margin-bottom: 1em
+    margin-right: 1em
+  ul
+    position: absolute
+    top: 1.5em
+    left: 15em
+    list-style: none
+    padding-left: 0
+    margin-left: 0
+    li
+      float: left
+      margin-right: 0.5em
+      a
+        display: block
+        padding: 0.1em 1em 0.2em
+        -moz-border-radius: 0.9em
+        -webkit-border-radius: 0.9em
+        border-radius: 0.9em
+        text-decoration: none
+        font-weight: normal
+        color: #444
+        &.selected
+          background: #444
+          color: white
+        &:hover
+          background: #ff9900
+          color: white
+      ul
+        background: #ccc
+        left: -100000em
+        top: 0
+        padding-bottom: 0.9em
+        -moz-border-radius: 0.9em
+        -webkit-border-radius: 0.9em
+        border-radius: 0.9em
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3)
+        z-index: 10
+        li
+          float: none
+          margin: 0
+          a
+            -moz-border-radius: 0
+            -webkit-border-radius: 0
+            border-radius: 0
+            &.header
+              background: #444
+              color: white
+              -moz-border-radius: 0.9em 0.9em 0 0
+              -webkit-border-radius: 0.9em 0.9em 0 0
+              border-radius: 0.9em 0.9em 0 0
+      &:hover
+        ul
+          left: 0
+  #user
+    position: relative
+    top: -1em
+    float: right
+    text-shadow: 0 0 5px white
+
+footer
+  margin-top: 3em
+  text-align: right
+  color: #999
+  div
+    float: right
+  &:after
+    content: ""
+    display: block
+    clear: both
+
+table
+  border-collapse: collapse
+  tbody
+    border-left: 1px solid #ccc
+    border-right: 1px solid #ccc
+    tr
+      border-bottom: 1px solid #ccc
+  th
+    text-align: left
+    background: #444
+    background: -moz-linear-gradient(top, #555555 0%, #333333 100%)
+    /* FF3.6+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #333333))
+    /* Chrome,Safari4+
+    background: -webkit-linear-gradient(top, #555555 0%, #333333 100%)
+    /* Chrome10+,Safari5.1+
+    background: -o-linear-gradient(top, #555555 0%, #333333 100%)
+    /* Opera11.10+
+    background: -ms-linear-gradient(top, #555555 0%, #333333 100%)
+    /* IE10+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#555555', endColorstr='#333333',GradientType=0 )
+    /* IE6-9
+    background: linear-gradient(top, #555555 0%, #333333 100%)
+    /* W3C
+    color: white
+    &:first-child
+      -webkit-border-top-left-radius: 7px
+      -moz-border-radius-topleft: 7px
+      border-top-left-radius: 7px
+    &:last-child
+      -webkit-border-top-right-radius: 7px
+      -moz-border-radius-topright: 7px
+      border-top-right-radius: 7px
+  th, td
+    padding: 0.2em 1em
+  td+td
+    border-left: 1px solid #ccc
+  th+th
+    border-left: 1px solid #666
+  tr
+    &.even
+      background: #eee
+    &.odd
+      background: white
+  td.actions
+    color: #ccc
+
+form
+  fieldset
+    border: none
+    h4
+      font-weight: normal
+      margin: 0 0 0 13em
+  .help_text
+    position: relative
+    top: -1em
+    margin-left: 13em
+    color: #666
+    p
+      font-size: 0.8em
+      margin-top: 0.7em
+      margin-bottom: 0
+  fieldset.inputs
+    border: 1px solid #ccc
+    background: #eee
+    margin-top: 1em
+    padding: 1em 2em
+    -moz-border-radius: 10px
+    -webkit-border-radius: 10px
+    border-radius: 10px
+
+.details
+  border: 1px solid #ccc
+  background: #eee
+  margin-top: 1em
+  padding: 1em 2em
+  -moz-border-radius: 10px
+  -webkit-border-radius: 10px
+  border-radius: 10px
+
+form
+  fieldset
+    legend
+      font-size: 1.1em
+      font-weight: bold
+    h3
+      margin-top: 0
+  ol
+    list-style: none
+    padding-left: 0
+    margin-left: 0
+
+.details ol
+  list-style: none
+  padding-left: 0
+  margin-left: 0
+
+form ol li, .details ol li
+  margin-bottom: 0.8em
+
+label
+  display: block
+  width: 12em
+  float: left
+  text-align: right
+  padding-right: 1em
+
+#login form label
+  width: 10em
+
+form
+  label abbr
+    margin-left: 0.4em
+    color: #ff9900
+    font-size: 1.2em
+  ol li.boolean label
+    margin-left: 13em
+    width: 100%
+    float: none
+    text-align: left
+
+#login form ol li.boolean label
+  margin-left: 11em
+
+form ol li.boolean label input
+  margin-right: 1em
+
+#login form ol li.boolean label
+  width: 15em
+
+input, textarea
+  font-family: "Helvetica Neue", "Arial", sans-serif
+  font-size: 0.9em
+  margin-right: 5px
+  border-width: 1px
+  border-style: solid
+  border-color: #999 #DDD #DDD #999
+  padding: 3px
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.1)
+
+input[type=checkbox]
+  border: none
+
+textarea
+  width: 30em
+  height: 10em
+
+input
+  &[type=text], &[type=email]
+    width: 15em
+  &[type=number]
+    width: 3.5em
+    text-align: right
+    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button
+      -webkit-appearance: none
+      margin: 0
+    &.api_mult
+      width: 6em
+  &[readonly=readonly]
+    border: none
+    box-shadow: none
+    background: none
+  &.unit
+    width: 4em
+
+.approval
+  margin-top: 2em
+  &:after
+    content: ""
+    display: block
+    clear: both
+  form
+    float: left
+    margin-right: 1em
+
+.error input
+  border-width: 1px
+  border-style: solid
+  border-color: #933 #FBB #FBB #933
+  background: #FFEFEF
+  padding: 3px
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.1)
+
+.inline-errors
+  display: inline
+  margin-left: 1em
+  color: #933
+
+.alert, .notice
+  border-style: solid
+  border-width: 2px 0 2px
+  padding: 0.7em 1.4em
+
+.alert
+  border-color: #993300
+  background: #ffddcc
+  color: #662200
+
+.notice
+  border-color: #339900
+  background: #ddffcc
+  color: #226600
+
+.status
+  span
+    font-family: consolas, mono
+    background: #666
+    color: white
+    font-size: 0.95em
+    font-weight: bold
+    padding: 0.3em 0.5em 0.1em
+    cursor: default
+    -webkit-border-radius: 3px
+    -moz-border-radius: 3px
+    border-radius: 3px
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.7)
+    -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.7)
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.7)
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5)
+  .error
+    background: #d66
+  .provisioned
+    background: #694
+  .denied
+    background: #BAA

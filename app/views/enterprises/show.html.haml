@@ -1,0 +1,7 @@
+= render "shared/flash_messages"
+
+%p Please check the details for your new cloud provision.
+
+= render :partial => "enterprise", :locals => { :enterprise => @enterprise }
+
+= button_to q(@app_config['enterprises_button_text']), provision_enterprise_url, :method => :put

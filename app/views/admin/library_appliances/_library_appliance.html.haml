@@ -1,0 +1,8 @@
+%tr
+  %td= image_tag library_appliance.icon.url(:small)
+  %td= library_appliance.name
+  %td= library_appliance.price
+  %td{ :class => :actions }
+    = link_to "Edit", edit_admin_library_appliance_path(library_appliance)
+    |
+    = link_to "Delete", admin_library_appliance_path(library_appliance), :method => :delete, :confirm => "Are you sure you wish to delete this Appliance?"

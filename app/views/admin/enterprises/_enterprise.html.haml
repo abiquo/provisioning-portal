@@ -1,0 +1,20 @@
+%tr
+  %td= enterprise.name
+  %td{ :class => :status }
+    - unless enterprise.status.nil?
+      %span{ :class => enterprise.status[:status], :title => enterprise.status[:message] }= enterprise.status[:status].to_s.upcase
+  %td= enterprise.user.first_name if enterprise.user.present?
+  %td= enterprise.user.last_name if enterprise.user.present?
+  %td= enterprise.user.email_address if enterprise.user.present?
+  %td{ :class => :actions }
+    = link_to "Edit", edit_admin_enterprise_path(enterprise)
+    |
+    = link_to "Delete", admin_enterprise_path(enterprise), :method => :delete, :confirm => "Are you sure you wish to delete this Enterprise?"
+    - unless [:provisioned, :unapproved, :denied].include? enterprise.status[:status]
+      |
+      = link_to "Provision", provision_admin_enterprise_path(enterprise), :confirm => "Are you sure you wish to provision this Enterprise?"
+    - if enterprise.status[:status] == :unapproved
+      |
+      = link_to "Approve", approve_admin_enterprise_path(enterprise), :confirm => "Are you sure you wish to approve this Enterprise?"
+      |
+      = link_to "Deny", deny_admin_enterprise_path(enterprise), :confirm => "Are you sure you wish to deny this Enterprise?"

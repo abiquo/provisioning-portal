@@ -1,0 +1,45 @@
+<h1>Listing parameters</h1>
+
+<table>
+  <tr>
+    <th>Enterprise</th>
+    <th>Name</th>
+    <th>Api</th>
+    <th>Visible</th>
+    <th>Unit</th>
+    <th>Min</th>
+    <th>Max</th>
+    <th>Interval</th>
+    <th>Value</th>
+    <th>Unit price</th>
+    <th>Include First?</th>
+    <th>API Multiplier</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @parameters.each do |parameter| %>
+  <tr>
+    <td><%= parameter.enterprise.name %></td>
+    <td><%= parameter.name %></td>
+    <td><%= parameter.api_id %></td>
+    <td><%= parameter.visible %></td>
+    <td><%= parameter.unit %></td>
+    <td><%= parameter.min %></td>
+    <td><%= parameter.max %></td>
+    <td><%= parameter.interval %></td>
+    <td><%= parameter.value %></td>
+    <td><%= parameter.unit_price %></td>
+    <td><%= parameter.include_first %></td>
+    <td><%= parameter.api_mult %></td>
+    <td><%= link_to 'Show', parameter %></td>
+    <td><%= link_to 'Edit', edit_parameter_path(parameter) %></td>
+    <td><%= link_to 'Destroy', parameter, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Parameter', new_parameter_path %>

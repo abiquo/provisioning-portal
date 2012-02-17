@@ -1,0 +1,12 @@
+!!!
+%html
+  %head
+    %title Abiquo Provisioning
+    = stylesheet_link_tag :all
+    = javascript_include_tag :defaults, "modernizr", "rails.validations"
+    = csrf_meta_tag
+  
+  %body
+    #page
+      %h1= image_tag @app_config['logo_url'], :alt => "Abiquo Provisioning"
+      = yield

@@ -1,0 +1,25 @@
+- semantic_form_for @enterprise do |f|
+  .fields
+    %ul.parameters= render :partial => "parameter", :collection => @parameters
+    = f.inputs do
+      - if !session[:get].nil? and session[:get][:enterprise_name]
+        = f.input :name, :as => :hidden
+      - else
+        = f.input :name, :label => "Enterprise Name"
+    = f.semantic_fields_for :user do |u|
+      = u.inputs do
+        - if !session[:get].nil? and session[:get][:first_name] and session[:get][:last_name] and session[:get][:email_address]
+          = u.input :first_name, :as => :hidden
+          = u.input :last_name, :as => :hidden
+          = u.input :email_address, :as => :hidden
+        - else
+          = u.input :first_name
+          = u.input :last_name
+          = u.input :email_address
+          
+        = u.input :username, :as => :hidden
+  .total_price
+    = f.label :total_price, :label => "Total Price"
+    $
+    = f.text_field :total_price, :type => :number, :readonly => :readonly, :id => "total_price"
+  = f.submit

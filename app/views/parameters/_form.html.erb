@@ -1,0 +1,65 @@
+<%= form_for(@parameter) do |f| %>
+  <% if @parameter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@parameter.errors.count, "error") %> prohibited this parameter from being saved:</h2>
+
+      <ul>
+      <% @parameter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :enterprise_id %><br />
+    <%= f.select :enterprise_id, Enterprise.all.collect { |e| [ e.name, e.id] } %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :api_id %><br />
+    <%= f.text_field :api_id %>
+  </div>
+  <div class="field">
+    <%= f.label :visible %><br />
+    <%= f.check_box :visible %>
+  </div>
+  <div class="field">
+    <%= f.label :unit %><br />
+    <%= f.text_field :unit %>
+  </div>
+  <div class="field">
+    <%= f.label :min %><br />
+    <%= f.text_field :min %>
+  </div>
+  <div class="field">
+    <%= f.label :max %><br />
+    <%= f.text_field :max %>
+  </div>
+  <div class="field">
+    <%= f.label :interval %><br />
+    <%= f.text_field :interval %>
+  </div>
+  <div class="field">
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </div>
+  <div class="field">
+    <%= f.label :unit_price %><br />
+    <%= f.text_field :unit_price %>
+  </div>
+  <div class="field">
+    <%= f.label :include_first %><br />
+    <%= f.check_box :include_first %>
+  </div>
+  <div class="field">
+    <%= f.label :api_mult %><br />
+    <%= f.text_field :api_mult %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

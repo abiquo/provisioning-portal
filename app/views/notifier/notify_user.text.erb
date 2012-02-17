@@ -1,0 +1,7 @@
+Hi, <%= @object.user.first_name %> <%= @object.user.last_name %>
+
+<%= $app_config['user_provisioned_email_body'].gsub('{object}', @object.label) %>
+
+URL: <%= @abiquo_url %>
+Username: <%= @object.user.username %>
+Password: <%= @object.user.password %>

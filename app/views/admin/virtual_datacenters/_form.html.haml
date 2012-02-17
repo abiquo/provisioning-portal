@@ -1,0 +1,15 @@
+= semantic_form_for [:admin, virtual_datacenter] do |f|
+  = f.inputs do
+    = f.input :name, :label => "VDC Name"
+    - if virtual_datacenter.provisioned?
+      = f.input :datacenter_id, :as => :select, :collection => datacenter_list, :input_html => { :disabled => true }
+    - else
+      = f.input :datacenter_id, :as => :select, :collection => datacenter_list
+  = f.semantic_fields_for :user do |u|
+    = u.inputs do
+      = u.input :username
+      = u.input :password, :as => :string
+      = u.input :first_name
+      = u.input :last_name
+      = u.input :email_address
+  = f.buttons

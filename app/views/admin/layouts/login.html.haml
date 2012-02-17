@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %title Abiquo Provisioning
+    = stylesheet_link_tag "admin/admin", "jquery-ui"
+    = javascript_include_tag :defaults, "modernizr", "rails.validations"
+    = csrf_meta_tag
+  
+  %body
+    #login
+      %h1= image_tag "admin_logo.png"
+      
+      = render :partial => "shared/flash_messages"
+      = yield

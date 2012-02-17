@@ -1,0 +1,11 @@
+%h2 Admin Users
+
+%table
+  %thead
+    %tr
+      %th Email
+      %th
+  %tbody
+    = render :partial => "admin_user", :collection => @admin_users
+    
+%p= link_to raw("New Admin User &plus;"), new_admin_admin_user_path

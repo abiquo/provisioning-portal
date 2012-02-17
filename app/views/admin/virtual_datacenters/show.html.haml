@@ -1,0 +1,29 @@
+%h2 Showing Virtual Datacenter
+
+.details
+  %ol
+    %li
+      %label Virtual Datacenter Name
+      = @virtual_datacenter.name
+    %li{ :class => :status }
+      %label Status
+      - unless @virtual_datacenter.status.nil?
+        %span{ :class => @virtual_datacenter.status[:status], :title => @virtual_datacenter.status[:message] }= @virtual_datacenter.status[:status].to_s.upcase
+    %li
+      %label First Name
+      = @virtual_datacenter.user.first_name
+    %li
+      %label Last Name
+      = @virtual_datacenter.user.last_name
+    %li
+      %label Email Address
+      = @virtual_datacenter.user.email_address
+    %li
+      %label Total Price
+      = number_to_currency(@virtual_datacenter.total_price, :unit => "$")
+    = render :partial => "admin/virtual_datacenters/parameter", :collection => @virtual_datacenter.parameters
+
+%div{ :class => :approval }
+  - if @virtual_datacenter.status[:status] == :unapproved
+    = button_to "Approve", approve_admin_virtual_datacenter_path(@virtual_datacenter), :confirm => "Are you sure you wish to approve this Virtual Datacenter?", :method => :get, :class => :approve
+    = button_to "Deny", deny_admin_virtual_datacenter_path(@virtual_datacenter), :confirm => "Are you sure you wish to deny this Virtual Datacenter?", :method => :get, :class => :deny

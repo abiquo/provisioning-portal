@@ -1,0 +1,16 @@
+%p#selected_appliance No appliance selected.
+= semantic_form_for @appliance do |f|
+  = f.inputs do
+    = f.input :library_appliance_id, :as => :hidden
+    = f.semantic_fields_for :user do |u|
+      = u.inputs do
+        - unless !session[:get].nil? and session[:get][:username]
+          = u.input :first_name
+          = u.input :last_name
+          = u.input :email_address
+        - else
+          = u.input :first_name, :as => :hidden
+          = u.input :last_name, :as => :hidden
+          = u.input :email_address, :as => :hidden
+        = u.input :username, :as => :hidden
+  = f.buttons

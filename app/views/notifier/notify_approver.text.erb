@@ -1,0 +1,13 @@
+<%= $app_config['approval_request_body'].gsub('{object}', @object.label) %>
+
+Click here to approve or deny the <%= @object.label %>:
+<%=
+  case @object.class.to_s
+  when "Enterprise"
+    admin_enterprise_url(@object)
+  when "VirtualDatacenter"
+    admin_virtual_datacenter_url(@object)
+  when "Appliance"    
+    admin_appliance_url(@object)
+  end
+%>

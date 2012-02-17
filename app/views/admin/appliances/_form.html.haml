@@ -1,0 +1,10 @@
+= semantic_form_for [:admin, appliance] do |f|
+  = f.inputs :name, :price
+  = f.semantic_fields_for :user do |u|
+    = u.inputs do
+      = u.input :username
+      = u.input :password, :as => :string
+      = u.input :first_name
+      = u.input :last_name
+      = u.input :email_address
+  = f.buttons

@@ -1,0 +1,3 @@
+Hi, <%= @object.user.first_name %> <%= @object.user.last_name %>
+
+<%= $app_config['user_approval_email_body'].gsub('{object}', @object.label) %>

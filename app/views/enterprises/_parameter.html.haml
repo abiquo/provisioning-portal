@@ -1,0 +1,10 @@
+%li
+  %p
+    %label= parameter.name
+    .slider{ "data-for" => parameter.api_id }
+    .price
+      $
+      %input{ :type => :number, :value => 0, :class => "price_per_unit", "data-unit-price" => parameter.unit_price, "data-include-first" => (parameter.include_first ? "true" : "false"), :readonly => :readonly, "data-for" => parameter.api_id }
+      //%span{ :class => "billing_cycle" } /monthly
+    %input{ :type => :number, :min => parameter.min, :max => parameter.max, :step => parameter.interval, :id => parameter.api_id, :name => "parameter[#{parameter.api_id}]", :value => parameter.value, :readonly => :readonly }
+    = parameter.unit
