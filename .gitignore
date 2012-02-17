@@ -1,0 +1,6 @@
+lib
+tmp
+eclipse
+*.swp
+*.class
+
