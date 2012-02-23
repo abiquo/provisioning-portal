@@ -1,5 +1,10 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
+#{if flash.error}
+    <p style="color:#c00">
+        ${flash.error}
+    </p>
+#{/if}
 <h1>  ${msg}</a></h1>
 <!-- Successfull login. <a href= "@{Services.listVDC()}"> Display list of vdc -->
 <a href="">Logout</a>

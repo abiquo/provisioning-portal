@@ -1,29 +1,19 @@
 #{extends 'main.html' /}
+
 #{set title:'Home' /}
 
-<style type="text/css">
+#{ifnot vdc_list}
     
-  ul.navbar {
-  display: inline;
-    position: absolute;
-    top: 2em;
-    left: 1em;
-    width: 9em }
-    li
-    {
-   float: left;
-	border: 1px solid;
-	border-bottom-width: 0;
-	margin: 0 0.5em 0 0;;
-    }
-    li a {
-	padding: 0 1em;
-}
-  </style>
-<h1>Displaying Virtual Datacenter for ${username} </h1>
+    <h3> No virtual Datacenters  !!!</h3>
+#{/ifnot}
+#{else}
+  
+         
+        <h1>Displaying Virtual Datacenter for ${username} </h1>
+<br />
 
 
-<ul class = "vdclist">
+<ul>
 %{
      for (vdc in vdc_list.name) { 
 }%
@@ -32,4 +22,8 @@
 %{
      }
 }%
-</ul>
+ </ul>
+
+
+#{/else}
+

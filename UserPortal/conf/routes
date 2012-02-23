@@ -5,11 +5,14 @@
 # Home page
 GET     /                                   	Services.login_page
 GET		/services/connect						Services.connect
+GET 	/services/setter						Services.setter
 GET 	/services/listvdc						Services.listVDC
-GET 	/services/listva/{vdc}					Services.listVA
+GET 	/services/listva					    Services.listVA
+POST 	/services/deployvaalt					Services.DeployVAalt
+POST 	/services/deployva						Services.DeployVA
 GET 	/services/listvm/{va}					Services.listVM
 GET		/services/vmDetails/{vm}				Services.vmDetails
-#GET     /UserPortal								Application.index
+#GET     /UserPortal							Application.index
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

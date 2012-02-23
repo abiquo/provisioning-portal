@@ -1,14 +1,37 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
-<h1>Displaying Virtual machines for ${vA}</h1>
+
+#{set title:'List VM(s)' /}
 
 
-<ul>
-%{
-     for (vm in vmList.name) { 
-}%
-     <li><a href ="@{Services.vmDetails(vm)}">${vm}</a></li>
-%{
-     }
-}%
-</ul>
+#{ifnot virtualAppliance}
+    
+    <h3> No virtual Machines !!!</h3>
+#{/ifnot}
+#{else}
+<h1>Displaying Virtual machines for ${virtualAppliance.name} and  ${vdc}</h1>
+<table>
+       <thead>
+           <tr>
+               <th><strong>Virtual-Machine </strong></th>
+              
+               <th>Action</th>
+               
+           </tr>
+       </thead>
+       <tbody>
+           #{list vmList, as:'vm'}
+               <tr>
+                   <td>${vm.name}</td>
+                   
+                   <td>
+                        
+                       
+                         #{a @Services.vmDetails(vdc,va, vm.name)}  Details #{/a}
+                   </td>
+               </tr>
+           #{/list}
+       </tbody>
+   </table> 
+  #{/else}
+<a href="@{Services.listVDC()}">Home </a>
+<a href="@{Services.listVA(vdc)}">  Back </a>
