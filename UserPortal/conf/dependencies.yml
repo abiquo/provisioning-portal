@@ -1,7 +1,7 @@
 # Application dependencies
 
 require:
-    - play
+    - play -> crud
     - org.jclouds.provider -> jclouds-abiquo 1.0-rc2
     # Force dependencies that already come with Play
     - com.google.code.gson -> gson 2.1:

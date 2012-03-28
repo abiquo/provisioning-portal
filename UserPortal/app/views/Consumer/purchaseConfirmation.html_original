@@ -1,0 +1,32 @@
+<html>
+<head><title>Purchase Confirmation</title></head>
+<link rel="stylesheet" href="styles/layout.css" type="text/css" />
+<link rel="stylesheet" href="styles/custom.css" type="text/css" />
+</head>
+<body id="popUp">
+<h2>Purchase Confirmation</h2>
+
+<p><strong>Select OK to confirmation this purchase.  Cancel to continue viewing selections.</p>
+<table>
+<tbody>
+ #{list offers, as:'offer'}
+#{list nodes_list, as:'node'}
+<tr><td rowspan="3"><img src="${offer.icon}" width=150 height=110 alt="MySQL"></td>
+<td>CPU:</td><td>${node.cpu} </td></tr>
+<tr><td>RAM:</td><td> ${node.ram} </td></tr> 
+#{/list}
+#{list nodes_resources, as:'resource'}
+<tr><td>Hard Disk  ${resource.sequence}:</td><td> ${resource.value}</td></tr>
+#{/list}
+
+<tr><td colspan="3">${offer.description}.</td></tr>
+<tr><td colspan="3">Quality Of Service: ${offer.virtualDataCenter_name}</td></tr>
+<tr><td colspan="3">Lease Period: 60 Days</td></tr>
+#{/list}
+</tbody>
+</table>
+
+<a href = "@{Consumer.deploy(offer.datacenter, offer.idVirtualDataCenter_ref, offer.sc_offer_id, offer.sc_offer_name )}"> OK </a>
+<a href = "@{Consumer.ServiceCatalog()}"> Cancel </a>
+</body>
+</html>

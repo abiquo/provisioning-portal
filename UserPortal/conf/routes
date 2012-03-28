@@ -3,16 +3,38 @@
 # ~~~~
 
 # Home page
-GET     /                                   	Services.login_page
-GET		/services/connect						Services.connect
-GET 	/services/setter						Services.setter
-GET 	/services/listvdc						Services.listVDC
-GET 	/services/listva					    Services.listVA
-POST 	/services/deployvaalt					Services.DeployVAalt
-POST 	/services/deployva						Services.DeployVA
-GET 	/services/listvm/{va}					Services.listVM
-GET		/services/vmDetails/{vm}				Services.vmDetails
-#GET     /UserPortal							Application.index
+GET     /                                   	Login.login_page
+GET		/login/connect							Login.connect
+GET 	/login/logout					    	Login.logout
+
+GET 	/producer/listvdc						Producer.listVDC
+GET		/producer/vmDetails						Producer.vmDetails
+GET 	/producer/listvm					    Producer.listVM
+GET 	/producer/listva					    Producer.listVA
+POST 	/producer/addtoservicecatalog			Producer.addToServiceCatalog
+GET 	/producer/configure						Producer.configure
+GET 	/producer/configureExistingOffer		Producer.configureExistingOffer
+GET 	/producer/displayOffer 					Producer.displayOffer 
+
+GET 	/producer/index							Producer.index 
+POST 	/producer/addUserWithFileName			Producer.addUserWithFileName
+POST 	/producer/addUser						Producer.addUser
+POST 	/producer/userPhoto						Producer.userPhoto
+POST 	/producer/saveConfigure					Producer.saveConfigure 
+GET     /producer/subscribedOffers				Producer.subscribedOffers
+GET      /producer/disableOffer				Producer.disableOffer
+
+
+GET 	/consumer/availableoffers				Consumer.availableOffers
+
+GET 	/consumer/servicecatalog				Consumer.ServiceCatalog
+GET 	/consumer/offerdetails					Consumer.offerDetails
+GET 	/consumer/purchaseconfirmation			Consumer.purchaseConfirmation
+GET 	/consumer/deploy					    Consumer.deploy
+GET 	/helper/displayIcon						Helper.displayIcon
+GET 	/helper/displayImage 					Helper.displayImage
+GET 	/consumer/displayIcon					Helper.displayIcon
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
@@ -22,3 +44,5 @@ GET     /public/                                staticDir:public
 # Catch all
 
 #*       /{controller}/{action}                  {controller}.{action}
+# Import CRUD routes
+*     /admin           module:crud

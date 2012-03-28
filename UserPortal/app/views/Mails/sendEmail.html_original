@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Cloud Services Confirmation</title>
+</head>
+<body>
+<p>-----------------<p>
+<p> ORDER COMPLETED <p>
+<p>-----------------<p>
+<p>Thank you for using Cloud Services. Your order is ready.<p>
+<P>You may receive multiple E-mails for Orders with multiple VMs<p>
+<p>Please review the order information below<p>
+<p>For assistance contact your cloud administrator<p>
+<p><p>
+<p>User :  <b>${user.name}</b><br>
+<p>Offer name : <b>${name} </b></p><br / >
+<p>This Virtual Machine can be accessed using VNC at the following location<p><br>
+<h4> Address : ${vncAddress} </h4><br / >
+<h4> Port : ${vncPort} </h4> <br / >
+<h4> Password : ${password} </h4><br / >
+</body>
+</html>

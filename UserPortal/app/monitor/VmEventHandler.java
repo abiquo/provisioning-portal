@@ -10,6 +10,9 @@ import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
 
 import com.google.common.eventbus.Subscribe;
 
+import controllers.Consumer;
+import controllers.Mails;
+
 /**
  * Handles events related to a concrete virtual machine.
  */
@@ -39,6 +42,7 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine>
     @Override
     protected boolean handles(final MonitorEvent<VirtualMachine> event)
     {
+    	System.out.println("Taking care of");
         return event.getTarget().getId().equals(vm.getId());
     }
 
@@ -51,10 +55,18 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine>
         if (handles(event))
         {
             System.out.println("VM " + event.getTarget().getName() + " deployed");
+           
 
             // Stop listening to events and close the context (in this example when the vm is
             // deployed the application should end)
+           // Mails.welcome(user, password, port, address)
             unregisterAndClose();
+            VirtualMachine vm = event.getTarget();
+            System.out.println(" VMmonitor vm :" + vm.getName());
+            System.out.println("VDC : " +vm.getVirtualDatacenter().getId());
+            Mails.updateDeployBundleNode(vm.getVirtualDatacenter().getId()  ,vm.getVirtualAppliance().getId() ,vm.getId(),vm);
+            
+             
         }
     }
 
@@ -67,10 +79,8 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine>
         if (handles(event))
         {
             System.out.println("Deployment for" + event.getTarget().getName() + " failed");
-
-            // Stop listening to events and close the context (in this example when the vm is
-            // deployed the application should end)
-            unregisterAndClose();
+           unregisterAndClose();
+          
         }
     }
 
@@ -87,10 +97,7 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine>
         if (handles(event))
         {
             System.out.println("Deployment for vm " + event.getTarget().getName() + " timed out");
-
-            // Stop listening to events and close the context (in this example when the vm is
-            // deployed the application should end)
-            unregisterAndClose();
+             unregisterAndClose();
         }
     }
 
@@ -100,7 +107,7 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine>
     private void unregisterAndClose()
     {
         context.getMonitoringService().unregister(this);
-        context.close();
+        //context.close();
         System.out.println("Terminating monitoring thread");
     }
 }

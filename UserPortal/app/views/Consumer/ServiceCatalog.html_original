@@ -1,0 +1,34 @@
+
+ #{ifnot result1}
+    
+    <h3> No offers available at this time  !!!</h3>
+#{/ifnot}
+#{else}
+ <h3>Available Service Catalog Entries</h3>
+ <div id = "tabs">
+   <ul>
+           #{list result1, as:'sc_offer'}
+               <li>
+                                   
+                  #{a @Consumer.availableOffers(sc_offer.virtualDataCenter_name)} ${sc_offer.virtualDataCenter_name} #{/a}</li>
+ #{/list}
+     
+</ul>
+
+               
+        <ul>
+           #{list result2, as:'sc_offer'}
+               <li>
+                                   
+                  ${sc_offer.sc_offer_name} </li>
+                  
+         <a href="@{Consumer.PurchaseConfirmation(sc_offer.sc_offer_id)}"> Buy </a>    
+      
+         #{a @Consumer.offerDetails(sc_offer.sc_offer_id)} Offer Details #{/a} 
+           #{/list}
+     
+</ul>
+          
+</div>
+#{/else}
+ #{a @Login.logout()}  Logout #{/a}

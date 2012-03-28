@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Abiquo | Thank You</title>
+<style>
+	body {
+		margin:0 20px;
+		    color: #333333;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 13px;
+	}
+	h1 {
+		text-shadow: 1px 1px 1px #999999;
+	}
+</style>
+<style>
+
+/* Start fancy button */
+div.fancyButtons {
+  right:20px;
+  position:absolute;
+  bottom:10px;
+}
+div.fancyButton {
+  position:relative;
+  float:left;
+  margin-left:10px;
+}
+
+div.fancyButton a, div.fancyButton span {
+  background-image:url(http://pages.abiquo.com/rs/abiquo/images/orange-button.png);
+  background-position:right 0px;
+  background-repeat:no-repeat;
+  border:0px none;
+  color:#FFFFFF;
+  cursor:pointer;
+  float:left;
+  font-weight:bold;
+  height:36px;
+  margin:0px 0px 0px 3px;
+  padding:0px 15px 2px;
+  position:relative;
+  z-index:5;
+}
+div.fancyButton span {
+  background-position:left -36px;
+  left:-4px;
+  padding:0px;
+  position:absolute;
+  top:0px;
+  width:4px;
+  z-index:10;
+}
+div.fancyButton a {
+  width:auto;
+  padding-left: 6px !important;
+  padding-right: 10px !important;
+  color: #603813 !important;
+    font-size: 13px;
+	text-decoration:none;
+	line-height:36px;
+}
+
+
+div.fancyButton:hover a {  background-position: right -72px;}
+div.fancyButton:hover span {  background-position: left -108px;}
+
+/* end fancy button */
+</style>
+</head>
+<body>
+#{if flash.error}
+    <p style="color:#c00">
+        ${flash.error}
+    </p>
+#{/if}
+#{else}
+<h1>Thank You</h1>
+<p>Thank you for your order. You will be notified by an email shortly.</p>
+#{/else}
+
+        <div class="fancyButtons">
+          <div class="fancyButton floatLeft"><span></span><a  href="#" onClick="parent.jQuery.fancybox.close();">Back to Offers</a></div>
+        </div>
+
+</body>
+</html>

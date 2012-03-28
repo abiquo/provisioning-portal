@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<ul>
+ #{list offers, as:'offer'}
+ 
+<li> Short-Description  : ${offer.short_description}  </li>
+<li> Description        : ${offer.description}    </li>
+<li> Quality of Service : ${offer.virtualDataCenter_name}  </li>
+<li> Offer Name         : ${offer.sc_offer_name} </li>
+#{/list} 
+</ul>
+<ul>
+#{list nodes_list, as:'node'}
+<li>RAM : ${node.ram}  </li>
+<li>CPU : ${node.cpu}  </li>
+<li>VM  : ${node.node_name}  </li>
+
+#{/list}
+</ul>
+<ul>
+#{list nodes_resources, as:'resource'}
+<li>Hard Disk ${resource.sequence} : ${resource.value}</li>
+
+
+#{/list}
+</ul>
+<a href = "@{Consumer.ServiceCatalog()}"> OK </a>
+</body>
+</html>

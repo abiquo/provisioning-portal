@@ -1,0 +1,68 @@
+#{extends 'main.html' /}
+
+#{set title:'Home' /}
+#{ifnot vdc_list}
+    
+    <h4> No Service Levels Defined, Contact Cloud Administrator  !!!</h4>
+#{/ifnot}
+#{else}
+  
+         
+        <h2>Un-Published Offers  </h2>
+        <a href="@{Producer.subscribedOffers()}"> Published Offers</a>	
+<br />
+
+ <div id="tabcontainer">
+          <ul id="tabnav">
+
+
+%{
+     for (vdc in vdc_list) { 
+}%
+     <li><a href ="@{Producer.listVA(vdc.id)}">${vdc.name}</a></li>
+   %{
+     }
+}%
+ </ul>  
+ #{ifnot vaWithVm}
+    
+    <h3> </h3>
+#{/ifnot}
+#{else}
+
+<h4> Service Offers for ${virtualDatacenter.name} </h4>
+
+<table border= "1">
+       <thead>
+           <tr>
+               <td><strong>Service Offer Name</strong></td>
+              
+               <td><strong>Action</strong></td>
+               
+           </tr>
+       </thead>
+       <tbody>
+           #{list vaWithVm, as:'va'}
+               <tr>
+               
+                   <td>${va.name}
+                   </td>
+                   
+                   <td>
+                    <p>  *{  #{a @Producer.addToServiceCatalog(virtualDatacenter.id , va.id)} Enable  #{/a} 
+                       &nbsp;&nbsp;&nbsp; }*
+                         #{a @Producer.listVM(virtualDatacenter.id,va.id)}  Offer-Details #{/a}&nbsp;&nbsp;&nbsp;
+                      <a href ="@{Producer.configure(virtualDatacenter.id , va.id)}"> Enable  </a></p>
+                        
+                   </td>
+               </tr>
+           #{/list}
+       </tbody>
+   </table> 
+
+#{/else}
+
+
+
+
+#{/else}

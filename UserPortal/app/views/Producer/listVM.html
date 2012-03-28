@@ -1,0 +1,37 @@
+#{extends 'main.html' /}
+
+#{set title:'List VM(s)' /}
+
+
+#{ifnot virtualAppliance}
+    
+    <h3> No Service Offers !!!</h3>
+#{/ifnot}
+#{else}
+<h1>Image Templates for ${virtualAppliance.name} &  ${virtualDatacenter.name}</h1>
+<table>
+       <thead>
+           <tr>
+               <strong>Virtual-Machine </strong>
+              
+               <th><th>Action</th></th>
+               
+           </tr>
+       </thead>
+       <tbody>
+           #{list vmList, as:'vm'}
+               <tr>
+                   <td>${vm.name}</td>
+                   
+                   <td>
+                        
+                       
+                         #{a @Producer.vmDetails(virtualDatacenter.id,virtualAppliance.id, vm.id)}  Details #{/a}
+                   </td>
+               </tr>
+           #{/list}
+       </tbody>
+   </table> 
+  #{/else}
+<a href="@{Producer.listVDC()}"> Home  </a> <br />
+<a href="@{Producer.listVA(virtualDatacenter.id)}">  Back </a>

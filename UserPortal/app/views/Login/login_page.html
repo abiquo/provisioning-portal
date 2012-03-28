@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Login</title>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+  <script>
+  $(document).ready(function(){
+    $("#loginForm").validate();
+  });
+  </script>
+<style type="text/css">
+html {
+	height:100%
+}
+body {
+	font-size:13px;
+	font-family:Helvetica, Arial, sans-serif;
+	color:#333333;
+	background-color:#161616;
+	height:100%;
+	position:relative;
+	min-height:400px;
+	/* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1a82f7), to(#2F2727)); /* Safari 5.1, Chrome 10+ */
+	background: -webkit-linear-gradient(top, #2F2727, #1a82f7); /* Firefox 3.6+ */
+	background: -moz-linear-gradient(top, #2F2727, #1a82f7); /* IE 10 */
+	background: -ms-linear-gradient(top, #2F2727, #1a82f7); /* Opera 11.10+ */
+	background: -o-linear-gradient(top, #2F2727, #1a82f7);
+	margin:0;
+	height:100%;
+}
+#page-wrapper {
+	width:960px;
+	margin:0 auto;
+}
+#header {
+	
+}
+#main {
+
+}
+form {
+	background-color: #FFFFFF;
+	border:1px solid #CCCCCC;
+	border-top-width:5px;
+	color:#333333;
+	padding:20px;
+	overflow:hidden;
+}
+#form .logo {
+	margin:0 auto 40px;
+	text-align:center;
+	display:block;
+}
+#form {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top:-250px;
+	margin-left:-150px;
+	width: 300px;
+	height: 450px;
+
+}
+h2 {
+	color:#666666;
+	margin:0 0 20px;;
+}
+form ul {
+	list-style: none outside none;
+	margin: 0;
+	padding: 0;
+}
+form ul li {
+	margin-bottom: 10px;
+	height:40px;
+}
+label {
+	width:80px;
+	text-align:right;
+	float:left;
+	font-weight:bold;
+	padding-right: 20px;
+}
+.field label {
+	background:url(public/images/bg-label-req.gif) center right no-repeat;
+}
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
+</style>
+<style type="text/css">
+/* Start fancy button */
+
+div.buttonSubmit {
+	position:relative;
+	float:left;
+}
+div.buttonSubmit input, div.buttonSubmit span, div.buttonSubmit a {
+	background-image:url(http://pages.abiquo.com/rs/abiquo/images/orange-button.png);
+	background-position:right 0px;
+	background-repeat:no-repeat;
+	border:0px none;
+	cursor:pointer;
+	float:left;
+	font-weight:bold;
+	height:36px;
+	margin:0px 0px 0px 3px;
+	padding:0px 15px 4px;
+	position:relative;
+	z-index:5;
+}
+div.buttonSubmit span {
+	background-position:left -36px;
+	left:-4px;
+	padding:0px;
+	position:absolute;
+	top:0px;
+	width:4px;
+	z-index:10;
+}
+div.buttonSubmit input, div.buttonSubmit a {
+	width:auto;
+	padding-left: 6px !important;
+	padding-right: 10px !important;
+}
+div.buttonSubmit a {
+	line-height:36px;
+	text-decoration:none;
+	color: #603813 !important;
+	font-size: 13px;
+}
+#frmSubmit {
+	color: #603813 !important;
+	font-size: 13px;
+}
+div.buttonSubmit:hover input, div.buttonSubmit:hover a {
+	background-position: right -72px;
+}
+div.buttonSubmit:hover span {
+	background-position: left -108px;
+}
+/* end fancy button */
+</style>
+</head>
+
+<body>
+<div id="page-wrapper">
+  <div id="page">
+    <div id="header">
+      
+    </div>
+    <div id="main">
+      <div id="form">
+      
+            <img class="logo" src="/public/images/logo-abiquo.png" width="188" height="50" /> 
+
+        <form id="loginForm" action="@{Login.connect()}" method="GET">
+          <h2>Login</h2>
+          <ul style="float:left;">
+          #{if flash.error}
+    		<p style="color:#c00">
+        	${flash.error}
+    		</p>
+			#{/if}
+            <li class="field" >
+              <label>Username:</label>
+              <input type="text" name="username" />
+            </li>
+            <li class="field" >
+              <label>Password:</label>
+              <input type="password" name="password" />
+            </li>
+            <li>
+              <label>&nbsp;</label>
+              <div class="buttonSubmit"> <span></span>
+                <input type="submit" value="Login" id="frmSubmit" />
+              </div>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

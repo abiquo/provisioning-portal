@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Application Store | Purchase Confirmation</title>
+<script type="text/javascript" src="/public/javascripts/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="/public/javascripts/jquery-ui-1.8.12.custom.min.js"></script>
+<style>
+	body {
+		margin:0 20px;
+		    color: #333333;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 13px;
+	}
+	h1 {
+		text-shadow: 1px 1px 1px #999999;
+	}
+</style>
+<style>
+
+/* Start fancy button */
+div.fancyButtons {
+  right:20px;
+  position:absolute;
+  bottom:10px;
+}
+div.fancyButton {
+  position:relative;
+  float:left;
+  margin-left:10px;
+}
+
+div.fancyButton a, div.fancyButton span {
+  background-image:url(http://pages.abiquo.com/rs/abiquo/images/orange-button.png);
+  background-position:right 0px;
+  background-repeat:no-repeat;
+  border:0px none;
+  color:#FFFFFF;
+  cursor:pointer;
+  float:left;
+  font-weight:bold;
+  height:36px;
+  margin:0px 0px 0px 3px;
+  padding:0px 15px 2px;
+  position:relative;
+  z-index:5;
+}
+div.fancyButton span {
+  background-position:left -36px;
+  left:-4px;
+  padding:0px;
+  position:absolute;
+  top:0px;
+  width:4px;
+  z-index:10;
+}
+div.fancyButton a {
+  width:auto;
+  padding-left: 6px !important;
+  padding-right: 10px !important;
+  color: #603813 !important;
+    font-size: 13px;
+	text-decoration:none;
+	line-height:36px;
+}
+
+
+div.fancyButton:hover a {  background-position: right -72px;}
+div.fancyButton:hover span {  background-position: left -108px;}
+
+/* end fancy button */
+</style>
+</head>
+<body>
+        <h1>Purchase Confirmation</h1>
+        <ul>
+          #{list offers, as:'offer'}
+          <li> Short-Description: ${offer.short_description} </li>
+          <li> Description: ${offer.description} </li>
+          <li> Service Level: ${offer.virtualDataCenter_name} </li>
+          <li> Offer Name: ${offer.sc_offer_name} </li>
+          <img src="@{Helper.displayIcon(offer.sc_offer_id)}" alt="" /></a>
+          <img src="@{Helper.displayImage(offer.sc_offer_id)}" alt="" /></a>  
+          #{/list}
+        </ul>
+        <ul>
+          #{list nodes_list, as:'node'}
+          
+          <li>RAM: ${node.ram} </li>
+          <li>CPU: ${node.cpu} </li>
+          <li>VM: ${node.node_name} </li>
+          #{/list}
+        </ul>
+        <ul>
+          #{list nodes_resources, as:'resource'}
+          <li>Hard Disk ${resource.sequence} : ${resource.value}</li>
+          #{/list}
+        </ul>
+        <strong>Default Lease Period : 60 days</strong> <br />
+        <div class="fancyButtons">
+          <div class="fancyButton"><span></span><a href="@{Consumer.deploy(offer.datacenter, offer.idVirtualDataCenter_ref, offer.sc_offer_id, offer.sc_offer_name )}">Buy</a></div>
+                  	<div class="fancyButton"><span></span><a  href="#" onClick="parent.jQuery.fancybox.close();">Cancel</a></div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+
+
+<h1>Add user with file name</h1>
+ #{form @addUser(), enctype:'multipart/form-data'}
+	<p>
+		<input type="file" name="user.photo">
+		<input type="submit" name="submit" value="Upload">
+	</p>
+#{/form}
+
+
+
+
+
+#{list items:models.User.findAll(), as:'user'}
+${user.id}
+ <li> User photo :  <img src="@{userPhoto(user.id)}"> </li>
+#{/list}
+
+
+
+#{form @addUserWithFileName(), enctype:'multipart/form-data'}
+   <input type="file" name="photo">
+   <input type="submit" name="submit" value="Upload">
+#{/form}
