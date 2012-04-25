@@ -229,7 +229,7 @@ public class Consumer extends Controller{
 								
 					 Logger.info(" 2. VAPP CREATED ");
 					
-					 /* Save the deploy info : user, vdc etc */
+					 /* Save the deploy info to the portal database : user, vdc etc */
 					 User_Consumption user_consumption = new User_Consumption();
 								user_consumption.setUserid(useremail);
 									Date current = new Date();
