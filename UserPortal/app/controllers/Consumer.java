@@ -27,6 +27,8 @@ import org.jclouds.abiquo.features.services.AdministrationService;
 import org.jclouds.abiquo.features.services.CloudService;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
 import org.jclouds.abiquo.domain.enterprise.User;
+import org.jclouds.rest.AuthorizationException;
+
 import com.abiquo.model.enumerator.HypervisorType;
 
 import models.Deploy_Bundle;
@@ -35,6 +37,7 @@ import models.Deploy_Nodes_Resources;
 import models.MKT_Configuration;
 import models.Nodes;
 import models.Nodes_Resources;
+import models.sc_offers_subscriptions;
 
 import models.User_Consumption;
 import models.sc_offer;
@@ -44,184 +47,156 @@ import play.cache.Cache;
 import play.db.jpa.GenericModel.JPAQuery;
 import play.db.jpa.JPA;
 import play.mvc.Controller;
+import portal.util.AbiquoUtils;
 import portal.util.Context;
 
 /**
  * @author Harpreet Kaur
- *
+ * This class is invoked when a user with role USER logs in. 
+ * User is served with pre-defined service catalog defined for his enterprise. 
+ * He can browse through various service catalog offers and can buy them . 
+ * If user selects to buy the offer, the selected offer gets deployed and an email is sent specifiying ip, port to access the deployed virtualmachine.
  */
 public class Consumer extends Controller{
 
-	public static void ServiceCatalog()
+	/** 
+	 * Displays service level ( i.e VDC) for current user's enterprise.
+	 * @param enterpriseID
+	 */
+	public static void ServiceCatalog( Integer enterpriseID )
 	{
-		Logger.info("---------INSIDE CONSUMER SERVICECATALOG()------------");
-		String user = session.get("username");
-		//String user = (String) Cache.get(session.getId());
-		Logger.info("CURRENT USER EMAIL ID: "+ user);
 		
-		Query query = JPA.em().createNamedQuery("groupByVDC");
-        List<sc_offer> result1 = query.getResultList();
+		Logger.info("---------INSIDE CONSUMER SERVICECATALOG()------------");
+		System.out.println("Enterprie ID for current User " +  enterpriseID);
+		String user = session.get("username");
+		
+		List<sc_offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
 		Logger.info("------------EXITING CONSUMER SERVICECATALOG()--------------");
 		
-		render(result1,user);
+		render( result1 , user , enterpriseID);
 	}
-	public static void availableOffers( String vdc_name_param)
+	
+	/**
+	 * Displays service catalog offers for selected service level 
+	 * @param vdc_name_param
+	 * @param enterpriseID
+	 */
+	public static void availableOffers( String vdc_name_param, Integer enterpriseID)
 	{
 		
 		Logger.info("---------INSIDE CONSUMER AVAILABLEOFFERS()---------------");
-	    String user = session.get("email");
-		//String user = (String) Cache.get(session.getId());
+		Logger.info("Enterprie ID for current User " +  enterpriseID);
+	    String user = session.get("username");
+		
 		Logger.info("CURRENT USER EMAIL ID: "+ user);
-	  	
-	    Query query1 = JPA.em().createNamedQuery("groupByVDC");
-	    List<sc_offer> result1 = query1.getResultList();
-	        
-	    Query query2 = JPA.em().createNamedQuery("getVappListForVDC");
-		query2.setParameter(1,vdc_name_param);
-		List<sc_offer> result2= query2.getResultList();
+		List<sc_offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);   
+	 	List<sc_offer> result2= ProducerDAO.getVappListForVDC_EnterpriseView(enterpriseID, vdc_name_param);
 		
 		Logger.info("------------EXITING CONSUMER AVAILABLEOFFERS()--------------");
-		render("/Consumer/ServiceCatalog.html", result2,result1,user ); 
+		render("/Consumer/ServiceCatalog.html", result2,result1,user, enterpriseID ); 
 
 		
 	}
 	
-	
-		
-	
-	public static void offerDetails(Integer offer_id)
-	{
-		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
-		//String user = (String) Cache.get(session.getId());
-		String user = session.get("username");
-		Logger.info("CURRENT USER EMAIL ID: "+ user);
-		sc_offer offer = null;
-		Set<Nodes> nodes_list = null;
-		Set<Nodes_Resources> nodes_resources = null;
-		String query = "select p from sc_offer as p where p.sc_offer_id = ?1";
-		JPAQuery result = sc_offer.find(query, offer_id);
-
-		List<sc_offer> offers  = result.fetch();
-		Iterator<sc_offer> offers_it = offers.iterator();
-		while(offers_it.hasNext())
-		{
-			offer = offers_it.next();
-			 nodes_list = offer.getNodes();
-
-				Iterator<Nodes> nodes_list_it = nodes_list.iterator();
-				while(nodes_list_it.hasNext())
-				{
-					Nodes node = nodes_list_it.next();
-					nodes_resources = node.getResources();
-					
-				}
-		
-			
-		}
-		Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
-		render( offers, nodes_list , nodes_resources,user);
-	}
-
+	/**
+	 * Displays selected Service catalog offer details
+	 * @param offer_id
+	 */
 	public static void purchaseConfirmation(Integer offer_id)
 	{
 		Logger.info("---------INSIDE CONSUMER PURCHASECONFIMATION()---------------");
-		String user = session.get("email");
-		//String user = (String) Cache.get(session.getId());
+		String user = session.get("username");
 		Logger.info("CURRENT USER EMAIL ID: "+ user);
-		sc_offer offer = null;
+		
+		sc_offer offers = null;
 		Set<Nodes> nodes_list = null;
 		Set<Nodes_Resources> nodes_resources = null;
-		String query = "select p from sc_offer as p where p.sc_offer_id = ?1";
-		JPAQuery result = sc_offer.find(query, offer_id);
-
-		List<sc_offer> offers  = result.fetch();
-		Iterator<sc_offer> offers_it = offers.iterator();
-		while(offers_it.hasNext())
-		{
-			offer = offers_it.next();
-			 nodes_list = offer.getNodes();
-
-				Iterator<Nodes> nodes_list_it = nodes_list.iterator();
-				while(nodes_list_it.hasNext())
-				{
-					Nodes node = nodes_list_it.next();
-					nodes_resources = node.getResources();
-					
-				}
+		List<sc_offers_subscriptions> sc_offers_subscriptions = null;
 		
-			
-		}
-		Logger.info("------------EXITING CONSUMER PURCHASECONFIRMATION()--------------");
-		render( offers, nodes_list , nodes_resources,user);
+		Query query2 = JPA.em().createNativeQuery("select * from sc_offers_subscriptions where sc_offer_sc_offer_id = ?1", sc_offers_subscriptions.class);
+		query2.setParameter(1, offer_id);
+		sc_offers_subscriptions = query2.getResultList();
+		
+	    for ( sc_offers_subscriptions sc_offers_subscription :sc_offers_subscriptions)
+	    {
+	    	offers = sc_offers_subscription.getSc_offer();
+	    	nodes_list = offers.getNodes();
+	    	for( Nodes node : nodes_list ) 
+	    	{  
+				nodes_resources = node.getResources();
+				
+			}
+	    }
+	    
+	    Logger.info("------------EXITING CONSUMER PURCHASECONFIRMATION()--------------");
+		render( offers, nodes_list , nodes_resources,user , sc_offers_subscriptions);
 	}
 	
-	
-	public static void Deploy( Integer id_datacenter, Integer vdc_id_param , Integer sc_offer_id, String va_param)
+	/**1. Customer buy offer as a User. Deployment needs CLOUD_ADMIN privilege. Hence,require deploy user setup for the enterprise that consumer belongs to.2 users - session user and deploy user .
+	 * 2. Save the deployment details such as user, vdc created, SC offer id , lease etc into database. 
+	 * 3. Destroy date needs to be updated with the date when offer is undeployed after lease has expired (in future releases). For now, its null. 
+	 * 4. Refer portal-schema if needed.
+	 *  
+	 * @param id_datacenter The datacenter id to be used for deployment.
+	 * @param vdc_id_param	The id of virtual datacenter to be created.
+	 * @param sc_offer_id	The id of virtual appliance to be deployed.
+	 * @param va_param		The virtual appliance name.
+	 * @param lease_period	
+	 */
+	public static void Deploy( Integer id_datacenter, Integer vdc_id_param , Integer sc_offer_id, String va_param, String lease_period)
 	{
 		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " + id_datacenter + ", INTEGER VDC_ID_PARAM :: "+ vdc_id_param + ", INTEGER SC_OFFER_ID :: "+ sc_offer_id +" , String va_param:: " +va_param + ")");
+		
 		String deploy_username=null;
 		String deploy_password =null;
-		String deploy_enterprise = null;
-		String query1 = "select p from MKT_Configuration as p ";
-		JPAQuery result1 = sc_offer.find(query1);
-		List<MKT_Configuration> mkt_conf = result1.fetch();
-		Iterator<MKT_Configuration> mkt_conf_it = mkt_conf.iterator();
-		while (mkt_conf_it.hasNext())
+		Integer deploy_enterprise_id = null;
+				
+		String user =session.get("username");
+		String password =session.get("password");
+		
+		AbiquoContext contextt = Context.getContext(user,password);
+		AbiquoUtils.setAbiquoUtilsContext(contextt);
+		
+		/* ---------------------------- */
+		/* Retrieve the deploy username and password for current user's Enterprise. */
+		Enterprise current_enterprise = AbiquoUtils.getCurrentUserEnterprise();
+		Integer enterprise_id = current_enterprise.getId();
+		List<MKT_Configuration> mkt_conf = MarketDAO.getMKTConfiguration(enterprise_id);
+		
+		for ( MKT_Configuration mkt : mkt_conf )
 		{
-			MKT_Configuration mkt = mkt_conf_it.next();
 			deploy_username= mkt.getMkt_deploy_user();
 			deploy_password = mkt.getMkt_deploy_pw();
-			deploy_enterprise = mkt.getMkt_deploy_enterprise();
+			deploy_enterprise_id = mkt.getDeploy_enterprise_id();
 		}
-		Logger.info(" DEPLOY ENTERPRISE  + USERNAME + PASSWORD :" + deploy_enterprise +"  " + deploy_username +"  " + deploy_password );
-		/*Properties props = new Properties();
-		props.put("abiquo.endpoint", "http://67.111.53.253/api");
+		Logger.info(" DEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :" + deploy_enterprise_id +"  " + deploy_username +"  " + deploy_password );
+		/* ---------------------------- */
 		
-		AbiquoContext context = new AbiquoContextFactory().createContext("demo-deploy" ,"demo" ,props);*/
+		/* Create context with deploy username and password for deployments */
 		AbiquoContext context = Context.getContext(deploy_username,deploy_password);
+		
 		VirtualDatacenter vdc_toDeploy = null;
 		VirtualAppliance virtualapp_todeploy= null;
 		VirtualMachine vm_todeploy=null;
 		 
 		
 		 try{
-				    Logger.info("STARTING DEPLOYMENT..");
-				    System.out.println(" context :" + context );
-				    
-				    CloudService cloudService = context.getCloudService();
-				    System.out.println("Cloud Service :" + cloudService );
-				    Logger.info("Cloud Service :" + cloudService );
-			 		
-				    AdministrationService adminService = context.getAdministrationService();
-			 		System.out.println("Admin Service :" + adminService);
-			 		 Logger.info("Admin Service :" + adminService );
-			 		
-			 		User currentUser = adminService.getCurrentUserInfo();
-			 		Logger.info("CURRENT USER i.e. DEPLOY USER :" + currentUser );
-			 		Enterprise enterprise= currentUser.getEnterprise();
-			 		Logger.info("DEPLOY ENTERPRRISE :" + enterprise );
-			 		
-			 		
+				    AbiquoUtils.setAbiquoUtilsContext(context);
+			 		Enterprise enterprise = AbiquoUtils.getEnterprise(deploy_enterprise_id);
 			 		String useremail = session.get("email");
-			 		Logger.info("CURRENT USER EMAIL ID: "+ useremail);
-			 		
-			 		//String user = Helper.getUser().getName();
 			 		String vdc_user = session.get("username");
 					String vdcname = Helper.vdcNameGen(vdc_user);
-			 		
+					Logger.info("CURRENT USER EMAIL ID: "+ useremail);
 					Logger.info(" vdcname : " + vdcname);	
 					
-			 		VirtualDatacenter virtualDC = cloudService.getVirtualDatacenter(vdc_id_param);
-			 		System.out.println(" VDC to deploy: " + virtualDC);
+			 		VirtualDatacenter virtualDC = AbiquoUtils.getVDCDetails(vdc_id_param);
 			 		Logger.info(" VDC to deploy: " , virtualDC);
 			 		
 			 		HypervisorType hypervisor = virtualDC.getHypervisorType();
-			 		System.out.println(" Hypervisor to deploy: " + hypervisor);
 			 		Logger.info(" Hypervisor to deploy: " , hypervisor);
 			 		
 			 		Datacenter datacenter = virtualDC.getDatacenter();
-			 		System.out.println(" Datacenter to deploy: " + datacenter);
 			 		Logger.info(" Datacenter to deploy: " , datacenter);
 			 		
 			 		PrivateNetwork network =  PrivateNetwork.builder(context)
@@ -230,7 +205,7 @@ public class Consumer extends Controller{
 			 				 					.address("10.80.0.0") 
 			 				 					.mask(22)               
 			 				 					.build();	
-			 		System.out.println(" Network Built");
+			 		Logger.info(" Network Built");
 					
 			 		vdc_toDeploy = VirtualDatacenter.builder(context, datacenter, enterprise)
 								.name(vdcname)
@@ -243,9 +218,9 @@ public class Consumer extends Controller{
 						        .hypervisorType(hypervisor)         
 						        .network(network)                    
 						        .build();
-					System.out.println(" VDC built");
+					
 					Logger.info("VDC built  " );
-					 vdc_toDeploy.save();
+					vdc_toDeploy.save();
 					Logger.info(" 1. VDC CREATED ");
 					 virtualapp_todeploy = VirtualAppliance.builder(context,vdc_toDeploy)
 							 											.name(va_param)
@@ -253,17 +228,36 @@ public class Consumer extends Controller{
 					 virtualapp_todeploy.save();
 								
 					 Logger.info(" 2. VAPP CREATED ");
-				   		  User_Consumption user_consumption = new User_Consumption();
+					
+					 /* Save the deploy info : user, vdc etc */
+					 User_Consumption user_consumption = new User_Consumption();
 								user_consumption.setUserid(useremail);
 									Date current = new Date();
 									Calendar cal = Calendar.getInstance();
-									cal.add(Calendar.DATE, 60);
+									if (lease_period.contentEquals("30 days"))
+									{
+										Logger.info("case1 : 30 days lease ");
+										cal.add(Calendar.DATE, 30);
+									}
+									else if (lease_period.contentEquals("60 days"))
+									{
+										Logger.info("case2 : 60 days lease");
+										cal.add(Calendar.DATE, 60);
+									}
+									else if (lease_period.contentEquals("90 days"))
+									{
+										Logger.info("case3 : 90 days lease ");
+										cal.add(Calendar.DATE, 90);
+									
+									}
+									System.out.println("--------------------");
 								user_consumption.setPurchase_date(current);
 								user_consumption.setExpiration_date(cal.getTime());
-								user_consumption.setVdc_name(vdc_toDeploy.getName());
+								//user_consumption.setVdc_name(vdc_toDeploy.getName());
 								user_consumption.setDestroy_date(null);
 								user_consumption.setSc_offer_id_ref(sc_offer_id);
 								user_consumption.setVdc_id(vdc_toDeploy.getId());
+							
 							Set<Deploy_Bundle> deploy_bundle_set = new HashSet<Deploy_Bundle>();		
 							Deploy_Bundle deploy_Bundle = new Deploy_Bundle();
 									deploy_Bundle.setDeploy_datacenter(datacenter.getId());
@@ -274,22 +268,16 @@ public class Consumer extends Controller{
 									deploy_Bundle.setUserConsumption(user_consumption);
 									deploy_Bundle.setVapp_id(virtualapp_todeploy.getId());
 									deploy_bundle_set.add(deploy_Bundle);
-					
+				/*	
 					String query = "select p from sc_offer as p where p.sc_offer_id = ?1";
 					JPAQuery result = sc_offer.find(query, sc_offer_id);
-					List<sc_offer> nodes  = result.fetch();
-					Iterator<sc_offer> nodes_it = nodes.iterator();
-							
-								
-					while(nodes_it.hasNext())
+				*/	List<sc_offer> nodes  = ProducerDAO.getOfferDetails(sc_offer_id);
+					for ( sc_offer node : nodes)
 					{
-						sc_offer node = nodes_it.next();
-						Set<Nodes> vmlist_todeploy = node.getNodes();
-						Iterator<Nodes> vmlist_todeploy_it = vmlist_todeploy.iterator();
 						Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = new HashSet<Deploy_Bundle_Nodes>();
-						 while (vmlist_todeploy_it.hasNext())
-						 {
-							 Nodes aVM =  vmlist_todeploy_it.next();
+						Set<Nodes> vmlist_todeploy = node.getNodes();
+						for ( Nodes aVM : vmlist_todeploy) 
+						{
 							 String vmName = aVM.getNode_name();
 							 VirtualMachineTemplate vm_template_todeploy = virtualDC.getAvailableTemplate(aVM.getIdImage());
 							 int cpu = aVM.getCpu();
@@ -315,14 +303,12 @@ public class Consumer extends Controller{
 							 			deploy_Bundle_Nodes.setVdrpPort(0);
 							 			deploy_Bundle_Nodes_list.add(deploy_Bundle_Nodes);
 							 			//deploy_Bundle_Nodes.setResources(resources);
-							Set<Nodes_Resources> resources =  aVM.getResources();
-							Iterator<Nodes_Resources> resources_it = resources.iterator();
+							
 							List<HardDisk> hardDisk_toattach = new ArrayList<HardDisk>();
-							Nodes_Resources resource=null;
-							 Set<Deploy_Nodes_Resources> deploy_Nodes_Resources_list = new HashSet<Deploy_Nodes_Resources>();
-							while(resources_it.hasNext())
+							Set<Deploy_Nodes_Resources> deploy_Nodes_Resources_list = new HashSet<Deploy_Nodes_Resources>();
+							Set<Nodes_Resources> resources =  aVM.getResources();
+							for ( Nodes_Resources resource : resources)
 							{
-								resource = resources_it.next();
 								Long size = resource.getValue();
 								HardDisk disk = HardDisk.builder(context, vdc_toDeploy).sizeInMb(size).build();
 								disk.save();
@@ -342,6 +328,7 @@ public class Consumer extends Controller{
 								vm_todeploy.attachHardDisks(disks);
 								Logger.info(" 4. HARDDISKS ATTACHED ");
 								VmEventHandler handler = new VmEventHandler(context, vm_todeploy);	
+								Logger.info(" Handler created :");
 								VirtualMachineMonitor monitor =  context.getMonitoringService().getVirtualMachineMonitor();
 								monitor.register(handler);
 								vm_todeploy.deploy();
@@ -349,8 +336,7 @@ public class Consumer extends Controller{
 								monitor.monitorDeploy(vm_todeploy);
 								
 								
-								
-							
+						
 						 }
 						Logger.info("SAVING DEPLOY INFORMATION ......"); 
 					deploy_Bundle.setNodes(deploy_Bundle_Nodes_list);
@@ -365,13 +351,18 @@ public class Consumer extends Controller{
 			 			
 					
 		 }
-		 
+		 catch ( AuthorizationException ae)
+		 {
+			 
+			 Logger.warn(ae, "EXCEPTION OCCURED" );
+			 String message = "Oops .... Deployment cant proceed further. Please Check deploy user and password for your enterprise .";
+			 render("/errors/error.html",message);
+		 }
 		 catch (Exception ae) 
 			{
-			 //logger.warn(ex, "exception thrown while monitoring %s on %s, returning CONTINUE",virtualMachine, getClass().getName());
-			 Logger.warn(ae, "EXCEPTION OCCURED", vm_todeploy.getId() );
-			//Logger.info(" ERROR: " + ae.printStackTrace());
-			 //ae.printStackTrace();
+			
+			 Logger.warn(ae, "EXCEPTION OCCURED" );
+			
 			 if (context!=null)
 			 {
 				 context.close();
@@ -382,5 +373,31 @@ public class Consumer extends Controller{
 		  
 	}
 	
+	/*
+	public static void offerDetails(Integer offer_id)
+	{
+		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
+		
+		String user = session.get("username");
+		Set<Nodes> nodes_list = null;
+		Set<Nodes_Resources> nodes_resources = null;
+		String query = "select p from sc_offer as p where p.sc_offer_id = ?1";
+		JPAQuery result = sc_offer.find(query, offer_id);
 
+		List<sc_offer> offers  = result.fetch();
+		for ( sc_offer offer : offers )
+		{
+			nodes_list = offer.getNodes();
+
+				for ( Nodes node : nodes_list )
+					nodes_resources = node.getResources();
+					
+		}
+		Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
+		render( offers, nodes_list , nodes_resources,user);
+	}
+*/
+	
+	
+	
 }

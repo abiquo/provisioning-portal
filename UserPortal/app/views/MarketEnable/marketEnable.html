@@ -1,0 +1,47 @@
+
+#{extends 'main.html' /}
+
+#{set title:'Market enable ' /}
+<html>
+    <head>
+   
+    <style type="text/css">
+    table { width:500px; }
+    tbody { height:10em;  overflow:scroll;}
+    td { height:auto; }
+    </style>
+    </head>
+    <body>
+ #{if flash.error}
+    		<p style="color:#c00">
+        	${flash.error}
+    		</p>
+#{/if}
+<h2> Enterprises </h2>
+
+<form action ="" method = "POST" >
+
+		<table border= "1">
+      		 <thead>
+           			<tr>
+               			<td><strong>Enterprise </strong></td>
+             			<td><strong>Action</strong></td>
+                    </tr>
+     	     </thead>
+       		 <tbody>
+          				 #{list enterpriseList , as:'enterprise'}
+               		<tr>
+               			<td>${enterprise.name}</td>
+              		     <td>
+                    		<p> <a href="@{enable(enterprise.id, enterprise.name)} " >  Enable </a> &nbsp;&nbsp;&nbsp;&nbsp;	
+                    			 <a href="@{publishMarket(enterprise.id, enterprise.name)} " >  Publish </a></p>   
+                  		 </td>
+               		</tr>
+           					#{/list}
+       		</tbody>
+   		</table>  
+</form>
+</body>
+</html>
+
+<p><a href ="@{ProducerLocal.admin()}"> Home  </a></p>

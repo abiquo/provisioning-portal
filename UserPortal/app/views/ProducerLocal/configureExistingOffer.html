@@ -1,0 +1,46 @@
+#{extends 'main.html' /}
+#{ifnot scOffer}
+    
+    <h3> Unable to retrieve values.</h3>
+#{/ifnot}
+#{else}
+<h3>Configure Offer </h3>
+ #{list scOffer, as:'scOffer'}
+ 
+<form action ="@{ProducerLocal.saveConfigure(sc_offers,icon)}" method = "POST" enctype="multipart/form-data">
+
+<p> Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${scOffer.sc_offer_id}" readonly/></p> 
+<p> Service Level  <input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${scOffer.virtualDataCenter_name}" readonly/></p> 
+<p> Offer Name <input type ="text" name = "sc_offers.sc_offer_name" size="45" value = "${scOffer.sc_offer_name}" /></p> 
+
+ #{list scOffer.nodes, as:'node'}
+<p>CPU <input type ="text" name = "" size="25" value = "${node.cpu}" readonly/></p>
+<p>RAM  <input type ="text" name = "" size="45" value = "${node.ram}" readonly/></p>
+ #{/list}
+
+<p>Selection Icon <img src="@{Helper.displayIcon(scOffer.sc_offer_id)}" /> <input type ="file" name = "icon"  value = ""/>  </p>
+<p>Details Image <img src="@{Helper.displayImage(scOffer.sc_offer_id)}" />  <input type ="file" name = "image" value = "" /> </p> 
+
+<p>Short Description <input type ="text" name = "sc_offers.short_description" value = "${scOffer.short_description}" /> </p> 
+<p>Long Description <textarea name ="sc_offers.description" rows="5" cols="70" >${scOffer.description}</textarea></p>
+#{/list}
+
+<p>Offer Start Date <input type ="text" name = "offer_start_date" value = "${startDate}" /> </p> 
+<p>Offer Retire Date<input type ="text" name = "offer_expire_date" value = "${expireDate}" /> </p> 
+
+<p>Default Lease Period <input type ="text" name = "lease_period" value = "${lease_period}" /> </p> 
+<p>Default Lease Period  :  
+#{select 'lease_period', value:'${lease_period}'}
+	#{option '30 days'}30 days #{/option}
+	#{option '60 days'}60 days#{/option}
+	#{option '90 days'}90 days #{/option}
+#{/select}
+ </p>
+
+<p><input type ="submit" name = "submit" value ="Save "/> 
+ <input type ="submit" value ="Cancel"  formaction="@{Producer.poe()}" /> </p> 
+ 
+</form>
+
+
+#{/else}

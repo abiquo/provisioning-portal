@@ -7,30 +7,43 @@ GET     /                                   	Login.login_page
 GET		/login/connect							Login.connect
 GET 	/login/logout					    	Login.logout
 
-GET 	/producer/listvdc						Producer.listVDC
-GET		/producer/vmDetails						Producer.vmDetails
-GET 	/producer/listvm					    Producer.listVM
-GET 	/producer/listva					    Producer.listVA
-POST 	/producer/addtoservicecatalog			Producer.addToServiceCatalog
-GET 	/producer/configure						Producer.configure
-GET 	/producer/configureExistingOffer		Producer.configureExistingOffer
-GET 	/producer/displayOffer 					Producer.displayOffer 
 
-GET 	/producer/index							Producer.index 
-POST 	/producer/addUserWithFileName			Producer.addUserWithFileName
-POST 	/producer/addUser						Producer.addUser
-POST 	/producer/userPhoto						Producer.userPhoto
-POST 	/producer/saveConfigure					Producer.saveConfigure 
-GET     /producer/subscribedOffers				Producer.subscribedOffers
-GET      /producer/disableOffer				Producer.disableOffer
 
+GET 	/ProducerLocal/admin						ProducerLocal.admin
+
+GET 	/Producer/poe								Producer.poe
+GET 	/Producer/listAllOffers						Producer.listAllOffers
+POST 	/Producer/poe								Producer.poe
+
+GET 	/ProducerRemote/listvdc						ProducerRemote.listVDC
+POST 	/ProducerRemote/listvdc						ProducerRemote.listVDC
+GET		/ProducerRemote/vmDetails					ProducerRemote.vmDetails
+GET 	/ProducerRemote/listvm					    ProducerRemote.listVM
+GET 	/ProducerRemote/listva					    ProducerRemote.listVA
+POST 	/ProducerRemote/addtoservicecatalog			ProducerRemote.addToServiceCatalog
+GET 	/ProducerRemote/configure					ProducerRemote.configure
+
+GET 	/ProducerLocal/configureExistingOffer		ProducerLocal.configureExistingOffer
+GET 	/ProducerLocal/displayOffer 				ProducerLocal.displayOffer 
+POST 	/ProducerLocal/saveConfigure				ProducerLocal.saveConfigure 
+GET     /ProducerLocal/subscribedOffers				ProducerLocal.subscribedOffers
+POST    /ProducerLocal/subscribedOffers				ProducerLocal.subscribedOffers
+GET     /ProducerLocal/disableOffer					ProducerLocal.disableOffer
+
+GET 	/MarketEnable/publishOffersPerMarket 		MarketEnable.publishOffersPerMarket
+GET     /MarketEnable/marketEnable					MarketEnable.marketEnable
+POST    /MarketEnable/marketEnable					MarketEnable.marketEnable
+GET     /MarketEnable/enable						MarketEnable.Enable
+GET     /MarketEnable/saveMKTConfiguration			MarketEnable.saveMKTConfiguration
+GET     /MarketEnable/publishMarket					MarketEnable.publishMarket
+POST    /MarketEnable/saveMarketView				MarketEnable.saveMarketView
 
 GET 	/consumer/availableoffers				Consumer.availableOffers
-
 GET 	/consumer/servicecatalog				Consumer.ServiceCatalog
-GET 	/consumer/offerdetails					Consumer.offerDetails
+#GET 	/consumer/offerdetails					Consumer.offerDetails
 GET 	/consumer/purchaseconfirmation			Consumer.purchaseConfirmation
 GET 	/consumer/deploy					    Consumer.deploy
+
 GET 	/helper/displayIcon						Helper.displayIcon
 GET 	/helper/displayImage 					Helper.displayImage
 GET 	/consumer/displayIcon					Helper.displayIcon
@@ -45,4 +58,5 @@ GET     /public/                                staticDir:public
 
 #*       /{controller}/{action}                  {controller}.{action}
 # Import CRUD routes
-*     /admin           module:crud
+#*     /admin           module:crud
+#*		/mkt_configurations module:crud

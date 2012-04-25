@@ -23,9 +23,13 @@ public class Context {
 	
 	public static final AbiquoContext getContext(String username, String password) 
     {
+		AbiquoContext context = null;
+		if ( username != null && password != null)
+		{
 		Properties props = new Properties();
-		props.put("abiquo.endpoint", "http://67.111.53.233/api");
-		AbiquoContext context = new AbiquoContextFactory().createContext(username ,password ,props);
+		props.put("abiquo.endpoint", "http://67.111.53.253/api");
+		context = new AbiquoContextFactory().createContext(username ,password ,props);
+		}
     	return context;
     }
 	

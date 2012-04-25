@@ -18,6 +18,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import play.db.jpa.GenericModel;
+
+/**
+ * 
+ * @author Harpreet Kaur
+ * when user buys an offer, the details about user, purchase information about offer gets saved in user_consumption.
+ * See also Deploy_Bundle and Deploy_bundle_Nodes
+ */
 @Entity
 public class User_Consumption extends GenericModel {
 
@@ -26,8 +33,6 @@ public class User_Consumption extends GenericModel {
 	private Integer iduser_consumption;
 	private String userid;
 	
-	/*@OneToOne( cascade = CascadeType.ALL)
-	private sc_offer offer;*/
 	private Integer sc_offer_id_ref;
 	@OneToMany( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)
 	@JoinTable(name = "UserConsumption_DeployNode", joinColumns = { @JoinColumn(name = "iduser_consumption") }, inverseJoinColumns = { @JoinColumn(name = "bundle_id") })
@@ -38,7 +43,7 @@ public class User_Consumption extends GenericModel {
 	private Date destroy_date;
 	
 	@Column(length = 45)
-	private String vdc_name;
+	//private String vdc_name;
 	private Integer vdc_id;
 	
 	public User_Consumption(){
@@ -61,14 +66,6 @@ public class User_Consumption extends GenericModel {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-/*
-	public sc_offer getOffer() {
-		return offer;
-	}
-
-	public void setOffer(sc_offer offer) {
-		this.offer = offer;
-	}*/
 
 	public Set<Deploy_Bundle> getNodes() {
 		return nodes;
@@ -102,13 +99,13 @@ public class User_Consumption extends GenericModel {
 		this.destroy_date = destroy_date;
 	}
 
-	public String getVdc_name() {
+	/*public String getVdc_name() {
 		return vdc_name;
 	}
 
 	public void setVdc_name(String vdc_name) {
 		this.vdc_name = vdc_name;
-	}
+	}*/
 
 	public Integer getSc_offer_id_ref() {
 		return sc_offer_id_ref;

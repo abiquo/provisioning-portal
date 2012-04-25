@@ -16,7 +16,7 @@ import play.mvc.Before;
 
 public class Bootstrap extends Job {
 
-	//private static UserInfo ui;
+	
 
     public void doJob() {
 
@@ -42,27 +42,9 @@ public class Bootstrap extends Job {
 
 
 
-
-        // Set all loaded properties as system properties
-
-        
-
     }
     
-    /*public static final AbiquoContext getContext() 
-    {
-		Properties props = new Properties();
-		props.put("abiquo.endpoint", "http://67.111.53.253/api");
-		AbiquoContext context = new AbiquoContextFactory().createContext(ui.getUsername(),ui.getPassword(),props);
-    	return context;
-    }
     
-	 @Before 
-		static void setUserInfo(String username, String password)
-		{
-			UserInfo ui = new UserInfo (username,password);
-			System.out.println("USERBAME " + username + "PASWORD"+  password);
-		}*/
 
 }
 

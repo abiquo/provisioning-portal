@@ -17,6 +17,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import play.db.jpa.GenericModel;
+
+/**
+ * 
+ * @author Harpreet Kaur
+ * The offer i.e virtual appliance details that gets deployed 
+ * Refer also User_Consumption
+ */
 @Entity
 public class Deploy_Bundle extends GenericModel{
 

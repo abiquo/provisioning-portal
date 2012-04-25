@@ -45,8 +45,8 @@ $(function() {
         <div id="tabcontainer">
           <ul id="tabnav">
                #{list result1, as:'sc_offer'}
-               <li>  
-                #{a @Consumer.availableOffers(sc_offer.virtualDataCenter_name)} ${sc_offer.virtualDataCenter_name} #{/a}</li>              
+               <li> 
+                #{a @Consumer.availableOffers(sc_offer.virtualDataCenter_name, enterpriseID )} ${sc_offer.virtualDataCenter_name}  #{/a}</li>              
  				#{/list}
                </ul>
           
@@ -65,9 +65,11 @@ $(function() {
 	 
           <li class="category">                       
           <h2>${sc_offer.sc_offer_name}</h2>
-        
+       
           <a href="#" class="resize"> <img src="@{Helper.displayIcon(sc_offer.sc_offer_id)}" alt="" /></a> 
-          <p>Offer Id : ${sc_offer.sc_offer_id}.</p>
+          <p>Offer Id : ${sc_offer.sc_offer_id} </p>
+          <p>${sc_offer.short_description}</p>
+        	<p>${sc_offer.description}</p>
                  <table>
                     <tbody>
                       <tr>

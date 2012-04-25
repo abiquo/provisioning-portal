@@ -17,6 +17,12 @@ import javax.persistence.OneToOne;
 
 import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
+/**
+ * 
+ * @author Harpreet Kaur
+ * VIRTUAL MACHINES CONTIANED IN AN OFFER
+ * REFER ALSO sc_offer
+ */
 @Entity
 public class Nodes extends GenericModel{
 

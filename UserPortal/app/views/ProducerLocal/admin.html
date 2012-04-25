@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+
+#{set title:'Admin' /}
+
+ *{<div class="fancyButtons">
+              <div class="fancyButton floatLeft"><a href="@{ProducerLocal.subscribedOffers()}">Published Offers</a></div>
+                  </div> 
+    <div class="fancyButtons">
+                    <div class="fancyButton floatLeft"><a href="@{ProducerRemote.listVDC()}">Un-Published Offers</a></div>
+                  </div> }*
+    <div class="fancyButtons">
+                    <div class="fancyButton floatLeft"><a href="@{MarketEnable.marketEnable()}">Market Management</a></div>
+                  </div> 
+    <div class="fancyButtons">
+                    <div class="fancyButton floatLeft"><a href="@{Producer.poe()}">Offers Management</a></div>
+                  </div> 
+   

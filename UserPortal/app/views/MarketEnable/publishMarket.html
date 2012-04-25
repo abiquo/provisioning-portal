@@ -1,0 +1,92 @@
+#{extends 'main.html' /}
+
+#{set title:'Market Publish' /}
+<script language=JavaScript>
+function checkall()
+{
+void(d=document);
+void(el=d.getElementsByName('scOffer'));
+for(i=0;i<el.length;i++)
+void(el[i].checked=1)
+}
+function uncheckall()
+{
+void(d2=document);
+void(e2=d2.getElementsByName('scOffer'));
+for(i=0;i<el.length;i++)
+void(el[i].checked=0)
+}
+
+</script>
+<h2><u>ENTERPRISE : ${enterprise_name}</u> </h2>	
+#{ifnot resultSet}
+    
+    No Pubished offers available !!!
+#{/ifnot}
+
+
+<div id="tabcontainer">
+       <ul id="tabnav">
+          #{list resultSet, as:'subscoffer'}
+					<li><a href = "@{publishOffersPerMarket(subscoffer.service_level,enterprise_id,enterprise_name)}"> ${subscoffer.service_level}</a></li>
+		  #{/list}
+		</ul>
+#{ifnot resultSet1}
+    
+    
+#{/ifnot}
+
+<form action ="@{MarketEnable.marketEnable()}" method= "POST">
+<div>
+		<table width="100%" border="1"  >
+		<thead>		
+				<tr>
+    				<th>Offer</th>
+    				<th>Details</th>
+    				<th>Action </th>
+  				</tr>
+  		</thead>
+  					
+  		<tbody>
+  		#{list resultSet1, as:'subscoffers'}
+  		
+				<tr>
+
+						<td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}" width="100" height=100" /></td>
+									#{list subscoffers.sc_offer, as:'sc_offer'}
+						<td><b> OfferId : </b> ${sc_offer.sc_offer_id} <b> Offer Name </b>: ${sc_offer.sc_offer_name} <br />
+									#{/list}
+							<b> Short Description </b> : ${sc_offer.short_description}<br />
+							<b> Description </b> :${sc_offer.description} <br />
+									#{list sc_offer.nodes, as:'nodes'}
+							<b> CPU </b>:${nodes.cpu}  <b> RAM : </b> ${nodes.ram} </b> <br />
+								#{/list}
+						</td>
+						<td>
+						 		#{list sc_offer.sc_offer_id, as:'scOffer'}
+						 		
+						 		
+									<input type="checkbox" name ="scOffer" value ="${scOffer}"  >  Publish</td>
+									
+								#{/list}	
+									
+						
+						 
+						
+  				</tr>
+	 		#{/list}
+	    </tbody>
+         </table>
+</div>
+         
+        <p> <input type="submit" value ="Save" formaction = "@{MarketEnable.saveMarketView(enterprise_id, scOffer , subscoffers?.service_level, enterprise_name)}">
+        	<input type="submit" value ="Cancel"  >   
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <input type=button onClick="checkall()" value="Check All" name="button">
+			 <input type=button onClick="uncheckall()" value="UnCheck All" name="button"> </p>
+</form>
+      
+
+<p><a href ="@{ProducerLocal.admin()}"> Home  </a></p>

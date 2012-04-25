@@ -10,15 +10,25 @@ import javax.persistence.*;
 
 import java.util.*;
 
+
+/**
+ * 
+ * @author Harpreet Kaur
+ * Offer( i.e virtual appliance)  added to service catalog by the producer.
+ * See also Nodes 
+ */
 @Entity
 
 /*@Table( uniqueConstraints = {
 		@UniqueConstraint(columnNames = "sc_offer_name")})
 */
 @NamedQueries({
+@NamedQuery(name="getAllOffers",query="select p.sc_offer_id from sc_offer as p "),
 @NamedQuery(name="groupByVDC",query="select p from sc_offer as p GROUP BY p.virtualDataCenter_name"),
+@NamedQuery(name="groupByVDC_EnterpriseView",query="select p from sc_offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) GROUP BY p.virtualDataCenter_name"),
 @NamedQuery(name="getOfferDetails",query="select p from sc_offer as p where sc_offer_id = ?1 "),
-@NamedQuery(name="getVappListForVDC",query="select p from sc_offer as p where p.virtualDataCenter_name = ?1")
+@NamedQuery(name="getVappListForVDC",query="select p from sc_offer as p where p.virtualDataCenter_name = ?1"),
+@NamedQuery(name="getVappListForVDC_EnterpriseView",query="select p from sc_offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) and  p.virtualDataCenter_name = ?2")
 })
 
 public class sc_offer extends GenericModel {
@@ -46,13 +56,7 @@ public class sc_offer extends GenericModel {
 	@JoinTable(name = "Offer_Node", joinColumns = { @JoinColumn(name = "sc_offer_id") }, inverseJoinColumns = { @JoinColumn(name = "id_node") })
 	private Set<Nodes> nodes = new HashSet<Nodes>();
 
-	/*@OneToOne
-    @PrimaryKeyJoinColumn
-    private sc_offers_subscriptions offer_sub;*/
 	
-	/*@OneToOne( cascade = CascadeType.ALL,  fetch = FetchType.EAGER, targetEntity = User_Consumption.class)
-	//@JoinTable(name = "Offer_UserConsumption", joinColumns = { @JoinColumn(name = "sc_offer_id") }, inverseJoinColumns = { @JoinColumn(name = "iduser_consumption") })
-	private Set<User_Consumption> userConsume = new HashSet<User_Consumption>();*/
 	
 	public sc_offer() {
 		

@@ -14,6 +14,13 @@ import javax.persistence.ManyToOne;
 import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
 
+/**
+ * 
+ * @author Harpreet Kaur
+ * The virtual machine resources such as harddisks , network.
+ * Currently only harddisk is considered .
+ * 
+ */
 @Entity
 public class Nodes_Resources extends GenericModel{
 	

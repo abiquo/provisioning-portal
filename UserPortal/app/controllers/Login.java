@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import models.MKT_Configuration;
-import models.UserDetails;
+
 
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.enterprise.Enterprise;
@@ -21,12 +21,19 @@ import play.data.validation.Required;
 import play.db.jpa.JPA;
 import play.mvc.Before;
 import play.mvc.Controller;
+import portal.util.AbiquoUtils;
 import portal.util.Context;
+import portal.util.CurrentUserContext;
+import portal.util.PortalContext;
 
 public class Login extends Controller{
 
 	public static void login_page()
 	{
+		session.remove("username");
+		session.remove("password");
+		Cache.delete(session.getId());
+		
 		render();
 	}
 	
@@ -40,21 +47,7 @@ public class Login extends Controller{
 		Logger.info("-----EXITING LOGOUT()-----");
 				
 	}
-	@Before(only = {"connect"}) 
-	static void createMKTConfi()
-	{
-		Query query = JPA.em().createNamedQuery("getMktConfi");
-		query.setParameter(1, 1);
-		List<MKT_Configuration> result= query.getResultList();
-		if (result.size() == 0)
-		{
-		MKT_Configuration mkt1 = new MKT_Configuration();
-		mkt1.setMkt_deploy_enterprise("PORTAL DEPLOY");
-		mkt1.setMkt_deploy_pw( "demo");
-		mkt1.setMkt_deploy_user("demo-deploy");
-		mkt1.save();
-		}
-	}
+	
 	public static void connect(@Required String username, @Required String password)
 	{
 		if(validation.hasErrors()) {
@@ -67,16 +60,28 @@ public class Login extends Controller{
 			
 				session.put("username", username);
 				session.put("password", password);
-		
+				
 		AbiquoContext context = Context.getContext(username,password);
+		System.out.println(" Thresd curret" + Thread.currentThread());
+		//Cache.set(session.getId() + "-context", context, "30mn");
+		//	AbiquoUtils.setContext(context);
+		//PortalContext userContext = new PortalContext();
+		//userContext.setContext(context);
+		CurrentUserContext.setContext(context);
+		CurrentUserContext.setUser(username);
+		
 		try{
 			Logger.info("context: " + context );
+		
 			if (context !=null)
 			{
 				AdministrationService adminService = context.getAdministrationService();
 				if (adminService != null)
 				{
 					User currentUser = adminService.getCurrentUserInfo();
+					flash.put("currentUserInfo", currentUser);
+					Integer enterpriseID = currentUser.getEnterprise().getId();
+					
 					String useremail = currentUser.getEmail();
 					session.put("email", useremail);
 					if (currentUser!=null)
@@ -85,10 +90,10 @@ public class Login extends Controller{
 					Logger.info("Role of user" + role);
 				
 						if (role.getName().contentEquals("CLOUD_ADMIN") )
-									Producer.subscribedOffers();
+									ProducerLocal.admin();
 									
 				else 
-						Consumer.ServiceCatalog();
+						Consumer.ServiceCatalog(enterpriseID);
 			}}
 				
 				}

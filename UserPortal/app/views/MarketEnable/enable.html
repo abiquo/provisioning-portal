@@ -1,0 +1,37 @@
+#{extends 'main.html' /}
+
+#{set title:'Market enable ' /}
+ #{if flash.error}
+    		<p style="color:#c00">
+        	${flash.error}
+ #{/if}
+
+<form action ="@{MarketEnable.saveMKTConfiguration(mkt)}"  >
+<fieldset>
+<legend>Personal information:</legend>
+<input type ="text" name = "mkt.enterprise_id" size="25" value = "${enterprise_id}" hidden=true/> 
+<p> Market Name <input type ="text" name = "mkt.enterprise_name" size="25" value = "${enterprise_name}" readonly/></p> 
+<p> Market URL <input type ="text" name = "mkt.mkt_url" size="25" value = "" /></p> 
+<div>
+<p> Market Deploy Enterprise  #{select 'mkt.deploy_enterprise_id'}
+
+            #{list enterpriseList , as: 'enterprise'}
+                #{option enterprise?.id}${enterprise?.name} #{/option}
+            #{/list}
+#{/select}   *</p> 
+<span class="error">#{error 'user.name' /}</span>
+</div>
+
+<div> Market Deploy User <input type ="text" name = "mkt.mkt_deploy_user" size="50" value = "${flash['mkt.mkt_deploy_user']}" /> * 
+<span class="error">#{error 'mkt.mkt_deploy_user' /}</span></div>
+<p> Market Deploy Password <input type ="password" name = "mkt.mkt_deploy_pw" size="50" value = "${flash['mkt.mkt_deploy_pw']}" />*
+<span class="error">#{error 'mkt.mkt_deploy_pw' /}</span></p>
+<p>	Market Branding theme  <input type ="text" name = "" size="25" value = "" /></p> 
+<p>	Market Branding Icon  <input type ="text" name = "" size="25" value = "" /></p>
+<p>	Market theme CSS <input type ="text" name = "" size="25" value = "" /></p>
+
+
+<p><input type ="submit" name = "submit" value ="Save  "/> 
+ <input type ="submit" value ="Cancel" formaction = "@{MarketEnable.marketEnable()}" /> </p> 
+ </fieldset>
+</form>

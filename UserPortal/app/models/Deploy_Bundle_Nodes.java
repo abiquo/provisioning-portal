@@ -15,6 +15,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import play.db.jpa.GenericModel;
+/**
+ * 
+ * @author Harpreet Kaur
+ * Virtual machine details that gets deployed when user buy an offer.
+ * Refer also User_Consumption, Deploy_Bundle
+ */
+
 @Entity
 public class Deploy_Bundle_Nodes extends GenericModel {
 	@Id

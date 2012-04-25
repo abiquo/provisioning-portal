@@ -1,0 +1,37 @@
+#{extends 'main.html' /}
+
+#{set title:'List VM(s)' /}
+
+
+#{ifnot virtualAppliance}
+    
+    <h3> No Service Offers !!!</h3>
+#{/ifnot}
+#{else}
+<h1>Image Templates for ${virtualAppliance.name} &  ${virtualDatacenter.name}</h1>
+<table border= "1">
+       <thead>
+           <tr>
+               <th><strong>Virtual-Machine </strong></th>
+              
+               <th>Action</th>
+               
+           </tr>
+       </thead>
+       <tbody>
+           #{list vmList, as:'vm'}
+               <tr>
+                   <td>${vm.name}</td>
+                   
+                   <td>
+                        
+                       
+                         #{a @ProducerRemote.vmDetails(virtualDatacenter.id,virtualAppliance.id, vm.id)}  Details #{/a}
+                   </td>
+               </tr>
+           #{/list}
+       </tbody>
+   </table> 
+  #{/else}
+<p> <a href="@{ProducerLocal.admin()}"> Home  </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="@{Producer.poe()}">  Back </a> </p>

@@ -11,6 +11,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
 import play.db.jpa.GenericModel;
+
+/**
+ * 
+ * @author Harpreet Kaur
+ * Deployed virtual machine resources such as harddisk and networks. 
+ * Currently only harddisk is taken into consideration.
+ * Refer User_Consumption, Deploy_Bundle, Deploy_Bundle_Nodes
+ */
 @Entity
 public class Deploy_Nodes_Resources extends GenericModel {
 	@Id
@@ -28,7 +36,7 @@ public class Deploy_Nodes_Resources extends GenericModel {
 	
 	public Deploy_Nodes_Resources() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Deploy_Nodes_Resources(Integer iddeploy_nodes_resources,

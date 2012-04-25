@@ -96,9 +96,12 @@ div.fancyButton:hover span {  background-position: left -108px;}
           <li>Hard Disk ${resource.sequence} : ${resource.value}</li>
           #{/list}
         </ul>
-        <strong>Default Lease Period : 60 days</strong> <br />
+        #{list sc_offers_subscriptions, as:'sc_offers_subscriptions'}
+          <li>Default Lease Period : ${sc_offers_subscriptions.lease_period}</li>
+          #{/list}
+       
         <div class="fancyButtons">
-          <div class="fancyButton"><span></span><a href="@{Consumer.deploy(offer.datacenter, offer.idVirtualDataCenter_ref, offer.sc_offer_id, offer.sc_offer_name )}">Buy</a></div>
+          <div class="fancyButton"><span></span><a href="@{Consumer.deploy(offer.datacenter, offer.idVirtualDataCenter_ref, offer.sc_offer_id, offer.sc_offer_name , sc_offers_subscriptions.lease_period)}">Buy</a></div>
                   	<div class="fancyButton"><span></span><a  href="#" onClick="parent.jQuery.fancybox.close();">Cancel</a></div>
         </div>
 </body>
