@@ -5,6 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h3> Offer Details</h3>
 <ul>
  #{list offers, as:'offer'}
  
@@ -12,6 +13,7 @@
 <li> Description        : ${offer.description}    </li>
 <li> Quality of Service : ${offer.virtualDataCenter_name}  </li>
 <li> Offer Name         : ${offer.sc_offer_name} </li>
+<img src="@{Helper.displayIcon(offer.sc_offer_id)}" alt="${offer.sc_offer_name}" />
 #{/list} 
 </ul>
 <ul>
@@ -29,6 +31,6 @@
 
 #{/list}
 </ul>
-<a href = "@{Consumer.ServiceCatalog()}"> OK </a>
+<a href = "@{Consumer.PurchaseConfirmation(offer.sc_offer_id)}"> Purchase </a>
 </body>
 </html>

@@ -18,12 +18,17 @@ void(el[i].checked=0)
 }
 
 </script>
+#{if flash.error}
+    		<p style="color:#c00">
+        	${flash.error}
+    		</p>
+			#{/if}
 <h2><u>ENTERPRISE : ${enterprise_name}</u> </h2>	
 #{ifnot resultSet}
     
     No Pubished offers available !!!
 #{/ifnot}
-
+#{else}
 
 <div id="tabcontainer">
        <ul id="tabnav">
@@ -36,7 +41,7 @@ void(el[i].checked=0)
     
 #{/ifnot}
 
-<form action ="@{MarketEnable.marketEnable()}" method= "POST">
+<form action ="@{MarketEnable.saveMarketView(enterprise_id, scOffer , subscoffer?.service_level, enterprise_name)}" method= "POST">
 <div>
 		<table width="100%" border="1"  >
 		<thead>		
@@ -79,8 +84,8 @@ void(el[i].checked=0)
          </table>
 </div>
          
-        <p> <input type="submit" value ="Save" formaction = "@{MarketEnable.saveMarketView(enterprise_id, scOffer , subscoffers?.service_level, enterprise_name)}">
-        	<input type="submit" value ="Cancel"  >   
+        <p> <input type="submit" value ="Save" >
+        	<input type="submit" value ="Cancel"  formaction = "@{MarketEnable.marketEnable()}" >   
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -88,5 +93,5 @@ void(el[i].checked=0)
 			 <input type=button onClick="uncheckall()" value="UnCheck All" name="button"> </p>
 </form>
       
-
+#{/else}
 <p><a href ="@{ProducerLocal.admin()}"> Home  </a></p>

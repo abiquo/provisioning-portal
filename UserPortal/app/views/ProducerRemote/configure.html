@@ -29,7 +29,7 @@
 	#{option '90 days'}90 days #{/option}
 #{/select}
  </p>
-<p>Offer Start Date
+*{<p>Offer Start Date
 	#{select 'date.year', value:5 }
 	
 	#{option 2012}2012 #{/option}
@@ -91,7 +91,7 @@
 	#{option }Day  #{/option}
 	#{/select}  
 	
-	</p>
+	</p> }*
 
 <p><input type ="submit" name = "submit" value ="Enable  "/> 
  <input type ="submit" value ="Cancel" formaction="@{Producer.poe()}" method = "GET"/> </p> 

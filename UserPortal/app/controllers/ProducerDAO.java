@@ -73,5 +73,11 @@ public class ProducerDAO {
 				return result2;
 		}
 		
-		
+	static List<sc_offers_subscriptions>  getSubscribedOfferGivenOfferId(Integer sc_offer_id )
+	{
+		 Query query1 =JPA.em().createNativeQuery("select * from sc_offers_subscriptions where sc_offer_sc_offer_id = ?1",sc_offers_subscriptions.class);
+		 query1.setParameter(1,sc_offer_id);
+		 List<sc_offers_subscriptions> subscribedOffers = query1.getResultList();
+		 return subscribedOffers;
+	}
 }

@@ -68,14 +68,13 @@ public class ProducerRemote extends Controller {
 		Logger.info("Session user in listVDC(): "+ user);
 		AbiquoContext context = CurrentUserContext.getContext();
 		AbiquoContext context  = contextProp.getContext();
-		System.out.println("Created context :" + context );
+		Logger.info("Created context :" + context );
 		*/
 		
 		AbiquoContext context = Context.getContext(user,password);
 		AbiquoUtils.setAbiquoUtilsContext(context);
-				
-					Iterable<VirtualDatacenter> vdc_list = AbiquoUtils.getAllVDC();
-					return vdc_list;
+		Iterable<VirtualDatacenter> vdc_list = AbiquoUtils.getAllVDC();
+		return vdc_list;
 		
 	
 }
@@ -92,38 +91,46 @@ public class ProducerRemote extends Controller {
 		
 		String user =session.get("username");
 		String password =session.get("password");
-		
-		AbiquoContext context = Context.getContext(user,password);
-		AbiquoUtils.setAbiquoUtilsContext(context);
-		try {
-					VirtualDatacenter virtualDatacenter = AbiquoUtils.getVDCDetails(id_vdc_param);
-					VirtualAppliance virtualAppliance  = AbiquoUtils.getVADetails(id_vdc_param, id_va_param);
-		
-					if (virtualAppliance != null )
-					{
-							List<VirtualMachine> vmList = virtualAppliance.listVirtualMachines();
-							render(vmList,virtualAppliance, virtualDatacenter,user);
-					}
-		
-					else 
-					{
-							String msg = " No Virtual Machine to display!!";
-							render(msg,user);
-					}
-			Logger.info(" -----EXITING PRODUCER LISTVM()------");
-		} 
-		catch(Exception e)
+		if ( user != null)
 		{
-				flash.error("Unable to create contaxt");
-				render();
-				e.printStackTrace();
-			
-		}
-		finally{
-			if (context!= null)
-				context.close();
-			
-		}
+				AbiquoContext context = Context.getContext(user,password);
+				AbiquoUtils.setAbiquoUtilsContext(context);
+				try {
+							VirtualDatacenter virtualDatacenter = AbiquoUtils.getVDCDetails(id_vdc_param);
+							VirtualAppliance virtualAppliance  = AbiquoUtils.getVADetails(id_vdc_param, id_va_param);
+				
+							if (virtualAppliance != null )
+							{
+									List<VirtualMachine> vmList = virtualAppliance.listVirtualMachines();
+									render(vmList,virtualAppliance, virtualDatacenter,user);
+							}
+				
+							else 
+							{
+									String msg = " No Virtual Machine to display!!";
+									render(msg,user);
+							}
+					Logger.info(" -----EXITING PRODUCER LISTVM()------");
+				} 
+				catch(Exception e)
+				{
+						flash.error("Unable to create contaxt");
+						render();
+						//e.printStackTrace();
+					
+				}
+				finally{
+					if (context!= null)
+						context.close();
+					
+				}
+	}
+	else 
+	{
+		
+		flash.error("You are not connected.Please Login");
+		Login.login_page();
+	}
 
 }
 	/**
@@ -139,50 +146,55 @@ public class ProducerRemote extends Controller {
 		String user =session.get("username");
 		String password =session.get("password");
 		Logger.info("Session user in vmDetails(): "+ user);
-		
-		
-		AbiquoContext context = Context.getContext(user,password);
-		
-		try {
-					VirtualMachine virtualMachine = AbiquoUtils.getVMDetails(vdc, va, vm);
-							//context.getCloudService().getVirtualDatacenter(vdc).getVirtualAppliance(va).getVirtualMachine(vm);
-					Integer cpu = virtualMachine.getCpu();
-					Integer ram = virtualMachine.getRam();
-					long hd = virtualMachine.getHdInBytes();
-					List<HardDisk> harddisk =virtualMachine.listAttachedHardDisks();
-					
-					VirtualMachineTemplate template = virtualMachine.getTemplate();
-					//String template_path = template.getIconUrl();
-					String template_name = template.getName();
-					String template_path = template.getPath();
-					render(vdc,va,vm, cpu,ram,hd,harddisk, template_name,template_path,user);
-					Logger.info(" -----EXITING PRODUCER VMDETAILS()------");
-					
-		} 
-		catch(Exception e)
+		if ( user != null)
 		{
-			flash.error("Unable to create contaxt");
-			render();
-			e.printStackTrace();
-			
+				AbiquoContext context = Context.getContext(user,password);
+				
+				try {
+							VirtualMachine virtualMachine = AbiquoUtils.getVMDetails(vdc, va, vm);
+									//context.getCloudService().getVirtualDatacenter(vdc).getVirtualAppliance(va).getVirtualMachine(vm);
+							Integer cpu = virtualMachine.getCpu();
+							Integer ram = virtualMachine.getRam();
+							long hd = virtualMachine.getHdInBytes();
+							List<HardDisk> harddisk =virtualMachine.listAttachedHardDisks();
+							
+							VirtualMachineTemplate template = virtualMachine.getTemplate();
+							//String template_path = template.getIconUrl();
+							String template_name = template.getName();
+							String template_path = template.getPath();
+							render(vdc,va,vm, cpu,ram,hd,harddisk, template_name,template_path,user);
+							Logger.info(" -----EXITING PRODUCER VMDETAILS()------");
+							
+				} 
+				catch(Exception e)
+				{
+					flash.error("Unable to create contaxt");
+					render();
+				}
+				finally{
+					if (context!= null)
+					context.close();
+				}
+				
 		}
-		finally{
-			if (context!= null)
-			context.close();
+		else 
+		{
 			
-			
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
 		}
 	}
 	
-	static String setDate(DateParts date)
+	/*static String setDate(DateParts date)
 	{
 		String year = date.getYear();
 		String month = date.getMonth();
 		String day = date.getDay();
 		String gendate = year+"-"+month+"-"+day;
-		System.out.println(gendate);
+		Logger.info(gendate);
 		return gendate;
 	}
+	*/
 	
 	/**
 	 * Create service catalog entry ( saving to portal database)
@@ -197,7 +209,7 @@ public class ProducerRemote extends Controller {
 	
 	if ( validation.hasErrors() )
 	{
-	        flash.error("Icon is required to enable an Offer ");
+			flash.error("Icon is required to enable an Offer ");
 	        configure(sc_offers.getIdVirtualDataCenter_ref(),sc_offers.getSc_offer_id());
 			
 	 }
@@ -206,29 +218,29 @@ public class ProducerRemote extends Controller {
 		Logger.info(" -----INSIDE PRODUCER ADDTOSERVICECATALOG()------");
 		String user =session.get("username");
 		String password =session.get("password");
-		
+		if ( user != null){
 		Logger.info("Session user in addToServiceCatalog(): "+ user);
-		System.out.println(" and sc_offers vdc " + sc_offers.getIdVirtualDataCenter_ref() + " va_id : " + sc_offers.getSc_offer_id());
-		System.out.println(" start date" + offerSubscription.getStart_date());
-		System.out.println(" expiry date" + offerSubscription.getExpiration_date());
-		System.out.println(" lease period " + offerSubscription.getLease_period());
-		System.out.println(" Year : " + date.getYear());
-		System.out.println(" Year : " + date.getMonth());
-		System.out.println(" Year : " + date.getDay());
+		Logger.info(" and  vdc " + sc_offers.getIdVirtualDataCenter_ref() + "  & va_id : " + sc_offers.getSc_offer_id());
+		Logger.info(" lease period " + offerSubscription.getLease_period());
+		/*Logger.info(" start date" + offerSubscription.getStart_date());
+		Logger.info(" expiry date" + offerSubscription.getExpiration_date());
+		
+		Logger.info(" Year : " + date.getYear());
+		Logger.info(" Year : " + date.getMonth());
+		Logger.info(" Year : " + date.getDay());
 		
 		String start_date = setDate(date);
 		DateFormat formatter ; 
-		Date datee ; 
+		Date datee ; */
 		Integer vdc_id_param = sc_offers.getIdVirtualDataCenter_ref();
 		Integer id_va_param = sc_offers.getSc_offer_id();
 		String lease_period = offerSubscription.getLease_period();
 		
 		AbiquoContext context = Context.getContext(user,password);
 		 try{
-			 		formatter = new SimpleDateFormat("yyyy-M-d");
+			 		/*formatter = new SimpleDateFormat("yyyy-M-d");
 			 		datee = (Date)formatter.parse(start_date);
-					System.out.println("hjhjh" +  datee);
-					
+					*/
 					AbiquoUtils.setAbiquoUtilsContext(context);
 					VirtualDatacenter virtualDC = AbiquoUtils.getVDCDetails(vdc_id_param);
 			 		VirtualAppliance va = AbiquoUtils.getVADetails(vdc_id_param, id_va_param);
@@ -312,7 +324,7 @@ public class ProducerRemote extends Controller {
 						 scOffer.setNodes(node_set);
 						 sc_offers_subscriptions offerSub = new sc_offers_subscriptions();
 						 offerSub.setSc_offer(scOffer);
-						 offerSub.setStart_date(datee);
+						 //offerSub.setStart_date(datee);
 						 offerSub.setService_level(virtualDC.getName());
 						 offerSub.setLease_period(lease_period);
 						 offerSub.save();
@@ -322,8 +334,8 @@ public class ProducerRemote extends Controller {
 		 }
 	catch (Exception e) 
 	{
-			 	//e.printStackTrace();
-			 	Logger.warn(e, "EXCEPTION OCCURED", vdc_id_param );
+			 	
+			 	Logger.warn(e, "EXCEPTION OCCURED IN addToServiceCAtalog()", vdc_id_param );
 			 	flash.error("Entry already exists");
 			 	render();
 	}
@@ -332,6 +344,13 @@ public class ProducerRemote extends Controller {
 	   			if (context!= null)
 					context.close();
 	}
+		}
+		else 
+		{
+			
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
 		 
   }
 }
@@ -342,7 +361,8 @@ public class ProducerRemote extends Controller {
 		
 		String user =session.get("username");
 		String password =session.get("password");
-		
+		if (user != null )
+		{
 		VirtualDatacenter virtualDC = null;
 		VirtualAppliance va = null ;
 		List<VirtualMachine> vmList = null ;
@@ -355,11 +375,11 @@ public class ProducerRemote extends Controller {
 		 		
 		 		if ( virtualDC != null )
 		 		{
-				 			System.out.println(" virtualDC  : " + virtualDC.getName() );
+				 			Logger.info(" virtualDC  : " + virtualDC.getName() );
 				 			va = AbiquoUtils.getVADetails(vdc_id_param, id_va_param);
 				 			if ( va != null )
 				 			{
-				 					System.out.println(" va  : " + virtualDC.getName() );
+				 					Logger.info(" va  : " + virtualDC.getName() );
 				 					vmList = va.listVirtualMachines();
 				 			}
 				 			Logger.info(" -----EXITING PRODUCER CONFIGURE()------");
@@ -376,7 +396,6 @@ public class ProducerRemote extends Controller {
 		{
 			flash.error("Oops !!!.........Unable to retrieve virtual datacenter");
 			Producer.poe();
-			e.printStackTrace();
 			
 		}
 		finally{
@@ -385,12 +404,13 @@ public class ProducerRemote extends Controller {
 				context.close();
 		}
 	}
-	
+	else 
+	{
+		
+		flash.error("You are not connected.Please Login");
+		Login.login_page();
+	}
+	}
 	
 
-
-
-	
-	
-	
 }

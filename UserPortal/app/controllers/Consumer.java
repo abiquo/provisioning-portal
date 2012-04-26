@@ -47,6 +47,7 @@ import play.cache.Cache;
 import play.db.jpa.GenericModel.JPAQuery;
 import play.db.jpa.JPA;
 import play.mvc.Controller;
+import play.mvc.Finally;
 import portal.util.AbiquoUtils;
 import portal.util.Context;
 
@@ -57,8 +58,8 @@ import portal.util.Context;
  * He can browse through various service catalog offers and can buy them . 
  * If user selects to buy the offer, the selected offer gets deployed and an email is sent specifiying ip, port to access the deployed virtualmachine.
  */
-public class Consumer extends Controller{
-
+public class Consumer extends Controller
+{
 	/** 
 	 * Displays service level ( i.e VDC) for current user's enterprise.
 	 * @param enterpriseID
@@ -66,14 +67,23 @@ public class Consumer extends Controller{
 	public static void ServiceCatalog( Integer enterpriseID )
 	{
 		
-		Logger.info("---------INSIDE CONSUMER SERVICECATALOG()------------");
-		System.out.println("Enterprie ID for current User " +  enterpriseID);
-		String user = session.get("username");
-		
-		List<sc_offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
-		Logger.info("------------EXITING CONSUMER SERVICECATALOG()--------------");
-		
-		render( result1 , user , enterpriseID);
+				Logger.info("---------INSIDE CONSUMER SERVICECATALOG()------------");
+				Logger.info("Enterprie ID for current User " +  enterpriseID);
+				String user = session.get("username");
+			if ( user !=null)
+			{
+				List<sc_offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
+				Logger.info("------------EXITING CONSUMER SERVICECATALOG()--------------");
+				
+				render( result1 , user , enterpriseID);
+				
+			}
+			else 
+			{
+				
+				flash.error("You are not connected.Please Login");
+				Login.login_page();
+			}
 	}
 	
 	/**
@@ -87,13 +97,21 @@ public class Consumer extends Controller{
 		Logger.info("---------INSIDE CONSUMER AVAILABLEOFFERS()---------------");
 		Logger.info("Enterprie ID for current User " +  enterpriseID);
 	    String user = session.get("username");
-		
-		Logger.info("CURRENT USER EMAIL ID: "+ user);
-		List<sc_offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);   
-	 	List<sc_offer> result2= ProducerDAO.getVappListForVDC_EnterpriseView(enterpriseID, vdc_name_param);
-		
-		Logger.info("------------EXITING CONSUMER AVAILABLEOFFERS()--------------");
-		render("/Consumer/ServiceCatalog.html", result2,result1,user, enterpriseID ); 
+	    if ( user !=null)
+		{
+			Logger.info("CURRENT USER EMAIL ID: "+ user);
+			List<sc_offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);   
+		 	List<sc_offer> result2= ProducerDAO.getVappListForVDC_EnterpriseView(enterpriseID, vdc_name_param);
+			
+			Logger.info("------------EXITING CONSUMER AVAILABLEOFFERS()--------------");
+			render("/Consumer/ServiceCatalog.html", result2,result1,user, enterpriseID );
+		}
+		else 
+		{
+			
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
 
 		
 	}
@@ -107,29 +125,37 @@ public class Consumer extends Controller{
 		Logger.info("---------INSIDE CONSUMER PURCHASECONFIMATION()---------------");
 		String user = session.get("username");
 		Logger.info("CURRENT USER EMAIL ID: "+ user);
-		
-		sc_offer offers = null;
-		Set<Nodes> nodes_list = null;
-		Set<Nodes_Resources> nodes_resources = null;
-		List<sc_offers_subscriptions> sc_offers_subscriptions = null;
-		
-		Query query2 = JPA.em().createNativeQuery("select * from sc_offers_subscriptions where sc_offer_sc_offer_id = ?1", sc_offers_subscriptions.class);
-		query2.setParameter(1, offer_id);
-		sc_offers_subscriptions = query2.getResultList();
-		
-	    for ( sc_offers_subscriptions sc_offers_subscription :sc_offers_subscriptions)
-	    {
-	    	offers = sc_offers_subscription.getSc_offer();
-	    	nodes_list = offers.getNodes();
-	    	for( Nodes node : nodes_list ) 
-	    	{  
-				nodes_resources = node.getResources();
+		if ( user !=null)
+		{
+				sc_offer offers = null;
+				Set<Nodes> nodes_list = null;
+				Set<Nodes_Resources> nodes_resources = null;
+				List<sc_offers_subscriptions> sc_offers_subscriptions = null;
 				
-			}
-	    }
-	    
-	    Logger.info("------------EXITING CONSUMER PURCHASECONFIRMATION()--------------");
-		render( offers, nodes_list , nodes_resources,user , sc_offers_subscriptions);
+				Query query2 = JPA.em().createNativeQuery("select * from sc_offers_subscriptions where sc_offer_sc_offer_id = ?1", sc_offers_subscriptions.class);
+				query2.setParameter(1, offer_id);
+				sc_offers_subscriptions = query2.getResultList();
+				
+			    for ( sc_offers_subscriptions sc_offers_subscription :sc_offers_subscriptions)
+			    {
+			    	offers = sc_offers_subscription.getSc_offer();
+			    	nodes_list = offers.getNodes();
+			    	for( Nodes node : nodes_list ) 
+			    	{  
+						nodes_resources = node.getResources();
+						
+					}
+			    }
+			    
+			    Logger.info("------------EXITING CONSUMER PURCHASECONFIRMATION()--------------");
+				render( offers, nodes_list , nodes_resources,user , sc_offers_subscriptions);
+	}
+	else 
+	{
+		
+		flash.error("You are not connected.Please Login");
+		Login.login_page();
+	}
 	}
 	
 	/**1. Customer buy offer as a User. Deployment needs CLOUD_ADMIN privilege. Hence,require deploy user setup for the enterprise that consumer belongs to.2 users - session user and deploy user .
@@ -156,229 +182,238 @@ public class Consumer extends Controller{
 		String password =session.get("password");
 		
 		AbiquoContext contextt = Context.getContext(user,password);
-		AbiquoUtils.setAbiquoUtilsContext(contextt);
-		
-		/* ---------------------------- */
-		/* Retrieve the deploy username and password for current user's Enterprise. */
-		Enterprise current_enterprise = AbiquoUtils.getCurrentUserEnterprise();
-		Integer enterprise_id = current_enterprise.getId();
-		List<MKT_Configuration> mkt_conf = MarketDAO.getMKTConfiguration(enterprise_id);
-		
-		for ( MKT_Configuration mkt : mkt_conf )
+		if (contextt != null )
 		{
-			deploy_username= mkt.getMkt_deploy_user();
-			deploy_password = mkt.getMkt_deploy_pw();
-			deploy_enterprise_id = mkt.getDeploy_enterprise_id();
-		}
-		Logger.info(" DEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :" + deploy_enterprise_id +"  " + deploy_username +"  " + deploy_password );
-		/* ---------------------------- */
-		
-		/* Create context with deploy username and password for deployments */
-		AbiquoContext context = Context.getContext(deploy_username,deploy_password);
-		
-		VirtualDatacenter vdc_toDeploy = null;
-		VirtualAppliance virtualapp_todeploy= null;
-		VirtualMachine vm_todeploy=null;
-		 
-		
-		 try{
-				    AbiquoUtils.setAbiquoUtilsContext(context);
-			 		Enterprise enterprise = AbiquoUtils.getEnterprise(deploy_enterprise_id);
-			 		String useremail = session.get("email");
-			 		String vdc_user = session.get("username");
-					String vdcname = Helper.vdcNameGen(vdc_user);
-					Logger.info("CURRENT USER EMAIL ID: "+ useremail);
-					Logger.info(" vdcname : " + vdcname);	
-					
-			 		VirtualDatacenter virtualDC = AbiquoUtils.getVDCDetails(vdc_id_param);
-			 		Logger.info(" VDC to deploy: " , virtualDC);
-			 		
-			 		HypervisorType hypervisor = virtualDC.getHypervisorType();
-			 		Logger.info(" Hypervisor to deploy: " , hypervisor);
-			 		
-			 		Datacenter datacenter = virtualDC.getDatacenter();
-			 		Logger.info(" Datacenter to deploy: " , datacenter);
-			 		
-			 		PrivateNetwork network =  PrivateNetwork.builder(context)
-			 				 					.name("10.80.0.0") 
-			 				 					.gateway("10.80.0.1") 
-			 				 					.address("10.80.0.0") 
-			 				 					.mask(22)               
-			 				 					.build();	
-			 		Logger.info(" Network Built");
-					
-			 		vdc_toDeploy = VirtualDatacenter.builder(context, datacenter, enterprise)
-								.name(vdcname)
-								.cpuCountLimits(0,0)               
-						        .hdLimitsInMb(0,0)  
-						        .publicIpsLimits(0,0)               
-						        .ramLimits(0,0)                
-						        .storageLimits(0,0)  
-						        .vlansLimits(0,0)                   
-						        .hypervisorType(hypervisor)         
-						        .network(network)                    
-						        .build();
-					
-					Logger.info("VDC built  " );
-					vdc_toDeploy.save();
-					Logger.info(" 1. VDC CREATED ");
-					 virtualapp_todeploy = VirtualAppliance.builder(context,vdc_toDeploy)
-							 											.name(va_param)
-							 									     	.build();
-					 virtualapp_todeploy.save();
-								
-					 Logger.info(" 2. VAPP CREATED ");
-					
-					 /* Save the deploy info to the portal database : user, vdc etc */
-					 User_Consumption user_consumption = new User_Consumption();
-								user_consumption.setUserid(useremail);
-									Date current = new Date();
-									Calendar cal = Calendar.getInstance();
-									if (lease_period.contentEquals("30 days"))
-									{
-										Logger.info("case1 : 30 days lease ");
-										cal.add(Calendar.DATE, 30);
-									}
-									else if (lease_period.contentEquals("60 days"))
-									{
-										Logger.info("case2 : 60 days lease");
-										cal.add(Calendar.DATE, 60);
-									}
-									else if (lease_period.contentEquals("90 days"))
-									{
-										Logger.info("case3 : 90 days lease ");
-										cal.add(Calendar.DATE, 90);
-									
-									}
-									System.out.println("--------------------");
-								user_consumption.setPurchase_date(current);
-								user_consumption.setExpiration_date(cal.getTime());
-								//user_consumption.setVdc_name(vdc_toDeploy.getName());
-								user_consumption.setDestroy_date(null);
-								user_consumption.setSc_offer_id_ref(sc_offer_id);
-								user_consumption.setVdc_id(vdc_toDeploy.getId());
-							
-							Set<Deploy_Bundle> deploy_bundle_set = new HashSet<Deploy_Bundle>();		
-							Deploy_Bundle deploy_Bundle = new Deploy_Bundle();
-									deploy_Bundle.setDeploy_datacenter(datacenter.getId());
-									deploy_Bundle.setDeploy_hypervisorType(hypervisor.toString());
-									deploy_Bundle.setDeploy_network("");
-									deploy_Bundle.setVapp_name(virtualapp_todeploy.getName());
-									deploy_Bundle.setVdc_name(vdc_toDeploy.getId());
-									deploy_Bundle.setUserConsumption(user_consumption);
-									deploy_Bundle.setVapp_id(virtualapp_todeploy.getId());
-									deploy_bundle_set.add(deploy_Bundle);
-				/*	
-					String query = "select p from sc_offer as p where p.sc_offer_id = ?1";
-					JPAQuery result = sc_offer.find(query, sc_offer_id);
-				*/	List<sc_offer> nodes  = ProducerDAO.getOfferDetails(sc_offer_id);
-					for ( sc_offer node : nodes)
-					{
-						Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = new HashSet<Deploy_Bundle_Nodes>();
-						Set<Nodes> vmlist_todeploy = node.getNodes();
-						for ( Nodes aVM : vmlist_todeploy) 
-						{
-							 String vmName = aVM.getNode_name();
-							 VirtualMachineTemplate vm_template_todeploy = virtualDC.getAvailableTemplate(aVM.getIdImage());
-							 int cpu = aVM.getCpu();
-							 int ram = aVM.getRam();
-							 //String description =   aVM.getDescription();
-							 
-							  vm_todeploy = VirtualMachine.builder(context, virtualapp_todeploy, vm_template_todeploy)
-								        .name(vmName) 
-								        .cpu(cpu)                 
-								        .ram(ram)
-								        .password("vmpassword")
-								        .build();
-							 vm_todeploy.save();
-							 Logger.info(" 3. VM CREATED");
-							 			Deploy_Bundle_Nodes deploy_Bundle_Nodes = new Deploy_Bundle_Nodes();
-							 			deploy_Bundle_Nodes.setCpu(cpu);
-							 			deploy_Bundle_Nodes.setNode_name(vmName);
-							 			deploy_Bundle_Nodes.setNode_name(vm_todeploy.getName());
-							 			deploy_Bundle_Nodes.setNode_id(vm_todeploy.getId());
-							 			deploy_Bundle_Nodes.setRam(ram);
-							 			deploy_Bundle_Nodes.setVdrp_password("");
-							 			deploy_Bundle_Nodes.setVdrpIP("");
-							 			deploy_Bundle_Nodes.setVdrpPort(0);
-							 			deploy_Bundle_Nodes_list.add(deploy_Bundle_Nodes);
-							 			//deploy_Bundle_Nodes.setResources(resources);
-							
-							List<HardDisk> hardDisk_toattach = new ArrayList<HardDisk>();
-							Set<Deploy_Nodes_Resources> deploy_Nodes_Resources_list = new HashSet<Deploy_Nodes_Resources>();
-							Set<Nodes_Resources> resources =  aVM.getResources();
-							for ( Nodes_Resources resource : resources)
-							{
-								Long size = resource.getValue();
-								HardDisk disk = HardDisk.builder(context, vdc_toDeploy).sizeInMb(size).build();
-								disk.save();
-								hardDisk_toattach.add(disk);
-										Deploy_Nodes_Resources deploy_Nodes_Resources = new Deploy_Nodes_Resources();
-										deploy_Nodes_Resources.setResourceType(resource.getResourceType());
-										deploy_Nodes_Resources.setResourceType(resource.getSequence());
-										deploy_Nodes_Resources.setValue(resource.getValue());
-										deploy_Nodes_Resources_list.add(deploy_Nodes_Resources);
-							}
-										deploy_Bundle_Nodes.setResources(deploy_Nodes_Resources_list);
-							HardDisk[] disks = new HardDisk[hardDisk_toattach.size()];
-							for (int i = 0; i<hardDisk_toattach.size() ; i++)
-							{
-								disks[i] = hardDisk_toattach.get(i);
-							}
-								vm_todeploy.attachHardDisks(disks);
-								Logger.info(" 4. HARDDISKS ATTACHED ");
-								VmEventHandler handler = new VmEventHandler(context, vm_todeploy);	
-								Logger.info(" Handler created :");
-								VirtualMachineMonitor monitor =  context.getMonitoringService().getVirtualMachineMonitor();
-								monitor.register(handler);
-								vm_todeploy.deploy();
-								Logger.info("STARTING MONITORING ......");
-								monitor.monitorDeploy(vm_todeploy);
-								
-								
-						
-						 }
-						Logger.info("SAVING DEPLOY INFORMATION ......"); 
-					deploy_Bundle.setNodes(deploy_Bundle_Nodes_list);
-					
-					user_consumption.setNodes(deploy_bundle_set);
-					user_consumption.save();
-					Logger.info("DEPLOY INFO SAVED ......");
-					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
-					render();
-			}
-						
-			 			
-					
-		 }
-		 catch ( AuthorizationException ae)
-		 {
-			 
-			 Logger.warn(ae, "EXCEPTION OCCURED" );
-			 String message = "Oops .... Deployment cant proceed further. Please Check deploy user and password for your enterprise .";
-			 render("/errors/error.html",message);
-		 }
-		 catch (Exception ae) 
-			{
-			
-			 Logger.warn(ae, "EXCEPTION OCCURED" );
-			
-			 if (context!=null)
-			 {
-				 context.close();
-			 }
+				AbiquoUtils.setAbiquoUtilsContext(contextt);
+				
+				/* ---------------------------- */
+				/* Retrieve the deploy username and password for current user's Enterprise. */
+				Enterprise current_enterprise = AbiquoUtils.getCurrentUserEnterprise();
+				Integer enterprise_id = current_enterprise.getId();
+				List<MKT_Configuration> mkt_conf = MarketDAO.getMKTConfiguration(enterprise_id);
+				
+				for ( MKT_Configuration mkt : mkt_conf )
+				{
+					deploy_username= mkt.getMkt_deploy_user();
+					deploy_password = mkt.getMkt_deploy_pw();
+					deploy_enterprise_id = mkt.getDeploy_enterprise_id();
+				}
+				Logger.info(" DEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :" + deploy_enterprise_id +"  " + deploy_username +"  " + deploy_password );
+				/* ---------------------------- */
+				
+				/* Create context with deploy username and password for deployments */
+				AbiquoContext context = Context.getContext(deploy_username,deploy_password);
+				
+				VirtualDatacenter vdc_toDeploy = null;
+				VirtualAppliance virtualapp_todeploy= null;
+				VirtualMachine vm_todeploy=null;
 				 
-			 }
+				
+				 try{
+						    AbiquoUtils.setAbiquoUtilsContext(context);
+					 		Enterprise enterprise = AbiquoUtils.getEnterprise(deploy_enterprise_id);
+					 		String useremail = session.get("email");
+					 		String vdc_user = session.get("username");
+							String vdcname = Helper.vdcNameGen(vdc_user);
+							Logger.info("CURRENT USER EMAIL ID: "+ useremail);
+							Logger.info(" vdcname : " + vdcname);	
+							
+					 		VirtualDatacenter virtualDC = AbiquoUtils.getVDCDetails(vdc_id_param);
+					 		Logger.info(" VDC to deploy: " , virtualDC);
+					 		
+					 		HypervisorType hypervisor = virtualDC.getHypervisorType();
+					 		Logger.info(" Hypervisor to deploy: " , hypervisor);
+					 		
+					 		Datacenter datacenter = virtualDC.getDatacenter();
+					 		Logger.info(" Datacenter to deploy: " , datacenter);
+					 		
+					 		PrivateNetwork network =  PrivateNetwork.builder(context)
+					 				 					.name("10.80.0.0") 
+					 				 					.gateway("10.80.0.1") 
+					 				 					.address("10.80.0.0") 
+					 				 					.mask(22)               
+					 				 					.build();	
+					 		Logger.info(" Network Built");
+							
+					 		vdc_toDeploy = VirtualDatacenter.builder(context, datacenter, enterprise)
+										.name(vdcname)
+										.cpuCountLimits(0,0)               
+								        .hdLimitsInMb(0,0)  
+								        .publicIpsLimits(0,0)               
+								        .ramLimits(0,0)                
+								        .storageLimits(0,0)  
+								        .vlansLimits(0,0)                   
+								        .hypervisorType(hypervisor)         
+								        .network(network)                    
+								        .build();
+							
+							Logger.info("VDC built  " );
+							vdc_toDeploy.save();
+							Logger.info(" 1. VDC CREATED ");
+							 virtualapp_todeploy = VirtualAppliance.builder(context,vdc_toDeploy)
+									 											.name(va_param)
+									 									     	.build();
+							 virtualapp_todeploy.save();
+										
+							 Logger.info(" 2. VAPP CREATED ");
+							
+							 /* Save the deploy info to the portal database : user, vdc etc */
+							 User_Consumption user_consumption = new User_Consumption();
+										user_consumption.setUserid(useremail);
+											Date current = new Date();
+											Calendar cal = Calendar.getInstance();
+											if (lease_period.contentEquals("30 days"))
+											{
+												Logger.info("case1 : 30 days lease ");
+												cal.add(Calendar.DATE, 30);
+											}
+											else if (lease_period.contentEquals("60 days"))
+											{
+												Logger.info("case2 : 60 days lease");
+												cal.add(Calendar.DATE, 60);
+											}
+											else if (lease_period.contentEquals("90 days"))
+											{
+												Logger.info("case3 : 90 days lease ");
+												cal.add(Calendar.DATE, 90);
+											
+											}
+											Logger.info("--------------------");
+										user_consumption.setPurchase_date(current);
+										user_consumption.setExpiration_date(cal.getTime());
+										//user_consumption.setVdc_name(vdc_toDeploy.getName());
+										user_consumption.setDestroy_date(null);
+										user_consumption.setSc_offer_id_ref(sc_offer_id);
+										user_consumption.setVdc_id(vdc_toDeploy.getId());
+									
+									Set<Deploy_Bundle> deploy_bundle_set = new HashSet<Deploy_Bundle>();		
+									Deploy_Bundle deploy_Bundle = new Deploy_Bundle();
+											deploy_Bundle.setDeploy_datacenter(datacenter.getId());
+											deploy_Bundle.setDeploy_hypervisorType(hypervisor.toString());
+											deploy_Bundle.setDeploy_network("");
+											deploy_Bundle.setVapp_name(virtualapp_todeploy.getName());
+											deploy_Bundle.setVdc_name(vdc_toDeploy.getId());
+											deploy_Bundle.setUserConsumption(user_consumption);
+											deploy_Bundle.setVapp_id(virtualapp_todeploy.getId());
+											deploy_bundle_set.add(deploy_Bundle);
+						/*	
+							String query = "select p from sc_offer as p where p.sc_offer_id = ?1";
+							JPAQuery result = sc_offer.find(query, sc_offer_id);
+						*/	List<sc_offer> nodes  = ProducerDAO.getOfferDetails(sc_offer_id);
+							for ( sc_offer node : nodes)
+							{
+								Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = new HashSet<Deploy_Bundle_Nodes>();
+								Set<Nodes> vmlist_todeploy = node.getNodes();
+								for ( Nodes aVM : vmlist_todeploy) 
+								{
+									 String vmName = aVM.getNode_name();
+									 VirtualMachineTemplate vm_template_todeploy = virtualDC.getAvailableTemplate(aVM.getIdImage());
+									 int cpu = aVM.getCpu();
+									 int ram = aVM.getRam();
+									 //String description =   aVM.getDescription();
+									 
+									  vm_todeploy = VirtualMachine.builder(context, virtualapp_todeploy, vm_template_todeploy)
+										        .name(vmName) 
+										        .cpu(cpu)                 
+										        .ram(ram)
+										        .password("vmpassword")
+										        .build();
+									 vm_todeploy.save();
+									 Logger.info(" 3. VM CREATED");
+									 			Deploy_Bundle_Nodes deploy_Bundle_Nodes = new Deploy_Bundle_Nodes();
+									 			deploy_Bundle_Nodes.setCpu(cpu);
+									 			deploy_Bundle_Nodes.setNode_name(vmName);
+									 			deploy_Bundle_Nodes.setNode_name(vm_todeploy.getName());
+									 			deploy_Bundle_Nodes.setNode_id(vm_todeploy.getId());
+									 			deploy_Bundle_Nodes.setRam(ram);
+									 			deploy_Bundle_Nodes.setVdrp_password("");
+									 			deploy_Bundle_Nodes.setVdrpIP("");
+									 			deploy_Bundle_Nodes.setVdrpPort(0);
+									 			deploy_Bundle_Nodes_list.add(deploy_Bundle_Nodes);
+									 			//deploy_Bundle_Nodes.setResources(resources);
+									
+									List<HardDisk> hardDisk_toattach = new ArrayList<HardDisk>();
+									Set<Deploy_Nodes_Resources> deploy_Nodes_Resources_list = new HashSet<Deploy_Nodes_Resources>();
+									Set<Nodes_Resources> resources =  aVM.getResources();
+									for ( Nodes_Resources resource : resources)
+									{
+										Long size = resource.getValue();
+										HardDisk disk = HardDisk.builder(context, vdc_toDeploy).sizeInMb(size).build();
+										disk.save();
+										hardDisk_toattach.add(disk);
+												Deploy_Nodes_Resources deploy_Nodes_Resources = new Deploy_Nodes_Resources();
+												deploy_Nodes_Resources.setResourceType(resource.getResourceType());
+												deploy_Nodes_Resources.setResourceType(resource.getSequence());
+												deploy_Nodes_Resources.setValue(resource.getValue());
+												deploy_Nodes_Resources_list.add(deploy_Nodes_Resources);
+									}
+												deploy_Bundle_Nodes.setResources(deploy_Nodes_Resources_list);
+									HardDisk[] disks = new HardDisk[hardDisk_toattach.size()];
+									for (int i = 0; i<hardDisk_toattach.size() ; i++)
+									{
+										disks[i] = hardDisk_toattach.get(i);
+									}
+										vm_todeploy.attachHardDisks(disks);
+										Logger.info(" 4. HARDDISKS ATTACHED ");
+										VmEventHandler handler = new VmEventHandler(context, vm_todeploy);	
+										Logger.info(" Handler created :");
+										VirtualMachineMonitor monitor =  context.getMonitoringService().getVirtualMachineMonitor();
+										monitor.register(handler);
+										//vm_todeploy.deploy();
+										Logger.info("STARTING MONITORING ......");
+										monitor.monitorDeploy(vm_todeploy);
+										
+										
+								
+								 }
+								Logger.info("SAVING DEPLOY INFORMATION ......"); 
+							deploy_Bundle.setNodes(deploy_Bundle_Nodes_list);
+							
+							user_consumption.setNodes(deploy_bundle_set);
+							user_consumption.save();
+							Logger.info("DEPLOY INFO SAVED ......");
+							Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
+							render(enterprise_id);
+					}
+								
+					 			
+							
+				 }
+				 catch ( AuthorizationException ae)
+				 {
+					 
+					 Logger.warn(ae, "EXCEPTION OCCURED IN deploy()" );
+					 String message = "Oops .... Deployment cant proceed further. Please Check deploy user and password for your enterprise .";
+					 render("/errors/error.html",message);
+				 }
+				 catch (Exception ae) 
+					{
+					
+					 Logger.warn(ae, "EXCEPTION OCCURED  IN deploy()" );
+					
+					 if (context!=null)
+					 {
+						 context.close();
+					 }
+						 
+					 }
 		
-		  
+		}
+		else {
+			
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
 	}
 	
-	/*
+	
+	
 	public static void offerDetails(Integer offer_id)
 	{
 		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
 		
 		String user = session.get("username");
+		if  ( user != null ){
 		Set<Nodes> nodes_list = null;
 		Set<Nodes_Resources> nodes_resources = null;
 		String query = "select p from sc_offer as p where p.sc_offer_id = ?1";
@@ -395,8 +430,15 @@ public class Consumer extends Controller{
 		}
 		Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
 		render( offers, nodes_list , nodes_resources,user);
+
 	}
-*/
+	else {
+		
+		flash.error("You are not connected.Please Login");
+		Login.login_page();
+	}
+	}
+
 	
 	
 	

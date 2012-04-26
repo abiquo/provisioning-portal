@@ -24,7 +24,7 @@ import models.sc_offer;
 import models.sc_offers_subscriptions;
 
 import org.apache.commons.mail.EmailAttachment;
-import org.jclouds.abiquo.AbiquoContext;
+//import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
 import org.jclouds.abiquo.domain.cloud.VirtualMachine;
 import org.jclouds.abiquo.domain.enterprise.Enterprise;
@@ -47,11 +47,11 @@ public class Mails extends Mailer {
   public static void sendEmail(Integer vncPort ,String vncAddress ,String password, String name , String offerName, String useremail, Date exp_date)
   {
 	  
-	  	System.out.println("INSIDE MAILS SENDEMAIL()....");
+	  	Logger.info("INSIDE MAILS SENDEMAIL()....");
 	  	setSubject("Abiquo Confirmation");
 	    addRecipient(useremail);
 	    setFrom("Admin <provisioning-portal@abiquo.com>");
-		System.out.println("SENDING EMAIL TO  ...." + useremail);
+		Logger.info("SENDING EMAIL TO  ...." + useremail);
 		send(offerName, name, vncPort , vncAddress , useremail, password, exp_date);
 		
 
@@ -66,11 +66,11 @@ public class Mails extends Mailer {
   public static void sendFailureEmail(String offerName, String name , String useremail)
   {
 	  
-		System.out.println("INSIDE Mails.sendFailureEmail()....");
+		Logger.info("INSIDE Mails.sendFailureEmail()....");
 		setSubject("Abiquo Confirmation");
 		addRecipient(useremail);
 		setFrom("Admin <provisioning-portal@abiquo.com>");
-	 	System.out.println("SENDING EMAIL TO  ...." + useremail);
+	 	Logger.info("SENDING EMAIL TO  ...." + useremail);
 		send(name, offerName , useremail );
  }	
   
@@ -84,8 +84,8 @@ public class Mails extends Mailer {
  */
   public static void updateUserConsumption_onSuccess(Integer vdc_id ,VirtualAppliance vapp,  Integer vm_id, VirtualMachine vmName) 
   {
-		System.out.println(" Inside Consumer.updateDeployBundleNode() ......");
-		System.out.println(" CREATED VM : " + vmName );
+		Logger.info(" Inside Consumer.updateDeployBundleNode() ......");
+		Logger.info(" CREATED VM : " + vmName );
 		try
 		{ 
 					/*After deployment , JPA em() and session variables are lost */
@@ -98,7 +98,7 @@ public class Mails extends Mailer {
 				    String offerName  = vapp.getName();
 				    Integer vapp_id = vapp.getId();
 				    Enterprise enterprise = vapp.getEnterprise();
-				    System.out.println(" vapp enterprise :" +  enterprise );
+				    Logger.info(" vapp enterprise :" +  enterprise );
 				    VirtualMachine vm = Helper.getVMDetails(vdc_id, vapp_id, vm_id, enterprise);
 					
 				    /* get virtual machine detials : password, port, address */
@@ -106,7 +106,7 @@ public class Mails extends Mailer {
 					int port =  vm.getVncPort();
 					String ip = vm.getVncAddress();
 					String name = vm.getName();
-					System.out.println(" PASSWORD : " + vmpassword + "  IP :" + ip + "  PORT :" + port);
+					Logger.info(" PASSWORD : " + vmpassword + "  IP :" + ip + "  PORT :" + port);
 				
 					/* update portal database */
 					EntityManager em  = JPA.em();
@@ -119,14 +119,14 @@ public class Mails extends Mailer {
 						 	id = node.getIdbundle_nodes();
 						 	
 					 }
-					 System.out.println("id :" + id );
+					 Logger.info("id :" + id );
 					 
 					 Deploy_Bundle_Nodes nodes=  Deploy_Bundle_Nodes.findById(id);
-					 System.out.println("nodes ::; "+ nodes  );
+					 Logger.info("nodes ::; "+ nodes  );
 					 em.getTransaction().begin();
-					 System.out.println(vmpassword);
+					 Logger.info(vmpassword);
 					 nodes.setVdrp_password(vmpassword);
-					 System.out.println(ip);
+					 Logger.info(ip);
 					 nodes.setVdrpPort(port);  
 					 nodes.setVdrpIP(ip);
 					 nodes.save();
@@ -143,7 +143,7 @@ public class Mails extends Mailer {
 						 exp_date = userCon.getExpiration_date();
 						 
 					 }
-					 System.out.println(" preparaing to send mail.....");
+					 Logger.info(" preparaing to send mail.....");
 					 Mails.sendEmail( port , ip , vmpassword , name, offerName , emailID ,exp_date);
 			}
 			finally 
@@ -163,15 +163,14 @@ public class Mails extends Mailer {
    */
   public static void updateUserConsumption_onFailure(Integer vdc_id , VirtualAppliance vapp , VirtualMachine vm) 
   {
-		System.out.println(" Inside Consumer.updateDeployBundleNode() ......");
-		System.out.println(" CREATED VM : " + vm );
+		Logger.info(" Inside Consumer.updateDeployBundleNode() ......");
+		Logger.info(" CREATED VM : " + vm );
 		try
 		{ 
-					System.out.println(JPA.isEnabled());
-				    if(JPA.local.get() == null)
+				 if(JPA.local.get() == null)
 	                {
 	                	
-	                System.out.println("NULL JAP");
+	                Logger.info("NULL JAP");
 	                    JPA.local.set(new JPA());
 	                    JPA.local.get().entityManager = JPA.newEntityManager();
 	                } 
@@ -197,7 +196,7 @@ public class Mails extends Mailer {
 					 User_Consumption userConsumption  = JPA.em().find(User_Consumption.class, user_consumption_id);
 					 userConsumption.delete();
 					 em.getTransaction().commit();
-					 System.out.println(" preparaing to send mail.....");
+					 Logger.info(" preparaing to send mail.....");
 					 Mails.sendFailureEmail(offerName, name, emailID);
 			}
 			finally 

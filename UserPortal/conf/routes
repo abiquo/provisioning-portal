@@ -40,7 +40,7 @@ POST    /MarketEnable/saveMarketView				MarketEnable.saveMarketView
 
 GET 	/consumer/availableoffers				Consumer.availableOffers
 GET 	/consumer/servicecatalog				Consumer.ServiceCatalog
-#GET 	/consumer/offerdetails					Consumer.offerDetails
+GET 	/consumer/offerdetails					Consumer.offerDetails
 GET 	/consumer/purchaseconfirmation			Consumer.purchaseConfirmation
 GET 	/consumer/deploy					    Consumer.deploy
 

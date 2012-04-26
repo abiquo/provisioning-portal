@@ -42,6 +42,7 @@ public class Login extends Controller{
 		Logger.info("-----INSIDE LOGOUT()-----");
 		session.remove("username");
 		session.remove("password");
+		session.clear();
 		Cache.delete(session.getId());
 		login_page();
 		Logger.info("-----EXITING LOGOUT()-----");
@@ -62,7 +63,6 @@ public class Login extends Controller{
 				session.put("password", password);
 				
 		AbiquoContext context = Context.getContext(username,password);
-		System.out.println(" Thresd curret" + Thread.currentThread());
 		//Cache.set(session.getId() + "-context", context, "30mn");
 		//	AbiquoUtils.setContext(context);
 		//PortalContext userContext = new PortalContext();
@@ -106,15 +106,20 @@ public class Login extends Controller{
 		}
 		catch(AuthorizationException ae)
 		{
-			ae.printStackTrace();
+			//ae.printStackTrace();
 			flash.error(" Unauthorized User");
 			login_page();
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 			flash.error("Server Unreachable");
 			login_page();
+		}
+		finally{
+			flash.clear();
+			if ( context != null)
+				context.close();
 		}
 		}
 	}

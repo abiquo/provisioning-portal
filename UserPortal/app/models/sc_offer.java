@@ -88,7 +88,13 @@ public class sc_offer extends GenericModel {
 	}
 
 
-
+	@Override
+	public void _delete() {
+	   super._delete();
+	    icon.getFile().delete();
+	   //image.getFile().delete();
+	}
+	
 
 	public Integer getIdVirtualDataCenter_ref() {
 		return idVirtualDataCenter_ref;

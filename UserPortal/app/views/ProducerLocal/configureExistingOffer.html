@@ -7,7 +7,7 @@
 <h3>Configure Offer </h3>
  #{list scOffer, as:'scOffer'}
  
-<form action ="@{ProducerLocal.saveConfigure(sc_offers,icon)}" method = "POST" enctype="multipart/form-data">
+<form action ="@{ProducerLocal.saveConfigure(sc_offers,icon, image, subscription )}" method = "POST" enctype="multipart/form-data">
 
 <p> Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${scOffer.sc_offer_id}" readonly/></p> 
 <p> Service Level  <input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${scOffer.virtualDataCenter_name}" readonly/></p> 
@@ -25,12 +25,12 @@
 <p>Long Description <textarea name ="sc_offers.description" rows="5" cols="70" >${scOffer.description}</textarea></p>
 #{/list}
 
-<p>Offer Start Date <input type ="text" name = "offer_start_date" value = "${startDate}" /> </p> 
-<p>Offer Retire Date<input type ="text" name = "offer_expire_date" value = "${expireDate}" /> </p> 
+*{<p>Offer Start Date <input type ="text" name = "subscription.offer_start_date" value = "${startDate}" /> </p> 
+<p>Offer Retire Date<input type ="text" name = "subscription.offer_expire_date" value = "${expireDate}" /> </p> 
 
-<p>Default Lease Period <input type ="text" name = "lease_period" value = "${lease_period}" /> </p> 
+<p>Default Lease Period <input type ="text" name = "subscription.lease_period" value = "${lease_period}" /> </p> }*
 <p>Default Lease Period  :  
-#{select 'lease_period', value:'${lease_period}'}
+#{select 'subscription.lease_period', value:'${lease_period}'}
 	#{option '30 days'}30 days #{/option}
 	#{option '60 days'}60 days#{/option}
 	#{option '90 days'}90 days #{/option}
