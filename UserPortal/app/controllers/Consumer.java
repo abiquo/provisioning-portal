@@ -359,7 +359,7 @@ public class Consumer extends Controller
 										Logger.info(" Handler created :");
 										VirtualMachineMonitor monitor =  context.getMonitoringService().getVirtualMachineMonitor();
 										monitor.register(handler);
-										//vm_todeploy.deploy();
+										vm_todeploy.deploy();
 										Logger.info("STARTING MONITORING ......");
 										monitor.monitorDeploy(vm_todeploy);
 										
