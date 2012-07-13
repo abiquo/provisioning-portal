@@ -1,0 +1,69 @@
+11:27:57,694 INFO  ~ Starting /home/dlopez/deliverablePortal/portal
+11:27:57,697 INFO  ~ Module crud is available (/opt/play-1.2/modules/crud)
+11:27:58,117 WARN  ~ You're running Play! in DEV mode
+11:27:58,164 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+11:28:01,621 INFO  ~ Connected to jdbc:mysql://localhost/portal
+11:28:10,259 INFO  ~ Application 'UserPortal2' is now started !
+11:28:15,464 INFO  ~ -------------- INSIDE LOGIN.CONNECT()--------------
+11:28:16,063 INFO  ~ context: {provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+11:28:16,601 INFO  ~ Role of userRole [id=1, name=CLOUD_ADMIN, blocked=true]
+11:28:18,042 INFO  ~ -----INSIDE PRODUCER LISTVDC()------ 
+11:28:18,126 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+11:28:18,557 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+11:28:18,819 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+11:28:18,922 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+11:28:18,981 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+11:28:19,040 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+11:28:19,040 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+11:28:19,041 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+11:28:19,041 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+11:28:19,042 DEBUG ~ /* named HQL query getSubscribedOffers */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ where sc_offers_0_.service_level=?
+11:28:19,044 INFO  ~ resultSet1 size :0
+11:28:19,044 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+11:28:19,044 INFO  ~  resultSet1 size []
+11:28:19,044 INFO  ~  -----INSIDE PRODUCER DISPLAYOFFER()------
+11:28:21,491 INFO  ~ -----INSIDE LOGOUT()-----
+11:28:25,577 INFO  ~ -------------- INSIDE LOGIN.CONNECT()--------------
+11:28:25,630 INFO  ~ context: {provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=userent, iso3166Codes=null}
+11:28:25,791 INFO  ~ Role of userRole [id=2, name=USER, blocked=false]
+11:28:25,808 INFO  ~ ---------INSIDE CONSUMER SERVICECATALOG()------------
+11:28:25,808 INFO  ~ Enterprie ID for current User 3
+11:28:25,808 DEBUG ~ /* named HQL query groupByVDC_EnterpriseView */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id in (select mkt_enterp1_.sc_offer_id from mkt_enterprise_view mkt_enterp1_ where mkt_enterp1_.enterprise_id=?) group by sc_offer0_.virtualDataCenter_name
+11:28:25,811 INFO  ~ ------------EXITING CONSUMER SERVICECATALOG()--------------
+11:28:26,050 INFO  ~ ---------INSIDE CONSUMER AVAILABLEOFFERS()---------------
+11:28:26,050 INFO  ~ Enterprie ID for current User 3
+11:28:26,050 INFO  ~ CURRENT USER EMAIL ID: userent
+11:28:26,051 DEBUG ~ /* named HQL query getAllOffersByState */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.state=?
+11:28:26,052 INFO  ~ ------------EXITING CONSUMER AVAILABLEOFFERS()--------------
+11:28:27,176 INFO  ~ ---------INSIDE CONSUMER PURCHASEDOFFERS()---------------
+11:28:27,176 INFO  ~ Enterprie ID for current User 3
+11:28:27,176 INFO  ~ CURRENT USER EMAIL ID: userent
+11:28:27,220 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=userent, iso3166Codes=null}
+11:28:27,569 DEBUG ~ /* named HQL query groupByVDC_EnterpriseView */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id in (select mkt_enterp1_.sc_offer_id from mkt_enterprise_view mkt_enterp1_ where mkt_enterp1_.enterprise_id=?) group by sc_offer0_.virtualDataCenter_name
+11:28:27,571 INFO  ~ ------------EXITING CONSUMER PURCHASEDOFFERS()--------------
+11:28:28,767 INFO  ~ ---------INSIDE CONSUMER AVAILABLEOFFERS()---------------
+11:28:28,767 INFO  ~ Enterprie ID for current User 3
+11:28:28,767 INFO  ~ CURRENT USER EMAIL ID: userent
+11:28:28,768 DEBUG ~ /* named HQL query getAllOffersByState */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.state=?
+11:28:28,769 INFO  ~ ------------EXITING CONSUMER AVAILABLEOFFERS()--------------
+11:30:22,999 INFO  ~ Starting /home/dlopez/provisioning-portal/UserPortal
+11:30:23,002 INFO  ~ Module crud is available (/opt/play-1.2/modules/crud)
+11:30:23,421 WARN  ~ You're running Play! in DEV mode
+11:30:23,467 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+11:30:25,783 INFO  ~ Connected to jdbc:mysql://localhost/portal
+11:30:34,105 INFO  ~ Application 'UserPortal2' is now started !
+11:30:34,314 INFO  ~ ---------INSIDE CONSUMER SERVICECATALOG()------------
+11:30:34,314 INFO  ~ Enterprie ID for current User 3
+11:30:34,321 DEBUG ~ /* named HQL query groupByVDC_EnterpriseView */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id in (select mkt_enterp1_.sc_offer_id from mkt_enterprise_view mkt_enterp1_ where mkt_enterp1_.enterprise_id=?) group by sc_offer0_.virtualDataCenter_name
+11:30:34,337 INFO  ~ ------------EXITING CONSUMER SERVICECATALOG()--------------
+11:30:35,025 INFO  ~ ---------INSIDE CONSUMER AVAILABLEOFFERS()---------------
+11:30:35,025 INFO  ~ Enterprie ID for current User 3
+11:30:35,025 INFO  ~ CURRENT USER EMAIL ID: userent
+11:30:35,025 DEBUG ~ /* named HQL query getAllOffersByState */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.state=?
+11:30:35,027 INFO  ~ ------------EXITING CONSUMER AVAILABLEOFFERS()--------------
+11:30:36,712 INFO  ~ ---------INSIDE CONSUMER PURCHASEDOFFERS()---------------
+11:30:36,712 INFO  ~ Enterprie ID for current User 3
+11:30:36,712 INFO  ~ CURRENT USER EMAIL ID: userent
+11:30:37,533 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=userent, iso3166Codes=null}
+11:30:38,340 DEBUG ~ /* named HQL query groupByVDC_EnterpriseView */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual14_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id in (select mkt_enterp1_.sc_offer_id from mkt_enterprise_view mkt_enterp1_ where mkt_enterp1_.enterprise_id=?) group by sc_offer0_.virtualDataCenter_name
+11:30:38,341 INFO  ~ ------------EXITING CONSUMER PURCHASEDOFFERS()--------------

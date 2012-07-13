@@ -1,0 +1,64 @@
+ <script type="text/javascript">
+ $('.accordion').accordion({
+       event: "click hoverintent",
+       clearStyle: true,
+       autoHeight: false
+       /*       create : function(event,ui) {
+            $('#content').load( $(this).find('a').attr('href') );
+       }*/
+ }); 
+ $('.accordion').bind('accordionchange', function(event, ui) {
+     /*var clicked = $(ui.newHeader).find('a').attr('href');
+     ui.newContent.load(clicked);*/
+ });
+</script> 
+ <div class="accordion">        
+   #{list result2 , as:'sc_offer'}    
+	    #{if 'PUBLISHED' == sc_offer.state}
+	    <h3><a href="#">${sc_offer.sc_offer_name}</a></h3>    
+	    <div class="container-fluid">
+	        <div class="row-fluid">
+	            <div class="span3">
+	                <ul class="thumbnails span">
+				    <li>
+					    <a href="#" class="thumbnail offerDetails" url="@{Consumer.offerDetails(sc_offer.sc_offer_id)}">
+					         <img src="@{Helper.displayIcon(sc_offer.sc_offer_id)}" alt="" height="100">
+					    </a>
+					    <div class="btn-group">
+	                     <button url="@{Consumer.offerDetails(sc_offer.sc_offer_id)}" class="btn offerDetails"><i class="icon-info-sign"></i>Info</button>
+	                     <button url="@{Consumer.PurchaseConfirmation(sc_offer.sc_offer_id)}" class="btn btn-warning purchaseConfirm" ><i class="icon-shopping-cart icon-white"></i>Purchase</button>
+	                    </div>
+				    </li>			      
+				    </ul>
+	            </div>
+	            <div class="span9">                
+	                <div style="display: none;">${sc_offer.sc_offer_id}</div>		       
+			         <table class="table table-bordered">
+			              <thead class="ui-widget-header">
+				            <tr>
+				                <td><div class="ui-widget">Resource</div></td>
+				                <td><div class="ui-widget">Description</div></td>
+				            </tr>
+				         </thead>
+			            <tbody class="ui-widget-content">		             
+	                      <tr>
+	                        <td class="ui-widget"><strong>Description</strong></td>
+	                        <td class="ui-widget">${sc_offer.description}</td>
+	                      </tr>
+	                      <tr>
+	                        <td class="ui-widget"><strong>Price</strong></td>
+	                        <td class="ui-widget"><strong>20$/day</strong></td>
+	                      </tr>		            
+			            </tbody>
+			          </table>          
+	            </div>
+	        </div>
+	    </div>                      
+	   #{/if}
+   #{/list}
+   #{else}
+	<div>
+	  <h3><a href="#">No offers available in marketplace</a></h3>
+	</div>   	
+   #{/else}
+</div>

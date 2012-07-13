@@ -35,10 +35,13 @@ GET     /MarketEnable/marketEnable					MarketEnable.marketEnable
 POST    /MarketEnable/marketEnable					MarketEnable.marketEnable
 GET     /MarketEnable/enable						MarketEnable.Enable
 GET     /MarketEnable/saveMKTConfiguration			MarketEnable.saveMKTConfiguration
+GET     /MarketEnable/enableMKTConfiguration        MarketEnable.enableMKTConfiguration
 GET     /MarketEnable/publishMarket					MarketEnable.publishMarket
 POST    /MarketEnable/saveMarketView				MarketEnable.saveMarketView
 
 GET 	/consumer/availableoffers				Consumer.availableOffers
+GET 	/consumer/availableoffersAll			Consumer.availableOffersAll
+GET     /consumer/purchasedOffers               Consumer.purchasedOffers
 GET 	/consumer/servicecatalog				Consumer.ServiceCatalog
 GET 	/consumer/offerdetails					Consumer.offerDetails
 GET 	/consumer/purchaseconfirmation			Consumer.purchaseConfirmation

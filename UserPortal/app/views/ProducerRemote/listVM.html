@@ -1,37 +1,61 @@
-#{extends 'main.html' /}
-
-#{set title:'List VM(s)' /}
-
-
-#{ifnot virtualAppliance}
-    
+#{ifnot virtualAppliance}    
     <h3> No Service Offers !!!</h3>
 #{/ifnot}
 #{else}
-<h1>Image Templates for ${virtualAppliance.name} &  ${virtualDatacenter.name}</h1>
-<table border= "1">
-       <thead>
-           <tr>
-               <th><strong>Virtual-Machine </strong></th>
-              
-               <th>Action</th>
-               
-           </tr>
-       </thead>
-       <tbody>
-           #{list vmList, as:'vm'}
-               <tr>
-                   <td>${vm.name}</td>
-                   
-                   <td>
-                        
-                       
-                         #{a @ProducerRemote.vmDetails(virtualDatacenter.id,virtualAppliance.id, vm.id)}  Details #{/a}
-                   </td>
-               </tr>
-           #{/list}
-       </tbody>
-   </table> 
-  #{/else}
-<p> <a href="@{ProducerLocal.admin()}"> Home  </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="@{Producer.poe()}">  Back </a> </p>
+<table class="table table-bordered table-condensed table-striped">
+     <thead class="ui-widget-header">
+	     <tr>
+	         <td><strong><center>${virtualAppliance.name}<center></strong></td><td width="100px"><strong><center>Details</center></strong></td>	        
+	     </tr>
+     </thead>
+     <tbody>
+      #{list sc_offers, as:'offer'}
+      	 <tr><td><center><img src="@{Helper.displayIcon(offer.sc_offer_id)}" width="100" ></center></td>
+      	 	 <td>
+	         	<table class="table table-striped table-bordered table-condensed" >
+	         		<tbody>
+		         		<tr><td width="200px"><strong><center>Short-Description<center></strong></td><td><center>${offer.short_description}</center></td></tr>
+	         			<tr><td width="200px"><strong><center>Description<center></strong></td><td><center>${offer.description}</center></td></tr>          
+	         			<tr><td width="200px"><strong><center>Quality of Service<center></strong></td><td><center>${virtualDatacenter.name}</center></td></tr>
+	         			<tr><td width="200px"><strong><center>Lease Period<center></strong></td><td><center>${offer.service_type}</center></td></tr>     
+         			</tbody>   
+	         	</table>	        
+	         </td>	               
+      	 </tr>         
+      #{/list}	   
+      #{else}
+       <tr><td><center><img src="@{'/public/images/user/server_off.png'}" width="100" ></center></td>
+      	 	 <td>
+	         	<table class="table table-striped table-bordered table-condensed" >
+	         		<tbody>		         	
+			      	 <tr><td width="200px"><strong><center>Short-Description<center></strong></td><td><center>not defined</center></td></tr>
+			         <tr><td width="200px"><strong><center>Description<center></strong></td><td><center>not defined</center></td></tr>       
+			         <tr><td width="200px"><strong><center>Quality of Service<center></strong></td><td><center>${virtualDatacenter.name}</center></td></tr> 
+			         <tr><td width="200px"><strong><center>Lease Period<center></strong></td><td><center>not defined</center></td></tr>        
+         			</tbody>   
+	         	</table>	        
+	         </td>	               
+      	 </tr>
+      #{/else}      	
+     </tbody>
+     <tfoot class="ui-widget-header">
+     	<tr>
+     		<td width="100px"><strong><center>Price<center></strong></td>
+     		<td><strong><center>20$/day</center></strong></td>
+        </tr>
+     </tfoot>
+ </table>
+    #{list vmList, as:'vm'}
+ <table>
+	<tbody>
+        <tr>                           
+           <td>
+                <div id="@{ProducerRemote.vmDetails(virtualDatacenter.id,virtualAppliance.id, vm.id)}" class="vmDetails"></div>
+           </td>
+        </tr>
+    </tbody>
+</table>
+    #{/list}   
+ #{/else}
+<!-- <p> <a href="@{ProducerLocal.admin()}"> Home  </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="@{Producer.poe()}">  Back </a> </p> -->

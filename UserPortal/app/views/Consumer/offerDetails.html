@@ -1,36 +1,58 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-<h3> Offer Details</h3>
-<ul>
- #{list offers, as:'offer'}
- 
-<li> Short-Description  : ${offer.short_description}  </li>
-<li> Description        : ${offer.description}    </li>
-<li> Quality of Service : ${offer.virtualDataCenter_name}  </li>
-<li> Offer Name         : ${offer.sc_offer_name} </li>
-<img src="@{Helper.displayIcon(offer.sc_offer_id)}" alt="${offer.sc_offer_name}" />
-#{/list} 
-</ul>
-<ul>
-#{list nodes_list, as:'node'}
-<li>RAM : ${node.ram}  </li>
-<li>CPU : ${node.cpu}  </li>
-<li>VM  : ${node.node_name}  </li>
+<div id="offerDetails" class="ui-widget">	
+	#{list offers, as:'offer'}
+	<table class="detailTable table table-bordered table-condensed table-striped">
+	 <thead class="ui-widget-header">
+	     <tr>
+	         <td width="350px"><strong><center>${offer.sc_offer_name}<center></strong></td><td width="700px"><strong><center>Details</center></strong></td>	        
+	     </tr>
+     </thead>
+     <tbody>
+      	 <tr><td><center><img src="@{Helper.displayIcon(offer.sc_offer_id)}" width="100px" ></center></td>
+      	 	 <td>
+	         	<table class="table table-striped table-bordered table-condensed" >
+	         		<tbody>
+		         		<tr><td width="200px"><strong><center>Short-Description<center></strong></td><td width="200px"><center>${offer.short_description}</center></td></tr>
+	         			<tr><td width="auto"><strong><center>Description<center></strong></td><td width="auto"><center>${offer.description}</center></td></tr>          
+	         			<tr><td width="auto"><strong><center>Quality of Service<center></strong></td><td width="auto"><center>${offer.sc_offer_name}</center></td></tr>
+	         			<tr><td width="auto"><strong><center>Lease Period<center></strong></td><td width="auto"><center>${offer.service_type}</center></td></tr>     
+         			</tbody>   
+	         	</table>	        
+	         </td>	               
+      	 </tr>        
+  	 	</tbody>
+  	 	<tfoot class="ui-widget-header">
+     	<tr>
+     		<td width="auto"><strong><center>Price<center></strong></td>
+     		<td><strong><center>20$/day</center></strong></td>
+        </tr>
+     </tfoot>	
+	</table>	 	
+	#{list nodes_list, as:'node'}	
+		<table class="table table-bordered table-condensed table-striped middle">
+		   <thead class="ui-widget-header">
+	           <tr>
+	               <td width="200px"><strong><center>${node.node_name}</center></strong></td>
+	               <td width="200px"><strong><center>CPU</center></strong></td>
+	               <td width="200px"><strong><center>RAM</center></strong></td>	            
+	           </tr>
+	       </thead>
+	       <tbody>	 
+	     <tr>
+	        <td><center><img src="@{'/public/images/user/1341575776_Yellow_Server.png'}" width="100px" ></center></td>
+	        <td><strong><center>${node.cpu}</center></strong></td>
+	        <td><strong><center>${node.ram} MBytes</center></strong></td>	      
+	     </tr>     
+			</tbody>	
+		</table>
+	#{/list}
 
-#{/list}
-</ul>
-<ul>
-#{list nodes_resources, as:'resource'}
-<li>Hard Disk ${resource.sequence} : ${resource.value}</li>
-
-
-#{/list}
-</ul>
-<a href = "@{Consumer.PurchaseConfirmation(offer.sc_offer_id)}">Purchase</a>
-</body>
-</html>
+	#{list nodes_resources, as:'resource'}
+	 <tr>
+        <td></td><td><strong>Hard Disk ${resource.sequence}</strong></td><td>${resource.value}</td>
+     </tr>	
+	#{/list}
+	#{/list}	
+	</tbody>
+	</table>
+    <div class="btn btn-warning purchaseConfirm" url="@{Consumer.PurchaseConfirmation(offer.sc_offer_id)}"><i class="icon-shopping-cart icon-white"></i>Purchase</div>
+</div>

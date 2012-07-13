@@ -1,47 +1,36 @@
-
-#{extends 'main.html' /}
-
-#{set title:'Market enable ' /}
-<html>
-    <head>
-   
-    <style type="text/css">
-    table { width:500px; }
-    tbody { height:10em;  overflow:scroll;}
-    td { height:auto; }
-    </style>
-    </head>
-    <body>
  #{if flash.error}
-    		<p style="color:#c00">
-        	${flash.error}
-    		</p>
+<p style="color:#c00">
+  	${flash.error}
+</p>
 #{/if}
-<h2> Enterprises </h2>
+#{else}
+<div id="marketplace" >
+	<table class="table table-bordered">
+  		 <thead class="ui-widget-header">
+   			<tr>
+       			<td><div class="ui-widget">Marketplace</div></td>
+     			<td><div class="ui-widget">Action</div></td>
+            </tr>
+ 	     </thead>
+   		 <tbody class="ui-widget-content">
+ 		    #{list enterpriseEnabledList , as:'enterpriseEnabledList'} 		    
+       		<tr>
+   			<td><div class="ui-widget"><h4>${enterpriseEnabledList.enterprise.name}</h4></div></td>
+   		     <td>
+       			  #{if enterpriseEnabledList.enabled}
+       			    <button class="enableMarketplace btn" id="enableMarket_${enterpriseEnabledList.enterprise.id}_${enterpriseEnabledList.enterprise.name}" url="@{enable(enterpriseEnabledList.enterprise.id, enterpriseEnabledList.enterprise.name)}"><i class="icon-cog"></i>Configure</button>
+       			    <button class="publishMarketplace btn" id="publishMarket_${enterpriseEnabledList.enterprise.id}_${enterpriseEnabledList.enterprise.name}" url="@{publishMarket(enterpriseEnabledList.enterprise.id, enterpriseEnabledList.enterprise.name)}"><i class="icon-globe"></i>Publish</button>
+       			  #{/if}
+       			  #{else}
+       			     <button class="enableMarketplace btn" id="enableMarket_${enterpriseEnabledList.enterprise.id}_${enterpriseEnabledList.enterprise.name}" url="@{enable(enterpriseEnabledList.enterprise.id, enterpriseEnabledList.enterprise.name)}"><i class="icon-ok"></i>Enable</button>
+       			  #{/else}
+       		 </td>
+       		</tr>       	
+       		#{/list}
+   		</tbody>
+	</table>  
+</div>
 
-<form action ="" method = "POST" >
-
-		<table border= "1">
-      		 <thead>
-           			<tr>
-               			<td><strong>Enterprise </strong></td>
-             			<td><strong>Action</strong></td>
-                    </tr>
-     	     </thead>
-       		 <tbody>
-          				 #{list enterpriseList , as:'enterprise'}
-               		<tr>
-               			<td>${enterprise.name}</td>
-              		     <td>
-                    		<p> <a href="@{enable(enterprise.id, enterprise.name)} " >  Enable </a> &nbsp;&nbsp;&nbsp;&nbsp;	
-                    			 <a href="@{publishMarket(enterprise.id, enterprise.name)} " >  Publish </a></p>   
-                  		 </td>
-               		</tr>
-           					#{/list}
-       		</tbody>
-   		</table>  
-</form>
-</body>
-</html>
-
-<p><a href ="@{ProducerLocal.admin()}"> Home  </a></p>
+<div id="enableMarketplaceForm" ></div>
+<div id="publishMarketplaceForm" ></div>
+#{/else}

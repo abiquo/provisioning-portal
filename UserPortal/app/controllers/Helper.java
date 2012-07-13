@@ -71,8 +71,8 @@ public class Helper extends Controller{
 			   Logger.info("-------------------------  EXITING  displayIcon()---------" );
 			   renderBinary(offer.getImage().get());
 	}
-	
-	
+
+
 	/**
 	 * Returns Virtual machine details. After deployment portal database needs to be updated . 
 	 * But after deployment session user is lost. To make updation the virtual machine details are needed.

@@ -1,13 +1,11 @@
-#{extends 'main.html' /}
-#{ifnot scOffer}
-    
+#{ifnot scOffer}    
     <h3> Unable to retrieve values.</h3>
 #{/ifnot}
 #{else}
 <h3>Configure Offer </h3>
  #{list scOffer, as:'scOffer'}
  
-<form action ="@{Producer.saveConfigure(sc_offers,icon)}" method = "POST" enctype="multipart/form-data">
+<form name="configureExisting" action ="@{Producer.saveConfigure(sc_offers,icon)}" method = "POST" enctype="multipart/form-data">
 
 <p> Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${scOffer.sc_offer_id}" readonly/></p> 
 <p> Service Level  <input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${scOffer.virtualDataCenter_name}" readonly/></p> 
@@ -29,10 +27,8 @@
 <p>Offer Retire Date<input type ="text" name = "offer_expire_date" value = "${expireDate}" /> </p> 
 
 <p>Default Lease Period  : 60 days </p> 
-<p><input type ="submit" name = "submit" value ="Save "/> 
- <input type ="button" value ="Cancel" "/> </p> 
+<p><input type ="submit" name = "submit" value ="Enable" class="btn"/> 
  
 </form>
-
 
 #{/else}

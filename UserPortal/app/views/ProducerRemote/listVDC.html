@@ -1,7 +1,4 @@
-#{extends 'main.html' /}
-
-#{set title:'Home' /}
- #{if flash.error}
+#{if flash.error}
     		<p style="color:#c00">
         	${flash.error}
     		</p>
@@ -12,13 +9,10 @@
 #{/ifnot}
 #{else}
   
-         
+<div id="listVDCForm">
 <h2><u>Un-Published Offers</u>  </h2>
-       
-
  	<div id="tabcontainer">
           <ul id="tabnav">
-
  				#{list vdc_list, as:'vdc'}
  						<li><a href ="@{ProducerRemote.listVA(vdc.id)}">${vdc?.name}</a></li>
 				 #{/list}
@@ -53,5 +47,5 @@
 
 #{/else}
 #{/else}
-
+</div>
 <p><a href ="@{ProducerLocal.admin()}"> Home  </a></p>

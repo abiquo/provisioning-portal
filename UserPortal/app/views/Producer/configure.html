@@ -5,7 +5,7 @@
     		</p>
 #{/if}
 <h2>Configure Offer </h2>
-<form action ="@{Producer.addToServiceCatalog(virtualDC.id , va.id, sc_offers,icon)}" method = "POST" enctype="multipart/form-data">
+<form name="configure" action ="@{Producer.addToServiceCatalog(virtualDC.id , va.id, sc_offers,icon)}" method = "POST" enctype="multipart/form-data">
 <p> Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${va.id}" readonly/></p> 
 <p> Service Level  <input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${virtualDC.name}" readonly/></p> 
 <p> Offer Name <input type ="text" name = "sc_offers.sc_offer_name" size="50" value = "${va.name}" /></p> 

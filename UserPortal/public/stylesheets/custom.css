@@ -22,12 +22,13 @@ h1 {
 }
 #main-wrapper {
 	background-color:#fff;
+   
 }
 #main {
-	min-height:500px;
-	padding:20px 0;
+	/*min-height:500px;*/
+	padding:58px 0;
 	width:100%;
-	max-width: 960px;
+	max-width: 1024px;
 	min-width: 320px;
 	margin:0 auto;
 	overflow:hidden;

@@ -1,0 +1,68 @@
+<script type="text/javascript">
+ $('.accordion').accordion({
+       event: "click hoverintent",
+       clearStyle: true,
+       autoHeight: false
+       /*       create : function(event,ui) {
+            $('#content').load( $(this).find('a').attr('href') );
+       }*/
+ }); 
+ $('.accordion').bind('accordionchange', function(event, ui) {
+     /*var clicked = $(ui.newHeader).find('a').attr('href');
+     ui.newContent.load(clicked);*/
+ });
+</script>
+ 
+ <div class="accordion">        
+   #{list listvApp , as:'sc_offer'}    
+    <h3><a href="#">${sc_offer.name}</a></h3>    
+    <div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <ul class="thumbnails span">
+                <li>
+                	 <!-- <a href="#" class="thumbnail offerDetails" url="@{Consumer.offerDetails(sc_offer.id)}">     -->
+                    <a href="#" class="thumbnail">                    	
+                    	#{if 'DEPLOYED' == sc_offer.state.name()}
+                         	<img src="@{'/public/images/user/server_on.png'}" height="100">
+                        #{/if}
+                		#{else}
+                        	 <img src="@{'/public/images/user/server_off.png'}" height="100">
+               			#{/else}
+                    </a>
+                    <div class="btn-group">
+                     <button class="btn"><i class="icon-info-sign"></i>Info</button>
+                     <button class="btn btn-danger" ><i class="icon-trash icon-white"></i>Delete</button>
+                    </div>
+                    <!-- <button url="@{Consumer.offerDetails(sc_offer.id)}" class="btn offerDetails"><i class="icon-info-sign"></i>Info</button>
+                     <button url="@{Consumer.PurchaseConfirmation(sc_offer.id)}" class="btn btn-danger purchaseConfirm" ><i class="icon-trash icon-white"></i>Delete</button> -->
+                </li>                 
+                </ul>
+            </div>
+            <div class="span9">                
+                <div style="display: none;">${sc_offer.id}</div>               
+                 <table class="table table-bordered">
+                      <thead class="ui-widget-header">
+                        <tr>
+                            <td><div class="ui-widget">Resource</div></td>
+                            <td><div class="ui-widget">Description</div></td>
+                        </tr>
+                     </thead>
+                    <tbody class="ui-widget-content">                    
+                      <tr>
+                        <td class="ui-widget"><strong>State</strong></td>
+                        <td class="ui-widget">${sc_offer.state}</td>
+                      </tr>
+                      <tr>
+                        <td class="ui-widget"><strong>Price</strong></td>
+                        <td class="ui-widget"><strong>20$/day</strong></td>
+                      </tr>                     
+                    </tbody>
+                  </table>          
+            </div>
+        </div>
+    </div>                        
+   </div>
+   #{/list}
+ </div>

@@ -1,46 +1,75 @@
-#{extends 'main.html' /}
 #{ifnot scOffer}
-    
     <h3> Unable to retrieve values.</h3>
 #{/ifnot}
 #{else}
-<h3>Configure Offer </h3>
- #{list scOffer, as:'scOffer'}
- 
-<form action ="@{ProducerLocal.saveConfigure(sc_offers,icon, image, subscription )}" method = "POST" enctype="multipart/form-data">
+<script type="text/javascript">
+    var wrapper = $('<div/>').css({height:0,width:0,'overflow':'hidden'});
+    var fileInput = $(':file').wrap(wrapper);
 
-<p> Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${scOffer.sc_offer_id}" readonly/></p> 
-<p> Service Level  <input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${scOffer.virtualDataCenter_name}" readonly/></p> 
-<p> Offer Name <input type ="text" name = "sc_offers.sc_offer_name" size="45" value = "${scOffer.sc_offer_name}" /></p> 
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
- #{list scOffer.nodes, as:'node'}
-<p>CPU <input type ="text" name = "" size="25" value = "${node.cpu}" readonly/></p>
-<p>RAM  <input type ="text" name = "" size="45" value = "${node.ram}" readonly/></p>
- #{/list}
+            reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+            }
 
-<p>Selection Icon <img src="@{Helper.displayIcon(scOffer.sc_offer_id)}" /> <input type ="file" name = "icon"  value = ""/>  </p>
-<p>Details Image <img src="@{Helper.displayImage(scOffer.sc_offer_id)}" />  <input type ="file" name = "image" value = "" /> </p> 
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
-<p>Short Description <input type ="text" name = "sc_offers.short_description" value = "${scOffer.short_description}" /> </p> 
-<p>Long Description <textarea name ="sc_offers.description" rows="5" cols="70" >${scOffer.description}</textarea></p>
+    /*fileInput.change(function(){
+        $this = $(this);
+        $('#file').text($this.val());
+        
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#image')
+                .attr('src', e.target.result)
+                .width(150)
+                .height(200);
+        };
+        reader.readAsDataURL(input.files[0]);
+    });*/
+    
+    $('#file').click(function(){
+        fileInput.click();
+    }).show();
+    
+    $('#fileThumbnail').click(function(){
+        fileInput.click();
+    }).show();
+    
+</script>
+ #{list scOffer, as:'scOffer'} 
+<form name="configureExistingOffer" action ="@{ProducerLocal.saveConfigure(sc_offers,icon, image, subscription )}" method = "POST" enctype="multipart/form-data">
+	<fieldset>
+	<h2 class="pull-right">Configure Offer</h2><br /><br /> 
+	<div class="pull-right" style="display:none;" >Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${scOffer.sc_offer_id}" readonly /></div>	
+	<div class="pull-right" style="display:none;" ><input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${scOffer.virtualDataCenter_name}" readonly/></div> 
+	<div class="pull-right">Offer Name <input type ="text" name = "sc_offers.sc_offer_name" size="45" value = "${scOffer.sc_offer_name}" /></div><br />
+	<div class="pull-right">Short Description <input type ="text" name = "sc_offers.short_description" value = "${scOffer.short_description}" /></div><br /> 
+	<div class="pull-right">Long Description <textarea name ="sc_offers.description" rows="5" cols="70" >${scOffer.description}</textarea></div><br /> 
 #{/list}
-
-*{<p>Offer Start Date <input type ="text" name = "subscription.offer_start_date" value = "${startDate}" /> </p> 
-<p>Offer Retire Date<input type ="text" name = "subscription.offer_expire_date" value = "${expireDate}" /> </p> 
-
-<p>Default Lease Period <input type ="text" name = "subscription.lease_period" value = "${lease_period}" /> </p> }*
-<p>Default Lease Period  :  
-#{select 'subscription.lease_period', value:'${lease_period}'}
-	#{option '30 days'}30 days #{/option}
-	#{option '60 days'}60 days#{/option}
-	#{option '90 days'}90 days #{/option}
-#{/select}
- </p>
-
-<p><input type ="submit" name = "submit" value ="Save "/> 
- <input type ="submit" value ="Cancel"  formaction="@{Producer.poe()}" /> </p> 
- 
+	<!-- *{<div class="pull-right">Offer Start Date <input type ="text" name = "subscription.offer_start_date" value = "${startDate}" /></div><br />  
+	<div class="pull-right">Offer Retire Date <input type ="text" name = "subscription.offer_expire_date" value = "${expireDate}" /></div><br />  
+	<div class="pull-right">Default Lease Period <input type ="text" name = "subscription.lease_period" value = "${lease_period}" /></div><br />  }*-->
+	<div class="pull-right">Default Lease Period  :  
+	#{select 'subscription.lease_period', value:'${lease_period}'}
+		#{option '30 days'}30 days #{/option}
+		#{option '60 days'}60 days#{/option}
+		#{option '90 days'}90 days #{/option}
+	#{/select}
+	</div>
+    </fieldset>
+    <div class="pull-right">
+        <div class="pull-left btn btn-warning" id="file">Chose an offer icon to display</div>
+        <input type="file" name="icon" onchange="readURL(this);"/> <br />
+         <a href="#" class="thumbnail" alt="Icon" id="fileThumbnail">
+             <img id="image" src="@{Helper.displayIcon(scOffer.sc_offer_id)}" width="100" height=100" >
+         </a>
+    </div><br /><br /><br /><br /><br /><br /><br /><br />
+    <div class="pull-right"><input type="submit" class="btn btn-warning" value="Enable" name="submit"> </div>
 </form>
-
-
 #{/else}

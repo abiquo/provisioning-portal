@@ -39,8 +39,7 @@ public class Producer extends Controller {
 				render(vdc_list,user);
 		}
 		else 
-		{
-			
+		{			
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
@@ -57,45 +56,45 @@ public class Producer extends Controller {
 		String password =session.get("password");
 		if ( user != null )
 		{
-				AbiquoContext context = Context.getContext(user,password);
-				AbiquoUtils.setAbiquoUtilsContext(context);
-				try {
-							if (id_vdc != null )
+			AbiquoContext context = Context.getContext(user,password);
+			AbiquoUtils.setAbiquoUtilsContext(context);
+			try {
+					if (id_vdc != null )
+					{
+						vdc_list = AbiquoUtils.getAllVDC();
+						 virtualDatacenter = AbiquoUtils.getVDCDetails(id_vdc);
+						if (virtualDatacenter != null )
+						{
+							vaList = virtualDatacenter.listVirtualAppliances();
+							for ( VirtualAppliance virtualAppliance : vaList )
 							{
-									vdc_list = AbiquoUtils.getAllVDC();
-									 virtualDatacenter = AbiquoUtils.getVDCDetails(id_vdc);
-										if (virtualDatacenter != null )
-											{
-													vaList = virtualDatacenter.listVirtualAppliances();
-													for ( VirtualAppliance virtualAppliance : vaList )
-													{
-															 Integer va_id = virtualAppliance.getId();
-															 Query query = JPA.em().createNamedQuery("getOfferDetails");
-															 query.setParameter(1,va_id);
-															 List<sc_offer> scOffer = query.getResultList();
-															 if ( scOffer.size() == 0)
-															 {
-																 	List<VirtualMachine> vmList = virtualAppliance.listVirtualMachines();
-																 	if (vmList.size()>0 )
-																 	{
-																 			vaWithVm.add(virtualAppliance);
-																 			
-																 	}
-															 }
-													}
-											}
-										
+								 Integer va_id = virtualAppliance.getId();
+								 Query query = JPA.em().createNamedQuery("getOfferDetails");
+								 query.setParameter(1,va_id);
+								 List<sc_offer> scOffer = query.getResultList();
+								 if ( scOffer.size() == 0)
+								 {
+								 	List<VirtualMachine> vmList = virtualAppliance.listVirtualMachines();
+								 	if (vmList.size()>0 )
+								 	{
+								 			vaWithVm.add(virtualAppliance);
+								 			
+								 	}
+								 }
 							}
-							  List<sc_offers_subscriptions> resultSet = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
-							  List<sc_offers_subscriptions> resultSet1 = ProducerDAO.getSubscribedOffers(service_level);
-							  Logger.info(" resultSet1 size " + resultSet1);
-							  Logger.info(" -----INSIDE PRODUCER DISPLAYOFFER()------");
-							  render("/Producer/poe.html",resultSet,resultSet1,user, vaWithVm, virtualDatacenter , vdc_list);
+						}
+							
+					}
+				  List<sc_offers_subscriptions> resultSet = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
+				  List<sc_offers_subscriptions> resultSet1 = ProducerDAO.getSubscribedOffers(service_level);
+				  Logger.info(" resultSet1 size " + resultSet1);
+				  Logger.info(" -----INSIDE PRODUCER DISPLAYOFFER()------");
+				  render("/Producer/offerList.html",resultSet,resultSet1,user, vaWithVm, virtualDatacenter , vdc_list);
 				} 
 				catch(Exception e)
 				{
 							flash.error("Unable to create context");
-						    e.printStackTrace();
+						   // e.printStackTrace();
 							//Logger.info(" -----EXITING PRODUCER VMDETAILS()------" + e.printStackTrace(), "");
 							render("/ProducerRemote/listVDC.html");
 					

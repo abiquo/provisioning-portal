@@ -1,0 +1,48 @@
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "BUNDLE_NODE" no encontrada
+Table "BUNDLE_NODE" not found; SQL statement:
+alter table Bundle_Node drop constraint FK54BE539F35460B7 [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "BUNDLE_NODE" no encontrada
+Table "BUNDLE_NODE" not found; SQL statement:
+alter table Bundle_Node drop constraint FK54BE539F4049D44E [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "DEPLOY_BUNDLE" no encontrada
+Table "DEPLOY_BUNDLE" not found; SQL statement:
+alter table Deploy_Bundle drop constraint FK12BC56DA62AA3E1C [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "DEPLOY_NODE_RESOURCE" no encontrada
+Table "DEPLOY_NODE_RESOURCE" not found; SQL statement:
+alter table Deploy_Node_Resource drop constraint FK4C21D47335460B7 [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "DEPLOY_NODE_RESOURCE" no encontrada
+Table "DEPLOY_NODE_RESOURCE" not found; SQL statement:
+alter table Deploy_Node_Resource drop constraint FK4C21D4733840F83D [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "NODE_RESOURCE" no encontrada
+Table "NODE_RESOURCE" not found; SQL statement:
+alter table Node_Resource drop constraint FK812D7DABC91B9D46 [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "NODE_RESOURCE" no encontrada
+Table "NODE_RESOURCE" not found; SQL statement:
+alter table Node_Resource drop constraint FK812D7DABD67D4B3 [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "OFFER_NODE" no encontrada
+Table "OFFER_NODE" not found; SQL statement:
+alter table Offer_Node drop constraint FK8063B64591F2559E [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "OFFER_NODE" no encontrada
+Table "OFFER_NODE" not found; SQL statement:
+alter table Offer_Node drop constraint FK8063B645D67D4B3 [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USERCONSUMPTION_DEPLOYNODE" no encontrada
+Table "USERCONSUMPTION_DEPLOYNODE" not found; SQL statement:
+alter table UserConsumption_DeployNode drop constraint FK2A8BC0984049D44E [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "USERCONSUMPTION_DEPLOYNODE" no encontrada
+Table "USERCONSUMPTION_DEPLOYNODE" not found; SQL statement:
+alter table UserConsumption_DeployNode drop constraint FK2A8BC098FDE7886D [42102-149]
+05-17 11:20:25 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "SC_OFFERS_SUBSCRIPTIONS" no encontrada
+Table "SC_OFFERS_SUBSCRIPTIONS" not found; SQL statement:
+alter table sc_offers_subscriptions drop constraint FKA53DD8DDEFA4280C [42102-149]

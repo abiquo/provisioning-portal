@@ -2,157 +2,129 @@
 <html>
 <head>
 <title>Login</title>
-  <script src="http://code.jquery.com/jquery-latest.js"></script>
-  <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-  <script>
-  $(document).ready(function(){
-    $("#loginForm").validate();
-  });
-  </script>
-<style type="text/css">
-html {
-	height:100%
-}
-body {
-	font-size:13px;
-	font-family:Helvetica, Arial, sans-serif;
-	color:#333333;
-	background-color:#161616;
-	height:100%;
-	position:relative;
-	min-height:400px;
-	/* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1a82f7), to(#2F2727)); /* Safari 5.1, Chrome 10+ */
-	background: -webkit-linear-gradient(top, #2F2727, #1a82f7); /* Firefox 3.6+ */
-	background: -moz-linear-gradient(top, #2F2727, #1a82f7); /* IE 10 */
-	background: -ms-linear-gradient(top, #2F2727, #1a82f7); /* Opera 11.10+ */
-	background: -o-linear-gradient(top, #2F2727, #1a82f7);
-	margin:0;
-	height:100%;
-}
-#page-wrapper {
-	width:960px;
-	margin:0 auto;
-}
-#header {
-	
-}
-#main {
+  <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+  
+   <link type="text/css" href="@{'/public/stylesheets/custom-theme/jquery-ui-1.8.21.custom.css'}" rel="stylesheet" />
+   <link rel="stylesheet" href="@{'/public/stylesheets/bootstrap.css'}" type="text/css" />
+   
+   <script type="text/javascript" src="@{'/public/javascripts/jquery-1.7.2.min.js'}"></script>
+   <script type="text/javascript" src="@{'/public/javascripts/jquery-ui-1.8.21.custom.min.js'}"></script>
+   <script src="@{'/public/javascripts/jquery.form.js'}"></script> 
+   <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+   <script>
+	  $(document).ready(function(){
+	    $("#loginForm").validate();
+	  });
+   </script>
+    <!-- Le styles -->
+    <script src="@{'/public/javascripts/bootstrap.js'}"></script>   
+    <link rel="icon" type="image/x-icon" href="@{'/public/images/favicon.ico'}" />
+        <link rel="shortcut icon" type="image/x-icon" href="@{'/public/images/favicon.ico'}">
+    <style type="text/css">
+      /* Override some defaults */
+      html, body {
+        /*background-color: #eee;*/
+        background-image:url("@{'public/images/simple-sky-cloud.jpg'}");
+        background-repeat:no-repeat;
+        background-size:100%;
+      }
+      body {
+        padding-top: 100px; 
+      }
+      .container {
+        width: 300px;
+      }
 
-}
-form {
-	background-color: #FFFFFF;
-	border:1px solid #CCCCCC;
-	border-top-width:5px;
-	color:#333333;
-	padding:20px;
-	overflow:hidden;
-}
-#form .logo {
-	margin:0 auto 40px;
-	text-align:center;
-	display:block;
-}
-#form {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top:-250px;
-	margin-left:-150px;
-	width: 300px;
-	height: 450px;
+      /* The white background content wrapper */
+      .container > .content {
+        background-color: #fff;
+        padding: 20px;
+        margin: 0 -20px; 
+        -webkit-border-radius: 10px 10px 10px 10px;
+           -moz-border-radius: 10px 10px 10px 10px;
+                border-radius: 10px 10px 10px 10px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+                box-shadow: 0 1px 2px rgba(0,0,0,.15);
+      }
 
-}
-h2 {
-	color:#666666;
-	margin:0 0 20px;;
-}
-form ul {
-	list-style: none outside none;
-	margin: 0;
-	padding: 0;
-}
-form ul li {
-	margin-bottom: 10px;
-	height:40px;
-}
-label {
-	width:80px;
-	text-align:right;
-	float:left;
-	font-weight:bold;
-	padding-right: 20px;
-}
-.field label {
-	background:url(public/images/bg-label-req.gif) center right no-repeat;
-}
-label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
-</style>
-<style type="text/css">
-/* Start fancy button */
+    .login-form {
+      margin-left: 65px;
+    }
+    #loginForm {
+      margin: -10px;
+    }
+    .brandTop {
+       margin:0px;
+      margin-top: 2px;
+    }
+  
+    legend {
+      margin-right: -50px;
+      font-weight: bold;
+      color: #404040;
+    }
 
-div.buttonSubmit {
-	position:relative;
-	float:left;
-}
-div.buttonSubmit input, div.buttonSubmit span, div.buttonSubmit a {
-	background-image:url(http://pages.abiquo.com/rs/abiquo/images/orange-button.png);
-	background-position:right 0px;
-	background-repeat:no-repeat;
-	border:0px none;
-	cursor:pointer;
-	float:left;
-	font-weight:bold;
-	height:36px;
-	margin:0px 0px 0px 3px;
-	padding:0px 15px 4px;
-	position:relative;
-	z-index:5;
-}
-div.buttonSubmit span {
-	background-position:left -36px;
-	left:-4px;
-	padding:0px;
-	position:absolute;
-	top:0px;
-	width:4px;
-	z-index:10;
-}
-div.buttonSubmit input, div.buttonSubmit a {
-	width:auto;
-	padding-left: 6px !important;
-	padding-right: 10px !important;
-}
-div.buttonSubmit a {
-	line-height:36px;
-	text-decoration:none;
-	color: #603813 !important;
-	font-size: 13px;
-}
-#frmSubmit {
-	color: #603813 !important;
-	font-size: 13px;
-}
-div.buttonSubmit:hover input, div.buttonSubmit:hover a {
-	background-position: right -72px;
-}
-div.buttonSubmit:hover span {
-	background-position: left -108px;
-}
-/* end fancy button */
-</style>
+    </style>
 </head>
 
 <body>
+<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div id="logo" class="pull-left"><img src="@{'/public/images/logo-abiquo.png'}" width="188" height="50" /></div><br />
+          <a class="brand" href="#">Marketplace</a>          
+          <!-- <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>/.nav-collapse -->
+          <!-- <div>
+	          <form id="loginForm" action="@{Login.connect()}" method="GET" class="form-inline pull-right">
+	              <input type="text" class="input-small" name="username" placeholder="Username">
+	              <input type="password" class="input-small" name="password" placeholder="Password">
+	              <!-- <label class="checkbox">
+	                <input type="checkbox"> Remember me
+	              </label> 
+	              <button type="submit" id="frmSubmit" class="btn btn-warning">Login</button>
+	         </form>
+         </div> -->
+        </div>
+      </div>
+    </div>
 <div id="page-wrapper">
   <div id="page">
     <div id="header">
-      
+      <div class="container">
+      <div class="content hero-unit">
+          <div class="row">
+              <div class="login-form">
+                  <h2>Login</h2>
+                  <form id="loginFormCenter" action="@{Login.connect()}" method="GET">
+                      <fieldset>
+                          <div class="clearfix">
+                              <input type="text" name="username" placeholder="Username">
+                          </div>
+                          <div class="clearfix">
+                              <input type="password" name="password" placeholder="Password">
+                          </div>
+                          <button class="btn btn-warning primary" type="submit">Sign in <i class="icon-ok icon-white"></i></button>
+                      </fieldset>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div> <!-- /container -->
     </div>
     <div id="main">
-      <div id="form">
-      
-            <img class="logo" src="/public/images/logo-abiquo.png" width="188" height="50" /> 
-
+      <!-- <div id="form">        
         <form id="loginForm" action="@{Login.connect()}" method="GET">
           <h2>Login</h2>
           <ul style="float:left;">
@@ -170,16 +142,34 @@ div.buttonSubmit:hover span {
               <input type="password" name="password" />
             </li>
             <li>
-              <label>&nbsp;</label>
-              <div class="buttonSubmit"> <span></span>
-                <input type="submit" value="Login" id="frmSubmit" />
-              </div>
+              <label>&nbsp;</label>             
+                <input type="submit" value="Login" id="frmSubmit"  class="btn btn-warning" />              
             </li>
           </ul>
         </form>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>
 </body>
+<div class="navbar navbar-fixed-bottom">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>-->
+      <!-- <a class="brand" href="#">abiquo Marketplace</a> -->         
+      <!-- <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="@{'/public/javascripts/events.js'}"></script>
 </html>

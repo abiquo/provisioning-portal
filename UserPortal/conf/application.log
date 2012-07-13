@@ -1,0 +1,6 @@
+13:06:01,127 INFO  ~ Starting /opt/tomcat/webapps/up/WEB-INF/application
+13:06:01,129 INFO  ~ Module crud is available (/opt/tomcat/webapps/up/WEB-INF/application/modules/crud)
+13:06:01,544 INFO  ~ Application is precompiled
+13:06:02,685 INFO  ~ Connected to jdbc:h2:/opt/tomcat/webapps/up/WEB-INF/application/db/h2/play;MODE=MYSQL
+13:06:03,936 INFO  ~ Application 'UserPortal2' is now started !
+13:06:04,045 INFO  ~ Forcing PROD mode because deploying as a war file.

@@ -1,0 +1,236 @@
+24 may 2012 12:12:39,865 INFO  ~ Starting /home/dlopez/UserPortal
+24 may 2012 12:12:39,868 INFO  ~ Module crud is available (/opt/play-1.2/modules/crud)
+24 may 2012 12:12:40,316 WARN  ~ You're running Play! in DEV mode
+24 may 2012 12:12:40,365 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+24 may 2012 12:12:47,634 INFO  ~ Connected to jdbc:h2:mem:play;MODE=MYSQL;LOCK_MODE=0
+24 may 2012 12:12:48,794 INFO  ~ Application 'UserPortal2' is now started !
+24 may 2012 12:13:08,756 INFO  ~ -------------- INSIDE LOGIN.CONNECT()--------------
+24 may 2012 12:13:09,337 INFO  ~ context: {provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=marketa, iso3166Codes=null}
+24 may 2012 12:13:11,003 INFO  ~ Role of userRole [id=1, name=CLOUD_ADMIN, blocked=true]
+24 may 2012 12:13:12,763 INFO  ~ -----INSIDE LOGOUT()-----
+24 may 2012 12:13:15,999 INFO  ~ -------------- INSIDE LOGIN.CONNECT()--------------
+24 may 2012 12:13:16,066 INFO  ~ context: {provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:13:17,458 INFO  ~ Role of userRole [id=1, name=CLOUD_ADMIN, blocked=true]
+24 may 2012 12:13:19,365 INFO  ~ -----INSIDE PRODUCER LISTVDC()------ 
+24 may 2012 12:13:19,424 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:13:21,765 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:13:22,960 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:13:22,972 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+24 may 2012 12:13:22,985 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:13:22,985 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:13:22,986 DEBUG ~ /* named HQL query getSubscribedOffers */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ where sc_offers_0_.service_level=?
+24 may 2012 12:13:22,988 INFO  ~ resultSet1 size :0
+24 may 2012 12:13:22,988 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:13:22,988 INFO  ~  resultSet1 size []
+24 may 2012 12:13:22,988 INFO  ~  -----INSIDE PRODUCER DISPLAYOFFER()------
+24 may 2012 12:13:24,335 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:13:25,386 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:13:25,387 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+24 may 2012 12:13:25,389 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:13:25,389 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:13:25,389 DEBUG ~ /* named HQL query getSubscribedOffers */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ where sc_offers_0_.service_level=?
+24 may 2012 12:13:25,390 INFO  ~ resultSet1 size :0
+24 may 2012 12:13:25,391 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:13:25,391 INFO  ~  resultSet1 size []
+24 may 2012 12:13:25,391 INFO  ~  -----INSIDE PRODUCER DISPLAYOFFER()------
+24 may 2012 12:13:26,530 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:13:27,570 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.virtualDataCenter_name as virtual13_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:13:27,832 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:13:27,832 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+24 may 2012 12:13:27,834 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:13:27,834 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:13:27,835 DEBUG ~ /* named HQL query getSubscribedOffers */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ where sc_offers_0_.service_level=?
+24 may 2012 12:13:27,837 INFO  ~ resultSet1 size :0
+24 may 2012 12:13:27,837 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:13:27,837 INFO  ~  resultSet1 size []
+24 may 2012 12:13:27,837 INFO  ~  -----INSIDE PRODUCER DISPLAYOFFER()------
+24 may 2012 12:13:28,876 INFO  ~  -----INSIDE PRODUCER CONFIGURE()------
+24 may 2012 12:13:28,917 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:13:29,297 INFO  ~  virtualDC  : gold
+24 may 2012 12:13:29,796 INFO  ~  va  : gold
+24 may 2012 12:13:30,064 INFO  ~  -----EXITING PRODUCER CONFIGURE()------
+24 may 2012 12:13:39,991 DEBUG ~ /* from models.sc_offer o where o.sc_offer_id = ?  */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.virtualDataCenter_name as virtual13_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=? limit ?
+24 may 2012 12:13:40,005 INFO  ~  -----INSIDE PRODUCER ADDTOSERVICECATALOG()------
+24 may 2012 12:13:40,005 INFO  ~ Session user in addToServiceCatalog(): admin
+24 may 2012 12:13:40,005 INFO  ~  and  vdc 97  & va_id : 117
+24 may 2012 12:13:40,005 INFO  ~  lease period 30 days
+24 may 2012 12:13:40,044 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:13:42,367 INFO  ~  description : sdfsdf
+24 may 2012 12:13:42,646 DEBUG ~ /* insert models.sc_offer */ insert into sc_offer (datacenter, default_network_type, description, hypervisorType, icon, icon_name, idVirtualDataCenter_ref, image, sc_offer_name, service_type, short_description, virtualDataCenter_name, sc_offer_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+24 may 2012 12:13:42,648 DEBUG ~ /* insert models.Nodes */ insert into Nodes (cpu, description, icon, idImage, node_name, ram, id_node) values (?, ?, ?, ?, ?, ?, ?)
+24 may 2012 12:13:42,649 DEBUG ~ /* insert models.sc_offers_subscriptions */ insert into sc_offers_subscriptions (id, expiration_date, lease_period, mkt_customization_allowed, sc_offer_sc_offer_id, service_level, start_date) values (null, ?, ?, ?, ?, ?, ?)
+24 may 2012 12:13:42,657 DEBUG ~ /* update models.sc_offer */ update sc_offer set datacenter=?, default_network_type=?, description=?, hypervisorType=?, icon=?, icon_name=?, idVirtualDataCenter_ref=?, image=?, sc_offer_name=?, service_type=?, short_description=?, virtualDataCenter_name=? where sc_offer_id=?
+24 may 2012 12:13:42,658 DEBUG ~ /* insert collection row models.sc_offer.nodes */ insert into Offer_Node (sc_offer_id, id_node) values (?, ?)
+24 may 2012 12:13:42,660 INFO  ~ -----------EXITING ADDTOSERVICECATALOG()------------
+24 may 2012 12:13:43,586 INFO  ~ -----INSIDE PRODUCER LISTVDC()------ 
+24 may 2012 12:13:43,635 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:13:46,589 INFO  ~ admin
+24 may 2012 12:13:46,630 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:13:49,529 INFO  ~ admin
+24 may 2012 12:13:49,530 INFO  ~ ------------------------- INSIDE Enable()-----------------
+24 may 2012 12:13:49,577 DEBUG ~ /* named HQL query getMktConfiguration */ select mkt_config0_.enterprise_id as enterprise1_11_, mkt_config0_.deploy_enterprise_id as deploy2_11_, mkt_config0_.enterprise_name as enterprise3_11_, mkt_config0_.mkt_branding_css as mkt4_11_, mkt_config0_.mkt_branding_icon as mkt5_11_, mkt_config0_.mkt_deploy_pw as mkt6_11_, mkt_config0_.mkt_deploy_user as mkt7_11_, mkt_config0_.mkt_theme_css as mkt8_11_, mkt_config0_.mkt_url as mkt9_11_ from MKT_Configuration mkt_config0_ where mkt_config0_.enterprise_id=?
+24 may 2012 12:13:49,578 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:14:08,335 DEBUG ~ /* from models.MKT_Configuration o where o.enterprise_id = ?  */ select mkt_config0_.enterprise_id as enterprise1_11_, mkt_config0_.deploy_enterprise_id as deploy2_11_, mkt_config0_.enterprise_name as enterprise3_11_, mkt_config0_.mkt_branding_css as mkt4_11_, mkt_config0_.mkt_branding_icon as mkt5_11_, mkt_config0_.mkt_deploy_pw as mkt6_11_, mkt_config0_.mkt_deploy_user as mkt7_11_, mkt_config0_.mkt_theme_css as mkt8_11_, mkt_config0_.mkt_url as mkt9_11_ from MKT_Configuration mkt_config0_ where mkt_config0_.enterprise_id=? limit ?
+24 may 2012 12:14:08,342 INFO  ~ admin
+24 may 2012 12:14:08,342 INFO  ~ ------------------------- INSIDE SAVEMKT()-----------------
+24 may 2012 12:14:08,342 INFO  ~ Enterprise id :  27 Enterprise Name  :  marketa Deploy username  :  marketa Deploy username  :  marketa Deploy Enterprise  :  27
+24 may 2012 12:14:08,343 DEBUG ~ /* insert models.MKT_Configuration */ insert into MKT_Configuration (deploy_enterprise_id, enterprise_name, mkt_branding_css, mkt_branding_icon, mkt_deploy_pw, mkt_deploy_user, mkt_theme_css, mkt_url, enterprise_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?)
+24 may 2012 12:14:08,352 INFO  ~ admin
+24 may 2012 12:14:08,390 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:14:11,379 INFO  ~ admin
+24 may 2012 12:14:11,380 INFO  ~ ------------------------- INSIDE publishMarket()-----------------
+24 may 2012 12:14:11,380 INFO  ~ Enterprise_id 27Enterprise_name marketa
+24 may 2012 12:14:11,380 DEBUG ~ /* named HQL query getMktConfiguration */ select mkt_config0_.enterprise_id as enterprise1_11_, mkt_config0_.deploy_enterprise_id as deploy2_11_, mkt_config0_.enterprise_name as enterprise3_11_, mkt_config0_.mkt_branding_css as mkt4_11_, mkt_config0_.mkt_branding_icon as mkt5_11_, mkt_config0_.mkt_deploy_pw as mkt6_11_, mkt_config0_.mkt_deploy_user as mkt7_11_, mkt_config0_.mkt_theme_css as mkt8_11_, mkt_config0_.mkt_url as mkt9_11_ from MKT_Configuration mkt_config0_ where mkt_config0_.enterprise_id=?
+24 may 2012 12:14:11,387 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:11,387 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+24 may 2012 12:14:11,391 DEBUG ~ /* load models.sc_offer */ select sc_offer0_.sc_offer_id as sc1_10_0_, sc_offer0_.datacenter as datacenter10_0_, sc_offer0_.default_network_type as default3_10_0_, sc_offer0_.description as descript4_10_0_, sc_offer0_.hypervisorType as hypervis5_10_0_, sc_offer0_.icon as icon10_0_, sc_offer0_.icon_name as icon7_10_0_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_0_, sc_offer0_.image as image10_0_, sc_offer0_.sc_offer_name as sc10_10_0_, sc_offer0_.service_type as service11_10_0_, sc_offer0_.short_description as short12_10_0_, sc_offer0_.virtualDataCenter_name as virtual13_10_0_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:14:11,394 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:11,394 INFO  ~ ResultSet 1
+24 may 2012 12:14:11,394 INFO  ~ ------------------------- EXITING publishMarket()-----------------
+24 may 2012 12:14:12,354 INFO  ~ admin
+24 may 2012 12:14:12,355 INFO  ~  -----------------INSIDE PRODUCER publishOffersPerMarket()------
+24 may 2012 12:14:12,355 INFO  ~ Enterprise id 27 Service_level gold Enterprise_name marketa
+24 may 2012 12:14:12,355 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:12,355 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+24 may 2012 12:14:12,358 DEBUG ~ /* load models.sc_offer */ select sc_offer0_.sc_offer_id as sc1_10_0_, sc_offer0_.datacenter as datacenter10_0_, sc_offer0_.default_network_type as default3_10_0_, sc_offer0_.description as descript4_10_0_, sc_offer0_.hypervisorType as hypervis5_10_0_, sc_offer0_.icon as icon10_0_, sc_offer0_.icon_name as icon7_10_0_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_0_, sc_offer0_.image as image10_0_, sc_offer0_.sc_offer_name as sc10_10_0_, sc_offer0_.service_type as service11_10_0_, sc_offer0_.short_description as short12_10_0_, sc_offer0_.virtualDataCenter_name as virtual13_10_0_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:14:12,360 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:12,360 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:14:12,360 DEBUG ~ /* named HQL query getSubscribedOffers */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ where sc_offers_0_.service_level=?
+24 may 2012 12:14:12,361 INFO  ~ resultSet1 size :1
+24 may 2012 12:14:12,361 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:14:12,361 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:14:12,361 DEBUG ~ /* named HQL query getAllOffers */ select sc_offer0_.sc_offer_id as col_0_0_ from sc_offer sc_offer0_
+24 may 2012 12:14:12,362 INFO  ~ resultSet1 size :1
+24 may 2012 12:14:12,362 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:14:12,362 DEBUG ~ /* named HQL query getOffersForEnterprise */ select distinct mkt_enterp0_.sc_offer_id as col_0_0_ from mkt_enterprise_view mkt_enterp0_ where mkt_enterp0_.enterprise_id=? and mkt_enterp0_.service_level=?
+24 may 2012 12:14:12,363 INFO  ~ Resultset for service levels : [sc_offers_subscriptions[1]]
+24 may 2012 12:14:12,363 INFO  ~ Resultset1 for VDC offers  : [sc_offers_subscriptions[1]]
+24 may 2012 12:14:12,364 INFO  ~ Resultset3 offers published : []
+24 may 2012 12:14:12,364 INFO  ~ Resultset4 offers published : [117]
+24 may 2012 12:14:12,364 INFO  ~  ---------------------EXITING PRODUCER publishOffersPerMarket()------
+24 may 2012 12:14:12,375 DEBUG ~ /* load collection models.sc_offer.nodes */ select nodes0_.sc_offer_id as sc1_10_1_, nodes0_.id_node as id2_1_, nodes1_.id_node as id1_8_0_, nodes1_.cpu as cpu8_0_, nodes1_.description as descript3_8_0_, nodes1_.icon as icon8_0_, nodes1_.idImage as idImage8_0_, nodes1_.node_name as node6_8_0_, nodes1_.ram as ram8_0_, nodes1_1_.sc_offer_id as sc1_9_0_ from Offer_Node nodes0_ inner join Nodes nodes1_ on nodes0_.id_node=nodes1_.id_node left outer join Offer_Node nodes1_1_ on nodes1_.id_node=nodes1_1_.id_node where nodes0_.sc_offer_id=?
+24 may 2012 12:14:12,434 INFO  ~ ------------------------- INSIDE displayIcon()---------
+24 may 2012 12:14:12,434 INFO  ~  OfferID for icon 117
+24 may 2012 12:14:12,435 DEBUG ~ /* load models.sc_offer */ select sc_offer0_.sc_offer_id as sc1_10_0_, sc_offer0_.datacenter as datacenter10_0_, sc_offer0_.default_network_type as default3_10_0_, sc_offer0_.description as descript4_10_0_, sc_offer0_.hypervisorType as hypervis5_10_0_, sc_offer0_.icon as icon10_0_, sc_offer0_.icon_name as icon7_10_0_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_0_, sc_offer0_.image as image10_0_, sc_offer0_.sc_offer_name as sc10_10_0_, sc_offer0_.service_type as service11_10_0_, sc_offer0_.short_description as short12_10_0_, sc_offer0_.virtualDataCenter_name as virtual13_10_0_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:14:12,436 INFO  ~ ------------------------- EXITING displayIcon()---------
+24 may 2012 12:14:15,554 INFO  ~ admin
+24 may 2012 12:14:15,555 INFO  ~ ------------------------- INSIDE saveMarketView()-----------------
+24 may 2012 12:14:15,556 INFO  ~ 1 offer(s) to be enabled for enterprise with id: 27 and name :marketa and  Service level :gold
+24 may 2012 12:14:15,556 DEBUG ~ /* insert models.mkt_enterprise_view */ insert into mkt_enterprise_view (id, enterprise_id, sc_offer_id, service_level) values (null, ?, ?, ?)
+24 may 2012 12:14:15,557 INFO  ~ Market View Updated 
+24 may 2012 12:14:15,557 INFO  ~ ------------------------- EXITING saveMarketView()-----------------
+24 may 2012 12:14:15,564 INFO  ~ admin
+24 may 2012 12:14:15,564 INFO  ~ ------------------------- INSIDE publishMarket()-----------------
+24 may 2012 12:14:15,564 INFO  ~ Enterprise_id 27Enterprise_name marketa
+24 may 2012 12:14:15,564 DEBUG ~ /* named HQL query getMktConfiguration */ select mkt_config0_.enterprise_id as enterprise1_11_, mkt_config0_.deploy_enterprise_id as deploy2_11_, mkt_config0_.enterprise_name as enterprise3_11_, mkt_config0_.mkt_branding_css as mkt4_11_, mkt_config0_.mkt_branding_icon as mkt5_11_, mkt_config0_.mkt_deploy_pw as mkt6_11_, mkt_config0_.mkt_deploy_user as mkt7_11_, mkt_config0_.mkt_theme_css as mkt8_11_, mkt_config0_.mkt_url as mkt9_11_ from MKT_Configuration mkt_config0_ where mkt_config0_.enterprise_id=?
+24 may 2012 12:14:15,565 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:15,565 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+24 may 2012 12:14:15,566 DEBUG ~ /* load models.sc_offer */ select sc_offer0_.sc_offer_id as sc1_10_0_, sc_offer0_.datacenter as datacenter10_0_, sc_offer0_.default_network_type as default3_10_0_, sc_offer0_.description as descript4_10_0_, sc_offer0_.hypervisorType as hypervis5_10_0_, sc_offer0_.icon as icon10_0_, sc_offer0_.icon_name as icon7_10_0_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_0_, sc_offer0_.image as image10_0_, sc_offer0_.sc_offer_name as sc10_10_0_, sc_offer0_.service_type as service11_10_0_, sc_offer0_.short_description as short12_10_0_, sc_offer0_.virtualDataCenter_name as virtual13_10_0_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:14:15,567 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:15,567 INFO  ~ ResultSet 1
+24 may 2012 12:14:15,567 INFO  ~ ------------------------- EXITING publishMarket()-----------------
+24 may 2012 12:14:18,961 INFO  ~ admin
+24 may 2012 12:14:19,007 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:14:24,202 INFO  ~ admin
+24 may 2012 12:14:24,203 INFO  ~ ------------------------- INSIDE Enable()-----------------
+24 may 2012 12:14:24,247 DEBUG ~ /* named HQL query getMktConfiguration */ select mkt_config0_.enterprise_id as enterprise1_11_, mkt_config0_.deploy_enterprise_id as deploy2_11_, mkt_config0_.enterprise_name as enterprise3_11_, mkt_config0_.mkt_branding_css as mkt4_11_, mkt_config0_.mkt_branding_icon as mkt5_11_, mkt_config0_.mkt_deploy_pw as mkt6_11_, mkt_config0_.mkt_deploy_user as mkt7_11_, mkt_config0_.mkt_theme_css as mkt8_11_, mkt_config0_.mkt_url as mkt9_11_ from MKT_Configuration mkt_config0_ where mkt_config0_.enterprise_id=?
+24 may 2012 12:14:24,248 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:14:34,412 DEBUG ~ /* from models.MKT_Configuration o where o.enterprise_id = ?  */ select mkt_config0_.enterprise_id as enterprise1_11_, mkt_config0_.deploy_enterprise_id as deploy2_11_, mkt_config0_.enterprise_name as enterprise3_11_, mkt_config0_.mkt_branding_css as mkt4_11_, mkt_config0_.mkt_branding_icon as mkt5_11_, mkt_config0_.mkt_deploy_pw as mkt6_11_, mkt_config0_.mkt_deploy_user as mkt7_11_, mkt_config0_.mkt_theme_css as mkt8_11_, mkt_config0_.mkt_url as mkt9_11_ from MKT_Configuration mkt_config0_ where mkt_config0_.enterprise_id=? limit ?
+24 may 2012 12:14:34,417 INFO  ~ admin
+24 may 2012 12:14:34,417 INFO  ~ ------------------------- INSIDE SAVEMKT()-----------------
+24 may 2012 12:14:34,417 INFO  ~ Enterprise id :  28 Enterprise Name  :  marketu Deploy username  :  marketu Deploy username  :  marketu Deploy Enterprise  :  28
+24 may 2012 12:14:34,418 DEBUG ~ /* insert models.MKT_Configuration */ insert into MKT_Configuration (deploy_enterprise_id, enterprise_name, mkt_branding_css, mkt_branding_icon, mkt_deploy_pw, mkt_deploy_user, mkt_theme_css, mkt_url, enterprise_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?)
+24 may 2012 12:14:34,427 INFO  ~ admin
+24 may 2012 12:14:34,478 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+24 may 2012 12:14:37,897 INFO  ~ admin
+24 may 2012 12:14:37,898 INFO  ~ ------------------------- INSIDE publishMarket()-----------------
+24 may 2012 12:14:37,898 INFO  ~ Enterprise_id 28Enterprise_name marketu
+24 may 2012 12:14:37,898 DEBUG ~ /* named HQL query getMktConfiguration */ select mkt_config0_.enterprise_id as enterprise1_11_, mkt_config0_.deploy_enterprise_id as deploy2_11_, mkt_config0_.enterprise_name as enterprise3_11_, mkt_config0_.mkt_branding_css as mkt4_11_, mkt_config0_.mkt_branding_icon as mkt5_11_, mkt_config0_.mkt_deploy_pw as mkt6_11_, mkt_config0_.mkt_deploy_user as mkt7_11_, mkt_config0_.mkt_theme_css as mkt8_11_, mkt_config0_.mkt_url as mkt9_11_ from MKT_Configuration mkt_config0_ where mkt_config0_.enterprise_id=?
+24 may 2012 12:14:37,900 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:37,900 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+24 may 2012 12:14:37,902 DEBUG ~ /* load models.sc_offer */ select sc_offer0_.sc_offer_id as sc1_10_0_, sc_offer0_.datacenter as datacenter10_0_, sc_offer0_.default_network_type as default3_10_0_, sc_offer0_.description as descript4_10_0_, sc_offer0_.hypervisorType as hypervis5_10_0_, sc_offer0_.icon as icon10_0_, sc_offer0_.icon_name as icon7_10_0_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_0_, sc_offer0_.image as image10_0_, sc_offer0_.sc_offer_name as sc10_10_0_, sc_offer0_.service_type as service11_10_0_, sc_offer0_.short_description as short12_10_0_, sc_offer0_.virtualDataCenter_name as virtual13_10_0_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:14:37,903 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:37,903 INFO  ~ ResultSet 1
+24 may 2012 12:14:37,903 INFO  ~ ------------------------- EXITING publishMarket()-----------------
+24 may 2012 12:14:38,904 INFO  ~ admin
+24 may 2012 12:14:38,904 INFO  ~  -----------------INSIDE PRODUCER publishOffersPerMarket()------
+24 may 2012 12:14:38,905 INFO  ~ Enterprise id 28 Service_level gold Enterprise_name marketu
+24 may 2012 12:14:38,905 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:38,905 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+24 may 2012 12:14:38,906 DEBUG ~ /* load models.sc_offer */ select sc_offer0_.sc_offer_id as sc1_10_0_, sc_offer0_.datacenter as datacenter10_0_, sc_offer0_.default_network_type as default3_10_0_, sc_offer0_.description as descript4_10_0_, sc_offer0_.hypervisorType as hypervis5_10_0_, sc_offer0_.icon as icon10_0_, sc_offer0_.icon_name as icon7_10_0_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_0_, sc_offer0_.image as image10_0_, sc_offer0_.sc_offer_name as sc10_10_0_, sc_offer0_.service_type as service11_10_0_, sc_offer0_.short_description as short12_10_0_, sc_offer0_.virtualDataCenter_name as virtual13_10_0_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:14:38,908 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:38,908 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:14:38,908 DEBUG ~ /* named HQL query getSubscribedOffers */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ where sc_offers_0_.service_level=?
+24 may 2012 12:14:38,909 INFO  ~ resultSet1 size :1
+24 may 2012 12:14:38,909 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:14:38,909 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:14:38,909 DEBUG ~ /* named HQL query getAllOffers */ select sc_offer0_.sc_offer_id as col_0_0_ from sc_offer sc_offer0_
+24 may 2012 12:14:38,910 INFO  ~ resultSet1 size :1
+24 may 2012 12:14:38,910 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+24 may 2012 12:14:38,910 DEBUG ~ /* named HQL query getOffersForEnterprise */ select distinct mkt_enterp0_.sc_offer_id as col_0_0_ from mkt_enterprise_view mkt_enterp0_ where mkt_enterp0_.enterprise_id=? and mkt_enterp0_.service_level=?
+24 may 2012 12:14:38,911 INFO  ~ Resultset for service levels : [sc_offers_subscriptions[1]]
+24 may 2012 12:14:38,911 INFO  ~ Resultset1 for VDC offers  : [sc_offers_subscriptions[1]]
+24 may 2012 12:14:38,911 INFO  ~ Resultset3 offers published : []
+24 may 2012 12:14:38,911 INFO  ~ Resultset4 offers published : [117]
+24 may 2012 12:14:38,911 INFO  ~  ---------------------EXITING PRODUCER publishOffersPerMarket()------
+24 may 2012 12:14:38,913 DEBUG ~ /* load collection models.sc_offer.nodes */ select nodes0_.sc_offer_id as sc1_10_1_, nodes0_.id_node as id2_1_, nodes1_.id_node as id1_8_0_, nodes1_.cpu as cpu8_0_, nodes1_.description as descript3_8_0_, nodes1_.icon as icon8_0_, nodes1_.idImage as idImage8_0_, nodes1_.node_name as node6_8_0_, nodes1_.ram as ram8_0_, nodes1_1_.sc_offer_id as sc1_9_0_ from Offer_Node nodes0_ inner join Nodes nodes1_ on nodes0_.id_node=nodes1_.id_node left outer join Offer_Node nodes1_1_ on nodes1_.id_node=nodes1_1_.id_node where nodes0_.sc_offer_id=?
+24 may 2012 12:14:38,972 INFO  ~ ------------------------- INSIDE displayIcon()---------
+24 may 2012 12:14:38,973 INFO  ~  OfferID for icon 117
+24 may 2012 12:14:38,973 DEBUG ~ /* load models.sc_offer */ select sc_offer0_.sc_offer_id as sc1_10_0_, sc_offer0_.datacenter as datacenter10_0_, sc_offer0_.default_network_type as default3_10_0_, sc_offer0_.description as descript4_10_0_, sc_offer0_.hypervisorType as hypervis5_10_0_, sc_offer0_.icon as icon10_0_, sc_offer0_.icon_name as icon7_10_0_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_0_, sc_offer0_.image as image10_0_, sc_offer0_.sc_offer_name as sc10_10_0_, sc_offer0_.service_type as service11_10_0_, sc_offer0_.short_description as short12_10_0_, sc_offer0_.virtualDataCenter_name as virtual13_10_0_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:14:38,975 INFO  ~ ------------------------- EXITING displayIcon()---------
+24 may 2012 12:14:41,370 INFO  ~ admin
+24 may 2012 12:14:41,371 INFO  ~ ------------------------- INSIDE saveMarketView()-----------------
+24 may 2012 12:14:41,371 INFO  ~ 1 offer(s) to be enabled for enterprise with id: 28 and name :marketu and  Service level :gold
+24 may 2012 12:14:41,372 DEBUG ~ /* insert models.mkt_enterprise_view */ insert into mkt_enterprise_view (id, enterprise_id, sc_offer_id, service_level) values (null, ?, ?, ?)
+24 may 2012 12:14:41,372 INFO  ~ Market View Updated 
+24 may 2012 12:14:41,372 INFO  ~ ------------------------- EXITING saveMarketView()-----------------
+24 may 2012 12:14:41,381 INFO  ~ admin
+24 may 2012 12:14:41,382 INFO  ~ ------------------------- INSIDE publishMarket()-----------------
+24 may 2012 12:14:41,382 INFO  ~ Enterprise_id 28Enterprise_name marketu
+24 may 2012 12:14:41,382 DEBUG ~ /* named HQL query getMktConfiguration */ select mkt_config0_.enterprise_id as enterprise1_11_, mkt_config0_.deploy_enterprise_id as deploy2_11_, mkt_config0_.enterprise_name as enterprise3_11_, mkt_config0_.mkt_branding_css as mkt4_11_, mkt_config0_.mkt_branding_icon as mkt5_11_, mkt_config0_.mkt_deploy_pw as mkt6_11_, mkt_config0_.mkt_deploy_user as mkt7_11_, mkt_config0_.mkt_theme_css as mkt8_11_, mkt_config0_.mkt_url as mkt9_11_ from MKT_Configuration mkt_config0_ where mkt_config0_.enterprise_id=?
+24 may 2012 12:14:41,384 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:41,384 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ group by sc_offers_0_.service_level
+24 may 2012 12:14:41,385 DEBUG ~ /* load models.sc_offer */ select sc_offer0_.sc_offer_id as sc1_10_0_, sc_offer0_.datacenter as datacenter10_0_, sc_offer0_.default_network_type as default3_10_0_, sc_offer0_.description as descript4_10_0_, sc_offer0_.hypervisorType as hypervis5_10_0_, sc_offer0_.icon as icon10_0_, sc_offer0_.icon_name as icon7_10_0_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_0_, sc_offer0_.image as image10_0_, sc_offer0_.sc_offer_name as sc10_10_0_, sc_offer0_.service_type as service11_10_0_, sc_offer0_.short_description as short12_10_0_, sc_offer0_.virtualDataCenter_name as virtual13_10_0_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:14:41,387 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+24 may 2012 12:14:41,387 INFO  ~ ResultSet 1
+24 may 2012 12:14:41,387 INFO  ~ ------------------------- EXITING publishMarket()-----------------
+24 may 2012 12:14:45,880 INFO  ~ -----INSIDE LOGOUT()-----
+24 may 2012 12:14:50,125 INFO  ~ -------------- INSIDE LOGIN.CONNECT()--------------
+24 may 2012 12:14:50,186 INFO  ~ context: {provider=abiquo, endpoint=http://67.111.53.253/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=marketu, iso3166Codes=null}
+24 may 2012 12:14:51,553 INFO  ~ Role of userRole [id=2, name=USER, blocked=false]
+24 may 2012 12:14:51,568 INFO  ~ ---------INSIDE CONSUMER SERVICECATALOG()------------
+24 may 2012 12:14:51,568 INFO  ~ Enterprie ID for current User 28
+24 may 2012 12:14:51,568 DEBUG ~ /* named HQL query groupByVDC_EnterpriseView */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.virtualDataCenter_name as virtual13_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id in (select mkt_enterp1_.sc_offer_id from mkt_enterprise_view mkt_enterp1_ where mkt_enterp1_.enterprise_id=?) group by sc_offer0_.virtualDataCenter_name
+24 may 2012 12:14:51,571 INFO  ~ ------------EXITING CONSUMER SERVICECATALOG()--------------
+24 may 2012 12:14:52,570 INFO  ~ ---------INSIDE CONSUMER AVAILABLEOFFERS()---------------
+24 may 2012 12:14:52,570 INFO  ~ Enterprie ID for current User 28
+24 may 2012 12:14:52,570 INFO  ~ CURRENT USER EMAIL ID: marketu
+24 may 2012 12:14:52,571 DEBUG ~ /* named HQL query groupByVDC_EnterpriseView */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.virtualDataCenter_name as virtual13_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id in (select mkt_enterp1_.sc_offer_id from mkt_enterprise_view mkt_enterp1_ where mkt_enterp1_.enterprise_id=?) group by sc_offer0_.virtualDataCenter_name
+24 may 2012 12:14:52,573 DEBUG ~ /* named HQL query getVappListForVDC_EnterpriseView */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc10_10_, sc_offer0_.service_type as service11_10_, sc_offer0_.short_description as short12_10_, sc_offer0_.virtualDataCenter_name as virtual13_10_ from sc_offer sc_offer0_ where (sc_offer0_.sc_offer_id in (select mkt_enterp1_.sc_offer_id from mkt_enterprise_view mkt_enterp1_ where mkt_enterp1_.enterprise_id=?)) and sc_offer0_.virtualDataCenter_name=?
+24 may 2012 12:14:52,574 INFO  ~ ------------EXITING CONSUMER AVAILABLEOFFERS()--------------
+24 may 2012 12:14:52,578 DEBUG ~ /* load collection models.sc_offer.nodes */ select nodes0_.sc_offer_id as sc1_10_1_, nodes0_.id_node as id2_1_, nodes1_.id_node as id1_8_0_, nodes1_.cpu as cpu8_0_, nodes1_.description as descript3_8_0_, nodes1_.icon as icon8_0_, nodes1_.idImage as idImage8_0_, nodes1_.node_name as node6_8_0_, nodes1_.ram as ram8_0_, nodes1_1_.sc_offer_id as sc1_9_0_ from Offer_Node nodes0_ inner join Nodes nodes1_ on nodes0_.id_node=nodes1_.id_node left outer join Offer_Node nodes1_1_ on nodes1_.id_node=nodes1_1_.id_node where nodes0_.sc_offer_id=?
+24 may 2012 12:14:52,617 INFO  ~ ------------------------- INSIDE displayIcon()---------
+24 may 2012 12:14:52,617 INFO  ~  OfferID for icon 117
+24 may 2012 12:14:52,617 DEBUG ~ /* load models.sc_offer */ select sc_offer0_.sc_offer_id as sc1_10_0_, sc_offer0_.datacenter as datacenter10_0_, sc_offer0_.default_network_type as default3_10_0_, sc_offer0_.description as descript4_10_0_, sc_offer0_.hypervisorType as hypervis5_10_0_, sc_offer0_.icon as icon10_0_, sc_offer0_.icon_name as icon7_10_0_, sc_offer0_.idVirtualDataCenter_ref as idVirtua8_10_0_, sc_offer0_.image as image10_0_, sc_offer0_.sc_offer_name as sc10_10_0_, sc_offer0_.service_type as service11_10_0_, sc_offer0_.short_description as short12_10_0_, sc_offer0_.virtualDataCenter_name as virtual13_10_0_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+24 may 2012 12:14:52,618 INFO  ~ ------------------------- EXITING displayIcon()---------
+24 may 2012 12:14:53,980 INFO  ~ ---------INSIDE CONSUMER OFFERDETAILS()---------------
+24 may 2012 12:14:54,204 ERROR ~ 
+
+@6aekp2j64
+Internal Server Error (500) for request GET /consumer/offerdetails?offer_id=117
+
+Execution exception (In /app/controllers/Consumer.java around line 411)
+UnsupportedOperationException occured : Please annotate your JPA model with @javax.persistence.Entity annotation.
+
+play.exceptions.JavaExecutionException: Please annotate your JPA model with @javax.persistence.Entity annotation.
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:231)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.UnsupportedOperationException: Please annotate your JPA model with @javax.persistence.Entity annotation.
+	at play.db.jpa.GenericModel.find(GenericModel.java:288)
+	at controllers.Consumer.offerDetails(Consumer.java:411)
+	at play.mvc.ActionInvoker.invokeWithContinuation(ActionInvoker.java:548)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:502)
+	at play.mvc.ActionInvoker.invokeControllerMethod(ActionInvoker.java:478)
+	at play.mvc.ActionInvoker.invokeControllerMethod(ActionInvoker.java:473)
+	at play.mvc.ActionInvoker.invoke(ActionInvoker.java:161)
+	... 1 more
