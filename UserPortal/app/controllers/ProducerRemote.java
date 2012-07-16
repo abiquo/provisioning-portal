@@ -201,11 +201,12 @@ public class ProducerRemote extends Controller {
 			final DateParts date) {
 
 		if (Validation.hasErrors()) {
-			flash.error("Sorry! Please enter valid data. See errors inline. Icon is required. Max characters for : Short Description - 30 and Long Description - 255 ");
+			flash.error("Please enter valid data. See errors inline. Icon is required. Max characters for : Short Description - 30 and Long Description - 255 ");
 			params.flash();
 			Validation.keep();
-			configure(sc_offers.getIdVirtualDataCenter_ref(),
-					sc_offers.getSc_offer_id());
+			/*configure(sc_offers.getIdVirtualDataCenter_ref(),
+					sc_offers.getSc_offer_id());*/
+			render();
 
 		} else {
 			extracted();

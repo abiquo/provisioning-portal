@@ -9,11 +9,11 @@
    
    <script type="text/javascript" src="@{'/public/javascripts/jquery-1.7.2.min.js'}"></script>
    <script type="text/javascript" src="@{'/public/javascripts/jquery-ui-1.8.21.custom.min.js'}"></script>
-   <script src="@{'/public/javascripts/jquery.form.js'}"></script> 
-   <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+   <script type="text/javascript" src="@{'/public/javascripts/jquery.form.js'}"></script> 
+   <script type="text/javascript" src="@{'/public/javascripts/jquery.validate.js'}"></script>
    <script>
 	  $(document).ready(function(){
-	    $("#loginForm").validate();
+	    $("#loginFormCenter").validate();
 	  });
    </script>
     <!-- Le styles -->
@@ -116,6 +116,9 @@
                               <input type="password" name="password" placeholder="Password">
                           </div>
                           <button class="btn btn-warning primary" type="submit">Sign in <i class="icon-ok icon-white"></i></button>
+                          #{if flash.error}
+                          	<br /><br /><h4><i class="icon-exclamation-sign"></i> ${flash.error}</h4>
+                          #{/if}
                       </fieldset>
                   </form>
               </div>

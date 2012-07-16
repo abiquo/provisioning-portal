@@ -1,8 +1,11 @@
-#{if flash.error}
-    <p style="color:#c00">
-        ${flash.error}
-    </p>
+#{if flash.error}   
+<div id="response" class="error">
+	<h3><i class=" icon-thumbs-down"></i> Please enter valid data<br /></h3>
+	<h4><i class="icon-exclamation-sign"></i> Icon is required<br />
+	<i class="icon-exclamation-sign"></i> Max characters for Short Description: 30<br /> 
+	<i class="icon-exclamation-sign"></i> Max characters for Short Description: 255</h4>	
+</div>
 #{/if}
 #{else}
-<div><h3><i class="icon-thumbs-up"></i> Offer has been successfully added</h3></div>
+<div id="response"><h3><i class="icon-thumbs-up"></i> Offer has been successfully added</h3></div>
 #{/else}

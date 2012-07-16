@@ -242,8 +242,8 @@ $(document).ready(function () {
             resizable: false,
             width: '800px',          
             buttons: [{             
-                text: "Cancel",
-                class: "btn btn-danger",
+                text: "Close",
+                class: "btn btn-warning",
                 click: function() {
                     $( this ).dialog( "close" );
                 }
@@ -411,7 +411,7 @@ $(document).ready(function () {
             resizable: false,
             modal: true,
             buttons: [{             
-                text: "Cancel",
+                text: "Close",
                 class: "btn btn-danger",
                 click: function() {
                     $( this ).dialog( "close" );
@@ -530,7 +530,7 @@ $(document).ready(function () {
 	     // stop form from submitting normally 
 		   // event.preventDefault(); 
 		var code = $(this).ajaxSubmit(function (responseText, textStatus, XMLHttpRequest) {
-			console.log(responseText);			
+			//console.log(responseText);			
 			
 			var dialog = $('<div style="display:none" class="loading dialog">' + responseText + '</div>').appendTo('body');
 			
@@ -556,7 +556,9 @@ $(document).ready(function () {
 		            class: "btn btn-warning",
 		            click: function() {
 		                $( this ).dialog( "close" );
-		                $(".dialog").dialog( "close" );
+		                if (!$(this).find('#response').is('.error')) {
+		                	$(".dialog").dialog( "close" );
+		                }
 		            }
 		        }]
 		    });
@@ -578,10 +580,8 @@ $(document).ready(function () {
 				/*$(this).attr("src", $(this).attr("src"));
 				$(this).attr("ref", $(this).attr("src"));*/
 			//})			
-        	$(this).animate({opacity: 1}, 600);
-        	
-        });
-		
+        	$(this).animate({opacity: 1}, 600);        	
+        });		
 		
 	    return false; // prevent default action
 

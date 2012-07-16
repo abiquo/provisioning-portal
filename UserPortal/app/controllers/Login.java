@@ -38,7 +38,7 @@ public class Login extends Controller {
 	public static void connect(@Required final String username,
 			@Required final String password) {
 		if (Validation.hasErrors()) {
-			flash.error(" Both Name and password are required!");
+			flash.error("Username and password required");
 			login_page();
 		} else {
 			Logger.info("-------------- INSIDE LOGIN.CONNECT()--------------");
@@ -88,7 +88,7 @@ public class Login extends Controller {
 				}
 			} catch (AuthorizationException ae) {
 				// ae.printStackTrace();
-				flash.error(" Unauthorized User");
+				flash.error("Unauthorized User");
 				login_page();
 			} catch (Exception e) {
 				// e.printStackTrace();
