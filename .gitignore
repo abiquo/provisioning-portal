@@ -6,4 +6,4 @@ eclipse
 .settings
 .project
 UserPortal/data/attachments/*
-UserPortal/*.log.*
+UserPortal/application.log*
