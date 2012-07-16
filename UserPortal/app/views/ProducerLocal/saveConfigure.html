@@ -1,2 +1,8 @@
-<h3>Updated</h3>
-<a href="@{Producer.poe()}"	 > Back </a>
+#{if flash.error}
+    <p style="color:#c00">
+        ${flash.error}
+    </p>
+#{/if}
+#{else}
+<div><h3><i class="icon-thumbs-up"></i> Offer has been successfully updated</h3></div>
+#{/else}

@@ -459,12 +459,13 @@ public class Consumer extends Controller {
 			} catch (AuthorizationException ae) {
 
 				Logger.warn(ae, "EXCEPTION OCCURED IN deploy()");
-				String message = "Oops .... Deployment cant proceed further. Please Check deploy user and password for your enterprise .";
+				String message = "Deployment cant proceed further. Please Check deploy user and password for your enterprise .";
 				render("/errors/error.html", message);
 			} catch (Exception ae) {
 
 				Logger.warn(ae, "EXCEPTION OCCURED  IN deploy()");
-
+				String message = "Deployment cant proceed further. Please contact your System Administrator.";
+				render("/errors/error.html", message);
 				if (context != null) {
 					context.close();
 				}

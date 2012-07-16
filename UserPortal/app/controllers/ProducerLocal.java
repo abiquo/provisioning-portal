@@ -81,7 +81,7 @@ public class ProducerLocal extends Controller {
 		Logger.info(" Offer deleted ");
 		offerSub.delete();
 		Logger.info(" -----EXITING PRODUCER DISABLEOFFER()------");
-		Producer.poe();
+		//Producer.poe();
 		render("/Producer/saveConfigure.html");
 	}
 

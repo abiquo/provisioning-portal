@@ -1,10 +1,4 @@
 
-#{extends 'main.html' /}
-
-#{set title:'Home' /}
-<html>
-<body>
-
 <iframe src="@{ProducerLocal.subscribedOffers()}" width="900" height="500" frameborder="0">
   <p>Your browser does not support iframes.</p>
 </iframe>
@@ -12,6 +6,4 @@
 <iframe src="@{ProducerRemote.listVDC()}">
   <p>Your browser does not support iframes.</p>
 </iframe>
-
-</body>
-</html>
+</div>
