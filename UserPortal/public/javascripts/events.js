@@ -530,7 +530,7 @@ $(document).ready(function () {
 	     // stop form from submitting normally 
 		   // event.preventDefault(); 
 		var code = $(this).ajaxSubmit(function (responseText, textStatus, XMLHttpRequest) {
-			//console.log(responseText);			
+			console.log(responseText);			
 			
 			var dialog = $('<div style="display:none" class="loading dialog">' + responseText + '</div>').appendTo('body');
 			
@@ -580,8 +580,10 @@ $(document).ready(function () {
 				/*$(this).attr("src", $(this).attr("src"));
 				$(this).attr("ref", $(this).attr("src"));*/
 			//})			
-        	$(this).animate({opacity: 1}, 600);        	
-        });		
+        	$(this).animate({opacity: 1}, 600);
+        	
+        });
+		
 		
 	    return false; // prevent default action
 
