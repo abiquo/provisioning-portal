@@ -5,3 +5,5 @@ eclipse
 .classpath
 .settings
 .project
+UserPortal/data/attachments/*
+UserPortal/*.log.*
