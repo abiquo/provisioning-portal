@@ -24,5 +24,13 @@ public class ConsumerDAO {
 			List<sc_offer> listOffers = query1.getResultList();
 			return listOffers;
 	}		
+	public static Integer getVdcId(final Integer vappId)
+	{
+			Query query1 = JPA.em().createNamedQuery("getVdcIdByVappId");
+			query1.setParameter(1, vappId);			
+			List<Integer> vdcIdList = query1.getResultList();
+			if (!vdcIdList.isEmpty()) return vdcIdList.get(0);
+			else 					  return -1;
+	}	
 	
 }

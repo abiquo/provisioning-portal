@@ -16,7 +16,6 @@ import models.MKT_Configuration;
 import models.Nodes;
 import models.Nodes_Resources;
 import models.User_Consumption;
-import models.VirtualAppliancePortal;
 import models.sc_offer;
 import models.sc_offers_subscriptions;
 import monitor.VmEventHandler;
@@ -30,7 +29,9 @@ import org.jclouds.abiquo.domain.cloud.VirtualMachineTemplate;
 import org.jclouds.abiquo.domain.enterprise.Enterprise;
 import org.jclouds.abiquo.domain.infrastructure.Datacenter;
 import org.jclouds.abiquo.domain.network.PrivateNetwork;
+import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
+import org.jclouds.abiquo.predicates.cloud.VirtualAppliancePredicates;
 import org.jclouds.rest.AuthorizationException;
 
 import play.Logger;
@@ -500,6 +501,323 @@ public class Consumer extends Controller {
 			}
 			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
 			render(offers, nodes_list, nodes_resources, user);
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	/**
+	 * 1. Customer buy offer as a User. Deployment needs CLOUD_ADMIN privilege.
+	 * Hence,require deploy user setup for the enterprise that consumer belongs
+	 * to.2 users - session user and deploy user . 2. Save the deployment
+	 * details such as user, vdc created, SC offer id , lease etc into database.
+	 * 3. Destroy date needs to be updated with the date when offer is
+	 * undeployed after lease has expired (in future releases). For now, its
+	 * null. 4. Refer portal-schema if needed.
+	 * 
+	 * @param id_datacenter
+	 *            The datacenter id to be used for deployment.
+	 * @param vdc_id_param
+	 *            The id of virtual datacenter to be created.
+	 * @param sc_offer_id
+	 *            The id of virtual appliance to be deployed.
+	 * @param va_param
+	 *            The virtual appliance name.
+	 * @param lease_period
+	 */
+	public static void Undeploy(final Integer sc_offer_id,final Integer vappId) {
+		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
+				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
+				+ " , String va_param:: " + vappId + ")");
+
+		String deploy_username = null;
+		String deploy_password = null;
+		Integer deploy_enterprise_id = null;
+
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext contextt = Context.getContext(user, password);
+		if (contextt != null) {
+			AbiquoUtils.setAbiquoUtilsContext(contextt);
+
+			/* ---------------------------- */
+			/*
+			 * Retrieve the deploy username and password for current user's
+			 * Enterprise.
+			 */
+			Enterprise current_enterprise = AbiquoUtils
+					.getCurrentUserEnterprise();
+			Integer enterprise_id = current_enterprise.getId();
+			/*List<MKT_Configuration> mkt_conf = MarketDAO
+					.getMKTConfiguration(enterprise_id);
+
+			for (MKT_Configuration mkt : mkt_conf) {
+				deploy_username = mkt.getMkt_deploy_user();
+				deploy_password = mkt.getMkt_deploy_pw();
+				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
+			}*/
+			
+			deploy_username = user;
+			deploy_password = password;
+			deploy_enterprise_id = current_enterprise.getId();
+			
+			Logger.info(" UNDEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :"
+					+ deploy_enterprise_id + "  " + deploy_username + "  "
+					+ deploy_password);
+			/* ---------------------------- */
+
+			/* Create context with deploy username and password for deployments */
+			AbiquoContext context = Context.getContext(deploy_username,
+					deploy_password);
+
+			VirtualDatacenter vdc_toDeploy = null;
+			VirtualAppliance virtualapp_todeploy = null;
+			VirtualMachine vm_todeploy = null;
+			VirtualDatacenter virtualDC = null;
+			String vdc_name = null;
+			try {			
+				Enterprise enterprise = AbiquoUtils
+						.getEnterprise(deploy_enterprise_id);
+				String useremail = session.get("email");
+				String vdc_user = session.get("username");
+				String vdcname = Helper.vdcNameGen(vdc_user);
+				Logger.info("CURRENT USER EMAIL ID: " + useremail);
+				Logger.info(" vdcname : " + vdcname);
+
+				
+				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
+				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				vapp.undeploy();
+				
+				AbiquoUtils.deleteVirtualDatacenter(vdcId);
+				
+					Logger.info("DEPLOY INFO SAVED ......");
+					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
+					render(vdc_name, enterprise_id);				
+
+			} catch (AuthorizationException ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED IN deploy()");
+				String message = "Deployment cannot proceed further. Please Check deploy user and password for your enterprise.";
+				render("/errors/error.html", message);
+			} catch (Exception ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED  IN deploy()");
+				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
+				render("/errors/error.html", message);
+				if (context != null) {
+					context.close();
+				}
+
+			}
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	public static void deleteOffer(final Integer sc_offer_id,final Integer vappId) {
+		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
+				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
+				+ " , String va_param:: " + vappId + ")");
+
+		String deploy_username = null;
+		String deploy_password = null;
+		Integer deploy_enterprise_id = null;
+
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext contextt = Context.getContext(user, password);
+		if (contextt != null) {
+			AbiquoUtils.setAbiquoUtilsContext(contextt);
+
+			/* ---------------------------- */
+			/*
+			 * Retrieve the deploy username and password for current user's
+			 * Enterprise.
+			 */
+			Enterprise current_enterprise = AbiquoUtils
+					.getCurrentUserEnterprise();
+			Integer enterprise_id = current_enterprise.getId();
+			/*List<MKT_Configuration> mkt_conf = MarketDAO
+					.getMKTConfiguration(enterprise_id);
+
+			for (MKT_Configuration mkt : mkt_conf) {
+				deploy_username = mkt.getMkt_deploy_user();
+				deploy_password = mkt.getMkt_deploy_pw();
+				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
+			}*/
+			
+			deploy_username = user;
+			deploy_password = password;
+			deploy_enterprise_id = current_enterprise.getId();
+			
+			Logger.info(" UNDEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :"
+					+ deploy_enterprise_id + "  " + deploy_username + "  "
+					+ deploy_password);
+			/* ---------------------------- */
+
+			/* Create context with deploy username and password for deployments */
+			AbiquoContext context = Context.getContext(deploy_username,
+					deploy_password);
+
+			VirtualDatacenter vdc_toDeploy = null;
+			VirtualAppliance virtualapp_todeploy = null;
+			VirtualMachine vm_todeploy = null;
+			VirtualDatacenter virtualDC = null;
+			String vdc_name = null;
+			try {			
+				Enterprise enterprise = AbiquoUtils
+						.getEnterprise(deploy_enterprise_id);
+				String useremail = session.get("email");
+				String vdc_user = session.get("username");
+				String vdcname = Helper.vdcNameGen(vdc_user);
+				Logger.info("CURRENT USER EMAIL ID: " + useremail);
+				Logger.info(" vdcname : " + vdcname);
+
+				
+				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
+				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				List<VirtualMachine> lvm = vapp.listVirtualMachines();
+				
+				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
+				for (VirtualMachine virtualMachine : lvm) {
+					virtualMachine.undeploy();					
+					monitor.awaitCompletionUndeploy(virtualMachine);
+					virtualMachine.delete();					
+				}
+				
+				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
+				vapp.undeploy();			
+				monitorVapp.awaitCompletionUndeploy(vapp);
+				vapp.delete();
+				vdc.delete();
+				
+				Logger.info("OFFER DELETED ......");
+				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
+				render(vdc_name, enterprise_id);				
+
+			} catch (AuthorizationException ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED IN deploy()");
+				String message = "Deployment cannot proceed further. Please Check deploy user and password for your enterprise.";
+				render("/errors/error.html", message);
+			} catch (Exception ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED  IN deploy()");
+				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
+				render("/errors/error.html", message);
+				if (context != null) {
+					context.close();
+				}
+
+			}
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	public static void resumeOffer(final Integer sc_offer_id,final Integer vappId) {
+		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
+				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
+				+ " , String va_param:: " + vappId + ")");
+
+		String deploy_username = null;
+		String deploy_password = null;
+		Integer deploy_enterprise_id = null;
+
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext contextt = Context.getContext(user, password);
+		if (contextt != null) {
+			AbiquoUtils.setAbiquoUtilsContext(contextt);
+
+			/* ---------------------------- */
+			/*
+			 * Retrieve the deploy username and password for current user's
+			 * Enterprise.
+			 */
+			Enterprise current_enterprise = AbiquoUtils
+					.getCurrentUserEnterprise();
+			Integer enterprise_id = current_enterprise.getId();
+			/*List<MKT_Configuration> mkt_conf = MarketDAO
+					.getMKTConfiguration(enterprise_id);
+
+			for (MKT_Configuration mkt : mkt_conf) {
+				deploy_username = mkt.getMkt_deploy_user();
+				deploy_password = mkt.getMkt_deploy_pw();
+				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
+			}*/
+			
+			deploy_username = user;
+			deploy_password = password;
+			deploy_enterprise_id = current_enterprise.getId();
+			
+			Logger.info(" UNDEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :"
+					+ deploy_enterprise_id + "  " + deploy_username + "  "
+					+ deploy_password);
+			/* ---------------------------- */
+
+			/* Create context with deploy username and password for deployments */
+			AbiquoContext context = Context.getContext(deploy_username,
+					deploy_password);
+
+			VirtualDatacenter vdc_toDeploy = null;
+			VirtualAppliance virtualapp_todeploy = null;
+			VirtualMachine vm_todeploy = null;
+			VirtualDatacenter virtualDC = null;
+			String vdc_name = null;
+			try {			
+				Enterprise enterprise = AbiquoUtils
+						.getEnterprise(deploy_enterprise_id);
+				String useremail = session.get("email");
+				String vdc_user = session.get("username");
+				String vdcname = Helper.vdcNameGen(vdc_user);
+				Logger.info("CURRENT USER EMAIL ID: " + useremail);
+				Logger.info(" vdcname : " + vdcname);
+
+				
+				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
+				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+								
+				vapp.deploy();
+				
+				Logger.info("OFFER DELETED ......");
+				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
+				render(vdc_name, enterprise_id);				
+
+			} catch (AuthorizationException ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED IN deploy()");
+				String message = "Deployment cannot proceed further. Please Check deploy user and password for your enterprise.";
+				render("/errors/error.html", message);
+			} catch (Exception ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED  IN deploy()");
+				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
+				render("/errors/error.html", message);
+				if (context != null) {
+					context.close();
+				}
+
+			}
 
 		} else {
 

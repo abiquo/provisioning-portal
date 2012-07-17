@@ -160,4 +160,12 @@ public class AbiquoUtils {
 		}
 		return enterprise;
 	}
+	
+	public static void deleteVirtualDatacenter(final Integer vdcId) {			
+		try {
+			CloudService cloudService = getCloud();
+		} catch (Exception e) {
+			Logger.error("Unable to delete vdc: " + e.getCause() );
+		}
+	}
 }

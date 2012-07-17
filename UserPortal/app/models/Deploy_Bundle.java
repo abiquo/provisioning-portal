@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -25,6 +27,10 @@ import play.db.jpa.GenericModel;
  * Refer also User_Consumption
  */
 @Entity
+
+@NamedQueries({
+	@NamedQuery(name = "getVdcIdByVappId", query = "select d.vdc_name from Deploy_Bundle as d where d.vapp_id = ?1")
+})
 public class Deploy_Bundle extends GenericModel{
 
 	@Id
