@@ -29,6 +29,8 @@ import org.jclouds.abiquo.domain.cloud.VirtualMachineTemplate;
 import org.jclouds.abiquo.domain.enterprise.Enterprise;
 import org.jclouds.abiquo.domain.infrastructure.Datacenter;
 import org.jclouds.abiquo.domain.network.PrivateNetwork;
+import org.jclouds.abiquo.domain.task.AsyncJob;
+import org.jclouds.abiquo.domain.task.AsyncTask;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
 import org.jclouds.abiquo.predicates.cloud.VirtualAppliancePredicates;
@@ -42,6 +44,8 @@ import portal.util.AbiquoUtils;
 import portal.util.Context;
 
 import com.abiquo.model.enumerator.HypervisorType;
+import com.abiquo.server.core.cloud.VirtualApplianceState;
+import com.abiquo.server.core.task.enums.TaskState;
 
 /**
  * @author Harpreet Kaur This class is invoked when a user with role USER logs
@@ -689,20 +693,18 @@ public class Consumer extends Controller {
 				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
 				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
 				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
-				List<VirtualMachine> lvm = vapp.listVirtualMachines();
-				
-				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
-				for (VirtualMachine virtualMachine : lvm) {
-					virtualMachine.undeploy();					
-					monitor.awaitCompletionUndeploy(virtualMachine);
-					virtualMachine.delete();					
-				}
 				
 				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
-				vapp.undeploy();			
+				AsyncTask[] undeployTasks = vapp.undeploy();			
 				monitorVapp.awaitCompletionUndeploy(vapp);
-				vapp.delete();
-				vdc.delete();
+				
+				if (vapp.getState() == VirtualApplianceState.NOT_DEPLOYED) {
+					vapp.delete();
+					vdc.delete();	
+				} else {
+					// LOG error
+				}
+				
 				
 				Logger.info("OFFER DELETED ......");
 				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
