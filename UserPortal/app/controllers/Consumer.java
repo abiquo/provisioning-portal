@@ -592,18 +592,26 @@ public class Consumer extends Controller {
 				String vdcname = Helper.vdcNameGen(vdc_user);
 				Logger.info("CURRENT USER EMAIL ID: " + useremail);
 				Logger.info(" vdcname : " + vdcname);
-
 				
 				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
 				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
 				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
-				vapp.undeploy();
 				
-				AbiquoUtils.deleteVirtualDatacenter(vdcId);
+				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
+				AsyncTask[] undeployTasks = vapp.undeploy();			
+				monitorVapp.awaitCompletionUndeploy(vapp);
 				
-					Logger.info("DEPLOY INFO SAVED ......");
-					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
-					render(vdc_name, enterprise_id);				
+				if (vapp.getState() == VirtualApplianceState.NOT_DEPLOYED) {
+					Logger.info("OFFER UNDEPLOYED SUCCESSFULLY");
+				} else {
+					
+					AbiquoUtils.checkErrorsInTasks(undeployTasks);
+					Logger.info("Tasks Checked");
+					
+				}
+				Logger.info("DEPLOY INFO SAVED ......");
+				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
+				render(vdc_name, enterprise_id);				
 
 			} catch (AuthorizationException ae) {
 
@@ -693,6 +701,20 @@ public class Consumer extends Controller {
 				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
 				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
 				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+//				List<VirtualMachine> lvm = vapp.listVirtualMachines();
+//				
+//				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
+//				for (VirtualMachine virtualMachine : lvm) {
+//					virtualMachine.undeploy();					
+//				}
+//				
+//				VirtualMachine[] arr = new VirtualMachine[lvm.size()];
+//				monitor.awaitCompletionUndeploy(lvm.toArray(arr));
+//				
+//				for (VirtualMachine virtualMachine : lvm) {
+//					virtualMachine.delete();					
+//				
+//				}
 				
 				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
 				AsyncTask[] undeployTasks = vapp.undeploy();			
@@ -702,7 +724,10 @@ public class Consumer extends Controller {
 					vapp.delete();
 					vdc.delete();	
 				} else {
-					// LOG error
+					
+					AbiquoUtils.checkErrorsInTasks(undeployTasks);
+					Logger.info("Tasks Checked");
+					
 				}
 				
 				
@@ -798,10 +823,20 @@ public class Consumer extends Controller {
 				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
 				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
 				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
-								
-				vapp.deploy();
+
+				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
+				AsyncTask[] deployTasks = vapp.deploy();			
+				monitorVapp.awaitCompletionDeploy(vapp);
 				
-				Logger.info("OFFER DELETED ......");
+				if (vapp.getState() == VirtualApplianceState.DEPLOYED) {
+					Logger.info("OFFER DEPLOYED SUCCESSFULLY");
+				} else {					
+					AbiquoUtils.checkErrorsInTasks(deployTasks);
+					Logger.info("Tasks Checked");
+					
+				}				
+				
+				Logger.info("OFFER RESUMED ......");
 				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
 				render(vdc_name, enterprise_id);				
 

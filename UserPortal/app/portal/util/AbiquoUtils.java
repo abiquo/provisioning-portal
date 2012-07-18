@@ -6,8 +6,12 @@ import org.jclouds.abiquo.domain.cloud.VirtualDatacenter;
 import org.jclouds.abiquo.domain.cloud.VirtualMachine;
 import org.jclouds.abiquo.domain.enterprise.Enterprise;
 import org.jclouds.abiquo.domain.enterprise.User;
+import org.jclouds.abiquo.domain.task.AsyncJob;
+import org.jclouds.abiquo.domain.task.AsyncTask;
 import org.jclouds.abiquo.features.services.AdministrationService;
 import org.jclouds.abiquo.features.services.CloudService;
+
+import com.abiquo.server.core.task.enums.TaskState;
 
 import play.Logger;
 
@@ -166,6 +170,21 @@ public class AbiquoUtils {
 			CloudService cloudService = getCloud();
 		} catch (Exception e) {
 			Logger.error("Unable to delete vdc: " + e.getCause() );
+		}
+	}
+	
+	public static void checkErrorsInTasks(final AsyncTask[] undeployTasks) {			
+		try {
+			for (AsyncTask task : undeployTasks) {
+				task.refresh();
+				if (task.getState() != TaskState.FINISHED_SUCCESSFULLY) {
+					for (AsyncJob job : task.getJobs()) {
+						Logger.info("JOB State: " + job.getState().name());
+					}
+				}
+			}
+		} catch (Exception e) {
+			Logger.error("Unable to check tasks state: " + e.getCause() );
 		}
 	}
 }
