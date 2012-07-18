@@ -242,8 +242,8 @@ $(document).ready(function () {
             resizable: false,
             width: '800px',          
             buttons: [{             
-                text: "Cancel",
-                class: "btn btn-danger",
+                text: "Close",
+                class: "btn btn-warning",
                 click: function() {
                     $( this ).dialog( "close" );
                 }
@@ -411,7 +411,7 @@ $(document).ready(function () {
             resizable: false,
             modal: true,
             buttons: [{             
-                text: "Cancel",
+                text: "Close",
                 class: "btn btn-danger",
                 click: function() {
                     $( this ).dialog( "close" );
@@ -428,7 +428,141 @@ $(document).ready(function () {
         );       
         return false;    
     }); 
+    
+    $(".deleteConfirm").live('click', function(){
+        //alert($(this).attr("id").toString());
+        var url = $(this).attr("url").toString();
+        
+        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+	    				'<div><div><h3><i class="icon-tasks"></i>Deleting Offer</h3></div><br />Please Wait...<br /></div>' +
+	    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
 
+        var posy = $(document).height() / 8;
+        var posx = $(document).width() / 4;
+        
+        dialog.dialog({
+        	autoOpen: true,
+        	position: [posx,posy],
+            // add a close listener to prevent adding multiple divs to the document                	
+            close: function(event, ui) {
+                // remove div with all data and events
+                dialog.remove();
+            },
+            //title: "Configure",
+            //height: 'auto',
+            //show: { effect: 'show'},
+            width: '800px',     
+            resizable: false,
+            modal: true,
+            buttons: [{             
+                text: "Close",
+                class: "btn btn-danger",
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+            }]
+        });
+        // load remote content
+        dialog.load(
+            url, function (responseText, textStatus, XMLHttpRequest) {
+                // remove the loading class
+                dialog.removeClass('progress progress-warning progress-striped active');
+                
+            }
+        );       
+        return false;    
+    }); 
+    
+    $(".undeployConfirm").live('click', function(){
+        //alert($(this).attr("id").toString());
+        var url = $(this).attr("url").toString();
+        
+        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+	    				'<div><div><h3><i class="icon-tasks"></i>Pausing Offer</h3></div><br />Please Wait...<br /></div>' +
+	    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
+
+        var posy = $(document).height() / 8;
+        var posx = $(document).width() / 4;
+         
+        dialog.dialog({
+        	autoOpen: true,
+        	position: [posx,posy],
+            // add a close listener to prevent adding multiple divs to the document                	
+            close: function(event, ui) {
+                // remove div with all data and events
+                dialog.remove();
+            },
+            //title: "Configure",
+            //height: 'auto',
+            //show: { effect: 'show'},
+            width: '800px',     
+            resizable: false,
+            modal: true,
+            buttons: [{             
+                text: "Close",
+                class: "btn btn-danger",
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+            }]
+        });
+        // load remote content
+        dialog.load(
+            url, function (responseText, textStatus, XMLHttpRequest) {
+                // remove the loading class
+                dialog.removeClass('progress progress-warning progress-striped active');
+                
+            }
+        );       
+        return false;    
+    }); 
+    
+    $(".resumeConfirm").live('click', function(){
+        //alert($(this).attr("id").toString());
+        var url = $(this).attr("url").toString();
+        
+        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+	    				'<div><div><h3><i class="icon-tasks"></i>Resuming Offer</h3></div><br />Please Wait...<br /></div>' +
+	    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
+
+        var posy = $(document).height() / 8;
+        var posx = $(document).width() / 4;
+        
+        dialog.dialog({
+        	autoOpen: true,
+        	position: [posx,posy],
+            // add a close listener to prevent adding multiple divs to the document                	
+            close: function(event, ui) {
+                // remove div with all data and events
+                dialog.remove();
+            },
+            //title: "Configure",
+            //height: 'auto',
+            //show: { effect: 'show'},
+            width: '800px',     
+            resizable: false,
+            modal: true,
+            buttons: [{             
+                text: "Close",
+                class: "btn btn-danger",
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+            }]
+        });
+        // load remote content
+        dialog.load(
+            url, function (responseText, textStatus, XMLHttpRequest) {
+                // remove the loading class
+                dialog.removeClass('progress progress-warning progress-striped active');
+                
+            }
+        );       
+        return false;    
+    }); 
+    
+    
+    
     function checkall()
     {
 	    void(d=document);
@@ -529,23 +663,57 @@ $(document).ready(function () {
 
 	     // stop form from submitting normally 
 		   // event.preventDefault(); 
-		$(this).ajaxSubmit(); 		  
+		var code = $(this).ajaxSubmit(function (responseText, textStatus, XMLHttpRequest) {
+			console.log(responseText);			
+			
+			var dialog = $('<div style="display:none" class="loading dialog">' + responseText + '</div>').appendTo('body');
+			
+			var posy = $(document).height() / 8;
+		    var posx = $(document).width() / 4;
+		    
+		    dialog.dialog({
+		    	autoOpen: true,
+		    	//position: [posx,posy],
+		        // add a close listener to prevent adding multiple divs to the document                	
+		        close: function(event, ui) {
+		            // remove div with all data and events
+		            dialog.remove();
+		        },
+		        //title: "Configure",
+		        //height: 'auto',
+		        //show: { effect: 'show'},
+		        width: 'auto',     
+		        resizable: false,
+		        modal: true,
+		        buttons: [{             
+		            text: "Accept",
+		            class: "btn btn-warning",
+		            click: function() {
+		                $( this ).dialog( "close" );
+		                if (!$(this).find('#response').is('.error')) {
+		                	$(".dialog").dialog( "close" );
+		                }
+		            }
+		        }]
+		    });
+		});
+		
 		//// refresh table
 		
 		var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
-		console.log(url);
+		//console.log(url);
 		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
 		//console.dir(activeTab);
-		$(".dialog").dialog( "close" );
+		//$(".dialog").dialog( "close" );
 		activeTab.animate({opacity: 0}, 600).load(url, function (responseText, textStatus, XMLHttpRequest) {
             //$("#dialog").dialog("close");
-			$(this).find('img').each( function() {				
-				$(this).load($(this).attr("src"));		
+			//$(this).find('img').each( function() {				
+			//	$(this).load($(this).attr("src"));		
 				//$(this).attr("src", $(this).attr("src")+'?'+Math.random());
 				//$(this).attr("src", $(this).attr("src"));
 				/*$(this).attr("src", $(this).attr("src"));
 				$(this).attr("ref", $(this).attr("src"));*/
-			})
+			//})			
         	$(this).animate({opacity: 1}, 600);
         	
         });
@@ -557,10 +725,40 @@ $(document).ready(function () {
 	
 	$('form[name=configureExisting]').live('submit',function(){
 
-		$(this).ajaxSubmit(); 	  
-		 var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
-		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
-		$(".dialog").dialog("close");
+		var code = $(this).ajaxSubmit(function (responseText, textStatus, XMLHttpRequest) {
+			console.log(responseText);			
+			
+			var dialog = $('<div style="display:none" class="loading dialog">' + responseText + '</div>').appendTo('body');
+			
+			var posy = $(document).height() / 8;
+		    var posx = $(document).width() / 4;
+		    
+		    dialog.dialog({
+		    	autoOpen: true,
+		    	//position: [posx,posy],
+		        // add a close listener to prevent adding multiple divs to the document                	
+		        close: function(event, ui) {
+		            // remove div with all data and events
+		            dialog.remove();
+		        },
+		        //title: "Configure",
+		        //height: 'auto',
+		        //show: { effect: 'show'},
+		        width: 'auto',     
+		        resizable: false,
+		        modal: true,
+		        buttons: [{             
+		            text: "Accept",
+		            class: "btn btn-warning",
+		            click: function() {
+		                $( this ).dialog( "close" );
+		                $(".dialog").dialog( "close" );
+		            }
+		        }]
+		    });
+		});  
+		var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
+		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');				
 		activeTab.animate({opacity: 0}, 600).load(url, function (responseText, textStatus, XMLHttpRequest) {
         	//$("#dialog").dialog("close");
 			$(this).animate({opacity: 1}, 600);
@@ -570,15 +768,44 @@ $(document).ready(function () {
 	});
 	$('form[name=configureExistingOffer]').live('submit',function(){
 
-		$(this).ajaxSubmit(); 	  
+		var code = $(this).ajaxSubmit(function (responseText, textStatus, XMLHttpRequest) {
+			console.log(responseText);			
+			
+			var dialog = $('<div style="display:none" class="loading dialog">' + responseText + '</div>').appendTo('body');
+			
+			var posy = $(document).height() / 8;
+		    var posx = $(document).width() / 4;
+		    
+		    dialog.dialog({
+		    	autoOpen: true,
+		    	//position: [posx,posy],
+		        // add a close listener to prevent adding multiple divs to the document                	
+		        close: function(event, ui) {
+		            // remove div with all data and events
+		            dialog.remove();
+		        },
+		        //title: "Configure",
+		        //height: 'auto',
+		        //show: { effect: 'show'},
+		        width: 'auto',     
+		        resizable: false,
+		        modal: true,
+		        buttons: [{             
+		            text: "Accept",
+		            class: "btn btn-warning",
+		            click: function() {
+		                $( this ).dialog( "close" );
+		                $(".dialog").dialog( "close" );
+		            }
+		        }]
+		    });
+		});  	  
 		var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
-		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
-		activeTab.load(
-            url, function (responseText, textStatus, XMLHttpRequest) {               
-            	//$("#dialog").dialog("close");
-            }
-        ).fadeOut().fadeIn();
-		$(".dialog").dialog("close");
+		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');				
+		activeTab.animate({opacity: 0}, 600).load(url, function (responseText, textStatus, XMLHttpRequest) {
+        	//$("#dialog").dialog("close");
+			$(this).animate({opacity: 1}, 600);
+		});
 	    return false; // prevent default action
 
 	});

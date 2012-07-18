@@ -46,11 +46,13 @@ GET 	/consumer/servicecatalog				Consumer.ServiceCatalog
 GET 	/consumer/offerdetails					Consumer.offerDetails
 GET 	/consumer/purchaseconfirmation			Consumer.purchaseConfirmation
 GET 	/consumer/deploy					    Consumer.deploy
-
+GET 	/consumer/undeploy					    Consumer.undeploy
+GET 	/consumer/deleteOffer					Consumer.deleteOffer
+GET 	/consumer/resumeOffer					Consumer.resumeOffer
 GET 	/helper/displayIcon						Helper.displayIcon
 GET 	/helper/displayImage 					Helper.displayImage
 GET 	/consumer/displayIcon					Helper.displayIcon
-
+ 
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
