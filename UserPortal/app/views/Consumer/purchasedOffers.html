@@ -19,36 +19,28 @@
     <div>
     <div class="container-fluid">
         <div class="row-fluid">
-            <div class="span4">
+            <div class="span3">
                 <ul class="thumbnails span">
                 <li>
-               	    #{if 'DEPLOYED' == sc_offer.state.name()}
                 	 <!-- <a href="#" class="thumbnail offerDetails" url="@{Consumer.offerDetails(sc_offer.id)}">     -->
-	                    <a href="#" class="thumbnail">
-	                  		<img src="@{'/public/images/user/server_on.png'}" height="100">
-	                    </a>
-	                    <div class="btn-group">
-		                    <button class="btn"><i class="icon-info-sign"></i>Info</button>
-		                    <button url="@{Consumer.undeploy(sc_offer.id,sc_offer.id)}" class="btn btn-warning undeployConfirm" ><i class="icon-pause icon-white"></i>Pause</button>
-		                    <button url="@{Consumer.deleteOffer(sc_offer.id,sc_offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i>Delete</button>
-	                    </div>
-                    #{/if}
-               		#{else}
-	               		<a href="#" class="thumbnail">     
-	                		 <img src="@{'/public/images/user/server_off.png'}" height="100">
-	                	</a>
-	                    <div class="btn-group">
-		                    <button class="btn"><i class="icon-info-sign"></i>Info</button>
-		                    <button url="@{Consumer.resumeOffer(sc_offer.id,sc_offer.id)}" class="btn btn-success resumeConfirm" ><i class="icon-play icon-white"></i>Resume</button>
-		                    <button url="@{Consumer.deleteOffer(sc_offer.id,sc_offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i>Delete</button>
-	                    </div>
-               		#{/else}
+                    <a href="#" class="thumbnail">                    	
+                    	#{if 'DEPLOYED' == sc_offer.state.name()}
+                         	<img src="@{'/public/images/user/server_on.png'}" height="100">
+                        #{/if}
+                		#{else}
+                        	 <img src="@{'/public/images/user/server_off.png'}" height="100">
+               			#{/else}
+                    </a>
+                    <div class="btn-group">
+                     <button class="btn"><i class="icon-info-sign"></i>Info</button>
+                     <button class="btn btn-danger" ><i class="icon-trash icon-white"></i>Delete</button>
+                    </div>
                     <!-- <button url="@{Consumer.offerDetails(sc_offer.id)}" class="btn offerDetails"><i class="icon-info-sign"></i>Info</button>
                      <button url="@{Consumer.PurchaseConfirmation(sc_offer.id)}" class="btn btn-danger purchaseConfirm" ><i class="icon-trash icon-white"></i>Delete</button> -->
                 </li>                 
                 </ul>
             </div>
-            <div class="span8">                
+            <div class="span9">                
                 <div style="display: none;">${sc_offer.id}</div>               
                  <table class="table table-bordered">
                       <thead class="ui-widget-header">

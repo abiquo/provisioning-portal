@@ -22,7 +22,7 @@
 #{else}
 		<table width="100%" border="1"  >
 				<tr>
-    				<th>Offer</th>
+    				<th>Offer</th> 
     				<th>Details</th>
     				<th>Action </th>
   				</tr>
@@ -31,7 +31,7 @@
   
 				<tr>
 
-					<td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}" width="100" height=100" /></td>
+					<td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}" height="100px" width="140px"  /></td>
 								#{list subscoffers.sc_offer, as:'sc_offer'}
 					<td><b> OfferId : </b> ${subscoffers.id} <b> Offer Name </b>: ${sc_offer.sc_offer_name} <br />
 								#{/list}

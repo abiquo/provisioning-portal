@@ -30,7 +30,7 @@ public class ConsumerDAO {
 			query1.setParameter(1, vappId);			
 			List<Integer> vdcIdList = query1.getResultList();
 			if (!vdcIdList.isEmpty()) return vdcIdList.get(0);
-			else 					  return -1;
+			else 					  return -1; 
 	}	
 	
 }

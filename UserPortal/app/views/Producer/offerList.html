@@ -14,7 +14,7 @@
           <tr>
               <th class="ui-widget"><strong><h4>Offer Icon</h4></strong></th>
               <th class="ui-widget"><strong><h4>Offer Name</h4></strong></th>
-              <th class="ui-widget"><strong><h4>Action</strong></h4></th>
+              <th class="ui-widget"><strong><h4>Action</strong></h4></th> 
       </tr>
        </thead>
            <tbody class="ui-widget-content">
@@ -28,7 +28,7 @@
                               #{/list}        
               #{list resultSet1, as:'subscoffers'}  
           <tr>  
-              <td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}" width="100" height=100" /></td>
+              <td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}" height="100px" width="140px" /></td>
                           #{list subscoffers.sc_offer, as:'sc_offer'}
               <td><h4>${sc_offer.sc_offer_name}</h4></td>
                  #{/list}         
