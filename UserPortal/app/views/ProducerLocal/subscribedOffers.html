@@ -31,7 +31,7 @@
   
 				<tr>
 
-					<td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}" height="100px" width="140px"  /></td>
+					<td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id, subscoffers.sc_offer.icon)}" height="100px" width="140px"  /></td>
 								#{list subscoffers.sc_offer, as:'sc_offer'}
 					<td><b> OfferId : </b> ${subscoffers.id} <b> Offer Name </b>: ${sc_offer.sc_offer_name} <br />
 								#{/list}

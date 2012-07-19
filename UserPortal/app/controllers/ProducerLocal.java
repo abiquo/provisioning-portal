@@ -178,12 +178,11 @@ public class ProducerLocal extends Controller {
 
 				scOffer.setSc_offer_id(sc_offers.getSc_offer_id());
 				scOffer.setSc_offer_name(sc_offers.getSc_offer_name());
-				if (icon != null) {
-					scOffer.setIcon_name(sc_offers.getIcon_name());
-					scOffer.setIcon_name(icon.getName());
+				if (icon != null) {					
 					scOffer.setIcon(new Blob());
 					scOffer.getIcon().set(new FileInputStream(icon),
 							MimeTypes.getContentType(icon.getName()));
+					scOffer.setIcon_name(icon.getName());
 				}
 				if (image != null) {
 					scOffer.setImage(new Blob());
@@ -193,7 +192,9 @@ public class ProducerLocal extends Controller {
 				scOffer.setShort_description(sc_offers.getShort_description());
 				scOffer.setDescription(sc_offers.getDescription());
 				scOffer.save();
-
+				scOffer.refresh();
+				//Helper.displayIcon(scOffer.getSc_offer_id());
+				
 				List<sc_offers_subscriptions> subscribedOffers = ProducerDAO
 						.getSubscribedOfferGivenOfferId(sc_offers
 								.getSc_offer_id());

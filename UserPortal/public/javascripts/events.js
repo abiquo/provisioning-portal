@@ -706,16 +706,14 @@ $(document).ready(function () {
 		//console.dir(activeTab);
 		//$(".dialog").dialog( "close" );
 		activeTab.animate({opacity: 0}, 600).load(url, function (responseText, textStatus, XMLHttpRequest) {
-            //$("#dialog").dialog("close");
-			//$(this).find('img').each( function() {				
-			//	$(this).load($(this).attr("src"));		
-				//$(this).attr("src", $(this).attr("src")+'?'+Math.random());
-				//$(this).attr("src", $(this).attr("src"));
-				/*$(this).attr("src", $(this).attr("src"));
-				$(this).attr("ref", $(this).attr("src"));*/
-			//})			
-        	$(this).animate({opacity: 1}, 600);
-        	
+            
+//			// force to refresh images
+//			$('#accordionOffers').find('img').each( function() {				
+//				console.log($(this).attr("src"));					
+//				var url = $(this).attr("src");
+//				$(this).load(url);			
+//			})			
+			$(this).animate({opacity: 1}, 600);        	
         });
 		
 		
@@ -757,12 +755,26 @@ $(document).ready(function () {
 		        }]
 		    });
 		});  
+		//// refresh table
+		
 		var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
-		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');				
+		//console.log(url);
+		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
+		//console.dir(activeTab);
+		//$(".dialog").dialog( "close" );
 		activeTab.animate({opacity: 0}, 600).load(url, function (responseText, textStatus, XMLHttpRequest) {
-        	//$("#dialog").dialog("close");
-			$(this).animate({opacity: 1}, 600);
-		});
+            //$("#dialog").dialog("close");
+//			$('#accordionOffers').find('img').each( function() {	
+//				console.log($(this).attr("src"));
+//				var url = $(this).attr("src");
+//				$(this).load(url);
+//				//$(this).attr("src", $(this).attr("src"));
+//				/*$(this).attr("src", $(this).attr("src"));
+//				$(this).attr("ref", $(this).attr("src"));*/
+//			})			
+        	$(this).animate({opacity: 1}, 600);
+        	
+        });
 	    return false; // prevent default action
 
 	});
@@ -800,12 +812,28 @@ $(document).ready(function () {
 		        }]
 		    });
 		});  	  
+		//// refresh table
+		
 		var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
-		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');				
+		//console.log(url);
+		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
+		//console.dir(activeTab);
+		//$(".dialog").dialog( "close" );
 		activeTab.animate({opacity: 0}, 600).load(url, function (responseText, textStatus, XMLHttpRequest) {
-        	//$("#dialog").dialog("close");
-			$(this).animate({opacity: 1}, 600);
-		});
+            //$("#dialog").dialog("close");
+//			$('#accordionOffers').find('img').each( function() {
+//				var url = $(this).attr("src");
+//				$(this).load(url);
+//				//var img = $('<div class="img"><img src="'+ $(this).attr("src") +' /></div>').appendTo($(this));
+//				//$(this).load($(this).attr("src"));		
+//				//$(this).attr("src", "@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}");
+//				//$(this).attr("src", $(this).attr("src"));
+//				/*$(this).attr("src", $(this).attr("src"));
+//				$(this).attr("ref", $(this).attr("src"));*/
+//			});		
+        	$(this).animate({opacity: 1}, 600);
+        	
+        });
 	    return false; // prevent default action
 
 	});

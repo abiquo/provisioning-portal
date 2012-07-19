@@ -45,7 +45,7 @@ public class Helper extends Controller{
 	 * Displays Icon for Service catalog offer.
 	 * @param id The Service catlog offer id
 	 */
-	public static void displayIcon (Integer id)
+	public static void displayIcon(Integer id, String refresh)
 	{
 		
 			Logger.info("------------------------- INSIDE displayIcon()---------" );
@@ -53,6 +53,8 @@ public class Helper extends Controller{
 			   final sc_offer offer = sc_offer.findById(id);
 			   notFoundIfNull(offer);
 			   response.setContentTypeIfNotSet(offer.getIcon().type());
+			   response.setHeader("cache-control", "no-cache");
+			   response.setHeader("Expires", "Mon, 26 Jul 1997 05:00:00 GMT");
 			   Logger.info("------------------------- EXITING displayIcon()---------" );
 			   renderBinary(offer.getIcon().get());
 	}

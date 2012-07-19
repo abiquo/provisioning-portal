@@ -28,7 +28,7 @@
                               #{/list}        
               #{list resultSet1, as:'subscoffers'}  
           <tr>  
-              <td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}" height="100px" width="140px" /></td>
+              <td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id, subscoffers.sc_offer.icon)}" height="100px" width="140px" /></td>
                           #{list subscoffers.sc_offer, as:'sc_offer'}
               <td><h4>${sc_offer.sc_offer_name}</h4></td>
                  #{/list}         
