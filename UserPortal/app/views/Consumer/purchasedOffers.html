@@ -1,13 +1,14 @@
-	<style>
-	.column { width: 170px; float: left; padding-bottom: 100px; }
+<style>
+	.column { width: 170px; float:left;}
 	.portlet { margin: 0 1em 1em 0; }
 	.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
 	.portlet-header .ui-icon { float: right; }
 	.portlet-content { padding: 0.4em; }
 	.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
 	.ui-sortable-placeholder * { visibility: hidden; }
-	</style>
-	<script>
+	#containerGrid { overflow: auto;}
+</style>
+<script>
 	$(function() {
 		$( ".column" ).sortable({
 			connectWith: ".column"
@@ -28,26 +29,37 @@
 		$( ".column" ).disableSelection();
 	});
 	</script>
-<div>
-
+<div id="containerGrid">
    #{list listvApp , as:'sc_offer'}    
     <div class="column">
       <div class="portlet">
      	    #{if 'DEPLOYED' == sc_offer.state.name()}
-      	 <!-- <a href="#" class="thumbnail offerDetails" url="@{Consumer.offerDetails(sc_offer.id)}">     -->
+      	 <!-- <a href="#" class="thumbnail offerDetails" url="@{Consumer.offerDetails(sc_offer.id)}"> -->
       	 <div class="portlet-header">${sc_offer.name}</div>
       	 <div class="portlet-content">
-           <a href="#" class="thumbnail">
-         		<img src="@{'/public/images/user/server_on.png'}" height="100px" width="120" >
-           </a>
-		</div>
+            <a href="#" class="thumbnail">
+           		<img src="@{'/public/images/user/server_on.png'}" height="100px" width="120" >
+             </a>
+             <div class="btn-group">
+              <button class="btn"><i class="icon-info-sign"></i></button>
+              <button class="btn"><i class="icon-shopping-cart"></i></button>
+              <button url="@{Consumer.undeploy(sc_offer.id,sc_offer.id)}" class="btn btn-warning undeployConfirm" ><i class="icon-pause icon-white"></i></button>
+              <button url="@{Consumer.deleteOffer(sc_offer.id,sc_offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i></button>
+             </div>
+			</div>
           #{/if}
      		#{else}
    		 <div class="portlet-header">${sc_offer.name}</div>
    		  <div class="portlet-content">
-	      	<a href="#" class="thumbnail">     
-	       		 <img src="@{'/public/images/user/server_off.png'}" height="100px" width="120" >
-	       	</a>
+	      	 <a href="#" class="thumbnail">
+	                  		<img src="@{'/public/images/user/server_off.png'}" height="100px" width="120" >
+              </a>
+              <div class="btn-group">
+               <button class="btn"><i class="icon-info-sign"></i></button>
+               <button class="btn"><i class="icon-shopping-cart"></i></button>
+               <button url="@{Consumer.resumeOffer(sc_offer.id,sc_offer.id)}" class="btn btn-success resumeConfirm" ><i class="icon-play icon-white"></i></button>
+               <button url="@{Consumer.deleteOffer(sc_offer.id,sc_offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i></button>
+              </div>
        	</div>
      		#{/else}
           <!-- <button url="@{Consumer.offerDetails(sc_offer.id)}" class="btn offerDetails"><i class="icon-info-sign"></i>Info</button>
