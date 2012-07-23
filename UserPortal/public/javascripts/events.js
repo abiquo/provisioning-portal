@@ -425,7 +425,7 @@ $(document).ready(function () {
                 dialog.removeClass('progress progress-warning progress-striped active');
                 
             }
-        );       
+        );               
         return false;    
     }); 
     
