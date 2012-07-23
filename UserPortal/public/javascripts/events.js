@@ -371,7 +371,7 @@ $(document).ready(function () {
                 text: "Cancel",
                 class: "btn btn-danger",
                 click: function() {
-                    $( this ).dialog( "close" );
+                	$( ".ui-dialog-content" ).dialog( "close" );
                 }
             }]
         });
@@ -414,7 +414,7 @@ $(document).ready(function () {
                 text: "Close",
                 class: "btn btn-danger",
                 click: function() {
-                    $( this ).dialog( "close" );
+                	$( ".ui-dialog-content" ).dialog( "close" );
                 }
             }]
         });
@@ -430,6 +430,53 @@ $(document).ready(function () {
     }); 
     
     $(".deleteConfirm").live('click', function(){
+        //alert($(this).attr("id").toString());
+        var url = $(this).attr("url").toString();
+        var dialog = $('<div style="display:none" class="loading dialog"><h3><i class="icon-warning-sign"></i> Are you sure you want to delete this Offer?</h3></div>').appendTo('body');
+        var posy = $(document).height() / 8;
+        var posx = $(document).width() / 4;
+        
+        dialog.dialog({
+        	autoOpen: true,
+        	position: [posx,posy],
+            // add a close listener to prevent adding multiple divs to the document                	
+            close: function(event, ui) {
+                // remove div with all data and events
+                dialog.remove();
+            },
+            //title: "Configure",
+            //height: 'auto',
+            //show: { effect: 'show'},
+            width: '800px',   
+            resizable: false,
+            modal: true,
+            buttons: [
+                {             
+                	text: "Delete",
+                	class: "btn btn-danger finalDeleteConfirm",
+                	url: url
+                },
+                {             
+                	text: "Cancel",
+                	class: "btn btn-warning",
+                	click: function() {
+                		$( this ).dialog( "close" );
+                	}
+                }
+            ]
+        });
+        // load remote content
+        /*dialog.load(
+            url, function (responseText, textStatus, XMLHttpRequest) {
+                // remove the loading class
+                dialog.removeClass('loading');
+                $(this).dialog('open');
+            }
+        );       */
+        return false;    
+    }); 
+    
+    $(".finalDeleteConfirm").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
         
@@ -458,7 +505,7 @@ $(document).ready(function () {
                 text: "Close",
                 class: "btn btn-danger",
                 click: function() {
-                    $( this ).dialog( "close" );
+                    $( ".ui-dialog-content" ).dialog( "close" );
                 }
             }]
         });

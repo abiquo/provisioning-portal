@@ -63,6 +63,10 @@ public class ProducerRemote extends Controller {
 		AbiquoContext context = Context.getContext(user, password);
 		AbiquoUtils.setAbiquoUtilsContext(context);
 		Iterable<VirtualDatacenter> vdc_list = AbiquoUtils.getAllVDC();
+		
+		for (VirtualDatacenter virtualDatacenter : vdc_list) {
+			virtualDatacenter.listVirtualAppliances();
+		}
 		return vdc_list;
 
 	}
@@ -277,6 +281,7 @@ public class ProducerRemote extends Controller {
 					scOffer.setDefault_network_type(network.getAddress());
 					scOffer.setId_VirtualDatacenter_ref(va
 							.getVirtualDatacenter().getId());
+					scOffer.setIdVirtualAppliance_ref(va.getId());
 					
 					if (offerSubscription.getLease_period().equals("100 years")) scOffer.setService_type("Infinite");
 					else scOffer.setService_type("Expire");

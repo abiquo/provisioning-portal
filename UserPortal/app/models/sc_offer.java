@@ -57,6 +57,7 @@ public class sc_offer extends GenericModel {
 	@Column(length = 45)
 	private String default_network_type;
 	private Integer idVirtualDataCenter_ref;
+	private Integer idVirtualAppliance_ref;
 	@Column(length = 40)
 	private String service_type;
 	private String virtualDataCenter_name;
@@ -245,6 +246,14 @@ public class sc_offer extends GenericModel {
 
 	public void setState(final String state) {
 		this.state = state;
+	}
+
+	public Integer getIdVirtualAppliance_ref() {
+		return idVirtualAppliance_ref;
+	}
+
+	public void setIdVirtualAppliance_ref(Integer idVirtualAppliance_ref) {
+		this.idVirtualAppliance_ref = idVirtualAppliance_ref;
 	}
 
 }
