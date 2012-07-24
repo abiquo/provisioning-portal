@@ -15,18 +15,41 @@
 </script> 
 <style>
 .row-fluid {
-    background-color: #FBFBFB;
-    background-image: -moz-linear-gradient(center top , #FFFFFF, #F5F5F5);
-    background-repeat: repeat-x;
+   
     border: 1px solid #DDDDDD;
-    border-radius: 2px 16px 2px 64px;
+    border-radius: 16px 16px 2px 16px;
     box-shadow: 0 1px 0 #FFFFFF inset;
     float: left;
     list-style: none outside none;
     margin: 0 0 1px;
-    padding: 20px 10px 10px 0px;
+    padding: 20px 10px 4px 0px;
     position:relative;
     width: 100%;
+    
+background-image: linear-gradient(bottom, rgb(255,162,0) 0%, rgb(237,237,237) 6%, rgb(255,255,255) 92%);
+background-image: -o-linear-gradient(bottom, rgb(255,162,0) 0%, rgb(237,237,237) 6%, rgb(255,255,255) 92%);
+background-image: -moz-linear-gradient(bottom, rgb(255,162,0) 0%, rgb(237,237,237) 6%, rgb(255,255,255) 92%);
+background-image: -webkit-linear-gradient(bottom, rgb(255,162,0) 0%, rgb(237,237,237) 6%, rgb(255,255,255) 92%);
+background-image: -ms-linear-gradient(bottom, rgb(255,162,0) 0%, rgb(237,237,237) 6%, rgb(255,255,255) 92%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0, rgb(255,162,0)),
+	color-stop(0.06, rgb(237,237,237)),
+	color-stop(0.92, rgb(255,255,255))
+);
+}
+
+.thumbnailPurchase {
+	position: relative;
+	left: 12px;
+}
+
+.table-offer {
+	position: relative;
+	left: -16x; 
 }
 </style>
  <div class="accordion">        
@@ -51,7 +74,7 @@
   		#{/else}  		
         <div class="row-fluid">
             <div class="span3">
-                <ul class="thumbnails span">
+                <ul class="thumbnails span thumbnailPurchase">
 			    <li>
 				    <a href="#" class="thumbnail offerDetails" url="@{Consumer.offerDetails(sc_offer.sc_offer_id)}">
 				         <img src="@{Helper.displayIcon(sc_offer.sc_offer_id, sc_offer.icon)}" height="100px" width="140" >
@@ -65,7 +88,7 @@
             </div>
             <div class="span9">                
                 <div style="display: none;">${sc_offer.sc_offer_id}</div>		       
-		         <table class="table table-bordered">
+		         <table class="table-offer table table-bordered ">
 		              <thead class="ui-widget-header">
 			            <tr>
 			                <td><div class="ui-widget">Resource</div></td>
