@@ -30,7 +30,7 @@ import play.db.jpa.GenericModel;
  * @UniqueConstraint(columnNames = "sc_offer_name")})
  */
 @NamedQueries({
-		@NamedQuery(name = "getAllOffersByState", query = "select p from sc_offer as p where p.state = ?1"),
+		@NamedQuery(name = "getAllOffersByState", query = "select p from sc_offer as p where p.state = ?1 order by p.virtualDataCenter_name asc"),
 		@NamedQuery(name = "getAvailableOffersByState", query = "select p from sc_offer as p  where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) and  p.state = ?2"),
 		@NamedQuery(name = "getAllOffers", query = "select p.sc_offer_id from sc_offer as p "),
 		@NamedQuery(name = "groupByVDC", query = "select p from sc_offer as p GROUP BY p.virtualDataCenter_name"),

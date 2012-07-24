@@ -127,9 +127,10 @@ public class Consumer extends Controller {
 			 * .groupByVDC_EnterpriseView(enterpriseID);
 			 */
 			List<sc_offer> result2 = ConsumerDAO.getPublishedOffers();
+			List<sc_offers_subscriptions> result = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
 
 			Logger.info("------------EXITING CONSUMER AVAILABLEOFFERS()--------------");
-			render("/Consumer/ListServiceCatalog.html", result2, user,
+			render("/Consumer/ListServiceCatalog.html", result, result2, user,
 					enterpriseID);
 		} else {
 
