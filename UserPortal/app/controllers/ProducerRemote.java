@@ -154,9 +154,11 @@ public class ProducerRemote extends Controller {
 				VirtualMachine virtualMachine = AbiquoUtils.getVMDetails(vdc,
 						va, vm);
 				// context.getCloudService().getVirtualDatacenter(vdc).getVirtualAppliance(va).getVirtualMachine(vm);
-				Integer cpu = virtualMachine.getCpu();
-				Integer ram = virtualMachine.getRam();
-				long hd = virtualMachine.getHdInBytes();
+				final Integer cpu = virtualMachine.getCpu();
+				final Integer ram = virtualMachine.getRam();
+				
+				//hd in MBytes
+				final Integer hd = (int) (virtualMachine.getHdInBytes() / (1024 * 1024));
 				List<HardDisk> harddisk = virtualMachine
 						.listAttachedHardDisks();
 
@@ -299,12 +301,15 @@ public class ProducerRemote extends Controller {
 						// String vmName = aVM.getName();
 						int cpu = aVM.getCpu();
 						int ram = aVM.getRam();
+						// HD in GBytes
+						int hd = (int) (aVM.getHdInBytes() / (1024 * 1024) );
 						// Long hd = aVM.getHdInBytes();
 						String description = aVM.getDescription();
 						node = new Nodes();
 						node.setId_node(aVM.getId());
 						node.setCpu(cpu);
 						node.setRam(ram);
+						node.setHd(hd);
 						node.setIdImage(vm_template_todeploy.getId());
 						node.setIcon("icon");
 						node.setDescription(description);

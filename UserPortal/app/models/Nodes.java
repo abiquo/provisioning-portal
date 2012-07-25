@@ -32,6 +32,7 @@ public class Nodes extends GenericModel{
 	private Integer idImage;
 	private Integer cpu;
 	private Integer ram;
+	private Integer hd;
 	private String icon;
 	private String description;
 	
@@ -141,5 +142,13 @@ public class Nodes extends GenericModel{
 	public String toString(){
 	return "Node [ID :"+ id_node + ", CPU: " + cpu +", RAM: "+ ram +" , ICON:"+ icon + ", sc_offer: "+ scOffer + ", Nodes_Resources:" + resources + "]";
 }
+
+	public Integer getHd() {
+		return hd;
+	}
+
+	public void setHd(Integer hd) {
+		this.hd = hd;
+	}
 	
 }
