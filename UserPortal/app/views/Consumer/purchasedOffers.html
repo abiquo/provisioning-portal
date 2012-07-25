@@ -28,9 +28,9 @@
 	                  		<img src="@{'/public/images/user/server_on.png'}" height="100px" width="120" >
 	                    </a>
 	                    <div class="btn-group">
-		                    <button class="btn"><i class="icon-info-sign"></i>Info</button>
-		                    <button url="@{Consumer.undeploy(sc_offer.id,sc_offer.id)}" class="btn btn-warning undeployConfirm" ><i class="icon-pause icon-white"></i>Pause</button>
-		                    <button url="@{Consumer.deleteOffer(sc_offer.id,sc_offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i>Delete</button>
+		                    <button class="btn"><i class="icon-info-sign"></i> Info</button>
+		                    <button url="@{Consumer.resetOffer(sc_offer.id,sc_offer.id)}" class="btn btn-warning resetConfirm" ><i class="icon-repeat icon-white"></i> Reset</button>
+		                    <button url="@{Consumer.deleteOffer(sc_offer.id,sc_offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i> Delete</button>
 	                    </div>
                     #{/if}
                		#{else}
@@ -38,9 +38,9 @@
 	                		 <img src="@{'/public/images/user/server_off.png'}" height="100px" width="120" >
 	                	</a>
 	                    <div class="btn-group">
-		                    <button class="btn"><i class="icon-info-sign"></i>Info</button>
-		                    <button url="@{Consumer.resumeOffer(sc_offer.id,sc_offer.id)}" class="btn btn-success resumeConfirm" ><i class="icon-play icon-white"></i>Resume</button>
-		                    <button url="@{Consumer.deleteOffer(sc_offer.id,sc_offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i>Delete</button>
+		                    <button class="btn"><i class="icon-info-sign"></i> Info</button>
+		                    <button url="@{Consumer.resumeOffer(sc_offer.id,sc_offer.id)}" class="btn btn-success resumeConfirm" ><i class="icon-play icon-white"></i> Resume</button>
+		                    <button url="@{Consumer.deleteOffer(sc_offer.id,sc_offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i> Delete</button>
 	                    </div>
                		#{/else}
                     <!-- <button url="@{Consumer.offerDetails(sc_offer.id)}" class="btn offerDetails"><i class="icon-info-sign"></i>Info</button>

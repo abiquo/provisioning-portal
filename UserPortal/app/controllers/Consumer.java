@@ -45,6 +45,7 @@ import portal.util.Context;
 
 import com.abiquo.model.enumerator.HypervisorType;
 import com.abiquo.server.core.cloud.VirtualApplianceState;
+import com.abiquo.server.core.cloud.VirtualMachineState;
 import com.abiquo.server.core.task.enums.TaskState;
 
 /**
@@ -721,7 +722,7 @@ public class Consumer extends Controller {
 				AsyncTask[] undeployTasks = vapp.undeploy();			
 				monitorVapp.awaitCompletionUndeploy(vapp);
 				
-				if (vapp.getState() == VirtualApplianceState.NOT_DEPLOYED) {
+				if (vapp.getState() == VirtualApplianceState.DEPLOYED) {
 					vapp.delete();
 					vdc.delete();	
 				} else {
@@ -835,6 +836,121 @@ public class Consumer extends Controller {
 					AbiquoUtils.checkErrorsInTasks(deployTasks);
 					Logger.info("Tasks Checked");
 					
+				}				
+				
+				Logger.info("OFFER RESUMED ......");
+				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
+				render(vdc_name, enterprise_id);				
+
+			} catch (AuthorizationException ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED IN deploy()");
+				String message = "Deployment cannot proceed further. Please Check deploy user and password for your enterprise.";
+				render("/errors/error.html", message);
+			} catch (Exception ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED  IN deploy()");
+				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
+				render("/errors/error.html", message);
+				if (context != null) {
+					context.close();
+				}
+
+			}
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	public static void resetOffer(final Integer sc_offer_id,final Integer vappId) {
+		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
+				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
+				+ " , String va_param:: " + vappId + ")");
+
+		String deploy_username = null;
+		String deploy_password = null;
+		Integer deploy_enterprise_id = null;
+
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext contextt = Context.getContext(user, password);
+		if (contextt != null) {
+			AbiquoUtils.setAbiquoUtilsContext(contextt);
+
+			/* ---------------------------- */
+			/*
+			 * Retrieve the deploy username and password for current user's
+			 * Enterprise.
+			 */
+			Enterprise current_enterprise = AbiquoUtils
+					.getCurrentUserEnterprise();
+			Integer enterprise_id = current_enterprise.getId();
+			/*List<MKT_Configuration> mkt_conf = MarketDAO
+					.getMKTConfiguration(enterprise_id);
+
+			for (MKT_Configuration mkt : mkt_conf) {
+				deploy_username = mkt.getMkt_deploy_user();
+				deploy_password = mkt.getMkt_deploy_pw();
+				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
+			}*/
+			
+			deploy_username = user;
+			deploy_password = password;
+			deploy_enterprise_id = current_enterprise.getId();
+			
+			Logger.info(" UNDEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :"
+					+ deploy_enterprise_id + "  " + deploy_username + "  "
+					+ deploy_password);
+			/* ---------------------------- */
+
+			/* Create context with deploy username and password for deployments */
+			AbiquoContext context = Context.getContext(deploy_username,
+					deploy_password);
+
+			VirtualDatacenter vdc_toDeploy = null;
+			VirtualAppliance virtualapp_todeploy = null;
+			VirtualMachine vm_todeploy = null;
+			VirtualDatacenter virtualDC = null;
+			String vdc_name = null;
+			try {			
+				Enterprise enterprise = AbiquoUtils
+						.getEnterprise(deploy_enterprise_id);
+				String useremail = session.get("email");
+				String vdc_user = session.get("username");
+				String vdcname = Helper.vdcNameGen(vdc_user);
+				Logger.info("CURRENT USER EMAIL ID: " + useremail);
+				Logger.info(" vdcname : " + vdcname);
+
+				
+				
+				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
+				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				
+				List<VirtualMachine> lvm = vapp.listVirtualMachines();
+				VirtualMachine[] arr = new VirtualMachine[lvm.size()];				
+				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
+				
+				for (VirtualMachine virtualMachine : lvm) {
+					virtualMachine.changeState(VirtualMachineState.OFF);
+				}
+				monitor.awaitState(VirtualMachineState.OFF,lvm.toArray(arr));
+				
+				for (VirtualMachine virtualMachine : lvm) {
+					virtualMachine.changeState(VirtualMachineState.ON);
+				}
+				monitor.awaitState(VirtualMachineState.ON,lvm.toArray(arr));
+						
+				if (vapp.getState() == VirtualApplianceState.DEPLOYED) {
+					Logger.info("OFFER RESET SUCCESSFULLY");
+				} else {					
+					//AbiquoUtils.checkErrorsInTasks(deployTasks);
+					Logger.info("Tasks Checked");					
 				}				
 				
 				Logger.info("OFFER RESUMED ......");

@@ -563,6 +563,49 @@ $(document).ready(function () {
         );       
         return false;    
     }); 
+    $(".resetConfirm").live('click', function(){
+        //alert($(this).attr("id").toString());
+        var url = $(this).attr("url").toString();
+        
+        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+	    				'<div><div><h3><i class="icon-tasks"></i>Resetting Offer</h3></div><br />Please Wait...<br /></div>' +
+	    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
+
+        var posy = $(document).height() / 8;
+        var posx = $(document).width() / 4;
+         
+        dialog.dialog({
+        	autoOpen: true,
+        	position: [posx,posy],
+            // add a close listener to prevent adding multiple divs to the document                	
+            close: function(event, ui) {
+                // remove div with all data and events
+                dialog.remove();
+            },
+            //title: "Configure",
+            //height: 'auto',
+            //show: { effect: 'show'},
+            width: '800px',     
+            resizable: false,
+            modal: true,
+            buttons: [{             
+                text: "Close",
+                class: "btn btn-danger",
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+            }]
+        });
+        // load remote content
+        dialog.load(
+            url, function (responseText, textStatus, XMLHttpRequest) {
+                // remove the loading class
+                dialog.removeClass('progress progress-warning progress-striped active');
+                
+            }
+        );       
+        return false;    
+    }); 
     
     $(".resumeConfirm").live('click', function(){
         //alert($(this).attr("id").toString());
