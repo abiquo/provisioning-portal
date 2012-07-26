@@ -2,68 +2,71 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Set context name 
+%{ ctx = play.configuration.getProperty('war.context', '') }% 
+
 # Home page
-GET     /                                   	Login.login_page
-GET		/login/connect							Login.connect
-GET 	/login/logout					    	Login.logout
+GET      ${ctx}/                                   	Login.login_page
+GET		 ${ctx}/login/connect							Login.connect
+GET 	 ${ctx}/login/logout					    	Login.logout
 
 
 
-GET 	/ProducerLocal/admin						ProducerLocal.admin
+GET 	 ${ctx}/ProducerLocal/admin						ProducerLocal.admin
 
-GET 	/Producer/poe								Producer.poe
-GET 	/Producer/listAllOffers						Producer.listAllOffers
-POST 	/Producer/poe								Producer.poe
+GET 	 ${ctx}/Producer/poe								Producer.poe
+GET 	 ${ctx}/Producer/listAllOffers						Producer.listAllOffers
+POST 	 ${ctx}/Producer/poe								Producer.poe
 
-GET 	/ProducerRemote/listvdc						ProducerRemote.listVDC
-POST 	/ProducerRemote/listvdc						ProducerRemote.listVDC
-GET		/ProducerRemote/vmDetails					ProducerRemote.vmDetails
-GET 	/ProducerRemote/listvm					    ProducerRemote.listVM
-GET 	/ProducerRemote/listva					    ProducerRemote.listVA
-POST 	/ProducerRemote/addtoservicecatalog			ProducerRemote.addToServiceCatalog
-GET 	/ProducerRemote/configure					ProducerRemote.configure
+GET 	 ${ctx}/ProducerRemote/listvdc						ProducerRemote.listVDC
+POST 	 ${ctx}/ProducerRemote/listvdc						ProducerRemote.listVDC
+GET		 ${ctx}/ProducerRemote/vmDetails					ProducerRemote.vmDetails
+GET 	 ${ctx}/ProducerRemote/listvm					    ProducerRemote.listVM
+GET 	 ${ctx}/ProducerRemote/listva					    ProducerRemote.listVA
+POST 	 ${ctx}/ProducerRemote/addtoservicecatalog			ProducerRemote.addToServiceCatalog
+GET 	 ${ctx}/ProducerRemote/configure					ProducerRemote.configure
 
-GET 	/ProducerLocal/configureExistingOffer		ProducerLocal.configureExistingOffer
-GET 	/ProducerLocal/displayOffer 				ProducerLocal.displayOffer 
-POST 	/ProducerLocal/saveConfigure				ProducerLocal.saveConfigure 
-GET     /ProducerLocal/subscribedOffers				ProducerLocal.subscribedOffers
-POST    /ProducerLocal/subscribedOffers				ProducerLocal.subscribedOffers
-GET     /ProducerLocal/disableOffer					ProducerLocal.disableOffer
+GET 	 ${ctx}/ProducerLocal/configureExistingOffer		ProducerLocal.configureExistingOffer
+GET 	 ${ctx}/ProducerLocal/displayOffer 				ProducerLocal.displayOffer 
+POST 	 ${ctx}/ProducerLocal/saveConfigure				ProducerLocal.saveConfigure 
+GET      ${ctx}/ProducerLocal/subscribedOffers				ProducerLocal.subscribedOffers
+POST     ${ctx}/ProducerLocal/subscribedOffers				ProducerLocal.subscribedOffers
+GET      ${ctx}/ProducerLocal/disableOffer					ProducerLocal.disableOffer
 
-GET 	/MarketEnable/publishOffersPerMarket 		MarketEnable.publishOffersPerMarket
-GET     /MarketEnable/marketEnable					MarketEnable.marketEnable
-POST    /MarketEnable/marketEnable					MarketEnable.marketEnable
-GET     /MarketEnable/enable						MarketEnable.Enable
-GET     /MarketEnable/saveMKTConfiguration			MarketEnable.saveMKTConfiguration
-GET     /MarketEnable/enableMKTConfiguration        MarketEnable.enableMKTConfiguration
-GET     /MarketEnable/publishMarket					MarketEnable.publishMarket
-POST    /MarketEnable/saveMarketView				MarketEnable.saveMarketView
+GET 	 ${ctx}/MarketEnable/publishOffersPerMarket 		MarketEnable.publishOffersPerMarket
+GET      ${ctx}/MarketEnable/marketEnable					MarketEnable.marketEnable
+POST     ${ctx}/MarketEnable/marketEnable					MarketEnable.marketEnable
+GET      ${ctx}/MarketEnable/enable						MarketEnable.Enable
+GET      ${ctx}/MarketEnable/saveMKTConfiguration			MarketEnable.saveMKTConfiguration
+GET      ${ctx}/MarketEnable/enableMKTConfiguration        MarketEnable.enableMKTConfiguration
+GET      ${ctx}/MarketEnable/publishMarket					MarketEnable.publishMarket
+POST     ${ctx}/MarketEnable/saveMarketView				MarketEnable.saveMarketView
 
-GET 	/consumer/availableoffers				Consumer.availableOffers
-GET 	/consumer/availableoffersAll			Consumer.availableOffersAll
-GET     /consumer/purchasedOffers               Consumer.purchasedOffers
-GET 	/consumer/servicecatalog				Consumer.ServiceCatalog
-GET 	/consumer/offerdetails					Consumer.offerDetails
-GET 	/consumer/purchaseconfirmation			Consumer.purchaseConfirmation
-GET 	/consumer/deploy					    Consumer.deploy
-GET 	/consumer/undeploy					    Consumer.undeploy
-GET 	/consumer/deleteOffer					Consumer.deleteOffer
-GET 	/consumer/resumeOffer					Consumer.resumeOffer
-GET 	/consumer/resetOffer					Consumer.resetOffer
-GET 	/helper/displayIcon						Helper.displayIcon
-GET 	/helper/displayIconName				    Helper.displayIconName
-GET 	/helper/displayImage 					Helper.displayImage
-GET 	/consumer/displayIcon					Helper.displayIcon
+GET 	 ${ctx}/consumer/availableoffers				Consumer.availableOffers
+GET 	 ${ctx}/consumer/availableoffersAll			Consumer.availableOffersAll
+GET      ${ctx}/consumer/purchasedOffers               Consumer.purchasedOffers
+GET 	 ${ctx}/consumer/servicecatalog				Consumer.ServiceCatalog
+GET 	 ${ctx}/consumer/offerdetails					Consumer.offerDetails
+GET 	 ${ctx}/consumer/purchaseconfirmation			Consumer.purchaseConfirmation
+GET 	 ${ctx}/consumer/deploy					    Consumer.deploy
+GET 	 ${ctx}/consumer/undeploy					    Consumer.undeploy
+GET 	 ${ctx}/consumer/deleteOffer					Consumer.deleteOffer
+GET 	 ${ctx}/consumer/resumeOffer					Consumer.resumeOffer
+GET 	 ${ctx}/consumer/resetOffer					Consumer.resetOffer
+GET 	 ${ctx}/helper/displayIcon						Helper.displayIcon
+GET 	 ${ctx}/helper/displayIconName				    Helper.displayIconName
+GET 	 ${ctx}/helper/displayImage 					Helper.displayImage
+GET 	 ${ctx}/consumer/displayIcon					Helper.displayIcon
  
 # Ignore favicon requests
-GET     /favicon.ico                            404
+GET      ${ctx}/favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
-GET     /public/                                staticDir:public
+GET      ${ctx}/public/                                staticDir:public
 
 # Catch all
 
-#*       /{controller}/{action}                  {controller}.{action}
+#*        ${ctx}/{controller}/{action}                  {controller}.{action}
 # Import CRUD routes
-#*     /admin           module:crud
-#*		/mkt_configurations module:crud
+#*      ${ctx}/admin           module:crud
+#*		${ctx}/mkt_configurations module:crud
