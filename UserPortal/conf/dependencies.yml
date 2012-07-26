@@ -2,27 +2,27 @@
 
 require:
     - play -> crud
-    - org.jclouds.provider -> jclouds-abiquo 2.2.1
+    - org.jclouds.provider -> jclouds-abiquo 2.2.3
     # Force dependencies that already come with Play
     - com.google.code.gson -> gson 2.1:
         force: true
     
-
-
-    
 repositories:
-    - localrepo:
+    - abiquo:
         type: iBiblio
-        root: "file:////${user.home}/.m2/repository/"
+        root: "http://repo.community.abiquo.com/repo"
         contains:
             - com.abiquo -> *
             - com.abiquo.abicloud -> *
             - org.jclouds.provider -> *
-        m2compatible: true
-    - abiquo:
-        type: iBiblio
-        root: "http://repo.community.abiquo.com/repo"
     - jclouds:
         type: iBiblio
         root: "https://oss.sonatype.org/content/repositories/snapshots"
-
+#    - localrepo:
+#        type: iBiblio
+#        root: "file:////${user.home}/.m2/repository/"
+#        contains:
+#            - com.abiquo -> *
+#            - com.abiquo.abicloud -> *
+#            - org.jclouds.provider -> *
+#        m2compatible: true
