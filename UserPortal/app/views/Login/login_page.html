@@ -4,27 +4,27 @@
 <title>Login</title>
   <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
   
-   <link type="text/css" href="@{'/public/stylesheets/custom-theme/jquery-ui-1.8.21.custom.css'}" rel="stylesheet" />
-   <link rel="stylesheet" href="@{'/public/stylesheets/bootstrap.css'}" type="text/css" />
+   <link type="text/css" href="@@{'/public/stylesheets/custom-theme/jquery-ui-1.8.21.custom.css'}" rel="stylesheet" />
+   <link rel="stylesheet" href="@@{'/public/stylesheets/bootstrap.css'}" type="text/css" />
    
-   <script type="text/javascript" src="@{'/public/javascripts/jquery-1.7.2.min.js'}"></script>
-   <script type="text/javascript" src="@{'/public/javascripts/jquery-ui-1.8.21.custom.min.js'}"></script>
-   <script type="text/javascript" src="@{'/public/javascripts/jquery.form.js'}"></script> 
-   <script type="text/javascript" src="@{'/public/javascripts/jquery.validate.js'}"></script>
+   <script type="text/javascript" src="@@{'/public/javascripts/jquery-1.7.2.min.js'}"></script>
+   <script type="text/javascript" src="@@{'/public/javascripts/jquery-ui-1.8.21.custom.min.js'}"></script>
+   <script type="text/javascript" src="@@{'/public/javascripts/jquery.form.js'}"></script> 
+   <script type="text/javascript" src="@@{'/public/javascripts/jquery.validate.js'}"></script>
    <script>
 	  $(document).ready(function(){
 	    $("#loginFormCenter").validate();
 	  });
    </script>
     <!-- Le styles -->
-    <script src="@{'/public/javascripts/bootstrap.js'}"></script>   
-    <link rel="icon" type="image/x-icon" href="@{'/public/images/favicon.ico'}" />
-        <link rel="shortcut icon" type="image/x-icon" href="@{'/public/images/favicon.ico'}">
+    <script src="@@{'/public/javascripts/bootstrap.js'}"></script>   
+    <link rel="icon" type="image/x-icon" href="@@{'/public/images/favicon.ico'}" />
+        <link rel="shortcut icon" type="image/x-icon" href="@@{'/public/images/favicon.ico'}">
     <style type="text/css">
       /* Override some defaults */
       html, body {
         /*background-color: #eee;*/
-        background-image:url("@{'public/images/simple-sky-cloud.jpg'}");
+        background-image:url("@@{'public/images/simple-sky-cloud.jpg'}");
         background-repeat:no-repeat;
         background-size:100%;
       }
@@ -77,7 +77,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <div id="logo" class="pull-left"><img src="@{'/public/images/logo-abiquo.png'}" width="188" height="50" /></div><br />
+          <div id="logo" class="pull-left"><img src="@@{'/public/images/logo-abiquo.png'}" width="188" height="50" /></div><br />
           <a class="brand" href="#">Marketplace</a>          
           <!-- <div class="nav-collapse">
             <ul class="nav">
@@ -107,7 +107,7 @@
           <div class="row">
               <div class="login-form">
                   <h2>Login</h2>
-                  <form id="loginFormCenter" action="@{Login.connect()}" method="GET">
+                  <form id="loginFormCenter" action="@@{Login.connect()}" method="GET">
                       <fieldset>
                           <div class="clearfix">
                               <input type="text" name="username" placeholder="Username">
@@ -174,5 +174,5 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="@{'/public/javascripts/events.js'}"></script>
+<script type="text/javascript" src="@@{'/public/javascripts/events.js'}"></script>
 </html>

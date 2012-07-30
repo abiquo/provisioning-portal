@@ -12,7 +12,7 @@
 <div id="tabcontainer">
        <ul id="tabnav">
           #{list resultSet, as:'subscoffer'}
-					<li><a href = "@{displayOffer(subscoffer.service_level)}"> ${subscoffer.service_level}</a></li>
+					<li><a href = "@@{displayOffer(subscoffer.service_level)}"> ${subscoffer.service_level}</a></li>
 		  #{/list}
 		</ul>
 #{ifnot resultSet1}
@@ -31,7 +31,7 @@
   
 				<tr>
 
-					<td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id, subscoffers.sc_offer.icon)}" height="100px" width="140px"  /></td>
+					<td><img src="@@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id, subscoffers.sc_offer.icon)}" height="100px" width="140px"  /></td>
 								#{list subscoffers.sc_offer, as:'sc_offer'}
 					<td><b> OfferId : </b> ${subscoffers.id} <b> Offer Name </b>: ${sc_offer.sc_offer_name} <br />
 								#{/list}
@@ -41,12 +41,12 @@
 						<b> CPU </b>:${nodes.cpu}  <b> RAM : </b> ${nodes.ram} </b> <br />
 								#{/list}
 					</td>
-					<td> &nbsp;&nbsp;&nbsp;&nbsp;<a href ="@{ProducerLocal.configureExistingOffer(sc_offer.sc_offer_id)}"> Configure </a> &nbsp;&nbsp;&nbsp;
-	 											<a href ="@{ProducerLocal.disableOffer(subscoffers.id)}"> Disable </a>
+					<td> &nbsp;&nbsp;&nbsp;&nbsp;<a href ="@@{ProducerLocal.configureExistingOffer(sc_offer.sc_offer_id)}"> Configure </a> &nbsp;&nbsp;&nbsp;
+	 											<a href ="@@{ProducerLocal.disableOffer(subscoffers.id)}"> Disable </a>
 					 </td>
   				</tr>
 			#{/list}
 	</table>
 #{/else}
 #{/else}
-<p><a href ="@{ProducerLocal.admin()}"> Home  </a></p>
+<p><a href ="@@{ProducerLocal.admin()}"> Home  </a></p>

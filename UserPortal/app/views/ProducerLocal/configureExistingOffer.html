@@ -43,7 +43,7 @@
     
 </script>
  #{list scOffer, as:'scOffer'} 
-<form name="configureExistingOffer" action ="@{ProducerLocal.saveConfigure(sc_offers,icon, image, subscription )}" method = "POST" enctype="multipart/form-data">
+<form name="configureExistingOffer" action ="@@{ProducerLocal.saveConfigure(sc_offers,icon, image, subscription )}" method = "POST" enctype="multipart/form-data">
 	<fieldset>
 	<h2 class="pull-right">Configure Offer</h2><br /><br /> 
 	<div class="pull-right" style="display:none;" >Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${scOffer.sc_offer_id}" readonly /></div>	
@@ -67,7 +67,7 @@
         <div class="pull-left btn btn-warning" id="file">Chose an offer icon to display</div>
         <input type="file" name="icon" onchange="readURL(this);"/> <br />
          <a href="#" class="thumbnail" alt="Icon" id="fileThumbnail">
-             <img id="image" src="@{Helper.displayIcon(scOffer.sc_offer_id)}" width="100" height=100" >
+             <img id="image" src="@@{Helper.displayIcon(scOffer.sc_offer_id)}" width="100" height=100" >
          </a>
     </div><br /><br /><br /><br /><br /><br /><br /><br />
     <div class="pull-right"><input type="submit" class="btn btn-warning" value="Enable" name="submit"> </div>

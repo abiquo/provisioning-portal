@@ -7,3 +7,4 @@ eclipse
 .project
 UserPortal/data/attachments/*
 UserPortal/application.log*
+UserPortal/precompiled*

@@ -791,7 +791,7 @@ $(document).ready(function () {
 		//// refresh table
 		
 		var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
-		//console.log(url);
+		console.log(url);
 		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
 		//console.dir(activeTab);
 		//$(".dialog").dialog( "close" );
@@ -807,6 +807,66 @@ $(document).ready(function () {
         });
 		
 		
+	    return false; // prevent default action
+
+	});
+	
+	$('form[name=configureExistingOffer]').live('submit',function(){
+
+		var code = $(this).ajaxSubmit(function (responseText, textStatus, XMLHttpRequest) {
+			console.log(responseText);			
+			
+			var dialog = $('<div style="display:none" class="loading dialog">' + responseText + '</div>').appendTo('body');
+			
+			var posy = $(document).height() / 8;
+		    var posx = $(document).width() / 4;
+		    
+		    dialog.dialog({
+		    	autoOpen: true,
+		    	//position: [posx,posy],
+		        // add a close listener to prevent adding multiple divs to the document                	
+		        close: function(event, ui) {
+		            // remove div with all data and events
+		            dialog.remove();
+		        },
+		        //title: "Configure",
+		        //height: 'auto',
+		        //show: { effect: 'show'},
+		        width: 'auto',     
+		        resizable: false,
+		        modal: true,
+		        buttons: [{             
+		            text: "Accept",
+		            class: "btn btn-warning",
+		            click: function() {
+		                $( this ).dialog( "close" );
+		                $(".dialog").dialog( "close" );
+		            }
+		        }]
+		    });
+		});  	  
+		//// refresh table
+		
+		var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
+		console.log(url);
+		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
+		//console.dir(activeTab);
+		//$(".dialog").dialog( "close" );
+		activeTab.animate({opacity: 0}, 600).load(url, function (responseText, textStatus, XMLHttpRequest) {
+            //$("#dialog").dialog("close");
+//			$('#accordionOffers').find('img').each( function() {
+//				var url = $(this).attr("src");
+//				$(this).load(url);
+//				//var img = $('<div class="img"><img src="'+ $(this).attr("src") +' /></div>').appendTo($(this));
+//				//$(this).load($(this).attr("src"));		
+//				//$(this).attr("src", "@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}");
+//				//$(this).attr("src", $(this).attr("src"));
+//				/*$(this).attr("src", $(this).attr("src"));
+//				$(this).attr("ref", $(this).attr("src"));*/
+//			});		
+        	$(this).animate({opacity: 1}, 600);
+        	
+        });
 	    return false; // prevent default action
 
 	});
@@ -848,7 +908,7 @@ $(document).ready(function () {
 		//// refresh table
 		
 		var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
-		//console.log(url);
+		console.log(url);
 		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
 		//console.dir(activeTab);
 		//$(".dialog").dialog( "close" );
@@ -868,65 +928,7 @@ $(document).ready(function () {
 	    return false; // prevent default action
 
 	});
-	$('form[name=configureExistingOffer]').live('submit',function(){
-
-		var code = $(this).ajaxSubmit(function (responseText, textStatus, XMLHttpRequest) {
-			console.log(responseText);			
-			
-			var dialog = $('<div style="display:none" class="loading dialog">' + responseText + '</div>').appendTo('body');
-			
-			var posy = $(document).height() / 8;
-		    var posx = $(document).width() / 4;
-		    
-		    dialog.dialog({
-		    	autoOpen: true,
-		    	//position: [posx,posy],
-		        // add a close listener to prevent adding multiple divs to the document                	
-		        close: function(event, ui) {
-		            // remove div with all data and events
-		            dialog.remove();
-		        },
-		        //title: "Configure",
-		        //height: 'auto',
-		        //show: { effect: 'show'},
-		        width: 'auto',     
-		        resizable: false,
-		        modal: true,
-		        buttons: [{             
-		            text: "Accept",
-		            class: "btn btn-warning",
-		            click: function() {
-		                $( this ).dialog( "close" );
-		                $(".dialog").dialog( "close" );
-		            }
-		        }]
-		    });
-		});  	  
-		//// refresh table
-		
-		var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
-		//console.log(url);
-		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
-		//console.dir(activeTab);
-		//$(".dialog").dialog( "close" );
-		activeTab.animate({opacity: 0}, 600).load(url, function (responseText, textStatus, XMLHttpRequest) {
-            //$("#dialog").dialog("close");
-//			$('#accordionOffers').find('img').each( function() {
-//				var url = $(this).attr("src");
-//				$(this).load(url);
-//				//var img = $('<div class="img"><img src="'+ $(this).attr("src") +' /></div>').appendTo($(this));
-//				//$(this).load($(this).attr("src"));		
-//				//$(this).attr("src", "@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}");
-//				//$(this).attr("src", $(this).attr("src"));
-//				/*$(this).attr("src", $(this).attr("src"));
-//				$(this).attr("ref", $(this).attr("src"));*/
-//			});		
-        	$(this).animate({opacity: 1}, 600);
-        	
-        });
-	    return false; // prevent default action
-
-	});
+	
 	$('form[name=enableMarket]').live('submit',function(){
 
 		$(this).ajaxSubmit(); 	  
