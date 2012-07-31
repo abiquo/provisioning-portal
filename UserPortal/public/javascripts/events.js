@@ -16,6 +16,7 @@ $(document).ready(function () {
     }).next().hide();
     
     $('#showRegister').live('click', function() {
+    	$(this).fadeOut();
         $('#registerForm').fadeIn();
         return false;
     });
