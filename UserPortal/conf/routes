@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                                   	Login.login_page
+GET 	/login/connect							Login.connect
 POST	/login/connect							Login.connect
 GET 	/login/logout					    	Login.logout
 POST	/register								Login.register
