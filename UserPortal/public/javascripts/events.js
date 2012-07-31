@@ -14,6 +14,11 @@ $(document).ready(function () {
         $(this).next().toggle();
         return false;
     }).next().hide();
+    
+    $('#showRegister').live('click', function() {
+        $('#registerForm').fadeIn();
+        return false;
+    });
         
     $('.publishCheck').live('click', function() {	
 

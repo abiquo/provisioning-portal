@@ -34,12 +34,13 @@
       .container {
         width: 300px;
       }
+      
 
       /* The white background content wrapper */
       .container > .content {
         background-color: #fff;
         padding: 20px;
-        margin: 0 -20px; 
+        margin: 2px;        
         -webkit-border-radius: 10px 10px 10px 10px;
            -moz-border-radius: 10px 10px 10px 10px;
                 border-radius: 10px 10px 10px 10px;
@@ -49,14 +50,14 @@
       }
 
     .login-form {
-      margin-left: 65px;
+      margin-left: 50px;
     }
     #loginForm {
       margin: -10px;
     }
     .brandTop {
        margin:0px;
-      margin-top: 2px;
+       margin-top: 2px;
     }
   
     legend {
@@ -64,6 +65,24 @@
       font-weight: bold;
       color: #404040;
     }
+    
+    .front-signin, .front-signup {
+    background: -moz-linear-gradient(center top , #FFFFFF 0px, #DDDDDD 100%) repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #CCCCCC;
+    border-left: 1px solid #EEEEEE;
+    border-right: 1px solid #EEEEEE;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	}
+	.front-welcome, .front-signin, .front-signup {
+	    border-radius: 4px 4px 4px 4px;
+	}
+	.front-signup {
+	    height: 206px;
+	    left: 536px;
+	    position: absolute;
+	    top: 121px;
+	    width: 300px;
+	}
 
     </style>
 </head>
@@ -115,18 +134,48 @@
                           <div class="clearfix">
                               <input type="password" name="password" placeholder="Password">
                           </div>
-                          <button name="signIn" class="btn btn-warning primary" type="submit">Sign in <i class="icon-ok icon-white"></i></button>
+                          <button name="signIn" class="btn btn-warning primary" type="submit">Sign in <i class="icon-ok icon-white"></i></button><a id="showRegister" href="#"> Don't have an account?</a>
                           #{if flash.error}
                           	<br /><br /><h4><i class="icon-exclamation-sign"></i> ${flash.error}</h4>
                           #{/if} 
                       </fieldset>
                   </form>
               </div>
-          </div>
+          </div>          
       </div>
-  </div> <!-- /container -->
+       <div id="registerForm" class="content hero-unit" style="display:none;">
+          <div class="row">
+          	 <div class="login-form">
+		       <h2>Register</h2>		
+		       <form method="post" class="signup" action="">
+		         <div class="clearfix">
+		           <input type="text" maxlength="20" name="user[name]" autocomplete="off" class="text-input" placeholder="Username">		           
+		         </div>
+		         <div class="clearfix">
+		           <input type="text" name="user[email]" autocomplete="off" class="text-input email-input"  placeholder="Email">		          
+		         </div>
+		         <div class="clearfix">
+		           <input type="password" name="user[user_password]" class="text-input"  placeholder="Password">		        
+		         </div>	
+		         <div class="clearfix">
+		           <input type="password" name="user[user_password2]" class="text-input"  placeholder="Repeat Password">		        
+		         </div>		
+		         <input type="hidden" name="context" value="front">
+		         <input type="hidden" name="authenticity_token" value="55e84e86d7151d139d9fa32075f4cc8215577269">
+		         <button class="btn btn-warning primary" type="submit">
+		           Register <i class="icon-plus-sign icon-white"></i>
+		         </button>
+		          #{if flash.error}
+                  	<br /><br /><h4><i class="icon-exclamation-sign"></i> ${flash.error}</h4>
+                  #{/if} 	
+		       </form>
+		     </div>
+          </div>
+       </div>
+  </div> <!-- /container -->  
     </div>
-    <div id="main">
+    <div id="main"> 
+   
       <!-- <div id="form">        
         <form id="loginForm" action="@{Login.connect()}" method="GET">
           <h2>Login</h2>

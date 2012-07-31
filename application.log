@@ -1435,3 +1435,82 @@ Caused by: java.lang.VerifyError: Cannot inherit from final class
 17:41:40,208 INFO  ~ Module crud is available (/opt/play-1.2/modules/crud)
 17:41:40,268 INFO  ~ Precompiling ...
 17:41:46,217 INFO  ~ Done.
+09:58:57,979 INFO  ~ Starting /home/dlopez/provisioning-portal/UserPortal
+09:58:57,982 INFO  ~ Module crud is available (/opt/play-1.2/modules/crud)
+09:58:58,041 INFO  ~ Precompiling ...
+09:59:03,990 INFO  ~ Done.
+09:59:48,168 INFO  ~ Starting /opt/tomcat/webapps/ProvisioningPortal/WEB-INF/application
+09:59:48,170 INFO  ~ Module crud is available (/opt/tomcat/webapps/ProvisioningPortal/WEB-INF/application/modules/crud)
+09:59:48,352 INFO  ~ Application is precompiled
+09:59:48,899 INFO  ~ Connected to jdbc:mysql://localhost/portal
+09:59:59,408 INFO  ~ Application 'ProvisioningPortal' is now started !
+10:00:08,071 INFO  ~ -------------- INSIDE LOGIN.CONNECT()--------------
+10:00:08,787 INFO  ~ context: {provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+10:00:09,328 INFO  ~ Role of userRole [id=1, name=CLOUD_ADMIN, blocked=true]
+10:00:16,959 INFO  ~ -----INSIDE PRODUCER LISTVDC()------ 
+10:00:17,039 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+10:00:17,750 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+10:00:17,944 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualAppliance_ref as idVirtua8_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua9_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc11_10_, sc_offer0_.service_type as service12_10_, sc_offer0_.short_description as short13_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual15_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+10:00:18,039 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualAppliance_ref as idVirtua8_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua9_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc11_10_, sc_offer0_.service_type as service12_10_, sc_offer0_.short_description as short13_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual15_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+10:00:18,087 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualAppliance_ref as idVirtua8_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua9_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc11_10_, sc_offer0_.service_type as service12_10_, sc_offer0_.short_description as short13_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual15_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+10:00:18,142 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+10:00:18,143 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ order by sc_offers_0_.service_level ASC
+10:00:18,144 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+10:00:18,144 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+10:00:18,144 DEBUG ~ /* named HQL query getSubscribedOffers */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ where sc_offers_0_.service_level=?
+10:00:18,146 INFO  ~ resultSet1 size :0
+10:00:18,146 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+10:00:18,146 INFO  ~  resultSet1 size []
+10:00:18,146 INFO  ~  -----INSIDE PRODUCER DISPLAYOFFER()------
+10:00:19,419 INFO  ~  -----INSIDE PRODUCER LISTVM()------
+10:00:19,475 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+10:00:19,754 INFO  ~  -----INSIDE PRODUCERDAO getPublishedOfferDetails()------
+10:00:19,754 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualAppliance_ref as idVirtua8_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua9_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc11_10_, sc_offer0_.service_type as service12_10_, sc_offer0_.short_description as short13_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual15_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+10:00:19,755 INFO  ~  -----EXITING PRODUCERDAO getPublishedOfferDetails()------
+10:00:19,809 INFO  ~  -----INSIDE PRODUCER VMDETAILS()------
+10:00:19,809 INFO  ~ Session user in vmDetails(): admin
+10:00:19,853 INFO  ~  -----INSIDE PRODUCER VMDETAILS()------
+10:00:19,853 INFO  ~ Session user in vmDetails(): admin
+10:00:22,854 INFO  ~  -----INSIDE PRODUCER LISTVM()------
+10:00:22,904 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+10:00:23,124 INFO  ~  -----INSIDE PRODUCERDAO getPublishedOfferDetails()------
+10:00:23,124 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualAppliance_ref as idVirtua8_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua9_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc11_10_, sc_offer0_.service_type as service12_10_, sc_offer0_.short_description as short13_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual15_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+10:00:23,126 INFO  ~  -----EXITING PRODUCERDAO getPublishedOfferDetails()------
+10:00:23,160 INFO  ~  -----INSIDE PRODUCER VMDETAILS()------
+10:00:23,160 INFO  ~ Session user in vmDetails(): admin
+10:00:26,593 INFO  ~  -----INSIDE PRODUCER LISTVM()------
+10:00:26,642 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+10:00:26,848 INFO  ~  -----INSIDE PRODUCERDAO getPublishedOfferDetails()------
+10:00:26,848 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualAppliance_ref as idVirtua8_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua9_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc11_10_, sc_offer0_.service_type as service12_10_, sc_offer0_.short_description as short13_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual15_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+10:00:26,849 INFO  ~  -----EXITING PRODUCERDAO getPublishedOfferDetails()------
+10:00:26,856 INFO  ~  -----INSIDE PRODUCER VMDETAILS()------
+10:00:26,856 INFO  ~ Session user in vmDetails(): admin
+10:00:29,127 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+10:00:29,302 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualAppliance_ref as idVirtua8_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua9_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc11_10_, sc_offer0_.service_type as service12_10_, sc_offer0_.short_description as short13_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual15_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+10:00:29,352 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+10:00:29,352 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ order by sc_offers_0_.service_level ASC
+10:00:29,353 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+10:00:29,353 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+10:00:29,353 DEBUG ~ /* named HQL query getSubscribedOffers */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ where sc_offers_0_.service_level=?
+10:00:29,354 INFO  ~ resultSet1 size :0
+10:00:29,354 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+10:00:29,354 INFO  ~  resultSet1 size []
+10:00:29,354 INFO  ~  -----INSIDE PRODUCER DISPLAYOFFER()------
+10:00:29,654 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+10:00:29,818 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualAppliance_ref as idVirtua8_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua9_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc11_10_, sc_offer0_.service_type as service12_10_, sc_offer0_.short_description as short13_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual15_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+10:00:29,865 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevels()------
+10:00:29,865 DEBUG ~ /* named HQL query getSubscribedOffersGroupByServiceLevels */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ order by sc_offers_0_.service_level ASC
+10:00:29,866 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevels()------
+10:00:29,866 INFO  ~  -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------
+10:00:29,866 DEBUG ~ /* named HQL query getSubscribedOffers */ select sc_offers_0_.id as id0_, sc_offers_0_.expiration_date as expiration2_0_, sc_offers_0_.lease_period as lease3_0_, sc_offers_0_.mkt_customization_allowed as mkt4_0_, sc_offers_0_.sc_offer_sc_offer_id as sc7_0_, sc_offers_0_.service_level as service5_0_, sc_offers_0_.start_date as start6_0_ from sc_offers_subscriptions sc_offers_0_ where sc_offers_0_.service_level=?
+10:00:29,866 INFO  ~ resultSet1 size :0
+10:00:29,866 INFO  ~  -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------
+10:00:29,866 INFO  ~  resultSet1 size []
+10:00:29,866 INFO  ~  -----INSIDE PRODUCER DISPLAYOFFER()------
+10:00:30,885 INFO  ~  -----INSIDE PRODUCER LISTVM()------
+10:00:30,933 INFO  ~  AbiquoUtils context set to :{provider=abiquo, endpoint=http://10.60.12.12/api, apiVersion=2.0, buildVersion=7bbfe95-158721b, identity=admin, iso3166Codes=null}
+10:00:31,179 INFO  ~  -----INSIDE PRODUCERDAO getPublishedOfferDetails()------
+10:00:31,179 DEBUG ~ /* named HQL query getOfferDetails */ select sc_offer0_.sc_offer_id as sc1_10_, sc_offer0_.datacenter as datacenter10_, sc_offer0_.default_network_type as default3_10_, sc_offer0_.description as descript4_10_, sc_offer0_.hypervisorType as hypervis5_10_, sc_offer0_.icon as icon10_, sc_offer0_.icon_name as icon7_10_, sc_offer0_.idVirtualAppliance_ref as idVirtua8_10_, sc_offer0_.idVirtualDataCenter_ref as idVirtua9_10_, sc_offer0_.image as image10_, sc_offer0_.sc_offer_name as sc11_10_, sc_offer0_.service_type as service12_10_, sc_offer0_.short_description as short13_10_, sc_offer0_.state as state10_, sc_offer0_.virtualDataCenter_name as virtual15_10_ from sc_offer sc_offer0_ where sc_offer0_.sc_offer_id=?
+10:00:31,180 INFO  ~  -----EXITING PRODUCERDAO getPublishedOfferDetails()------
+10:00:31,194 INFO  ~  -----INSIDE PRODUCER VMDETAILS()------
+10:00:31,194 INFO  ~ Session user in vmDetails(): admin
