@@ -5,6 +5,7 @@ eclipse
 .classpath
 .settings
 .project
+.metadata/
 UserPortal/data/attachments/*
 UserPortal/application.log*
-UserPortal/precompiled*
+UserPortal/precompiled/
