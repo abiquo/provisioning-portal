@@ -16,8 +16,16 @@ $(document).ready(function () {
     }).next().hide();
     
     $('#showRegister').live('click', function() {
-    	$(this).fadeOut();
-        $('#registerForm').fadeIn();
+    	$('#loginForm').fadeOut( function() {
+    		$('#registerForm').fadeIn();
+		});    	        
+        return false;
+    });
+    
+    $('#showLogin').live('click', function() {
+    	$('#registerForm').fadeOut( function() {
+    		$('#loginForm').fadeIn();
+		});    	        
         return false;
     });
         
