@@ -129,7 +129,7 @@
           <div class="row">
               <div class="login-form">
                   <h2>Login</h2>
-                  <form id="loginFormCenter" action="@@{Login.connect()}" method="GET">
+                  <form id="loginFormCenter" action="@@{Login.connect()}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
                       <fieldset>
                           <div class="clearfix">
                               <input type="text" name="username" placeholder="Username">
@@ -146,26 +146,25 @@
               </div>
           </div>          
       </div>
-       <div id="registerForm" class="content hero-unit" style="display:none;">
+       <div id="registerForm" class="content hero-unit"  style="display:none;">
           <div class="row">
           	 <div class="login-form">
 		       <h2>Register</h2>		
-		       <form method="post" class="signup" action="">
+		       <form id="registerFormCenter" action="@@{Login.register()}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
 		         <div class="clearfix">
-		           <input type="text" maxlength="20" name="user[name]" autocomplete="off" class="text-input" placeholder="Username">		           
+		           <input type="text" maxlength="20" name="username" autocomplete="off" class="text-input" placeholder="Username">		           
 		         </div>
 		         <div class="clearfix">
-		           <input type="text" name="user[email]" autocomplete="off" class="text-input email-input"  placeholder="Email">		          
+		           <input type="text" name="email" autocomplete="off" class="text-input email-input"  placeholder="Email">		          
 		         </div>
 		         <div class="clearfix">
-		           <input type="password" name="user[user_password]" class="text-input"  placeholder="Password">		        
+		           <input type="password" name="password" class="text-input"  placeholder="Password">		        
 		         </div>	
 		         <div class="clearfix">
-		           <input type="password" name="user[user_password2]" class="text-input"  placeholder="Repeat Password">		        
-		         </div>		
-		         <input type="hidden" name="context" value="front">
-		         <input type="hidden" name="authenticity_token" value="55e84e86d7151d139d9fa32075f4cc8215577269">
-		         <button class="btn btn-warning primary" type="submit">
+		           <input type="password" name="password2" class="text-input"  placeholder="Repeat Password">		        
+		         </div>
+		         <!-- <input type="hidden" name="authenticity_token" value="55e84e86d7151d139d9fa32075f4cc8215577269">-->
+		         <button name="register" class="btn btn-warning primary" type="submit">
 		           Register <i class="icon-plus-sign icon-white"></i>
 		         </button>
 		          #{if flash.error}

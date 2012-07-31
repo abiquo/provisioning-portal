@@ -6,6 +6,9 @@ eclipse
 .settings
 .project
 .metadata/
+application.log
 UserPortal/data/attachments/*
 UserPortal/application.log*
 UserPortal/precompiled/
+UserPortal/server.pid*
+
