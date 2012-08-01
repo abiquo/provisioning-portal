@@ -1,6 +1,10 @@
 package controllers;
 
-import org.hamcrest.core.IsNull;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.enterprise.Enterprise;
 import org.jclouds.abiquo.domain.enterprise.Role;
@@ -9,9 +13,11 @@ import org.jclouds.abiquo.domain.exception.AbiquoException;
 import org.jclouds.abiquo.domain.infrastructure.Datacenter;
 import org.jclouds.abiquo.features.services.AdministrationService;
 import org.jclouds.abiquo.predicates.enterprise.RolePredicates;
+import org.jclouds.abiquo.predicates.infrastructure.DatacenterPredicates;
 import org.jclouds.rest.AuthorizationException;
 
 import play.Logger;
+import play.Play;
 import play.cache.Cache;
 import play.data.validation.Required;
 import play.data.validation.Validation;
@@ -123,10 +129,18 @@ public class Login extends Controller {
 			    .modules(ImmutableSet.<Module> of(new SLF4JLoggingModule()))
 			    .build(AbiquoContext.class);*/
 
-			AbiquoContext context = Context.getContext("admin", "xabiquo");
-				  
+			AbiquoContext context = null;				  
 			try
 			{
+				Properties props = new Properties();
+				props.load(new FileInputStream(Play.getFile("conf/config.properties")));
+				
+				final String admin = props.getProperty("admin");
+				final String passwordAdmin = props.getProperty("password");
+				final String datacenterName = props.getProperty("datacenter");
+				final String rolePortal = props.getProperty("role");
+				
+				context = Context.getContext (admin, passwordAdmin);
 			    // Create a new enterprise with a given set of limits
 			    Enterprise enterprise = Enterprise.builder(context)
 			        .name(username)
@@ -139,8 +153,10 @@ public class Login extends Controller {
 			    enterprise.save();
 
 			    // Allow the enterprise to use a Datacenter
-			   /* Datacenter datacenter =
-			        context.getAdministrationService().findDatacenter(DatacenterPredicates.name("San Francisco"));*/
+			   Datacenter datacenter =
+			        context.getAdministrationService().findDatacenter(DatacenterPredicates.name(datacenterName));
+			   
+			   enterprise.allowDatacenter(datacenter);
 			    
 			    /*Datacenter datacenter =
 				        context.getAdministrationService().getDatacenter(0);
@@ -150,7 +166,7 @@ public class Login extends Controller {
 			    // Create an Enterprise administrator, so it can begin using the cloud infrastructure
 			    // and can start creating the users of the enterprise
 			    Role role =
-			        context.getAdministrationService().findRole(RolePredicates.name("USER"));
+			        context.getAdministrationService().findRole(RolePredicates.name(rolePortal));
 
 			    // Create the user with the selected role in the just created enterprise
 			    User enterpriseUser = User.builder(context, enterprise, role) 
@@ -178,6 +194,12 @@ public class Login extends Controller {
 				// ae.printStackTrace();
 				flash.error("Unauthorized User");
 				login_page();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (Exception e) {
 				// e.printStackTrace();
 				flash.error("Server Unreachable");
