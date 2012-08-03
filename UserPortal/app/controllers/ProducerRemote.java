@@ -103,7 +103,10 @@ public class ProducerRemote extends Controller {
 					}
 					
 					List<sc_offer> sc_offers = ProducerDAO.getOfferDetails(id_va_param);
-					render(vmList, virtualAppliance, virtualDatacenter, user, sc_offers);
+					
+					//Price
+					final String price = AbiquoUtils.getVAPrice(id_vdc_param, id_va_param);					
+					render(vmList, virtualAppliance, virtualDatacenter, user, sc_offers, price);
 				}
 
 				else {
@@ -204,7 +207,7 @@ public class ProducerRemote extends Controller {
 	public static void addToServiceCatalog(@Valid final sc_offer sc_offers,
 			@Required final File icon, final File image,
 			final sc_offers_subscriptions offerSubscription,
-			final DateParts date) {
+			final DateParts date, final VirtualAppliance vapp) {
 
 		if (Validation.hasErrors()) {
 			flash.error("Please enter valid data. See errors inline. Icon is required. Max characters for : Short Description - 30 and Long Description - 255 ");
@@ -264,6 +267,7 @@ public class ProducerRemote extends Controller {
 					sc_offer scOffer = new sc_offer();
 					scOffer.setSc_offer_id(va.getId());
 					scOffer.setSc_offer_name(va.getName());
+					scOffer.setPrice(AbiquoUtils.getVAPrice(vdc_id_param, id_va_param));
 					if (icon != null) {
 						scOffer.setIcon_name(sc_offers.getIcon_name());
 						scOffer.setIcon_name(icon.getName());
@@ -397,8 +401,11 @@ public class ProducerRemote extends Controller {
 						Logger.info(" va  : " + virtualDC.getName());
 						vmList = va.listVirtualMachines();
 					}
+					
+					//Price
+					final String price = AbiquoUtils.getVAPrice(vdc_id_param, id_va_param);
 					Logger.info(" -----EXITING PRODUCER CONFIGURE()------");
-					render(va, virtualDC, vmList, user);
+					render(va, virtualDC, vmList, user, price);
 				} else {
 					flash.error("Unable to retrieve virtual datacenter");
 					Producer.poe();

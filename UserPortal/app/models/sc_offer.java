@@ -62,6 +62,15 @@ public class sc_offer extends GenericModel {
 	private String service_type;
 	private String virtualDataCenter_name;
 	private String state;
+	private String price;
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Nodes.class)
 	@JoinTable(name = "Offer_Node", joinColumns = { @JoinColumn(name = "sc_offer_id") }, inverseJoinColumns = { @JoinColumn(name = "id_node") })

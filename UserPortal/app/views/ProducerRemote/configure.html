@@ -19,7 +19,7 @@
 </script>
 
 <div id="configure-form" title="Configure">
-<form name="configureOffer" action ="@{ProducerRemote.addToServiceCatalog(sc_offers,icon, image, offerSubscription, date)}" method = "POST" enctype="multipart/form-data" >
+<form name="configureOffer" action ="@{ProducerRemote.addToServiceCatalog(sc_offers,icon, image, offerSubscription, date, va)}" method = "POST" enctype="multipart/form-data" >
     <fieldset>	
 	<input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${va.id}" style="display: none;"/>
 	<h2 class="pull-right">Enable ${va.name}</h2><br /><br />
@@ -107,8 +107,7 @@
 		#{option 29}29 #{/option}
 		#{option 30}30 #{/option}
 		#{option }Day  #{/option}
-		#{/select}  
-		
+		#{/select}  		
 		}*
 	  </div><br /><br />	 
 	 <input class="btn btn-warning pull-right" type ="submit" name = "submit" value ="Enable" />

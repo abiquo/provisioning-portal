@@ -187,4 +187,19 @@ public class AbiquoUtils {
 			Logger.error("Unable to check tasks state: " + e.getCause() );
 		}
 	}
+	
+	public static String getVAPrice(final Integer virtualDatacenterId, final Integer va_id) {
+		VirtualDatacenter vdc = null;
+		VirtualAppliance va = null;
+		String Price = "0";
+		if (virtualDatacenterId != null && va_id != null) {			
+			vdc = getVDCDetails(virtualDatacenterId);
+			if (vdc != null) {
+				va = vdc.getVirtualAppliance(va_id);
+				//TODO Price from vApp
+				// Price = va.getPrice();				
+			}
+		}
+		return Price;
+	}
 }
