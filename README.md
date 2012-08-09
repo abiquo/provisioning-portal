@@ -20,3 +20,5 @@ Issue Tracing
 
 License
 -------
+
+See licensing details in the legal folder.
