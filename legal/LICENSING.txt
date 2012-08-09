@@ -232,7 +232,7 @@ This product includes software written by Tim Hudson (tjh@cryptsoft.com)
 SSLeay License is Copyright (C) 1995-1998 Eric Young
 
 E) Access to source code: 
-You may obtain a copy of the source code of these components by writing to support@abiquo.com 
-
+You may obtain a copy of the source code of these components by cloning the repository from Github:
+git://github.com/abiquo/provisioning-portal.git
 If you have questions about the licensing terms for the Abiquo Community Edition Software, please contact us at: contact@abiquo.com
 
