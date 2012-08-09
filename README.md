@@ -12,8 +12,8 @@ Documentation
 Information related to provisioning portal management and installation guide can be found in the [Project Wiki](https://github.com/abiquo/provisioning-portal/wiki).
 
 
-Issue Tracing
--------------
+Issue Tracking
+--------------
 
 If you find any issue, please submit it to the [Bug tracking system](http://jira.abiquo.com/browse/ABIPORTAL) and we will do our best to fix it.
 
