@@ -741,7 +741,7 @@ public class Consumer extends Controller {
 				AsyncTask[] undeployTasks = vapp.undeploy();			
 				monitorVapp.awaitCompletionUndeploy(vapp);
 				
-				if (vapp.getState() == VirtualApplianceState.DEPLOYED) {
+				if (vapp.getState() == VirtualApplianceState.NOT_DEPLOYED) {
 					vapp.delete();
 					vdc.delete();	
 				} else {
