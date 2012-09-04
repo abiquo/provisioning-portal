@@ -34,7 +34,7 @@ import play.db.jpa.GenericModel;
 
 /**
  * 
- * @author Harpreet Kaur
+ * @author David López
  * Deployed virtual machine resources such as harddisk and networks. 
  * Currently only harddisk is taken into consideration.
  * Refer User_Consumption, Deploy_Bundle, Deploy_Bundle_Nodes

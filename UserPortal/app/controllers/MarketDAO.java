@@ -25,7 +25,6 @@ import java.util.List;
 import javax.persistence.Query;
 
 import models.MKT_Configuration;
-import models.mkt_enterprise_view;
 import play.db.jpa.JPA;
 
 public class MarketDAO {
@@ -44,12 +43,12 @@ public class MarketDAO {
 			List<MKT_Configuration> mkt_conf = query1.getResultList();
 			return mkt_conf;
 	}
-	public static List<mkt_enterprise_view> getOffersForEnterprise ( Integer enterprise_id , String service_level)
+	/*public static List<mkt_enterprise_view> getOffersForEnterprise ( Integer enterprise_id , String service_level)
 	{
 			Query query = JPA.em().createNamedQuery("getOffersForEnterprise");
 			query.setParameter(1, enterprise_id);
 			query.setParameter(2, service_level);
 			List<mkt_enterprise_view> resultSet3 = query.getResultList();
 			return resultSet3;
-	}
+	}*/
 }

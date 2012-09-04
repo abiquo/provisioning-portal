@@ -25,8 +25,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import models.sc_offer;
-import models.sc_offers_subscriptions;
+import models.Offer;
+import models.OfferPurchased;
 
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
@@ -91,7 +91,7 @@ public class Producer extends Controller {
 								 Integer va_id = virtualAppliance.getId();
 								 Query query = JPA.em().createNamedQuery("getOfferDetails");
 								 query.setParameter(1,va_id);
-								 List<sc_offer> scOffer = query.getResultList();
+								 List<Offer> scOffer = query.getResultList();
 								 if ( scOffer.size() == 0)
 								 {
 								 	List<VirtualMachine> vmList = virtualAppliance.listVirtualMachines();
@@ -105,8 +105,8 @@ public class Producer extends Controller {
 						}
 							
 					}
-				  List<sc_offers_subscriptions> resultSet = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
-				  List<sc_offers_subscriptions> resultSet1 = ProducerDAO.getSubscribedOffers(service_level);
+				  List<OfferPurchased> resultSet = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
+				  List<OfferPurchased> resultSet1 = ProducerDAO.getSubscribedOffers(service_level);
 				  Logger.info(" resultSet1 size " + resultSet1);
 				  Logger.info(" -----INSIDE PRODUCER DISPLAYOFFER()------");
 				  render("/Producer/offerList.html",resultSet,resultSet1,user, vaWithVm, virtualDatacenter , vdc_list);

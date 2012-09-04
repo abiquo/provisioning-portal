@@ -39,9 +39,9 @@ import javax.persistence.Query;
 import models.Deploy_Bundle;
 import models.Deploy_Bundle_Nodes;
 import models.MKT_Configuration;
-import models.User_Consumption;
-import models.sc_offer;
-import models.sc_offers_subscriptions;
+import models.OfferPurchased;
+import models.Offer;
+import models.OfferPurchased;
 
 import org.apache.commons.mail.EmailAttachment;
 //import org.jclouds.abiquo.AbiquoContext;
@@ -156,11 +156,11 @@ public class Mails extends Mailer {
 					 query1.setParameter(1, vdc_id);
 					 String emailID= null;
 					 Date exp_date = null;
-					 List<User_Consumption> consumption = query1.getResultList();
-					 for( User_Consumption userCon : consumption )
+					 List<OfferPurchased> consumption = query1.getResultList();
+					 for( OfferPurchased userCon : consumption )
 					 {
-						 emailID = userCon.getUserid();
-						 exp_date = userCon.getExpiration_date();
+						 emailID = userCon.getUser().getEmail();
+						 exp_date = userCon.getExpiration();
 						 
 					 }
 					 Logger.info(" preparaing to send mail.....");
@@ -203,17 +203,17 @@ public class Mails extends Mailer {
 					 query1.setParameter(1, vdc_id);
 					
 					 String emailID= null;
-					 Integer user_consumption_id = null;
-					 List<User_Consumption> consumption = query1.getResultList();
-					 for( User_Consumption userCon : consumption )
+					 String user_consumption_id = null;
+					 List<OfferPurchased> consumption = query1.getResultList();
+					 for( OfferPurchased userCon : consumption )
 					 {
-						 emailID = userCon.getUserid();
-						 user_consumption_id = userCon.getIduser_consumption();
+						 emailID =  userCon.getUser().getEmail();
+						 user_consumption_id = userCon.getUser().getId();
 						 						 
 					 }
 					 /* delete that entry from database  and send email to user about deployment failure*/
 					 em.getTransaction().begin();
-					 User_Consumption userConsumption  = JPA.em().find(User_Consumption.class, user_consumption_id);
+					 OfferPurchased userConsumption  = JPA.em().find(OfferPurchased.class, user_consumption_id);
 					 userConsumption.delete();
 					 em.getTransaction().commit();
 					 Logger.info(" preparaing to send mail.....");
