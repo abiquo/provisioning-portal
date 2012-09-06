@@ -37,24 +37,23 @@
       </tr>
        </thead>
            <tbody class="ui-widget-content">
-                  #{list vaWithVm, as:'va'}
+         #{list vaWithVm, as:'va'}
           <tr>
           <td><img src="@{'/public/images/user/server_off.png'}" width="100" height=100" /></td>
            <td><h4>${va.name}</h4></td>
             <td><p><button class="listVM btn" id="@{ProducerRemote.listVM(virtualDatacenter.id,va.id)}"><i class="icon-info-sign"></i>Details</button>
                     <button class="btn configureVDC" id="@{ProducerRemote.configure(virtualDatacenter.id , va.id)}"><i class="icon-ok"></i>Enable</button></p></td>
             </tr>
-                              #{/list}        
-              #{list resultSet1, as:'subscoffers'}  
+         #{/list}        
+         #{list resultSet1, as:'offer'}  
           <tr>  
-              <td><img src="@{Helper.displayIcon(subscoffers.id, subscoffers.icon)}" height="100px" width="140px" /></td>
-              <td><h4>${subscoffers.name}</h4></td>    
-                 #{list subscoffers.nodes, as:'nodes'}#{/list}              
-              <td><button class="listVM btn" id="@{ProducerRemote.listVM(virtualDatacenter.id,subscoffers.id)}"><i class="icon-info-sign"></i>Details</button>
-                   <button class="btn configureExistingOffer" id="@{ProducerLocal.configureExistingOffer(subscoffers.id)}"><i class="icon-wrench"></i>Configure</button>                  
-                   <button class="btn btn-danger disableOffer" id="@{ProducerLocal.disableOffer(subscoffers.id)}"><i class="icon-remove icon-white"></i>Disable</button>
+              <td><img src="@{Helper.displayIcon(offer.id, offer.icon)}" height="100px" width="140px" /></td>
+              <td><h4>${offer.name}</h4></td>
+              <td><button class="listVM btn" id="@{ProducerRemote.listVM(virtualDatacenter.id,offer.id)}"><i class="icon-info-sign"></i>Details</button>
+                   <button class="btn configureExistingOffer" id="@{ProducerLocal.configureExistingOffer(offer.id)}"><i class="icon-wrench"></i>Configure</button>                  
+                   <button class="btn btn-danger disableOffer" id="@{ProducerLocal.disableOffer(offer.id)}"><i class="icon-remove icon-white"></i>Disable</button>
                </td>
-                  </tr>
+         </tr>
       #{/list}
       </tbody>
   </table> 

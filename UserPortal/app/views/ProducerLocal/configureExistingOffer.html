@@ -62,15 +62,15 @@
     }).show();
     
 </script>
- #{list scOffer, as:'scOffer'} 
+ #{list scOffer, as:'offer'} 
 <form name="configureExistingOffer" action ="@@{ProducerLocal.saveConfigure(sc_offers,icon, image, subscription )}" method = "POST" enctype="multipart/form-data">
 	<fieldset>
 	<h2 class="pull-right">Configure Offer</h2><br /><br /> 
-	<div class="pull-right" style="display:none;" >Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${scOffer.sc_offer_id}" readonly /></div>	
-	<div class="pull-right" style="display:none;" ><input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${scOffer.virtualDataCenter_name}" readonly/></div> 
-	<div class="pull-right">Offer Name <input type ="text" name = "sc_offers.sc_offer_name" size="45" value = "${scOffer.sc_offer_name}" /></div><br />
-	<div class="pull-right">Short Description <input type ="text" name = "sc_offers.short_description" value = "${scOffer.short_description}" /></div><br /> 
-	<div class="pull-right">Long Description <textarea name ="sc_offers.description" rows="5" cols="70" >${scOffer.description}</textarea></div><br /> 
+	<div class="pull-right" style="display:none;" >Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${offer.id}" readonly /></div>	
+	<div class="pull-right" style="display:none;" ><input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${offer.virtualDatacenterName}" readonly/></div> 
+	<div class="pull-right">Offer Name <input type ="text" name = "sc_offers.sc_offer_name" size="45" value = "${offer.name}" /></div><br />
+	<div class="pull-right">Short Description <input type ="text" name = "sc_offers.short_description" value = "${offer.shortDescription}" /></div><br /> 
+	<div class="pull-right">Long Description <textarea name ="sc_offers.description" rows="5" cols="70" >${offer.longDescription}</textarea></div><br /> 
 #{/list}
 	<!-- *{<div class="pull-right">Offer Start Date <input type ="text" name = "subscription.offer_start_date" value = "${startDate}" /></div><br />  
 	<div class="pull-right">Offer Retire Date <input type ="text" name = "subscription.offer_expire_date" value = "${expireDate}" /></div><br />  
@@ -87,7 +87,7 @@
         <div class="pull-left btn btn-warning" id="file">Chose an offer icon to display</div>
         <input type="file" name="icon" onchange="readURL(this);"/> <br />
          <a href="#" class="thumbnail" alt="Icon" id="fileThumbnail">
-             <img id="image" src="@@{Helper.displayIcon(scOffer.sc_offer_id)}" width="100" height=100" >
+             <img id="image" src="@@{Helper.displayIcon(offer.id)}" width="100" height=100" >
          </a>
     </div><br /><br /><br /><br /><br /><br /><br /><br />
     <div class="pull-right"><input type="submit" class="btn btn-warning" value="Enable" name="submit"> </div>

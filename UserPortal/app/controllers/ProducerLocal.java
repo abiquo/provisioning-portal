@@ -133,7 +133,7 @@ public class ProducerLocal extends Controller {
 					 * query1.getResultList();
 					 */
 
-					List<OfferPurchased> subscribedOffers = ProducerDAO
+					/*List<OfferPurchased> subscribedOffers = ProducerDAO
 							.getSubscribedOfferGivenOfferId(sc_offer_id);
 					Date expireDate = null;
 					Date startDate = null;
@@ -149,9 +149,9 @@ public class ProducerLocal extends Controller {
 						Logger.info(" Lease Period for selected  offer "
 								+ lease_period);
 
-					}
+					}*/
 					Logger.info("------ EXITING CONFIGURE EXISTING OFFER -------");
-					render(scOffer, user, expireDate, startDate, lease_period);
+					render(scOffer, user);
 				}
 
 				catch (Exception e) {
