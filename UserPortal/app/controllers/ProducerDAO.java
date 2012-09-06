@@ -42,12 +42,12 @@ public class ProducerDAO {
 		return resultSet;
 }
 	 
-	 static List<OfferPurchased>  getSubscribedOffers(String service_level){
+	 static List<Offer>  getSubscribedOffers(String service_level){
 			Logger.info(" -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------");
 			
 			Query query = JPA.em().createNamedQuery("getSubscribedOffers");
 			query.setParameter(1,service_level);
-			List<OfferPurchased> resultSet1 = query.getResultList();
+			List<Offer> resultSet1 = query.getResultList();
 			Logger.info("resultSet1 size :" + resultSet1.size());
 			Logger.info(" -----EXITING PRODUCERDAO getPublishedServiceLevelOffers()------");
 			

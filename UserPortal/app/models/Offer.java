@@ -50,13 +50,13 @@ import play.db.jpa.GenericModel;
  * @UniqueConstraint(columnNames = "sc_offer_name")})
  */
 @NamedQueries({
-		@NamedQuery(name = "getAllOffersByState", query = "select p from Offer as p where p.state = ?1 order by p.virtualDataCenter_name asc"),
+		@NamedQuery(name = "getAllOffersByState", query = "select p from Offer as p where p.state = ?1 order by p.id asc"),
 		//@NamedQuery(name = "getAvailableOffersByState", query = "select p from Offer as p  where p.id in ( select s.id from OfferPurchased as s where s.enterprise_id = ?1 ) and  p.state = ?2"),
 		@NamedQuery(name = "getAllOffers", query = "select p.id from Offer as p "),
-		@NamedQuery(name = "groupByVDC", query = "select p from Offer as p GROUP BY p.virtualDataCenter_name"),
+		@NamedQuery(name = "groupByVDC", query = "select p from Offer as p GROUP BY p.id"),
 		//@NamedQuery(name = "groupByVDC_EnterpriseView", query = "select p from Offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) GROUP BY p.virtualDataCenter_name"),
-		@NamedQuery(name = "getOfferDetails", query = "select p from Offer as p where sc_offer_id = ?1 "),
-		@NamedQuery(name = "getVappListForVDC", query = "select p from Offer as p where p.virtualDataCenter_name = ?1") })
+		@NamedQuery(name = "getOfferDetails", query = "select p from Offer as p where p.id = ?1 "),
+		@NamedQuery(name = "getVappListForVDC", query = "select p from Offer as p where p.virtualDatacenter = ?1") })
 		//@NamedQuery(name = "getVappListForVDC_EnterpriseView", query = "select p from Offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) and  p.virtualDataCenter_name = ?2") })
 public class Offer extends GenericModel {
 
@@ -67,6 +67,7 @@ public class Offer extends GenericModel {
     private Integer datacenter;	
 	private Integer virtualAppliance;
 	private Integer virtualDatacenter;
+	private String  virtualDatacenterName;
 	
 	// Extra data
 	private String name;
@@ -95,6 +96,12 @@ public class Offer extends GenericModel {
 	
 	// Pricing
 	private String price;
+	
+	private String defaultLeasePeriod;
+	
+	private String defaultServiceLevel;
+	
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -258,6 +265,30 @@ public class Offer extends GenericModel {
 	}
 	public Integer getVirtualDatacenter() {
 		return virtualDatacenter;
+	}
+
+	public String getVirtualDatacenterName() {
+		return virtualDatacenterName;
+	}
+
+	public void setVirtualDatacenterName(String virtualDatacenterName) {
+		this.virtualDatacenterName = virtualDatacenterName;
+	}
+
+	public String getDefaultLeasePeriod() {
+		return defaultLeasePeriod;
+	}
+
+	public void setDefaultLeasePeriod(String defaultLeasePeriod) {
+		this.defaultLeasePeriod = defaultLeasePeriod;
+	}
+
+	public String getDefaultServiceLevel() {
+		return defaultServiceLevel;
+	}
+
+	public void setDefaultServiceLevel(String defaultServiceLevel) {
+		this.defaultServiceLevel = defaultServiceLevel;
 	}
 
 }

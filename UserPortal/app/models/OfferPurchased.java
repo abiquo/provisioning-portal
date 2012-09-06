@@ -47,7 +47,7 @@ import play.db.jpa.Model;
 @Entity
 @NamedQueries({
 @NamedQuery(name="listSubscribedOffers",query=" select p from OfferPurchased as p "),
-@NamedQuery(name="getSubscribedOffers",query=" select p from OfferPurchased as p where p.serviceLevel = ?1"),
+@NamedQuery(name="getSubscribedOffers",query=" select p from Offer as p where p.defaultServiceLevel = ?1"),
 @NamedQuery(name="getSubscribedOffers1",query=" select p.offer from OfferPurchased as p where p.serviceLevel = ?1"),
 @NamedQuery(name="getSubscribedOffersGroupByServiceLevels",query="select p from OfferPurchased as p order BY p.serviceLevel ASC"),
 @NamedQuery(name="deleteOffer",query="delete from OfferPurchased as p where p.id = ?1"),

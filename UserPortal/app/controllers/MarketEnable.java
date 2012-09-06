@@ -261,7 +261,7 @@ public class MarketEnable extends Controller {
 		if (user != null) {
 			List<OfferPurchased> resultSet = ProducerDAO
 					.getSubscribedOffersGroupByServiceLevels();
-			List<OfferPurchased> resultSet1 = ProducerDAO
+			List<Offer> resultSet1 = ProducerDAO
 					.getSubscribedOffers(service_level);
 			List<Offer> resultSet4 = ProducerDAO
 					.getSubscribedOffers1(service_level);

@@ -72,7 +72,7 @@ public class ProducerLocal extends Controller {
 		if (user != null) {
 			List<OfferPurchased> resultSet = ProducerDAO
 					.getSubscribedOffersGroupByServiceLevels();
-			List<OfferPurchased> resultSet1 = ProducerDAO
+			List<Offer> resultSet1 = ProducerDAO
 					.getSubscribedOffers(service_level);
 			Logger.info(" -----INSIDE PRODUCER DISPLAYOFFER()------");
 			render("/ProducerLocal/subscribedOffers.html", resultSet,

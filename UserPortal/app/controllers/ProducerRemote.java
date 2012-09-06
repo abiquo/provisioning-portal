@@ -361,12 +361,13 @@ public class ProducerRemote extends Controller {
 
 					scOffer.setNodes(node_set);
 					scOffer.setState("PUBLISHED");
-					OfferPurchased offerSub = new OfferPurchased();
-					offerSub.setOffer(offer);
+					//OfferPurchased offerSub = new OfferPurchased();
+					//offerSub.setOffer(scOffer);
 					// offerSub.setStart_date(datee);
-					offerSub.setServiceLevel(virtualDC.getName());
-					offerSub.setLeasePeriod(lease_period);
-					offerSub.save();
+					scOffer.setDefaultServiceLevel(virtualDC.getName());
+					scOffer.setDefaultLeasePeriod(lease_period);
+					scOffer.setId(offer.getId());
+					scOffer.save();
 					Logger.info("-----------EXITING ADDTOSERVICECATALOG()------------");
 					render(user);
 					// listVDC();
