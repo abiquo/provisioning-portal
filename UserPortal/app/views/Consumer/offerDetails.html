@@ -18,23 +18,22 @@
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
-<div id="offerDetails" class="ui-widget">	
-	#{list offers, as:'offer'}
+<div id="offerDetails" class="ui-widget">
 	<table class="detailTable table table-bordered table-condensed table-striped">
 	 <thead class="ui-widget-header">
 	     <tr>
-	         <td width="350px"><strong><center>${offer.sc_offer_name}<center></strong></td><td width="700px"><strong><center>Details</center></strong></td>	        
+	         <td width="350px"><strong><center>${offer.name}<center></strong></td><td width="700px"><strong><center>Details</center></strong></td>	        
 	     </tr>
      </thead>
      <tbody>
-      	 <tr><td><center><img src="@{Helper.displayIcon(offer.sc_offer_id)}" width="140px" height="100px" ></center></td>
+      	 <tr><td><center><img src="@{Helper.displayIcon(offer.id)}" width="140px" height="100px" ></center></td>
       	 	 <td>
 	         	<table class="table table-striped table-bordered table-condensed" >
 	         		<tbody>
-		         		<tr><td width="200px"><strong><center>Short-Description<center></strong></td><td width="200px"><center>${offer.short_description}</center></td></tr>
-	         			<tr><td width="auto"><strong><center>Description<center></strong></td><td width="auto"><center>${offer.description}</center></td></tr>          
-	         			<tr><td width="auto"><strong><center>Quality of Service<center></strong></td><td width="auto"><center>${offer.sc_offer_name}</center></td></tr>
-	         			<tr><td width="auto"><strong><center>Lease Period<center></strong></td><td width="auto"><center>${offer.service_type}</center></td></tr>     
+		         		<tr><td width="200px"><strong><center>Short-Description<center></strong></td><td width="200px"><center>${offer.shortDescription}</center></td></tr>
+	         			<tr><td width="auto"><strong><center>Description<center></strong></td><td width="auto"><center>${offer.longDescription}</center></td></tr>          
+	         			<tr><td width="auto"><strong><center>Quality of Service<center></strong></td><td width="auto"><center>${offer.defaultServiceLevel}</center></td></tr>
+	         			<tr><td width="auto"><strong><center>Lease Period<center></strong></td><td width="auto"><center>${offer.serviceType}</center></td></tr>     
          			</tbody>   
 	         	</table>	        
 	         </td>	               
@@ -66,8 +65,6 @@
 	     </tr>     
 			</tbody>	
 		</table>
-	#{/list} 
-
 	#{list nodes_resources, as:'resource'}
 	 <tr>
         <td></td><td><strong>Hard Disk ${resource.sequence}</strong></td><td>${resource.value}</td>
@@ -76,5 +73,5 @@
 	#{/list}	
 	</tbody>
 	</table>
-    <div class="btn btn-warning purchaseConfirm" url="@{Consumer.PurchaseConfirmation(offer.sc_offer_id)}"><i class="icon-shopping-cart icon-white"></i>Purchase</div>
+    <div class="btn btn-warning purchaseConfirm" url="@{Consumer.PurchaseConfirmation(offer.id)}"><i class="icon-shopping-cart icon-white"></i>Purchase</div>
 </div>

@@ -80,7 +80,8 @@ public class ProducerDAO {
 		{
 				Query query = JPA.em().createNamedQuery("groupByVDC_EnterpriseView");
 				//Query query = JPA.em().createQuery("select p from sc_offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) GROUP BY p.virtualDataCenter_name");
-				query.setParameter(1, enterpriseID);
+				
+				//query.setParameter(1, enterpriseID);
 			    List<Offer> result1 = query.getResultList();
 			    return result1;
 		}

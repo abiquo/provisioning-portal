@@ -66,9 +66,9 @@ public class OfferPurchased extends Model{
 	@JoinTable(name = "Offer", joinColumns = { @JoinColumn(name = "id") })
 	private Offer offer; 
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = User.class)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = UserPortal.class)
 	@JoinTable(name = "User", joinColumns = { @JoinColumn(name = "id") })
-	private User user; 
+	private UserPortal user; 
 		
 	@OneToMany( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)
 	@JoinTable(name = "OfferPurchased_DeployNode", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "bundle_id") })
@@ -114,11 +114,11 @@ public class OfferPurchased extends Model{
 		this.offer = offer;
 	}
 	
-	public User getUser() {
+	public UserPortal getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserPortal user) {
 		this.user = user;
 	}
 

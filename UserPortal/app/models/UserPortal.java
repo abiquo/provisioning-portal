@@ -37,9 +37,9 @@ import play.mvc.Controller;
  */
 @Entity
 @NamedQueries({
-@NamedQuery(name="getUser",query=" select p from User as p where p.id = ?1")
+@NamedQuery(name="getUser",query=" select p from UserPortal as p where p.id = ?1")
 })
-public class User extends GenericModel{
+public class UserPortal extends GenericModel{
 	@Id
 	private String id;
 	private  String email;
@@ -48,12 +48,12 @@ public class User extends GenericModel{
 	private String idAbiquo;
 	
 	
-	public User() {
+	public UserPortal() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public User(String id, String email) {
+	public UserPortal(String id, String email) {
 		super();
 		this.id = id;
 		this.email = email;

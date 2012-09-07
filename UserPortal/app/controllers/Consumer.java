@@ -36,6 +36,7 @@ import models.Nodes;
 import models.Nodes_Resources;
 import models.Offer;
 import models.OfferPurchased;
+import models.UserPortal;
 import monitor.VmEventHandler;
 
 import org.jclouds.abiquo.AbiquoContext;
@@ -213,25 +214,10 @@ public class Consumer extends Controller {
 		Logger.info("---------INSIDE CONSUMER PURCHASECONFIMATION()---------------");
 		String user = session.get("username");
 		Logger.info("CURRENT USER EMAIL ID: " + user);
-		if (user != null) {
-			Offer offers = null;
-			List<OfferPurchased> sc_offers_subscriptions = null;
-
-			Query query2 = JPA
-					.em()
-					.createNativeQuery(
-							"select * from sc_offers_subscriptions where sc_offer_sc_offer_id = ?1",
-							OfferPurchased.class);
-			query2.setParameter(1, offer_id);
-			sc_offers_subscriptions = query2.getResultList();
-
-			for (OfferPurchased sc_offers_subscription : sc_offers_subscriptions) {
-				offers = sc_offers_subscription.getOffer();				
-			}
-
+		if (user != null) {			
+			Offer offer = Offer.findById(offer_id);
 			Logger.info("------------EXITING CONSUMER PURCHASECONFIRMATION()--------------");
-			render(offers, user,
-					sc_offers_subscriptions);
+			render(offer, user);
 		} else {
 
 			flash.error("You are not connected.Please Login");
@@ -355,7 +341,9 @@ public class Consumer extends Controller {
 
 				/* Save the deploy info to the portal database : user, vdc etc */
 				OfferPurchased offerPurchased = new OfferPurchased();
-				offerPurchased.getUser().setEmail(useremail);
+				UserPortal userToSave = new UserPortal(user,useremail);
+				
+				offerPurchased.setUser(userToSave);
 				
 				Date current = new Date();
 				Calendar cal = Calendar.getInstance();
@@ -380,7 +368,7 @@ public class Consumer extends Controller {
 				
 				final Offer offer = Offer.findById(sc_offer_id);
 				offer.setVirtualDatacenter(vdc_toDeploy.getId());
-				offerPurchased.setOffer(offer);
+				offerPurchased.setOffer(offer);				
 
 				Set<Deploy_Bundle> deploy_bundle_set = new HashSet<Deploy_Bundle>();
 				Deploy_Bundle deploy_Bundle = new Deploy_Bundle();
@@ -511,21 +499,17 @@ public class Consumer extends Controller {
 		String user = session.get("username");
 		if (user != null) {
 			Set<Nodes> nodes_list = null;
-			Set<Nodes_Resources> nodes_resources = null;
-			String query = "select p from sc_offer as p where p.sc_offer_id = ?1";
-			JPAQuery result = Nodes.find(query, offer_id);
+			Set<Nodes_Resources> nodes_resources = null;			
+			
+			Offer offer = Offer.findById(offer_id);	
+			nodes_list = offer.getNodes();
 
-			List<Offer> offers = result.fetch();
-			for (Offer offer : offers) {
-				nodes_list = offer.getNodes();
-
-				for (Nodes node : nodes_list) {
-					nodes_resources = node.getResources();
-				}
-
+			for (Nodes node : nodes_list) {
+				nodes_resources = node.getResources();
 			}
+			
 			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
-			render(offers, nodes_list, nodes_resources, user);
+			render(offer, nodes_list, nodes_resources, user);
 
 		} else {
 

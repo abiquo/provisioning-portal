@@ -26,21 +26,18 @@
     </tr>
    </thead>
    <tbody>
-   #{list offers, as:'offer'} 
       <tr>
-         <td><strong>Offer Name</strong></td><td>${offer.sc_offer_name}</td>
+         <td><strong>Offer Name</strong></td><td>${offer.name}</td>
       </tr>
      <tr>
-         <td><strong>Short-Description</strong></td><td>${offer.short_description}</td>
+         <td><strong>Short-Description</strong></td><td>${offer.shortDescription}</td>
       </tr>          
       <tr>
-         <td><strong>Quality of Service</strong></td><td>${offer.virtualDataCenter_name}</td>
+         <td><strong>Quality of Service</strong></td><td>${offer.defaultServiceLevel}</td>
       </tr>
-      #{set price: offer.price /}
-    #{/list} 
     </tbody>
     </table>
-    #{list nodes_list, as:'node'}
+    #{list offer.nodes, as:'node'}
 	<table class="table table-bordered table-condensed table-striped middle">
 	   <thead class="ui-widget-header">
            <tr>
@@ -63,11 +60,9 @@
    
    <table class="table table-bordered table-condensed table-striped middle">
    <tbody>
-   #{list sc_offers_subscriptions, as:'sc_offers_subscriptions'}
-          <tr><td><strong>Default Lease Period</strong></td><td>${sc_offers_subscriptions.sc_offer.service_type}</td></tr>
-    #{/list}
+    <tr><td><strong>Default Lease Period</strong></td><td>${offer.serviceType}</td></tr>
     </tbody>
-    <tfoot class="ui-widget-header"><tr><td><strong>Final Price</strong></td><td><strong>${price}</strong></td></tr></tfoot>
+    <tfoot class="ui-widget-header"><tr><td><strong>Final Price</strong></td><td><strong>${offer.price}</strong></td></tr></tfoot>
     </table> 	
-   <div class="btn btn-warning finalPurchaseConfirm" url="@{Consumer.deploy(offer.datacenter, offer.idVirtualDataCenter_ref, offer.sc_offer_id, offer.sc_offer_name , sc_offers_subscriptions.lease_period)}"><i class="icon-shopping-cart icon-white"></i>Purchase</div>             
+   <div class="btn btn-warning finalPurchaseConfirm" url="@{Consumer.deploy(offer.datacenter, offer.virtualDatacenter, offer.id, offer.name , offer.defaultLeasePeriod)}"><i class="icon-shopping-cart icon-white"></i>Purchase</div>             
  </div>       

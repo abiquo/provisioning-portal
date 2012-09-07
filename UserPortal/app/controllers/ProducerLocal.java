@@ -85,19 +85,14 @@ public class ProducerLocal extends Controller {
 	}
 
 	/* disable the selected offer */
-	public static void disableOffer(final Long scOfferId) {
+	public static void disableOffer(final Integer scOfferId) {
 		Logger.info(" -----INSIDE PRODUCER DISABLEOFFER()------");
 		Logger.info(" Offer Id to delete : " + scOfferId);
-
-		OfferPurchased offerPurchased = JPA.em().find(
-				OfferPurchased.class, scOfferId);
-
-		Query query = JPA.em().createNativeQuery(
-				"delete from mkt_enterprise_view where sc_offer_id = ?1");
-		query.setParameter(1, offerPurchased.getOffer().getId());
-		query.executeUpdate();
+		
+		Offer offerToDelete = Offer.findById(scOfferId);		
+		offerToDelete.delete();
+		
 		Logger.info(" Offer deleted ");
-		offerPurchased.delete();
 		Logger.info(" -----EXITING PRODUCER DISABLEOFFER()------");
 		//Producer.poe();
 		render("/Producer/saveConfigure.html");
@@ -175,7 +170,7 @@ public class ProducerLocal extends Controller {
 	 * @param image
 	 */
 	public static void saveConfigure(final Offer offer, final File icon,
-			final File image, final OfferPurchased subscription) {
+			final File image) {
 		String user = session.get("username");
 		if (user != null) {
 			Logger.info("-----------INSIDE SAVECONFIGURE()------------");
@@ -209,21 +204,22 @@ public class ProducerLocal extends Controller {
 				}
 				scOffer.setShortDescription(offer.getShortDescription());
 				scOffer.setLongDescription(offer.getLongDescription());
+				scOffer.setDefaultLeasePeriod(offer.getDefaultLeasePeriod());
 				scOffer.save();
 				scOffer.refresh();
 				//Helper.displayIcon(scOffer.getSc_offer_id());
 				
-				List<OfferPurchased> subscribedOffers = ProducerDAO
+				/*List<OfferPurchased> subscribedOffers = ProducerDAO
 						.getSubscribedOfferGivenOfferId(offer.getId());
 				for (OfferPurchased subOffer : subscribedOffers) {
 					/*
 					 * subOffer.setExpiration_date(subscription.getExpiration_date
 					 * ());
 					 * subOffer.setStart_date(subscription.getStart_date());
-					 */
+					 *s
 					subOffer.setLeasePeriod(subscription.getLeasePeriod());
 					subOffer.save();
-				}
+				}*/
 
 				Logger.info("-----------EXITING SAVECONFIGURE()------------");
 				render(user);

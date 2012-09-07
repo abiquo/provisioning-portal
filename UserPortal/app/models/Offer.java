@@ -54,7 +54,7 @@ import play.db.jpa.GenericModel;
 		//@NamedQuery(name = "getAvailableOffersByState", query = "select p from Offer as p  where p.id in ( select s.id from OfferPurchased as s where s.enterprise_id = ?1 ) and  p.state = ?2"),
 		@NamedQuery(name = "getAllOffers", query = "select p.id from Offer as p "),
 		@NamedQuery(name = "groupByVDC", query = "select p from Offer as p GROUP BY p.id"),
-		//@NamedQuery(name = "groupByVDC_EnterpriseView", query = "select p from Offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) GROUP BY p.virtualDataCenter_name"),
+		@NamedQuery(name = "groupByVDC_EnterpriseView", query = "select p from Offer as p GROUP BY p.defaultServiceLevel"),
 		@NamedQuery(name = "getOfferDetails", query = "select p from Offer as p where p.id = ?1 "),
 		@NamedQuery(name = "getVappListForVDC", query = "select p from Offer as p where p.virtualDatacenter = ?1") })
 		//@NamedQuery(name = "getVappListForVDC_EnterpriseView", query = "select p from Offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) and  p.virtualDataCenter_name = ?2") })
