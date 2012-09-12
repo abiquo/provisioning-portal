@@ -366,7 +366,6 @@ public class ProducerRemote extends Controller {
 					// offerSub.setStart_date(datee);
 					scOffer.setDefaultServiceLevel(virtualDC.getName());
 					scOffer.setDefaultLeasePeriod(lease_period);
-					scOffer.setId(offer.getId());
 					scOffer.save();
 					Logger.info("-----------EXITING ADDTOSERVICECATALOG()------------");
 					render(user);

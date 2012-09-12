@@ -37,6 +37,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.PrimaryKeyJoinColumns;
+import javax.persistence.Transient;
 
 import play.db.jpa.GenericModel;
 
@@ -47,7 +50,6 @@ import play.db.jpa.GenericModel;
  * Refer also OfferPurchased
  */
 @Entity
-
 @NamedQueries({
 	@NamedQuery(name = "getVdcIdByVappId", query = "select d.vdc_name from Deploy_Bundle as d where d.vapp_id = ?1")
 })
@@ -69,7 +71,9 @@ public class Deploy_Bundle extends GenericModel{
 	@ManyToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = User_Consumption.class)
 	@JoinTable(name = "UserConsumption_DeployNode", joinColumns = { @JoinColumn(name = "bundle_id") }, inverseJoinColumns = { @JoinColumn(name = "iduser_consumption") })
 	*/
-	@OneToOne( cascade = CascadeType.ALL)
+//	@OneToOne( cascade = CascadeType.ALL, mappedBy = "id")
+//	@PrimaryKeyJoinColumns({@PrimaryKeyJoinColumn(name ="bundle_id"), @PrimaryKeyJoinColumn(name = "id")})
+	@Transient
 	private OfferPurchased offerPurchased;
 	
 	@OneToMany( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle_Nodes.class)

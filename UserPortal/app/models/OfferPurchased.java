@@ -24,18 +24,27 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import play.db.jpa.Model;
+import com.abiquo.server.core.cloud.VirtualApplianceState;
+
+import play.db.jpa.GenericModel;
 
 /**
  * 
@@ -51,27 +60,35 @@ import play.db.jpa.Model;
 @NamedQuery(name="getSubscribedOffers1",query=" select p.offer from OfferPurchased as p where p.serviceLevel = ?1"),
 @NamedQuery(name="getSubscribedOffersGroupByServiceLevels",query="select p from OfferPurchased as p order BY p.serviceLevel ASC"),
 @NamedQuery(name="deleteOffer",query="delete from OfferPurchased as p where p.id = ?1"),
+@NamedQuery(name="getOffersPurchasedFromUserId",query="select p from OfferPurchased as p where p.user_id = ?1"),
 @NamedQuery(name="getSubscribedOfferDetails ",query="select p from OfferPurchased as p where p.id = ?1")
 })
-public class OfferPurchased extends Model{
+@Table(name = "offerPurchased")
+@AttributeOverrides({@AttributeOverride(name = "id", column = @Column(name = "id"))})
+public class OfferPurchased extends GenericModel{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
 	private Date start;
 	private Date expiration;
 	
-	
+	private Integer idVirtualDatacenterUser;
 	private Integer idVirtualApplianceUser;
 	
+	private VirtualApplianceState virtualApplianceState;
+	
 	// Relations
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Offer.class)
-	@JoinTable(name = "Offer", joinColumns = { @JoinColumn(name = "id") })
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Offer offer; 
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = UserPortal.class)
-	@JoinTable(name = "User", joinColumns = { @JoinColumn(name = "id") })
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserPortal user; 
 		
-	@OneToMany( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)
-	@JoinTable(name = "OfferPurchased_DeployNode", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = { @JoinColumn(name = "bundle_id") })
+	@OneToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)
+	@JoinTable(name = "OfferPurchased_DeployNode", joinColumns = { @JoinColumn(name = "bundle_id") }, inverseJoinColumns = { @JoinColumn(name = "id") })
+	@Transient
 	private Set<Deploy_Bundle> nodes = new HashSet<Deploy_Bundle>();
 
 	private String serviceLevel;
@@ -144,5 +161,21 @@ public class OfferPurchased extends Model{
 
 	public void setNodes(Set<Deploy_Bundle> nodes) {
 		this.nodes = nodes;
+	}
+
+	public Integer getIdVirtualDatacenterUser() {
+		return idVirtualDatacenterUser;
+	}
+
+	public void setIdVirtualDatacenterUser(Integer idVirtualDatacenterUser) {
+		this.idVirtualDatacenterUser = idVirtualDatacenterUser;
+	}
+
+	public VirtualApplianceState getVirtualApplianceState() {
+		return virtualApplianceState;
+	}
+
+	public void setVirtualApplianceState(VirtualApplianceState virtualApplianceState) {
+		this.virtualApplianceState = virtualApplianceState;
 	}
 }

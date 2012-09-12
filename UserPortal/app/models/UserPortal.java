@@ -40,6 +40,7 @@ import play.mvc.Controller;
 @NamedQuery(name="getUser",query=" select p from UserPortal as p where p.id = ?1")
 })
 public class UserPortal extends GenericModel{
+	
 	@Id
 	private String id;
 	private  String email;

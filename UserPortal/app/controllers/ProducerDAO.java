@@ -31,8 +31,18 @@ import play.db.jpa.JPA;
 
 public class ProducerDAO {
 
-	
-	 static List<OfferPurchased>  getSubscribedOffersGroupByServiceLevels(){
+	static List<OfferPurchased> getOffersPurchasedFromUserId(final String userId) {
+		Logger.info(" -----INSIDE PRODUCERDAO getOffersPurchasedFromUserId()------");
+		
+		Query query = JPA.em().createNamedQuery("getOffersPurchasedFromUserId");
+		query.setParameter(1,userId);
+		List<OfferPurchased> resultSet = query.getResultList();
+		Logger.info(" -----EXITING PRODUCERDAO getOffersPurchasedFromUserId()------");
+		
+		return resultSet;
+		
+	}
+	static List<OfferPurchased>  getSubscribedOffersGroupByServiceLevels(){
 		Logger.info(" -----INSIDE PRODUCERDAO getPublishedServiceLevels()------");
 		
 		Query query = JPA.em().createNamedQuery("getSubscribedOffersGroupByServiceLevels");
@@ -40,7 +50,7 @@ public class ProducerDAO {
 		Logger.info(" -----EXITING PRODUCERDAO getPublishedServiceLevels()------");
 		
 		return resultSet;
-}
+	 }
 	 
 	 static List<Offer>  getSubscribedOffers(String service_level){
 			Logger.info(" -----INSIDE PRODUCERDAO getPublishedServiceLevelOffers()------");

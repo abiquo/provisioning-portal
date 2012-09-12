@@ -178,15 +178,23 @@ public class Consumer extends Controller {
                      * Retrieve the deploy username and password for current user's
                      * Enterprise.
                      */
-                    Iterable<VirtualAppliance> listvApp = AbiquoUtils.getCloud()
-                                    .listVirtualAppliances();
+                    
+                    List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromUserId(user);                 
+                    for (OfferPurchased offerPurchased : offersPurchased) {
+                    	
+                    	VirtualDatacenter vdc =  contextt.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+                    	VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
+						offerPurchased.setVirtualApplianceState(vapp.getState());
+					}
+                     
 
                     /*
                      * List<sc_offer> result1 = ProducerDAO
                      * .groupByVDC_EnterpriseView(enterpriseID);
                      */
-                    List<Offer> result2 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
+                    //List<Offer> result2 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
                                    
+                    //List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromUserId(user);
 
                     /*
                      * for (VirtualAppliance virtualAppliance : listvApp) {
@@ -194,7 +202,7 @@ public class Consumer extends Controller {
                      */
 
                     Logger.info("------------EXITING CONSUMER PURCHASEDOFFERS()--------------");
-                    render(result2, user, enterpriseID, listvApp);
+                    render(offersPurchased, user, enterpriseID);
             }
 
     } else {
@@ -341,7 +349,7 @@ public class Consumer extends Controller {
 
 				/* Save the deploy info to the portal database : user, vdc etc */
 				OfferPurchased offerPurchased = new OfferPurchased();
-				UserPortal userToSave = new UserPortal(user,useremail);
+				UserPortal userToSave = UserPortal.findById(user);
 				
 				offerPurchased.setUser(userToSave);
 				
@@ -362,9 +370,9 @@ public class Consumer extends Controller {
 				offerPurchased.setStart(current);
 				offerPurchased.setExpiration(cal.getTime());
 				// user_consumption.setVdc_name(vdc_toDeploy.getName());
-				offerPurchased.setLeasePeriod(null);
-				
-				
+				offerPurchased.setLeasePeriod(lease_period);
+				offerPurchased.setIdVirtualDatacenterUser(vdc_toDeploy.getId());
+				offerPurchased.setIdVirtualApplianceUser(virtualapp_todeploy.getId());
 				
 				final Offer offer = Offer.findById(sc_offer_id);
 				offer.setVirtualDatacenter(vdc_toDeploy.getId());
@@ -392,7 +400,7 @@ public class Consumer extends Controller {
 					/// Retrieve nodes from jClouds
 					Set<Nodes> vmlist_todeploy = node.getNodes();			
 					
-					Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = null;
+					Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = new HashSet<Deploy_Bundle_Nodes>();
 					for (Nodes aVM : vmlist_todeploy) {
 						String vmName = aVM.getNode_name();
 						VirtualMachineTemplate vm_template_todeploy = enterprise.getTemplateInRepository(datacenter, aVM.getIdImage());
@@ -464,6 +472,7 @@ public class Consumer extends Controller {
 					deploy_Bundle.setNodes(deploy_Bundle_Nodes_list);
 
 					offerPurchased.setNodes(deploy_bundle_set);
+					offerPurchased.setServiceLevel(offer.getDefaultServiceLevel());
 					offerPurchased.save();
 					Logger.info("DEPLOY INFO SAVED ......");
 					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
@@ -483,7 +492,6 @@ public class Consumer extends Controller {
 				if (context != null) {
 					context.close();
 				}
-
 			}
 
 		} else {
