@@ -58,12 +58,12 @@ import play.db.jpa.GenericModel;
 @NamedQuery(name="listSubscribedOffers",query=" select p from OfferPurchased as p "),
 @NamedQuery(name="getSubscribedOffers",query=" select p from Offer as p where p.defaultServiceLevel = ?1"),
 @NamedQuery(name="getSubscribedOffers1",query=" select p.offer from OfferPurchased as p where p.serviceLevel = ?1"),
-@NamedQuery(name="getSubscribedOffersGroupByServiceLevels",query="select p from OfferPurchased as p order BY p.serviceLevel ASC"),
+@NamedQuery(name="getSubscribedOffersGroupByServiceLevels",query="select p from OfferPurchased as p order by p.serviceLevel ASC"),
 @NamedQuery(name="deleteOffer",query="delete from OfferPurchased as p where p.id = ?1"),
-@NamedQuery(name="getOffersPurchasedFromUserId",query="select p from OfferPurchased as p where p.user_id = ?1"),
+@NamedQuery(name="getOffersPurchasedFromUserId",query="select p from OfferPurchased as p where p.user.idAbiquo = ?1"),
 @NamedQuery(name="getSubscribedOfferDetails ",query="select p from OfferPurchased as p where p.id = ?1")
 })
-@Table(name = "offerPurchased")
+
 @AttributeOverrides({@AttributeOverride(name = "id", column = @Column(name = "id"))})
 public class OfferPurchased extends GenericModel{
 	
@@ -74,9 +74,8 @@ public class OfferPurchased extends GenericModel{
 	private Date start;
 	private Date expiration;
 	
-	private Integer idVirtualDatacenterUser;
 	private Integer idVirtualApplianceUser;
-	
+	private Integer idVirtualDatacenterUser;	
 	private VirtualApplianceState virtualApplianceState;
 	
 	// Relations
@@ -86,8 +85,8 @@ public class OfferPurchased extends GenericModel{
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserPortal user; 
 		
-	@OneToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)
-	@JoinTable(name = "OfferPurchased_DeployNode", joinColumns = { @JoinColumn(name = "bundle_id") }, inverseJoinColumns = { @JoinColumn(name = "id") })
+	//@OneToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)
+	//@JoinTable(name = "OfferPurchased_DeployNode", joinColumns = { @JoinColumn(name = "bundle_id") }, inverseJoinColumns = { @JoinColumn(name = "id") })
 	@Transient
 	private Set<Deploy_Bundle> nodes = new HashSet<Deploy_Bundle>();
 

@@ -105,11 +105,11 @@ public class Producer extends Controller {
 						}
 							
 					}
-				  List<OfferPurchased> resultSet = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
+				  //List<OfferPurchased> resultSet = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
 				  List<Offer> resultSet1 = ProducerDAO.getSubscribedOffers(service_level);
 				  Logger.info(" resultSet1 size " + resultSet1);
 				  Logger.info(" -----INSIDE PRODUCER DISPLAYOFFER()------");
-				  render("/Producer/offerList.html",resultSet,resultSet1,user, vaWithVm, virtualDatacenter , vdc_list);
+				  render("/Producer/offerList.html",resultSet1,user, vaWithVm, virtualDatacenter , vdc_list);
 				} 
 				catch(Exception e)
 				{

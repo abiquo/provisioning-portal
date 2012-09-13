@@ -208,7 +208,8 @@ public class Mails extends Mailer {
 					 for( OfferPurchased userCon : consumption )
 					 {
 						 emailID =  userCon.getUser().getEmail();
-						 user_consumption_id = userCon.getUser().getId();
+						 user_consumption_id = userCon.getUser().getIdAbiquo().toString();
+						 
 						 						 
 					 }
 					 /* delete that entry from database  and send email to user about deployment failure*/

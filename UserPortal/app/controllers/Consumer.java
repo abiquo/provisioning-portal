@@ -51,6 +51,7 @@ import org.jclouds.abiquo.domain.infrastructure.Datacenter;
 import org.jclouds.abiquo.domain.network.PrivateNetwork;
 import org.jclouds.abiquo.domain.task.AsyncJob;
 import org.jclouds.abiquo.domain.task.AsyncTask;
+import org.jclouds.abiquo.features.services.CloudService;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
 import org.jclouds.abiquo.predicates.cloud.VirtualAppliancePredicates;
@@ -148,10 +149,10 @@ public class Consumer extends Controller {
 			 * .groupByVDC_EnterpriseView(enterpriseID);
 			 */
 			List<Offer> result2 = ConsumerDAO.getPublishedOffers();
-			List<OfferPurchased> result = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
+			//List<OfferPurchased> result = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
 
 			Logger.info("------------EXITING CONSUMER AVAILABLEOFFERS()--------------");
-			render("/Consumer/ListServiceCatalog.html", result, result2, user,
+			render("/Consumer/ListServiceCatalog.html", result2, user,
 					enterpriseID);
 		} else {
 
@@ -172,6 +173,8 @@ public class Consumer extends Controller {
             AbiquoContext contextt = Context.getContext(user, password);
             if (contextt != null) {
                     AbiquoUtils.setAbiquoUtilsContext(contextt);
+                    final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
+                    final CloudService cloudService = contextt.getCloudService();
 
                     /* ---------------------------- */
                     /*
@@ -179,12 +182,13 @@ public class Consumer extends Controller {
                      * Enterprise.
                      */
                     
-                    List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromUserId(user);                 
+                    List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromUserId(userAbiquo.getId());                 
                     for (OfferPurchased offerPurchased : offersPurchased) {
                     	
-                    	VirtualDatacenter vdc =  contextt.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+                    	VirtualDatacenter vdc = cloudService.getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
                     	VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
-						offerPurchased.setVirtualApplianceState(vapp.getState());
+						offerPurchased.setVirtualApplianceState(vapp != null ? vapp.getState() : VirtualApplianceState.UNKNOWN );
+						offerPurchased.save();
 					}
                      
 
@@ -348,8 +352,17 @@ public class Consumer extends Controller {
 				Logger.info(" 2. VAPP CREATED ");
 
 				/* Save the deploy info to the portal database : user, vdc etc */
-				OfferPurchased offerPurchased = new OfferPurchased();
-				UserPortal userToSave = UserPortal.findById(user);
+				final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
+				final Integer idUser = userAbiquo.getId();
+				final OfferPurchased offerPurchased = new OfferPurchased();
+				UserPortal userToSave = UserPortal.findById(idUser);
+				
+				if (userToSave == null) {
+					// Try to recover from jClouds					
+					final String nickUser = userAbiquo.getNick();
+					final String emailUser = userAbiquo.getEmail();
+					userToSave = new UserPortal(idUser,nickUser, emailUser);					
+				}
 				
 				offerPurchased.setUser(userToSave);
 				
@@ -375,7 +388,7 @@ public class Consumer extends Controller {
 				offerPurchased.setIdVirtualApplianceUser(virtualapp_todeploy.getId());
 				
 				final Offer offer = Offer.findById(sc_offer_id);
-				offer.setVirtualDatacenter(vdc_toDeploy.getId());
+				//offer.setVirtualDatacenter(vdc_toDeploy.getId());
 				offerPurchased.setOffer(offer);				
 
 				Set<Deploy_Bundle> deploy_bundle_set = new HashSet<Deploy_Bundle>();

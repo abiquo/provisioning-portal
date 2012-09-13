@@ -42,11 +42,9 @@ import play.mvc.Controller;
 public class UserPortal extends GenericModel{
 	
 	@Id
-	private String id;
-	private  String email;
-	
-	
-	private String idAbiquo;
+	private Integer idAbiquo;	
+	private String nick;
+	private String email;
 	
 	
 	public UserPortal() {
@@ -54,32 +52,36 @@ public class UserPortal extends GenericModel{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public UserPortal(String id, String email) {
+	public UserPortal(final Integer idAbiquo, final String nick, final String email) {
 		super();
-		this.id = id;
+		this.idAbiquo = idAbiquo;
 		this.email = email;
+		this.nick = nick;
+	}
+	
+	public Integer getIdAbiquo() {
+		return idAbiquo;
 	}
 
-	public String getId() {
-		return id;
+	public void setIdAbiquo(Integer idAbiquo) {
+		this.idAbiquo = idAbiquo;
 	}
-	public void setId(String id) {
-		this.id = id;
+
+	public String getNick() {
+		return nick;
 	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public String getIdAbiquo() {
-		return idAbiquo;
-	}
-
-	public void setIdAbiquo(String idAbiquo) {
-		this.idAbiquo = idAbiquo;
-	}
- 
  
 }

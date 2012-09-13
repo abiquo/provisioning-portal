@@ -31,7 +31,7 @@ import play.db.jpa.JPA;
 
 public class ProducerDAO {
 
-	static List<OfferPurchased> getOffersPurchasedFromUserId(final String userId) {
+	static List<OfferPurchased> getOffersPurchasedFromUserId(final Integer userId) {
 		Logger.info(" -----INSIDE PRODUCERDAO getOffersPurchasedFromUserId()------");
 		
 		Query query = JPA.em().createNamedQuery("getOffersPurchasedFromUserId");
