@@ -558,11 +558,11 @@ public class Consumer extends Controller {
 	 *            The virtual appliance name.
 	 * @param lease_period
 	 */
-	public static void Undeploy(final Integer sc_offer_id,final Integer vappId) {
-		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+	public static void Undeploy(final Integer purchasedOfferId) {
+		/*Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
 				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");
+				+ " , String va_param:: " + vappId + ")");*/
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -619,9 +619,9 @@ public class Consumer extends Controller {
 				Logger.info("CURRENT USER EMAIL ID: " + useremail);
 				Logger.info(" vdcname : " + vdcname);
 				
-				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
-				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
 				
 				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
 				AsyncTask[] undeployTasks = vapp.undeploy();			
@@ -662,11 +662,11 @@ public class Consumer extends Controller {
 		}
 	}
 	
-	public static void deleteOffer(final Integer sc_offer_id,final Integer vappId) {
-		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+	public static void deleteOffer(final Integer purchasedOfferId) {
+		/*Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
 				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");
+				+ " , String va_param:: " + vappId + ")");*/
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -724,9 +724,9 @@ public class Consumer extends Controller {
 				Logger.info(" vdcname : " + vdcname);
 
 				
-				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
-				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
 //				List<VirtualMachine> lvm = vapp.listVirtualMachines();
 //				
 //				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
@@ -784,11 +784,11 @@ public class Consumer extends Controller {
 		}
 	}
 	
-	public static void resumeOffer(final Integer sc_offer_id,final Integer vappId) {
-		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+	public static void resumeOffer(final Integer purchasedOfferId) {
+		/*Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
 				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");
+				+ " , String va_param:: " + vappId + ")");*/
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -846,9 +846,9 @@ public class Consumer extends Controller {
 				Logger.info(" vdcname : " + vdcname);
 
 				
-				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
-				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
 
 				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
 				AsyncTask[] deployTasks = vapp.deploy();			
@@ -889,11 +889,11 @@ public class Consumer extends Controller {
 		}
 	}
 	
-	public static void resetOffer(final Integer sc_offer_id,final Integer vappId) {
+	public static void resetOffer(final Integer purchasedOfferId) {
 		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
-		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
+		/*Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
 				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");
+				+ " , String va_param:: " + vappId + ")");*/
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -952,9 +952,9 @@ public class Consumer extends Controller {
 
 				
 				
-				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
-				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
 				
 				List<VirtualMachine> lvm = vapp.listVirtualMachines();
 				VirtualMachine[] arr = new VirtualMachine[lvm.size()];				
