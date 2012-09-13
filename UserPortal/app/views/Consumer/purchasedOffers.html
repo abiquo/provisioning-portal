@@ -45,12 +45,12 @@
                	    #{if 'DEPLOYED' == offerPurchased.virtualApplianceState.name()}
                 	 <!-- <a href="#" class="thumbnail offerDetails" url="@{Consumer.offerDetails(offerPurchased.id)}">     -->
 	                    <a href="#" class="thumbnail">
-	                  		<img src="@{'/public/images/user/server_on.png'}" height="100px" width="120" >
+	                  		<img src="@{Helper.displayIcon(offerPurchased.offer.id, offerPurchased.offer.icon)}" height="100px" width="120" >
 	                    </a>
 	                    <div class="btn-group">
-		                    <button class="btn"><i class="icon-info-sign"></i> Info</button>
-		                    <button url="@{Consumer.resetOffer(offerPurchased.id,offerPurchased.id)}" class="btn btn-warning resetConfirm" ><i class="icon-repeat icon-white"></i> Reset</button>
-		                    <button url="@{Consumer.deleteOffer(offerPurchased.id,offerPurchased.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i> Delete</button>
+		                    <button url="@{Consumer.offerDetails(offerPurchased.offer.id)}" class="btn offerDetails"><i class="icon-info-sign"></i> Info</button>
+		                    <button url="@{Consumer.resetOffer(offerPurchased.offer.id,offerPurchased.offer.id)}" class="btn btn-warning resetConfirm" ><i class="icon-repeat icon-white"></i> Reset</button>
+		                    <button url="@{Consumer.deleteOffer(offerPurchased.offer.id,offerPurchased.offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i> Delete</button>
 	                    </div>
                     #{/if}
                		#{else}
@@ -58,9 +58,9 @@
 	                		 <img src="@{'/public/images/user/server_off.png'}" height="100px" width="120" >
 	                	</a>
 	                    <div class="btn-group">
-		                    <button class="btn"><i class="icon-info-sign"></i> Info</button>
-		                    <button url="@{Consumer.resumeOffer(offerPurchased.id,offerPurchased.id)}" class="btn btn-success resumeConfirm" ><i class="icon-play icon-white"></i> Resume</button>
-		                    <button url="@{Consumer.deleteOffer(offerPurchased.id,offerPurchased.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i> Delete</button>
+		                     <button url="@{Consumer.offerDetails(offerPurchased.offer.id)}" class="btn offerDetails"><i class="icon-info-sign"></i> Info</button>
+		                    <button url="@{Consumer.resumeOffer(offerPurchased.offer.id,offerPurchased.offer.id)}" class="btn btn-success resumeConfirm" ><i class="icon-play icon-white"></i> Resume</button>
+		                    <button url="@{Consumer.deleteOffer(offerPurchased.offer.id,offerPurchased.offer.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i> Delete</button>
 	                    </div>
                		#{/else}
                     <!-- <button url="@{Consumer.offerDetails(offerPurchased.id)}" class="btn offerDetails"><i class="icon-info-sign"></i>Info</button>
