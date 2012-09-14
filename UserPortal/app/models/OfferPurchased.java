@@ -61,6 +61,7 @@ import play.db.jpa.GenericModel;
 @NamedQuery(name="getSubscribedOffersGroupByServiceLevels",query="select p from OfferPurchased as p order by p.serviceLevel ASC"),
 @NamedQuery(name="deleteOffer",query="delete from OfferPurchased as p where p.id = ?1"),
 @NamedQuery(name="getOffersPurchasedFromUserId",query="select p from OfferPurchased as p where p.user.idAbiquo = ?1"),
+@NamedQuery(name="getOffersPurchasedFromEnterpriseId",query="select p from OfferPurchased as p where p.user.idEnterprise = ?1"),
 @NamedQuery(name="getSubscribedOfferDetails ",query="select p from OfferPurchased as p where p.id = ?1")
 })
 

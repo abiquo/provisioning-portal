@@ -42,6 +42,17 @@ public class ProducerDAO {
 		return resultSet;
 		
 	}
+	static List<OfferPurchased> getOffersPurchasedFromEnterpriseId(final Integer enterpriseId) {
+		Logger.info(" -----INSIDE PRODUCERDAO getOffersPurchasedFromEnterpriseId()------");
+		
+		Query query = JPA.em().createNamedQuery("getOffersPurchasedFromEnterpriseId");
+		query.setParameter(1, enterpriseId);
+		List<OfferPurchased> resultSet = query.getResultList();
+		Logger.info(" -----EXITING PRODUCERDAO getOffersPurchasedFromEnterpriseId()------");
+		
+		return resultSet;
+		
+	}
 	static List<OfferPurchased>  getSubscribedOffersGroupByServiceLevels(){
 		Logger.info(" -----INSIDE PRODUCERDAO getPublishedServiceLevels()------");
 		

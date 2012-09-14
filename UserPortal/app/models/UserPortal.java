@@ -43,6 +43,7 @@ public class UserPortal extends GenericModel{
 	
 	@Id
 	private Integer idAbiquo;	
+	private Integer idEnterprise;
 	private String nick;
 	private String email;
 	
@@ -52,11 +53,12 @@ public class UserPortal extends GenericModel{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public UserPortal(final Integer idAbiquo, final String nick, final String email) {
+	public UserPortal(final Integer idAbiquo, final String nick, final String email, final Integer idEnterprise) {
 		super();
 		this.idAbiquo = idAbiquo;
 		this.email = email;
 		this.nick = nick;
+		this.idEnterprise = idEnterprise;
 	}
 	
 	public Integer getIdAbiquo() {
@@ -81,6 +83,14 @@ public class UserPortal extends GenericModel{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getIdEnterprise() {
+		return idEnterprise;
+	}
+
+	public void setIdEnterprise(Integer idEnterprise) {
+		this.idEnterprise = idEnterprise;
 	}
 
  

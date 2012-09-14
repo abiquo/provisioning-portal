@@ -189,9 +189,9 @@ public class Consumer extends Controller {
                      * Enterprise.
                      */
                     
-                    List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromUserId(userAbiquo.getId());                 
-                    for (OfferPurchased offerPurchased : offersPurchased) {
-                    	
+                    //List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromUserId(userAbiquo.getId());
+                    List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromEnterpriseId(userAbiquo.getId());
+                    for (OfferPurchased offerPurchased : offersPurchased) {                    	
                     	VirtualDatacenter vdc = cloudService.getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
                     	VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
 						offerPurchased.setVirtualApplianceState(vapp != null ? vapp.getState() : VirtualApplianceState.UNKNOWN );
@@ -368,7 +368,8 @@ public class Consumer extends Controller {
 					// Try to recover from jClouds					
 					final String nickUser = userAbiquo.getNick();
 					final String emailUser = userAbiquo.getEmail();
-					userToSave = new UserPortal(idUser,nickUser, emailUser);					
+					final Integer idEnterprise = userAbiquo.getEnterprise().getId();
+					userToSave = new UserPortal(idUser,nickUser, emailUser, idEnterprise);					
 				}
 				
 				offerPurchased.setUser(userToSave);
