@@ -79,7 +79,9 @@
         <div id="tabs">
           <ul>               
                	<li><a href="@{Consumer.availableOffersAll(enterpriseID)}"><i class="icon-shopping-cart"></i> Marketplace</a></li>	
- 				<li><a href="@{Consumer.purchasedOffers(enterpriseID)}"><i class="icon-briefcase"></i> Purchased Offers</a></li>			
+               	#{if numOffers > 0 }
+ 				<li><a href="@{Consumer.purchasedOffers(enterpriseID)}"><i class="icon-briefcase"></i> Purchased Offers</a></li>
+ 				#{/if}			
           </ul>                  
         </div> 
      </div>

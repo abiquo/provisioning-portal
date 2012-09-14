@@ -88,6 +88,8 @@ public class Consumer extends Controller {
 		Logger.info("---------INSIDE CONSUMER SERVICECATALOG()------------");
 		Logger.info("Enterprie ID for current User " + enterpriseID);
 		String user = session.get("username");
+	    String password = session.get("password");
+
 		if (user != null) {
 			List<Offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
 			/*
@@ -95,13 +97,18 @@ public class Consumer extends Controller {
 			 * .getVappListForVDC_EnterpriseView(enterpriseID, vdc_name_param);
 			 */
 			Logger.info("------------EXITING CONSUMER SERVICECATALOG()--------------");
+			
+			AbiquoContext contextt = Context.getContext(user, password);
+            if (contextt != null) {
+                AbiquoUtils.setAbiquoUtilsContext(contextt);
+                final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
+            	final Integer numOffers = ProducerDAO.getOffersPurchasedFromUserId(userAbiquo.getId()).size();
+            	render(result1, user, enterpriseID, numOffers);            
+			} else {
 
-			render(result1, user, enterpriseID);
-
-		} else {
-
-			flash.error("You are not connected.Please Login");
-			Login.login_page();
+				flash.error("You are not connected.Please Login");
+				Login.login_page();
+			}
 		}
 	}
 
@@ -515,6 +522,31 @@ public class Consumer extends Controller {
 	}
 
 	public static void offerDetails(final Integer offer_id) {
+		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
+
+		String user = session.get("username");
+		if (user != null) {
+			Set<Nodes> nodes_list = null;
+			Set<Nodes_Resources> nodes_resources = null;			
+			
+			Offer offer = Offer.findById(offer_id);	
+			nodes_list = offer.getNodes();
+
+			for (Nodes node : nodes_list) {
+				nodes_resources = node.getResources();
+			}
+			
+			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
+			render(offer, nodes_list, nodes_resources, user);
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	public static void offerDetailsPurchased(final Integer offer_id) {
 		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
 
 		String user = session.get("username");

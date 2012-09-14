@@ -46,6 +46,7 @@ GET 	/consumer/availableoffersAll			Consumer.availableOffersAll
 GET     /consumer/purchasedOffers               Consumer.purchasedOffers
 GET 	/consumer/servicecatalog				Consumer.ServiceCatalog
 GET 	/consumer/offerdetails					Consumer.offerDetails
+GET 	/consumer/offerdetailspurchased 		Consumer.offerDetailsPurchased
 GET 	/consumer/purchaseconfirmation			Consumer.purchaseConfirmation
 GET 	/consumer/deploy					    Consumer.deploy
 GET 	/consumer/undeploy					    Consumer.undeploy
