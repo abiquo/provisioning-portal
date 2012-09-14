@@ -37,17 +37,19 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.PrimaryKeyJoinColumns;
+import javax.persistence.Transient;
 
 import play.db.jpa.GenericModel;
 
 /**
  * 
- * @author Harpreet Kaur
+ * @author David López
  * The offer i.e virtual appliance details that gets deployed 
- * Refer also User_Consumption
+ * Refer also OfferPurchased
  */
 @Entity
-
 @NamedQueries({
 	@NamedQuery(name = "getVdcIdByVappId", query = "select d.vdc_name from Deploy_Bundle as d where d.vapp_id = ?1")
 })
@@ -68,9 +70,11 @@ public class Deploy_Bundle extends GenericModel{
 	/*
 	@ManyToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = User_Consumption.class)
 	@JoinTable(name = "UserConsumption_DeployNode", joinColumns = { @JoinColumn(name = "bundle_id") }, inverseJoinColumns = { @JoinColumn(name = "iduser_consumption") })
-*/
-	@OneToOne( cascade = CascadeType.ALL)
-	private User_Consumption userConsumption;
+	*/
+//	@OneToOne( cascade = CascadeType.ALL, mappedBy = "id")
+//	@PrimaryKeyJoinColumns({@PrimaryKeyJoinColumn(name ="bundle_id"), @PrimaryKeyJoinColumn(name = "id")})
+	@Transient
+	private OfferPurchased offerPurchased;
 	
 	@OneToMany( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle_Nodes.class)
 	@JoinTable(name = "Bundle_Node", joinColumns = { @JoinColumn(name = "bundle_id") }, inverseJoinColumns = { @JoinColumn(name = "idbundle_nodes") })
@@ -141,13 +145,12 @@ public class Deploy_Bundle extends GenericModel{
 		this.vapp_id = vapp_id;
 	}
 
-
-	public User_Consumption getUserConsumption() {
-		return userConsumption;
+	public void setOfferPurchased(OfferPurchased offerPurchased) {
+		this.offerPurchased = offerPurchased;
 	}
 
-	public void setUserConsumption(User_Consumption userConsumption) {
-		this.userConsumption = userConsumption;
+	public OfferPurchased getOfferPurchased() {
+		return offerPurchased;
 	}
 
 	public Set<Deploy_Bundle_Nodes> getNodes() {

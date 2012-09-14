@@ -25,9 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import models.MKT_Configuration;
-import models.mkt_enterprise_view;
-import models.sc_offer;
-import models.sc_offers_subscriptions;
+import models.Offer;
+import models.OfferPurchased;
 
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.enterprise.Enterprise;
@@ -231,7 +230,7 @@ public class MarketEnable extends Controller {
 			 * enabled
 			 */
 			if (resultSet1.size() > 0) {
-				List<sc_offers_subscriptions> resultSet = ProducerDAO
+				List<OfferPurchased> resultSet = ProducerDAO
 						.getSubscribedOffersGroupByServiceLevels();
 				Logger.info("ResultSet " + resultSet.size());
 				Logger.info("------------------------- EXITING publishMarket()-----------------");
@@ -260,22 +259,18 @@ public class MarketEnable extends Controller {
 		Logger.info("Enterprise id " + enterprise_id + " Service_level "
 				+ service_level + " Enterprise_name " + enterprise_name);
 		if (user != null) {
-			List<sc_offers_subscriptions> resultSet = ProducerDAO
+			List<OfferPurchased> resultSet = ProducerDAO
 					.getSubscribedOffersGroupByServiceLevels();
-			List<sc_offers_subscriptions> resultSet1 = ProducerDAO
+			List<Offer> resultSet1 = ProducerDAO
 					.getSubscribedOffers(service_level);
-			List<sc_offer> resultSet4 = ProducerDAO
+			List<Offer> resultSet4 = ProducerDAO
 					.getSubscribedOffers1(service_level);
-			List<mkt_enterprise_view> resultSet3 = MarketDAO
-					.getOffersForEnterprise(enterprise_id, service_level);
 
 			Logger.info("Resultset for service levels : " + resultSet);
 			Logger.info("Resultset1 for VDC offers  : " + resultSet1);
-			Logger.info("Resultset3 offers published : " + resultSet3);
 			Logger.info("Resultset4 offers published : " + resultSet4);
 			Logger.info(" ---------------------EXITING PRODUCER publishOffersPerMarket()------");
-			render("/MarketEnable/publishOfferBack.html", resultSet, resultSet1,
-					resultSet3, resultSet4, user, enterprise_id,
+			render("/MarketEnable/publishOfferBack.html", resultSet, resultSet1, resultSet4, user, enterprise_id,
 					enterprise_name);
 		} else {
 			flash.error("You are not connected.Please Login");
@@ -310,16 +305,16 @@ public class MarketEnable extends Controller {
 						final Boolean hasToChangeState = scOfferState.get(i);
 						
 						if (hasToChangeState) {				
-							sc_offer offer = sc_offer.findById(sc_offer_id);	
+							Offer offer = Offer.findById(sc_offer_id);	
 							if (offer.getState() == null) offer.setState("PUBLISHED");
 							else offer.setState(null);
 							offer.save();
 						}
-						mkt_enterprise_view mktView = new mkt_enterprise_view();
+						/*mkt_enterprise_view mktView = new mkt_enterprise_view();
 						mktView.setEnterprise_id(enterprise_id);
 						mktView.setSc_offer_id(sc_offer_id);
 						mktView.setService_level(service_level);			
-						mktView.save();
+						mktView.save();*/
 				}
 				Logger.info("Market View Updated ");
 				Logger.info("------------------------- EXITING saveMarketView()-----------------");

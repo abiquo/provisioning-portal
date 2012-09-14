@@ -32,12 +32,11 @@ import javax.persistence.Query;
 import models.Deploy_Bundle;
 import models.Deploy_Bundle_Nodes;
 import models.Deploy_Nodes_Resources;
-import models.MKT_Configuration;
 import models.Nodes;
 import models.Nodes_Resources;
-import models.User_Consumption;
-import models.sc_offer;
-import models.sc_offers_subscriptions;
+import models.Offer;
+import models.OfferPurchased;
+import models.UserPortal;
 import monitor.VmEventHandler;
 
 import org.jclouds.abiquo.AbiquoContext;
@@ -47,10 +46,12 @@ import org.jclouds.abiquo.domain.cloud.VirtualDatacenter;
 import org.jclouds.abiquo.domain.cloud.VirtualMachine;
 import org.jclouds.abiquo.domain.cloud.VirtualMachineTemplate;
 import org.jclouds.abiquo.domain.enterprise.Enterprise;
+import org.jclouds.abiquo.domain.enterprise.User;
 import org.jclouds.abiquo.domain.infrastructure.Datacenter;
 import org.jclouds.abiquo.domain.network.PrivateNetwork;
 import org.jclouds.abiquo.domain.task.AsyncJob;
 import org.jclouds.abiquo.domain.task.AsyncTask;
+import org.jclouds.abiquo.features.services.CloudService;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
 import org.jclouds.abiquo.predicates.cloud.VirtualAppliancePredicates;
@@ -87,20 +88,27 @@ public class Consumer extends Controller {
 		Logger.info("---------INSIDE CONSUMER SERVICECATALOG()------------");
 		Logger.info("Enterprie ID for current User " + enterpriseID);
 		String user = session.get("username");
+	    String password = session.get("password");
+
 		if (user != null) {
-			List<sc_offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
+			List<Offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
 			/*
 			 * List<sc_offer> result2 = ProducerDAO
 			 * .getVappListForVDC_EnterpriseView(enterpriseID, vdc_name_param);
 			 */
 			Logger.info("------------EXITING CONSUMER SERVICECATALOG()--------------");
+			
+			AbiquoContext contextt = Context.getContext(user, password);
+            if (contextt != null) {
+                AbiquoUtils.setAbiquoUtilsContext(contextt);
+                final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
+            	final Integer numOffers = ProducerDAO.getOffersPurchasedFromUserId(userAbiquo.getId()).size();
+            	render(result1, user, enterpriseID, numOffers);            
+			} else {
 
-			render(result1, user, enterpriseID);
-
-		} else {
-
-			flash.error("You are not connected.Please Login");
-			Login.login_page();
+				flash.error("You are not connected.Please Login");
+				Login.login_page();
+			}
 		}
 	}
 
@@ -122,7 +130,7 @@ public class Consumer extends Controller {
 			 * List<sc_offer> result1 = ProducerDAO
 			 * .groupByVDC_EnterpriseView(enterpriseID);
 			 */
-			List<sc_offer> result2 = ProducerDAO
+			List<Offer> result2 = ProducerDAO
 					.getVappListForVDC_EnterpriseView(enterpriseID,
 							vdc_name_param);
 
@@ -147,11 +155,11 @@ public class Consumer extends Controller {
 			 * List<sc_offer> result1 = ProducerDAO
 			 * .groupByVDC_EnterpriseView(enterpriseID);
 			 */
-			List<sc_offer> result2 = ConsumerDAO.getPublishedOffers();
-			List<sc_offers_subscriptions> result = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
+			List<Offer> result2 = ConsumerDAO.getPublishedOffers();
+			//List<OfferPurchased> result = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
 
 			Logger.info("------------EXITING CONSUMER AVAILABLEOFFERS()--------------");
-			render("/Consumer/ListServiceCatalog.html", result, result2, user,
+			render("/Consumer/ListServiceCatalog.html", result2, user,
 					enterpriseID);
 		} else {
 
@@ -172,21 +180,32 @@ public class Consumer extends Controller {
             AbiquoContext contextt = Context.getContext(user, password);
             if (contextt != null) {
                     AbiquoUtils.setAbiquoUtilsContext(contextt);
+                    final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
+                    final CloudService cloudService = contextt.getCloudService();
 
                     /* ---------------------------- */
                     /*
                      * Retrieve the deploy username and password for current user's
                      * Enterprise.
                      */
-                    Iterable<VirtualAppliance> listvApp = AbiquoUtils.getCloud()
-                                    .listVirtualAppliances();
+                    
+                    List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromUserId(userAbiquo.getId());                 
+                    for (OfferPurchased offerPurchased : offersPurchased) {
+                    	
+                    	VirtualDatacenter vdc = cloudService.getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+                    	VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
+						offerPurchased.setVirtualApplianceState(vapp != null ? vapp.getState() : VirtualApplianceState.UNKNOWN );
+						offerPurchased.save();
+					}
+                     
 
                     /*
                      * List<sc_offer> result1 = ProducerDAO
                      * .groupByVDC_EnterpriseView(enterpriseID);
                      */
-                    List<sc_offer> result2 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
+                    //List<Offer> result2 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
                                    
+                    //List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromUserId(user);
 
                     /*
                      * for (VirtualAppliance virtualAppliance : listvApp) {
@@ -194,7 +213,7 @@ public class Consumer extends Controller {
                      */
 
                     Logger.info("------------EXITING CONSUMER PURCHASEDOFFERS()--------------");
-                    render(result2, user, enterpriseID, listvApp);
+                    render(offersPurchased, user, enterpriseID);
             }
 
     } else {
@@ -214,32 +233,10 @@ public class Consumer extends Controller {
 		Logger.info("---------INSIDE CONSUMER PURCHASECONFIMATION()---------------");
 		String user = session.get("username");
 		Logger.info("CURRENT USER EMAIL ID: " + user);
-		if (user != null) {
-			sc_offer offers = null;
-			Set<Nodes> nodes_list = null;
-			Set<Nodes_Resources> nodes_resources = null;
-			List<sc_offers_subscriptions> sc_offers_subscriptions = null;
-
-			Query query2 = JPA
-					.em()
-					.createNativeQuery(
-							"select * from sc_offers_subscriptions where sc_offer_sc_offer_id = ?1",
-							sc_offers_subscriptions.class);
-			query2.setParameter(1, offer_id);
-			sc_offers_subscriptions = query2.getResultList();
-
-			for (sc_offers_subscriptions sc_offers_subscription : sc_offers_subscriptions) {
-				offers = sc_offers_subscription.getSc_offer();
-				nodes_list = offers.getNodes();
-				for (Nodes node : nodes_list) {
-					nodes_resources = node.getResources();
-
-				}
-			}
-
+		if (user != null) {			
+			Offer offer = Offer.findById(offer_id);
 			Logger.info("------------EXITING CONSUMER PURCHASECONFIRMATION()--------------");
-			render(offers, nodes_list, nodes_resources, user,
-					sc_offers_subscriptions);
+			render(offer, user);
 		} else {
 
 			flash.error("You are not connected.Please Login");
@@ -266,6 +263,7 @@ public class Consumer extends Controller {
 	 *            The virtual appliance name.
 	 * @param lease_period
 	 */
+	@SuppressWarnings("null")
 	public static void Deploy(final Integer id_datacenter,
 			final Integer vdc_id_param, final Integer sc_offer_id,
 			final String va_param, final String lease_period) {
@@ -294,8 +292,6 @@ public class Consumer extends Controller {
 			Enterprise current_enterprise = AbiquoUtils
 					.getCurrentUserEnterprise();
 			Integer enterprise_id = current_enterprise.getId();
-			List<MKT_Configuration> mkt_conf = MarketDAO
-					.getMKTConfiguration(enterprise_id);
 
 			/*for (MKT_Configuration mkt : mkt_conf) {
 				deploy_username = mkt.getMkt_deploy_user();
@@ -363,8 +359,20 @@ public class Consumer extends Controller {
 				Logger.info(" 2. VAPP CREATED ");
 
 				/* Save the deploy info to the portal database : user, vdc etc */
-				User_Consumption user_consumption = new User_Consumption();
-				user_consumption.setUserid(useremail);
+				final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
+				final Integer idUser = userAbiquo.getId();
+				final OfferPurchased offerPurchased = new OfferPurchased();
+				UserPortal userToSave = UserPortal.findById(idUser);
+				
+				if (userToSave == null) {
+					// Try to recover from jClouds					
+					final String nickUser = userAbiquo.getNick();
+					final String emailUser = userAbiquo.getEmail();
+					userToSave = new UserPortal(idUser,nickUser, emailUser);					
+				}
+				
+				offerPurchased.setUser(userToSave);
+				
 				Date current = new Date();
 				Calendar cal = Calendar.getInstance();
 				if (lease_period.contentEquals("30 days")) {
@@ -379,12 +387,16 @@ public class Consumer extends Controller {
 
 				}
 				Logger.info("--------------------");
-				user_consumption.setPurchase_date(current);
-				user_consumption.setExpiration_date(cal.getTime());
+				offerPurchased.setStart(current);
+				offerPurchased.setExpiration(cal.getTime());
 				// user_consumption.setVdc_name(vdc_toDeploy.getName());
-				user_consumption.setDestroy_date(null);
-				user_consumption.setSc_offer_id_ref(sc_offer_id);
-				user_consumption.setVdc_id(vdc_toDeploy.getId());
+				offerPurchased.setLeasePeriod(lease_period);
+				offerPurchased.setIdVirtualDatacenterUser(vdc_toDeploy.getId());
+				offerPurchased.setIdVirtualApplianceUser(virtualapp_todeploy.getId());
+				
+				final Offer offer = Offer.findById(sc_offer_id);
+				//offer.setVirtualDatacenter(vdc_toDeploy.getId());
+				offerPurchased.setOffer(offer);				
 
 				Set<Deploy_Bundle> deploy_bundle_set = new HashSet<Deploy_Bundle>();
 				Deploy_Bundle deploy_Bundle = new Deploy_Bundle();
@@ -393,18 +405,22 @@ public class Consumer extends Controller {
 				deploy_Bundle.setDeploy_network("");
 				deploy_Bundle.setVapp_name(virtualapp_todeploy.getName());
 				deploy_Bundle.setVdc_name(vdc_toDeploy.getId());
-				deploy_Bundle.setUserConsumption(user_consumption);
+				deploy_Bundle.setOfferPurchased(offerPurchased);
 				deploy_Bundle.setVapp_id(virtualapp_todeploy.getId());
 				deploy_bundle_set.add(deploy_Bundle);
 				/*
 				 * String query =
 				 * "select p from sc_offer as p where p.sc_offer_id = ?1";
 				 * JPAQuery result = sc_offer.find(query, sc_offer_id);
-				 */List<sc_offer> nodes = ProducerDAO
+				 */List<Offer> nodes = ProducerDAO
 						.getOfferDetails(sc_offer_id);
-				for (sc_offer node : nodes) {
+				for (Offer node : nodes) {
+					/////Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = new HashSet<Deploy_Bundle_Nodes>();
+					
+					/// Retrieve nodes from jClouds
+					Set<Nodes> vmlist_todeploy = node.getNodes();			
+					
 					Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = new HashSet<Deploy_Bundle_Nodes>();
-					Set<Nodes> vmlist_todeploy = node.getNodes();
 					for (Nodes aVM : vmlist_todeploy) {
 						String vmName = aVM.getNode_name();
 						VirtualMachineTemplate vm_template_todeploy = enterprise.getTemplateInRepository(datacenter, aVM.getIdImage());
@@ -475,8 +491,9 @@ public class Consumer extends Controller {
 					Logger.info("SAVING DEPLOY INFORMATION ......");
 					deploy_Bundle.setNodes(deploy_Bundle_Nodes_list);
 
-					user_consumption.setNodes(deploy_bundle_set);
-					user_consumption.save();
+					offerPurchased.setNodes(deploy_bundle_set);
+					offerPurchased.setServiceLevel(offer.getDefaultServiceLevel());
+					offerPurchased.save();
 					Logger.info("DEPLOY INFO SAVED ......");
 					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
 					render(vdc_name, enterprise_id);
@@ -495,7 +512,6 @@ public class Consumer extends Controller {
 				if (context != null) {
 					context.close();
 				}
-
 			}
 
 		} else {
@@ -511,21 +527,42 @@ public class Consumer extends Controller {
 		String user = session.get("username");
 		if (user != null) {
 			Set<Nodes> nodes_list = null;
-			Set<Nodes_Resources> nodes_resources = null;
-			String query = "select p from sc_offer as p where p.sc_offer_id = ?1";
-			JPAQuery result = Nodes.find(query, offer_id);
+			Set<Nodes_Resources> nodes_resources = null;			
+			
+			Offer offer = Offer.findById(offer_id);	
+			nodes_list = offer.getNodes();
 
-			List<sc_offer> offers = result.fetch();
-			for (sc_offer offer : offers) {
-				nodes_list = offer.getNodes();
-
-				for (Nodes node : nodes_list) {
-					nodes_resources = node.getResources();
-				}
-
+			for (Nodes node : nodes_list) {
+				nodes_resources = node.getResources();
 			}
+			
 			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
-			render(offers, nodes_list, nodes_resources, user);
+			render(offer, nodes_list, nodes_resources, user);
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	public static void offerDetailsPurchased(final Integer offer_id) {
+		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
+
+		String user = session.get("username");
+		if (user != null) {
+			Set<Nodes> nodes_list = null;
+			Set<Nodes_Resources> nodes_resources = null;			
+			
+			Offer offer = Offer.findById(offer_id);	
+			nodes_list = offer.getNodes();
+
+			for (Nodes node : nodes_list) {
+				nodes_resources = node.getResources();
+			}
+			
+			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
+			render(offer, nodes_list, nodes_resources, user);
 
 		} else {
 
@@ -553,11 +590,11 @@ public class Consumer extends Controller {
 	 *            The virtual appliance name.
 	 * @param lease_period
 	 */
-	public static void Undeploy(final Integer sc_offer_id,final Integer vappId) {
-		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+	public static void Undeploy(final Integer purchasedOfferId) {
+		/*Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
 				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");
+				+ " , String va_param:: " + vappId + ")");*/
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -614,9 +651,9 @@ public class Consumer extends Controller {
 				Logger.info("CURRENT USER EMAIL ID: " + useremail);
 				Logger.info(" vdcname : " + vdcname);
 				
-				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
-				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
 				
 				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
 				AsyncTask[] undeployTasks = vapp.undeploy();			
@@ -657,11 +694,11 @@ public class Consumer extends Controller {
 		}
 	}
 	
-	public static void deleteOffer(final Integer sc_offer_id,final Integer vappId) {
-		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+	public static void deleteOffer(final Integer purchasedOfferId) {
+		/*Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
 				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");
+				+ " , String va_param:: " + vappId + ")");*/
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -719,9 +756,9 @@ public class Consumer extends Controller {
 				Logger.info(" vdcname : " + vdcname);
 
 				
-				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
-				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
 //				List<VirtualMachine> lvm = vapp.listVirtualMachines();
 //				
 //				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
@@ -779,11 +816,11 @@ public class Consumer extends Controller {
 		}
 	}
 	
-	public static void resumeOffer(final Integer sc_offer_id,final Integer vappId) {
-		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+	public static void resumeOffer(final Integer purchasedOfferId) {
+		/*Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
 				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");
+				+ " , String va_param:: " + vappId + ")");*/
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -841,9 +878,9 @@ public class Consumer extends Controller {
 				Logger.info(" vdcname : " + vdcname);
 
 				
-				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
-				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
 
 				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
 				AsyncTask[] deployTasks = vapp.deploy();			
@@ -884,11 +921,11 @@ public class Consumer extends Controller {
 		}
 	}
 	
-	public static void resetOffer(final Integer sc_offer_id,final Integer vappId) {
+	public static void resetOffer(final Integer purchasedOfferId) {
 		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
-		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
+		/*Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
 				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");
+				+ " , String va_param:: " + vappId + ")");*/
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -947,9 +984,9 @@ public class Consumer extends Controller {
 
 				
 				
-				final Integer vdcId = ConsumerDAO.getVdcId(vappId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(vdcId);
-				VirtualAppliance vapp = vdc.getVirtualAppliance(vappId);
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
 				
 				List<VirtualMachine> lvm = vapp.listVirtualMachines();
 				VirtualMachine[] arr = new VirtualMachine[lvm.size()];				

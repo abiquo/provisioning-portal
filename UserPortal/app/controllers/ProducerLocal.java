@@ -28,8 +28,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import models.sc_offer;
-import models.sc_offers_subscriptions;
+import models.Offer;
+import models.OfferPurchased;
 import play.Logger;
 import play.db.jpa.Blob;
 import play.db.jpa.JPA;
@@ -44,7 +44,7 @@ public class ProducerLocal extends Controller {
 		Logger.info(" -----INSIDE PRODUCER SUBSCRIBEDOFFERS()------");
 		String user = session.get("username");
 		if (user != null) {
-			List<sc_offers_subscriptions> resultSet = null;
+			List<OfferPurchased> resultSet = null;
 			try {
 				resultSet = ProducerDAO
 						.getSubscribedOffersGroupByServiceLevels();
@@ -70,9 +70,9 @@ public class ProducerLocal extends Controller {
 		Logger.info(" Service_level " + service_level);
 		String user = session.get("username");
 		if (user != null) {
-			List<sc_offers_subscriptions> resultSet = ProducerDAO
+			List<OfferPurchased> resultSet = ProducerDAO
 					.getSubscribedOffersGroupByServiceLevels();
-			List<sc_offers_subscriptions> resultSet1 = ProducerDAO
+			List<Offer> resultSet1 = ProducerDAO
 					.getSubscribedOffers(service_level);
 			Logger.info(" -----INSIDE PRODUCER DISPLAYOFFER()------");
 			render("/ProducerLocal/subscribedOffers.html", resultSet,
@@ -85,21 +85,14 @@ public class ProducerLocal extends Controller {
 	}
 
 	/* disable the selected offer */
-	public static void disableOffer(final Long scOfferId) {
+	public static void disableOffer(final Integer scOfferId) {
 		Logger.info(" -----INSIDE PRODUCER DISABLEOFFER()------");
 		Logger.info(" Offer Id to delete : " + scOfferId);
-
-		sc_offers_subscriptions offerSub = JPA.em().find(
-				sc_offers_subscriptions.class, scOfferId);
-		sc_offer sc_offer = offerSub.getSc_offer();
-		Integer sc_offer_id = sc_offer.getSc_offer_id();
-
-		Query query = JPA.em().createNativeQuery(
-				"delete from mkt_enterprise_view where sc_offer_id = ?1");
-		query.setParameter(1, sc_offer_id);
-		query.executeUpdate();
+		
+		Offer offerToDelete = Offer.findById(scOfferId);		
+		offerToDelete.delete();
+		
 		Logger.info(" Offer deleted ");
-		offerSub.delete();
 		Logger.info(" -----EXITING PRODUCER DISABLEOFFER()------");
 		//Producer.poe();
 		render("/Producer/saveConfigure.html");
@@ -123,7 +116,7 @@ public class ProducerLocal extends Controller {
 				Logger.info(" sc_offer_Id to configure existing offer : "
 						+ sc_offer_id);
 				try {
-					List<sc_offer> scOffer = ProducerDAO
+					List<Offer> scOffer = ProducerDAO
 							.getOfferDetails(sc_offer_id);
 
 					/*
@@ -135,15 +128,15 @@ public class ProducerLocal extends Controller {
 					 * query1.getResultList();
 					 */
 
-					List<sc_offers_subscriptions> subscribedOffers = ProducerDAO
+					/*List<OfferPurchased> subscribedOffers = ProducerDAO
 							.getSubscribedOfferGivenOfferId(sc_offer_id);
 					Date expireDate = null;
 					Date startDate = null;
 					String lease_period = null;
-					for (sc_offers_subscriptions subscribedOffer : subscribedOffers) {
-						expireDate = subscribedOffer.getExpiration_date();
-						startDate = subscribedOffer.getStart_date();
-						lease_period = subscribedOffer.getLease_period();
+					for (OfferPurchased subscribedOffer : subscribedOffers) {
+						expireDate = subscribedOffer.getExpiration();
+						startDate = subscribedOffer.getStart();
+						lease_period = subscribedOffer.getLeasePeriod();
 						Logger.info(" expire date for selected  offer "
 								+ expireDate);
 						Logger.info(" start date for selected  offer "
@@ -151,9 +144,9 @@ public class ProducerLocal extends Controller {
 						Logger.info(" Lease Period for selected  offer "
 								+ lease_period);
 
-					}
+					}*/
 					Logger.info("------ EXITING CONFIGURE EXISTING OFFER -------");
-					render(scOffer, user, expireDate, startDate, lease_period);
+					render(scOffer, user);
 				}
 
 				catch (Exception e) {
@@ -176,57 +169,57 @@ public class ProducerLocal extends Controller {
 	 * @param icon
 	 * @param image
 	 */
-	public static void saveConfigure(final sc_offer sc_offers, final File icon,
-			final File image, final sc_offers_subscriptions subscription) {
+	public static void saveConfigure(final Offer offer, final File icon,
+			final File image) {
 		String user = session.get("username");
 		if (user != null) {
 			Logger.info("-----------INSIDE SAVECONFIGURE()------------");
 			Logger.info("------ saveConfigure() id------- "
-					+ sc_offers.getSc_offer_id());
+					+ offer.getId());
 			Logger.info("------ saveConfigure() Offer name ------- "
-					+ sc_offers.getSc_offer_name());
+					+ offer.getName());
 			Logger.info("------ saveConfigure() short description------- "
-					+ sc_offers.getShort_description());
+					+ offer.getShortDescription());
 			Logger.info("------ saveConfigure() description------- "
-					+ sc_offers.getDescription());
+					+ offer.getLongDescription());
 
 			Logger.info("------ saveConfigure() icon ----" + icon);
 			Logger.info("------ saveConfigure() image ----" + image);
 			try {
-				sc_offer scOffer = sc_offer
-						.findById(sc_offers.getSc_offer_id());
+				Offer scOffer = Offer
+						.findById(offer.getId());
 
-				scOffer.setSc_offer_id(sc_offers.getSc_offer_id());
-				scOffer.setSc_offer_name(sc_offers.getSc_offer_name());
+				scOffer.setId(offer.getId());
+				scOffer.setName(offer.getName());
 				if (icon != null) {					
 					scOffer.setIcon(new Blob());
 					scOffer.getIcon().set(new FileInputStream(icon),
 							MimeTypes.getContentType(icon.getName()));
-					scOffer.setIcon_name(icon.getName());
+					scOffer.setIconName(icon.getName());
 				}
 				if (image != null) {
 					scOffer.setImage(new Blob());
 					scOffer.getImage().set(new FileInputStream(image),
 							MimeTypes.getContentType(image.getName()));
 				}
-				scOffer.setShort_description(sc_offers.getShort_description());
-				scOffer.setDescription(sc_offers.getDescription());
+				scOffer.setShortDescription(offer.getShortDescription());
+				scOffer.setLongDescription(offer.getLongDescription());
+				scOffer.setDefaultLeasePeriod(offer.getDefaultLeasePeriod());
 				scOffer.save();
 				scOffer.refresh();
 				//Helper.displayIcon(scOffer.getSc_offer_id());
 				
-				List<sc_offers_subscriptions> subscribedOffers = ProducerDAO
-						.getSubscribedOfferGivenOfferId(sc_offers
-								.getSc_offer_id());
-				for (sc_offers_subscriptions subOffer : subscribedOffers) {
+				/*List<OfferPurchased> subscribedOffers = ProducerDAO
+						.getSubscribedOfferGivenOfferId(offer.getId());
+				for (OfferPurchased subOffer : subscribedOffers) {
 					/*
 					 * subOffer.setExpiration_date(subscription.getExpiration_date
 					 * ());
 					 * subOffer.setStart_date(subscription.getStart_date());
-					 */
-					subOffer.setLease_period(subscription.getLease_period());
+					 *s
+					subOffer.setLeasePeriod(subscription.getLeasePeriod());
 					subOffer.save();
-				}
+				}*/
 
 				Logger.info("-----------EXITING SAVECONFIGURE()------------");
 				render(user);

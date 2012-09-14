@@ -39,13 +39,14 @@
 </script>
 
 <div id="configure-form" title="Configure">
-<form name="configureOffer" action ="@{ProducerRemote.addToServiceCatalog(sc_offers,icon, image, offerSubscription, date, va)}" method = "POST" enctype="multipart/form-data" >
+<form name="configureOffer" action ="@{ProducerRemote.addToServiceCatalog(sc_offers,icon, image, offerSubscription, va)}" method = "POST" enctype="multipart/form-data" >
     <fieldset>	
-	<input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${va.id}" style="display: none;"/>
+	<input type ="text" name = "offer.id" size="25" value = "${va.id}" style="display: none;"/>
 	<h2 class="pull-right">Enable ${va.name}</h2><br /><br />
-	<input type ="text" name = "sc_offers.idVirtualDataCenter_ref" size="25" value = "${virtualDC.id}" style="display:none;" />  
-	<div class="pull-right">Service Level <input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${virtualDC.name}"  readonly/></div><br />
-	<div class="pull-right">Offer Name <input type ="text" name = "sc_offers.sc_offer_name" size="50" value = "${va.name}" /></div><br />
+	<input type ="text" name = "offer.virtualDatacenter" size="25" value = "${virtualDC.id}" style="display:none;" />  
+	<input type ="text" name = "offer.virtualAppliance" size="25" value = "${va.id}" style="display:none;" />  
+	<div class="pull-right">Service Level <input type ="text" name = "offer.virtualDatacenterName" size="25" value = "${virtualDC.name}"  readonly/></div><br />
+	<div class="pull-right">Offer Name <input type ="text" name = "offer.name" size="50" value = "${va.name}" /></div><br />
 	<!-- #{list vmList, as:'vm'}
 		<div class="pull-right">CPU <input type ="text" name = "sc_offers.sc_offer_name" size="25" value = "${vm.cpu}" /></div><br />
 		<div class="pull-right">RAM <input type ="text" name = "sc_offers.sc_offer_name" size="25" value = "${vm.ram}" /></div><br />
@@ -55,12 +56,12 @@
 	<!-- <div class="pull-right">Selection Icon <input type ="file" name = "icon" /></div><br /> -->
 	<!-- <span class="error">#{error 'icon' /}</span></div>-->
 	<!-- <div class="pull-right btn btn-warning" id="file">Details Image<input type ="file" name = "image" /></div><br /> -->
-	<div class="pull-right">Short Description <input type ="text" name = "sc_offers.short_description" value = "${flash['sc_offers.short_description']}"/></div><br /> 
+	<div class="pull-right">Short Description <input type ="text" name = "offer.shortDescription" value = "${flash['offer.shortDescription']}"/></div><br /> 
 	<!-- <span class="error">#{error 'sc_offers.short_description' /}</span></div> --> 
-	<div class="pull-right">Long Description <textarea rows="5" cols="7" name = "sc_offers.description" value = "${flash['sc_offers.description']}"/></div><br />
+	<div class="pull-right">Long Description <textarea rows="5" cols="7" name = "offer.longDescription" value = "${flash['offer.longDescription']}"/></div><br />
 	<!-- <span class="error">#{error 'sc_offers.description' /}</span></div> -->
 	<div class="pull-right">Default Lease Period 
-	#{select 'offerSubscription.lease_period' }
+	#{select 'offerSubscription.leasePeriod' }
 		#{option '100 years'}infinite #{/option}
 		#{option '30 days'}30 days #{/option}
 		#{option '60 days'}60 days#{/option}

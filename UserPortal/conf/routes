@@ -10,7 +10,7 @@ GET 	/login/logout					    	Login.logout
 POST	/register								Login.register
 
 
-
+GET 	/ProducerRemote/configure					ProducerRemote.configure
 GET 	/ProducerLocal/admin						ProducerLocal.admin
 
 GET 	/Producer/poe								Producer.poe
@@ -23,7 +23,7 @@ GET		/ProducerRemote/vmDetails					ProducerRemote.vmDetails
 GET 	/ProducerRemote/listvm					    ProducerRemote.listVM
 GET 	/ProducerRemote/listva					    ProducerRemote.listVA
 POST 	/ProducerRemote/addtoservicecatalog			ProducerRemote.addToServiceCatalog
-GET 	/ProducerRemote/configure					ProducerRemote.configure
+
 
 GET 	/ProducerLocal/configureExistingOffer		ProducerLocal.configureExistingOffer
 GET 	/ProducerLocal/displayOffer 				ProducerLocal.displayOffer 
@@ -46,6 +46,7 @@ GET 	/consumer/availableoffersAll			Consumer.availableOffersAll
 GET     /consumer/purchasedOffers               Consumer.purchasedOffers
 GET 	/consumer/servicecatalog				Consumer.ServiceCatalog
 GET 	/consumer/offerdetails					Consumer.offerDetails
+GET 	/consumer/offerdetailspurchased 		Consumer.offerDetailsPurchased
 GET 	/consumer/purchaseconfirmation			Consumer.purchaseConfirmation
 GET 	/consumer/deploy					    Consumer.deploy
 GET 	/consumer/undeploy					    Consumer.undeploy

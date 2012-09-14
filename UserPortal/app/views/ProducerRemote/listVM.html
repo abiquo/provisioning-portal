@@ -29,15 +29,15 @@
 	     </tr>
      </thead>
      <tbody>
-      #{list sc_offers, as:'offer'}
-      	 <tr><td><center><img src="@{Helper.displayIcon(offer.sc_offer_id)}" width="100" ></center></td>
+      #{list offers, as:'offer'}
+      	 <tr><td><center><img src="@{Helper.displayIcon(offer.id)}" width="100" ></center></td>
       	 	 <td>
 	         	<table class="table table-striped table-bordered table-condensed" >
 	         		<tbody>
-		         		<tr><td width="200px"><strong><center>Short-Description<center></strong></td><td><center>${offer.short_description}</center></td></tr>
-	         			<tr><td width="200px"><strong><center>Description<center></strong></td><td><center>${offer.description}</center></td></tr>          
+		         		<tr><td width="200px"><strong><center>Short-Description<center></strong></td><td><center>${offer.shortDescription}</center></td></tr>
+	         			<tr><td width="200px"><strong><center>Description<center></strong></td><td><center>${offer.longDescription}</center></td></tr>          
 	         			<tr><td width="200px"><strong><center>Quality of Service<center></strong></td><td><center>${virtualDatacenter.name}</center></td></tr>
-	         			<tr><td width="200px"><strong><center>Lease Period<center></strong></td><td><center>${offer.service_type}</center></td></tr>     
+	         			<tr><td width="200px"><strong><center>Lease Period<center></strong></td><td><center>${offer.serviceType}</center></td></tr>     
          			</tbody>   
 	         	</table>	        
 	         </td>	               

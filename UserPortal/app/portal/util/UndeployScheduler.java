@@ -41,7 +41,7 @@ import controllers.Helper;
 
 import models.Deploy_Bundle;
 import models.Deploy_Bundle_Nodes;
-import models.User_Consumption;
+import models.OfferPurchased;
 
 import play.Logger;
 import play.db.jpa.JPA;

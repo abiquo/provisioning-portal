@@ -56,10 +56,10 @@ public class Nodes extends GenericModel{
 	private String icon;
 	private String description;
 	
-	@ManyToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = sc_offer.class)
-	@JoinTable(name = "Offer_Node", joinColumns = { @JoinColumn(name = "id_node") }, inverseJoinColumns = { @JoinColumn(name = "sc_offer_id") })
+	@ManyToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Offer.class)
+	@JoinTable(name = "Offer_Node", joinColumns = { @JoinColumn(name = "id_node") }, inverseJoinColumns = { @JoinColumn(name = "offer_id") })
 	
-	private sc_offer scOffer;
+	private Offer offer;
 		
 	@OneToMany(cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Nodes_Resources.class)
 	@JoinTable(name = "Node_Resource", joinColumns = { @JoinColumn(name = "id_node") }, inverseJoinColumns = { @JoinColumn(name = "id_nodes_resources") })
@@ -73,7 +73,7 @@ public class Nodes extends GenericModel{
 
 	public Nodes(Integer id_node, String node_name, Integer idImage,
 			Integer cpu, Integer ram, String icon, String description,
-			sc_offer scOffer, Set<Nodes_Resources> resources) {
+			Offer offer, Set<Nodes_Resources> resources) {
 		super();
 		this.id_node = id_node;
 		this.node_name = node_name;
@@ -82,7 +82,7 @@ public class Nodes extends GenericModel{
 		this.ram = ram;
 		this.icon = icon;
 		this.description = description;
-		this.scOffer = scOffer;
+		this.offer = offer;
 		this.resources = resources;
 	}
 
@@ -142,12 +142,12 @@ public class Nodes extends GenericModel{
 		this.description = description;
 	}
 
-	public sc_offer getScOffer() {
-		return scOffer;
+	public Offer getScOffer() {
+		return offer;
 	}
 
-	public void setScOffer(sc_offer scOffer) {
-		this.scOffer = scOffer;
+	public void setOffer(Offer offer) {
+		this.offer = offer;
 	}
 
 	public Set<Nodes_Resources> getResources() {
@@ -160,7 +160,7 @@ public class Nodes extends GenericModel{
 	
 	@Override
 	public String toString(){
-	return "Node [ID :"+ id_node + ", CPU: " + cpu +", RAM: "+ ram +" , ICON:"+ icon + ", sc_offer: "+ scOffer + ", Nodes_Resources:" + resources + "]";
+	return "Node [ID :"+ id_node + ", CPU: " + cpu +", RAM: "+ ram +" , ICON:"+ icon + ", Offer: "+ offer + ", Nodes_Resources:" + resources + "]";
 }
 
 	public Integer getHd() {

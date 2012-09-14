@@ -62,21 +62,21 @@
     }).show();
     
 </script>
- #{list scOffer, as:'scOffer'} 
-<form name="configureExistingOffer" action ="@@{ProducerLocal.saveConfigure(sc_offers,icon, image, subscription )}" method = "POST" enctype="multipart/form-data">
+ #{list scOffer, as:'scoffer'} 
+<form name="configureExistingOffer" action ="@@{ProducerLocal.saveConfigure(offer,icon, image)}" method = "POST" enctype="multipart/form-data">
 	<fieldset>
 	<h2 class="pull-right">Configure Offer</h2><br /><br /> 
-	<div class="pull-right" style="display:none;" >Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${scOffer.sc_offer_id}" readonly /></div>	
-	<div class="pull-right" style="display:none;" ><input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${scOffer.virtualDataCenter_name}" readonly/></div> 
-	<div class="pull-right">Offer Name <input type ="text" name = "sc_offers.sc_offer_name" size="45" value = "${scOffer.sc_offer_name}" /></div><br />
-	<div class="pull-right">Short Description <input type ="text" name = "sc_offers.short_description" value = "${scOffer.short_description}" /></div><br /> 
-	<div class="pull-right">Long Description <textarea name ="sc_offers.description" rows="5" cols="70" >${scOffer.description}</textarea></div><br /> 
+	<div class="pull-right" style="display:none;" >Offer ID <input type ="text" name = "offer.id" size="25" value = "${scoffer.id}" readonly /></div>	
+	<div class="pull-right" style="display:none;" ><input type ="text" name = "offer.virtualDatacenterName" size="25" value = "${scoffer.virtualDatacenterName}" readonly/></div> 
+	<div class="pull-right">Offer Name <input type ="text" name = "offer.name" size="45" value = "${scoffer.name}" /></div><br />
+	<div class="pull-right">Short Description <input type ="text" name = "offer.shortDescription" value = "${scoffer.shortDescription}" /></div><br /> 
+	<div class="pull-right">Long Description <textarea name ="offer.longDescription" rows="5" cols="70" >${scoffer.longDescription}</textarea></div><br /> 
 #{/list}
 	<!-- *{<div class="pull-right">Offer Start Date <input type ="text" name = "subscription.offer_start_date" value = "${startDate}" /></div><br />  
 	<div class="pull-right">Offer Retire Date <input type ="text" name = "subscription.offer_expire_date" value = "${expireDate}" /></div><br />  
-	<div class="pull-right">Default Lease Period <input type ="text" name = "subscription.lease_period" value = "${lease_period}" /></div><br />  }*-->
+	<div class="pull-right">Default Lease Period <input type ="text" name = "offer.defaultLeasePeriod" value = "${scoffer.defaultLeasePeriod}" /></div><br />  }*-->
 	<div class="pull-right">Default Lease Period  :  
-	#{select 'subscription.lease_period', value:'${lease_period}'}
+	#{select 'offer.defaultLeasePeriod', value:'${scoffer.defaultLeasePeriod}'}
 		#{option '30 days'}30 days #{/option}
 		#{option '60 days'}60 days#{/option}
 		#{option '90 days'}90 days #{/option}
@@ -87,7 +87,7 @@
         <div class="pull-left btn btn-warning" id="file">Chose an offer icon to display</div>
         <input type="file" name="icon" onchange="readURL(this);"/> <br />
          <a href="#" class="thumbnail" alt="Icon" id="fileThumbnail">
-             <img id="image" src="@@{Helper.displayIcon(scOffer.sc_offer_id)}" width="100" height=100" >
+             <img id="image" src="@@{Helper.displayIcon(scoffer.id)}" width="100" height=100" >
          </a>
     </div><br /><br /><br /><br /><br /><br /><br /><br />
     <div class="pull-right"><input type="submit" class="btn btn-warning" value="Enable" name="submit"> </div>

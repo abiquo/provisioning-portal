@@ -26,7 +26,7 @@ import java.util.Properties;
 
 
 import models.MKT_Configuration;
-import models.sc_offer;
+import models.Offer;
 
 import org.apache.ivy.ant.IvyAntSettings.Credentials;
 import org.jclouds.abiquo.AbiquoContext;
@@ -70,7 +70,7 @@ public class Helper extends Controller{
 		
 			Logger.info("------------------------- INSIDE displayIcon()---------" );
 			Logger.info(" OfferID for icon " + id );
-			   final sc_offer offer = sc_offer.findById(id);
+			   final Offer offer = Offer.findById(id);
 			   notFoundIfNull(offer);
 			   response.setContentTypeIfNotSet(offer.getIcon().type());
 			   response.setHeader("cache-control", "no-cache");
@@ -87,7 +87,7 @@ public class Helper extends Controller{
 		
 			Logger.info("------------------------- INSIDE displayImage()-------"  );
 			Logger.info(" OfferID for image " + id );
-			   final sc_offer offer = sc_offer.findById(id);
+			   final Offer offer = Offer.findById(id);
 			   notFoundIfNull(offer);
 			   response.setContentTypeIfNotSet(offer.getImage().type());
 			   Logger.info("-------------------------  EXITING  displayIcon()---------" );
@@ -118,7 +118,7 @@ public class Helper extends Controller{
 			String username = null, password = null;
 			for ( MKT_Configuration mkt : mkt_conf )
 			{
-				username= mkt.getMkt_deploy_user();
+				username = mkt.getMkt_deploy_user();
 				password = mkt.getMkt_deploy_pw();
 				
 			}

@@ -32,11 +32,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import models.DateParts;
 import models.Nodes;
 import models.Nodes_Resources;
-import models.sc_offer;
-import models.sc_offers_subscriptions;
+import models.Offer;
+import models.OfferPurchased;
 
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.HardDisk;
@@ -122,11 +121,11 @@ public class ProducerRemote extends Controller {
 						virtualMachine.listAttachedNics();
 					}
 					
-					List<sc_offer> sc_offers = ProducerDAO.getOfferDetails(id_va_param);
+					List<Offer> offers = ProducerDAO.getOfferDetails(id_va_param);
 					
 					//Price
 					final String price = AbiquoUtils.getVAPrice(id_vdc_param, id_va_param);					
-					render(vmList, virtualAppliance, virtualDatacenter, user, sc_offers, price);
+					render(vmList, virtualAppliance, virtualDatacenter, user, offers, price);
 				}
 
 				else {
@@ -224,10 +223,9 @@ public class ProducerRemote extends Controller {
 	 * @param offerSubscription
 	 * @param date
 	 */
-	public static void addToServiceCatalog(@Valid final sc_offer sc_offers,
+	public static void addToServiceCatalog(@Valid final Offer offer,
 			@Required final File icon, final File image,
-			final sc_offers_subscriptions offerSubscription,
-			final DateParts date, final VirtualAppliance vapp) {
+			final OfferPurchased offerSubscription, final VirtualAppliance vapp) {
 
 		if (Validation.hasErrors()) {
 			flash.error("Please enter valid data. See errors inline. Icon is required. Max characters for : Short Description - 30 and Long Description - 255 ");
@@ -244,10 +242,10 @@ public class ProducerRemote extends Controller {
 			if (user != null) {
 				Logger.info("Session user in addToServiceCatalog(): " + user);
 				Logger.info(" and  vdc "
-						+ sc_offers.getIdVirtualDataCenter_ref()
-						+ "  & va_id : " + sc_offers.getSc_offer_id());
+						+ offer.getVirtualDatacenter()
+						+ "  & va_id : " + offer.getId());
 				Logger.info(" lease period "
-						+ offerSubscription.getLease_period());
+						+ offerSubscription.getLeasePeriod());
 				/*
 				 * Logger.info(" start date" +
 				 * offerSubscription.getStart_date());
@@ -261,9 +259,9 @@ public class ProducerRemote extends Controller {
 				 * String start_date = setDate(date); DateFormat formatter ;
 				 * Date datee ;
 				 */
-				Integer vdc_id_param = sc_offers.getIdVirtualDataCenter_ref();
-				Integer id_va_param = sc_offers.getSc_offer_id();
-				String lease_period = offerSubscription.getLease_period();
+				Integer vdc_id_param = offer.getVirtualDatacenter();
+				Integer id_va_param = offer.getVirtualAppliance();
+				String lease_period = offerSubscription.getLeasePeriod();
 
 				AbiquoContext context = Context.getContext(user, password);
 				try {
@@ -284,13 +282,13 @@ public class ProducerRemote extends Controller {
 							.name("10.80.0.0").gateway("10.80.0.1")
 							.address("10.80.0.0").mask(22).build();
 
-					sc_offer scOffer = new sc_offer();
-					scOffer.setSc_offer_id(va.getId());
-					scOffer.setSc_offer_name(va.getName());
+					Offer scOffer = new Offer();
+					scOffer.setVirtualAppliance(va.getId());
+					scOffer.setName(va.getName());
 					scOffer.setPrice(AbiquoUtils.getVAPrice(vdc_id_param, id_va_param));
 					if (icon != null) {
-						scOffer.setIcon_name(sc_offers.getIcon_name());
-						scOffer.setIcon_name(icon.getName());
+						scOffer.setIconName(offer.getIconName());
+						scOffer.setIconName(icon.getName());
 						scOffer.setIcon(new Blob());
 						scOffer.getIcon().set(new FileInputStream(icon),
 								MimeTypes.getContentType(icon.getName()));
@@ -300,18 +298,17 @@ public class ProducerRemote extends Controller {
 						scOffer.getImage().set(new FileInputStream(image),
 								MimeTypes.getContentType(image.getName()));
 					}
-					scOffer.setShort_description(sc_offers
-							.getShort_description());
+					scOffer.setShortDescription(offer
+							.getShortDescription());
 					scOffer.setDatacenter(id_datacenter);
 					scOffer.setHypervisorType(hypervisor.toString());
-					scOffer.setDefault_network_type(network.getAddress());
-					scOffer.setId_VirtualDatacenter_ref(va
-							.getVirtualDatacenter().getId());
-					scOffer.setIdVirtualAppliance_ref(va.getId());
+					scOffer.setDefaultNetworkType(network.getAddress());
+					scOffer.setVirtualDatacenter(va.getVirtualDatacenter().getId());
+					scOffer.setVirtualAppliance(va.getId());
 					
-					if (offerSubscription.getLease_period().equals("100 years")) scOffer.setService_type("Infinite");
-					else scOffer.setService_type("Expire");
-					scOffer.setVirtualDatacenter_name(virtualDC.getName());
+					if (offerSubscription.getLeasePeriod().equals("100 years")) scOffer.setServiceType("Infinite");
+					else scOffer.setServiceType("Expire");
+					scOffer.setVirtualDatacenter(virtualDC.getId());
 
 					Set<Nodes> node_set = new HashSet<Nodes>();
 					Nodes node = null;
@@ -339,8 +336,8 @@ public class ProducerRemote extends Controller {
 						node.setDescription(description);
 						node.setNode_name(vm_template_todeploy.getName());
 						Logger.info(" description : "
-								+ sc_offers.getDescription());
-						scOffer.setDescription(sc_offers.getDescription());
+								+ offer.getLongDescription());
+						scOffer.setLongDescription(offer.getLongDescription());
 						node_set.add(node);
 						Set<Nodes_Resources> node_resource_set = new HashSet<Nodes_Resources>();
 
@@ -364,12 +361,12 @@ public class ProducerRemote extends Controller {
 
 					scOffer.setNodes(node_set);
 					scOffer.setState("PUBLISHED");
-					sc_offers_subscriptions offerSub = new sc_offers_subscriptions();
-					offerSub.setSc_offer(scOffer);
+					//OfferPurchased offerSub = new OfferPurchased();
+					//offerSub.setOffer(scOffer);
 					// offerSub.setStart_date(datee);
-					offerSub.setService_level(virtualDC.getName());
-					offerSub.setLease_period(lease_period);
-					offerSub.save();
+					scOffer.setDefaultServiceLevel(virtualDC.getName());
+					scOffer.setDefaultLeasePeriod(lease_period);
+					scOffer.save();
 					Logger.info("-----------EXITING ADDTOSERVICECATALOG()------------");
 					render(user);
 					// listVDC();
