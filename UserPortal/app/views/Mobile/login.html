@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Abiquo Provisioning Portal</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+</head> 
+<body> 
+
+<div data-role="page">
+
+	<div data-role="header">
+		<h1>Login</h1>
+	</div><!-- /header -->
+
+		<!-- start content -->
+	<div data-role="content" data-inset="true">	
+              <form id="loginFormCenter" action="@@{Login.connect()}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
+                      <fieldset>
+                          <div class="clearfix">
+                              <input type="text" name="username" id="usernamne" placeholder="Username">
+                          </div>
+                          <div class="clearfix">
+                              <input type="password" name="password" id="password" placeholder="Password">
+                          </div>
+                          <button name="signIn" class="btn btn-warning primary" type="submit">Sign in</button>
+                          <hr />
+                          <a id="showRegister" href="#"> Don't have an account?</a>
+                          #{if flash.error}
+                          	<br /><br /><h4><i class="icon-exclamation-sign"></i> ${flash.error}</h4>
+                          #{/if} 
+                      </fieldset>
+                  </form>
+        <!--<form action="/FormActions/login.ashx" method="POST">
+            <fieldset>
+            
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" value=""  />
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" value="" />
+
+                <input id="Submit1" type="submit" value="Login" data-role="button" data-inline="true" data-theme="b" />
+
+            <hr />
+            Don't have a login? <a href="register.aspx">Sign Up</a>
+            </fieldset>
+        </form>-->        
+	</div>
+	<!-- end content -->
+</div><!-- /page -->
+</body>
+</html>

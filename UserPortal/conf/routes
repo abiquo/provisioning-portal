@@ -8,6 +8,9 @@ GET 	/login/connect							Login.connect
 POST	/login/connect							Login.connect
 GET 	/login/logout					    	Login.logout
 POST	/register								Login.register
+GET     /mobile                                 Mobile.login
+GET     /mobile/logout                          Mobile.logout
+GET     /mobile/index                           Mobile.index
 
 
 GET 	/ProducerRemote/configure					ProducerRemote.configure
