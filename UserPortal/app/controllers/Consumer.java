@@ -27,8 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Query;
-
 import models.Deploy_Bundle;
 import models.Deploy_Bundle_Nodes;
 import models.Deploy_Nodes_Resources;
@@ -49,17 +47,13 @@ import org.jclouds.abiquo.domain.enterprise.Enterprise;
 import org.jclouds.abiquo.domain.enterprise.User;
 import org.jclouds.abiquo.domain.infrastructure.Datacenter;
 import org.jclouds.abiquo.domain.network.PrivateNetwork;
-import org.jclouds.abiquo.domain.task.AsyncJob;
 import org.jclouds.abiquo.domain.task.AsyncTask;
 import org.jclouds.abiquo.features.services.CloudService;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
-import org.jclouds.abiquo.predicates.cloud.VirtualAppliancePredicates;
 import org.jclouds.rest.AuthorizationException;
 
 import play.Logger;
-import play.db.jpa.GenericModel.JPAQuery;
-import play.db.jpa.JPA;
 import play.mvc.Controller;
 import portal.util.AbiquoUtils;
 import portal.util.Context;
@@ -67,7 +61,6 @@ import portal.util.Context;
 import com.abiquo.model.enumerator.HypervisorType;
 import com.abiquo.server.core.cloud.VirtualApplianceState;
 import com.abiquo.server.core.cloud.VirtualMachineState;
-import com.abiquo.server.core.task.enums.TaskState;
 
 /**
  * @author Harpreet Kaur This class is invoked when a user with role USER logs
