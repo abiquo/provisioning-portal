@@ -95,7 +95,7 @@ public class Consumer extends Controller {
             if (contextt != null) {
                 AbiquoUtils.setAbiquoUtilsContext(contextt);
                 final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
-            	final Integer numOffers = ProducerDAO.getOffersPurchasedFromUserId(userAbiquo.getId()).size();
+            	final Integer numOffers = ProducerDAO.getOffersPurchasedFromEnterpriseId(userAbiquo.getEnterprise().getId()).size();
             	render(result1, user, enterpriseID, numOffers);            
 			} else {
 
@@ -175,6 +175,7 @@ public class Consumer extends Controller {
                     AbiquoUtils.setAbiquoUtilsContext(contextt);
                     final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
                     final CloudService cloudService = contextt.getCloudService();
+                    final Integer idEnterprise = userAbiquo.getEnterprise().getId();
 
                     /* ---------------------------- */
                     /*
@@ -183,7 +184,7 @@ public class Consumer extends Controller {
                      */
                     
                     //List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromUserId(userAbiquo.getId());
-                    List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromEnterpriseId(userAbiquo.getId());
+                    List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromEnterpriseId(idEnterprise);
                     for (OfferPurchased offerPurchased : offersPurchased) {                    	
                     	VirtualDatacenter vdc = cloudService.getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
                     	VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());

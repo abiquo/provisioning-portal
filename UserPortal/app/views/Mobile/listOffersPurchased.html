@@ -12,17 +12,21 @@
 <div data-role="page">
 
 	<div data-role="header">
-		<a href="@@{Mobile.index()}" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>	
+		<a href="@@{Mobile.admin()}" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 		<h1>Abiquo Provisioning Portal</h1>
 	</div><!-- /header -->
 
 	<div data-role="content">		
 		<ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Search offer..." data-filter-theme="d"data-theme="d" data-divider-theme="d">
 
-        #{list vaWithVm, as:'va'}
-        <li data-role="list-divider">${va.name}</li>
-   		<li><a href="@{Mobile.listVM(virtualDatacenter.id,va.id)}">Details</a></li>
-        #{/list}   
+		 <li class="offerUrl"  data-role="list-divider">Offers</li>
+		   #{list offersPurchased , as:'offerPurchased'}
+		   	<li><a href="#">${offerPurchased.offer?.name}<span class="ui-li-count">20$/month
+		   	</span></a></li>
+		   #{/list}		
+		   #{else}
+		   		<li><a href="#">No offers purchased</a></li>
+		   #{/else}
 		</ul>
 	</div><!--/content-primary -->		
 
@@ -64,6 +68,13 @@
 				</div>
 			</div>		
 	<div><!-- /content -->		
+	<div data-role="footer" data-id="foo1" data-position="fixed">
+	<div data-role="navbar">
+		<ul>
+			<li><a href="@{Mobile.listOffersToPurchase()}">Marketplace</a></li>
+			<li><a href="@{Mobile.listOffersPurchased()}" class="ui-btn-active ui-state-persist">Purchased Offers</a></li>
+		</ul>
+	</div><!-- /navbar -->
 </div><!-- /page -->
 
 </body>

@@ -12,13 +12,13 @@
 <div data-role="page">
 
 	<div data-role="header">
-		<a href="@@{Mobile.index()}" data-icon="home"></a>
+		<a href="@@{Mobile.admin()}" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 		<h1>Abiquo Provisioning Portal</h1>
 	</div><!-- /header -->
 
 	<div data-role="content">		
 		<ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Search offer..." data-filter-theme="d"data-theme="d" data-divider-theme="d" data-split-icon="info">
-			<li data-role="list-divider">${vappFull.virtualAppliance.name}</li>
+			<li data-role="list-divider">${vappFull?.virtualAppliance.name}</li>
 		    #{list vappFull.listVirtualMachines, as:'vm'}		    
 			<li><a href="#">
 				<h3>${vm?.template_name}</h3>
@@ -27,7 +27,7 @@
 				<p><strong>Description:</strong> ${vm?.virtualMachine.description}</p>				
 				<p class="ui-li-aside"><strong>State:</strong>${vm?.virtualMachine.state}</p>
 				</a>
-				<a href="@@{Mobile.purchaseConfirmation()}" data-rel="dialog" data-transition="slideup">Purchase offer</a>
+				<a href="#" data-rel="dialog" data-transition="slideup">Purchase offer</a>
 			</li> 
 			#{/list}
 		</ul>

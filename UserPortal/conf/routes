@@ -14,12 +14,16 @@ GET     /mobile/logout                          Mobile.logout
 GET     /mobile/connect                         Mobile.connect
 POST    /mobile/connect                         Mobile.connect
 GET     /mobile/index                           Mobile.index
+GET     /mobile/admin	                        Mobile.admin	
 GET     /mobile/listActiveOffers                Mobile.listActiveOffers
 GET     /mobile/listInactiveOffers              Mobile.listInactiveOffers
 GET     /mobile/listalloffers                   Mobile.listAllOffers
 GET     /mobile/listvm                          Mobile.listVM
 GET     /mobile/details                         Mobile.details
 GET     /mobile/purchaseConfirmation            Mobile.purchaseConfirmation
+GET     /mobile/listOffersToPurchase            Mobile.listOffersToPurchase
+GET     /mobile/listOffersPurchased             Mobile.listOffersPurchased
+GET     /mobile/deploy                          Mobile.deploy
 
 
 GET 	/ProducerRemote/configure					ProducerRemote.configure
