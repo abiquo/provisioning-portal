@@ -225,6 +225,62 @@ public class Mobile extends Controller {
 	    }
 
 	}
+	
+	public static void manageOffer(final Integer offerPurchasedId) {
+	    Logger.info("---------INSIDE CONSUMER PURCHASEDOFFERS()---------------");
+	    Logger.info("Enterprie ID for current User ");
+	    String user = session.get("username");
+	    String password = session.get("password");
+
+	    AbiquoContext context = Context.getContext(user, password);		    	
+	    AbiquoUtils.setAbiquoUtilsContext(context);
+	    
+        final User userAbiquo = context.getAdministrationService().getCurrentUserInfo();
+        //final CloudService cloudService = contextt.getCloudService();
+        final Enterprise userEnterprise =  userAbiquo.getEnterprise();
+        final Integer idEnterprise = userEnterprise.getId();
+        
+        final OfferPurchased offerPurchased = OfferPurchased.findById(offerPurchasedId);
+        
+        if (offerPurchased.getUser().getIdEnterprise() == idEnterprise) {	                   
+        	
+	    	VirtualDatacenter virtualDatacenter = context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());		    	
+			VirtualAppliance vapp = virtualDatacenter.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
+			
+			ArrayList<VirtualMachineFull> listVM = new ArrayList<VirtualMachineFull>(); 				
+			for (VirtualMachine virtualMachine : vapp.listVirtualMachines()) {
+				VirtualMachineFull vmfull = new VirtualMachineFull(virtualMachine);
+				
+				vmfull.setCpu(virtualMachine.getCpu());
+				vmfull.setRam(virtualMachine.getRam());
+				vmfull.setHd((int) (virtualMachine.getHdInBytes() / (1024 * 1024)));
+
+				VirtualMachineTemplate vtemplate = virtualMachine.getTemplate();
+				vmfull.setTemplate_name(vtemplate.getName());
+				vmfull.setTemplate_path(vtemplate.getPath());				
+				
+				listVM.add(vmfull);
+			}
+			
+			VirtualApplianceFull vappFull = new VirtualApplianceFull(vapp, listVM);
+							
+			
+			/*List<HardDisk> harddisk = virtualMachine
+					.listAttachedHardDisks();*/
+
+			//VirtualMachineTemplate template = virtualMachine.getTemplate();
+			// String template_path = template.getIconUrl();
+			//String template_name = template.getName();
+			//String template_path = template.getPath();
+			render(vappFull, user);
+        	
+	    } else {
+
+	            flash.error("You are not connected.Please Login");
+	            Login.login_page();
+	    }
+
+	}
 
 
 	public static void listAllOffers ( Integer id_vdc , String service_level  )
@@ -525,7 +581,7 @@ public class Mobile extends Controller {
 	 * @param lease_period
 	 */
 	@SuppressWarnings("null")
-	public static void Deploy(final Integer id_datacenter,
+	public static void deploy(final Integer id_datacenter,
 			final Integer vdc_id_param, final Integer sc_offer_id,
 			final String va_param, final String lease_period) {
 		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
@@ -588,7 +644,7 @@ public class Mobile extends Controller {
 				Logger.info("CURRENT USER EMAIL ID: " + useremail);
 				Logger.info(" vdcname : " + vdcname);
 
-				virtualDC = AbiquoUtils.getVDCDetails(vdc_id_param);
+				virtualDC = AbiquoUtils.getMarketplaceDetails(vdc_id_param);
 				Logger.info(" VDC to deploy: ", virtualDC);
 				vdc_name = virtualDC.getName();
 				HypervisorType hypervisor = virtualDC.getHypervisorType();

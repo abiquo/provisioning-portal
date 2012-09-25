@@ -51,6 +51,7 @@ import org.jclouds.abiquo.domain.task.AsyncTask;
 import org.jclouds.abiquo.features.services.CloudService;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
+import org.jclouds.abiquo.predicates.enterprise.EnterprisePredicates;
 import org.jclouds.rest.AuthorizationException;
 
 import play.Logger;
@@ -301,7 +302,8 @@ public class Consumer extends Controller {
 					+ deploy_enterprise_id + "  " + deploy_username + "  "
 					+ deploy_password);
 			/* ---------------------------- */
-
+			
+			
 			/* Create context with deploy username and password for deployments */
 			AbiquoContext context = Context.getContext(deploy_username,
 					deploy_password);
@@ -321,7 +323,8 @@ public class Consumer extends Controller {
 				Logger.info("CURRENT USER EMAIL ID: " + useremail);
 				Logger.info(" vdcname : " + vdcname);
 
-				virtualDC = AbiquoUtils.getVDCDetails(vdc_id_param);
+			
+				virtualDC = AbiquoUtils.getMarketplaceDetails(vdc_id_param);
 				Logger.info(" VDC to deploy: ", virtualDC);
 				vdc_name = virtualDC.getName();
 				HypervisorType hypervisor = virtualDC.getHypervisorType();
@@ -363,7 +366,8 @@ public class Consumer extends Controller {
 					final String nickUser = userAbiquo.getNick();
 					final String emailUser = userAbiquo.getEmail();
 					final Integer idEnterprise = userAbiquo.getEnterprise().getId();
-					userToSave = new UserPortal(idUser,nickUser, emailUser, idEnterprise);					
+					userToSave = new UserPortal(idUser,nickUser, emailUser, idEnterprise);				
+					userToSave.save();
 				}
 				
 				offerPurchased.setUser(userToSave);
@@ -775,7 +779,8 @@ public class Consumer extends Controller {
 				
 				if (vapp.getState() == VirtualApplianceState.NOT_DEPLOYED) {
 					vapp.delete();
-					vdc.delete();	
+					vdc.delete();
+					offerPurchased.delete();
 				} else {
 					
 					AbiquoUtils.checkErrorsInTasks(undeployTasks);

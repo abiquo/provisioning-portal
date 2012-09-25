@@ -21,7 +21,7 @@
 
 		 <li class="offerUrl"  data-role="list-divider">Offers</li>
 		   #{list offersPurchased , as:'offerPurchased'}
-		   	<li><a href="#">${offerPurchased.offer?.name}<span class="ui-li-count">20$/month
+		   	<li><a href="@@{Mobile.manageOffer(offerPurchased?.id)}">${offerPurchased.offer?.name}<span class="ui-li-count">20$/month
 		   	</span></a></li>
 		   #{/list}		
 		   #{else}

@@ -80,10 +80,10 @@ public class OfferPurchased extends GenericModel{
 	private VirtualApplianceState virtualApplianceState;
 	
 	// Relations
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Offer offer; 
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private UserPortal user; 
 		
 	//@OneToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)

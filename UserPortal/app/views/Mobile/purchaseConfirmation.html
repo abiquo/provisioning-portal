@@ -14,17 +14,15 @@
 </head> 
 <body> 
 
-
 	<div data-role="page">
 
 		<div data-role="header" data-theme="e">
 			<h1>Purchase?</h1>
 		</div><!-- /header -->
-
 		<div data-role="content" data-theme="d">
 			<h4>This offer costs $20 and includes selected vm.</h4>
 			<p>Your offer will be deployed once you confirm your purchase</p>
-			<a href="@@{Mobile.deploy(offer.datacenter, offer.virtualDatacenter, offer.id, offer.name, offer.defaultLeasePeriod)}" data-role="button" data-theme="b">Purchase offer</a>
+			<a href="@@{Mobile.deploy(offer.datacenter, offer.virtualDatacenter, offer.id, offer.name, offer.defaultLeasePeriod)}" data-role="button" data-theme="b" data-rel="dialog" data-transition="slideup">Purchase offer</a>
 			<a href="@@{Mobile.index()}" data-role="button" data-rel="back">No thanks</a>
 		</div>
 </div><!-- /page -->

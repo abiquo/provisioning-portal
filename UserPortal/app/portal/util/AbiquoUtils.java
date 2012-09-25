@@ -20,6 +20,11 @@
  ******************************************************************************/
 package portal.util;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
 import org.jclouds.abiquo.domain.cloud.VirtualDatacenter;
@@ -34,6 +39,7 @@ import org.jclouds.abiquo.features.services.CloudService;
 import com.abiquo.server.core.task.enums.TaskState;
 
 import play.Logger;
+import play.Play;
 
 /**
  * 
@@ -121,6 +127,35 @@ public class AbiquoUtils {
 							.getVirtualDatacenter(virtualDatacenterId);
 				}
 			}
+		}
+		return vdc;
+	}
+	
+	public static VirtualDatacenter getMarketplaceDetails(
+			final Integer virtualDatacenterId) {
+		
+		VirtualDatacenter vdc = null;
+		if (virtualDatacenterId != null) {
+			System.out.println(" AbiquoUtils getVDCDetails() Context: "
+					+ context);
+			
+			Properties props = new Properties();
+			 //load a properties file
+			try {
+				props.load(new FileInputStream(Play.getFile("conf/config.properties")));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}           
+			final String admin =  props.getProperty("admin");
+			final String password =  props.getProperty("password");
+			
+			AbiquoContext adminContext = Context.getContext(admin, password);
+			vdc = adminContext.getCloudService().getVirtualDatacenter(virtualDatacenterId);
+			
 		}
 		return vdc;
 	}
