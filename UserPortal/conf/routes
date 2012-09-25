@@ -20,10 +20,12 @@ GET     /mobile/listInactiveOffers              Mobile.listInactiveOffers
 GET     /mobile/listalloffers                   Mobile.listAllOffers
 GET     /mobile/listvm                          Mobile.listVM
 GET     /mobile/details                         Mobile.details
+GET     /mobile/deploy                          Mobile.deploy
 GET     /mobile/purchaseConfirmation            Mobile.purchaseConfirmation
 GET     /mobile/listOffersToPurchase            Mobile.listOffersToPurchase
 GET     /mobile/listOffersPurchased             Mobile.listOffersPurchased
-GET     /mobile/deploy                          Mobile.deploy
+GET     /mobile/manageOffer             		Mobile.manageOffer
+
 
 
 GET 	/ProducerRemote/configure					ProducerRemote.configure
