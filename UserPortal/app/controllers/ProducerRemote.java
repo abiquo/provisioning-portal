@@ -124,6 +124,7 @@ public class ProducerRemote extends Controller {
 					List<Offer> offers = ProducerDAO.getOfferDetails(id_va_param);
 					
 					//Price
+					
 					final String price = AbiquoUtils.getVAPrice(id_vdc_param, id_va_param);					
 					render(vmList, virtualAppliance, virtualDatacenter, user, offers, price);
 				}

@@ -21,7 +21,13 @@ GET     /mobile/listalloffers                   Mobile.listAllOffers
 GET     /mobile/listvm                          Mobile.listVM
 GET     /mobile/details                         Mobile.details
 GET     /mobile/deploy                          Mobile.deploy
+GET     /mobile/resetOffer                      Mobile.resetOffer
+GET     /mobile/deleteOffer                     Mobile.deleteOffer
+GET     /mobile/confirmation             		Mobile.confirmation
 GET     /mobile/purchaseConfirmation            Mobile.purchaseConfirmation
+GET     /mobile/resetConfirmation               Mobile.resetConfirmation
+GET     /mobile/deleteConfirmation              Mobile.deleteConfirmation
+GET     /mobile/upgradeConfirmation             Mobile.upgradeConfirmation
 GET     /mobile/listOffersToPurchase            Mobile.listOffersToPurchase
 GET     /mobile/listOffersPurchased             Mobile.listOffersPurchased
 GET     /mobile/manageOffer             		Mobile.manageOffer

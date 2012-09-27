@@ -39,6 +39,9 @@ import models.Nodes_Resources;
 import models.Offer;
 import models.OfferPurchased;
 import models.UserPortal;
+import models.VirtualApplianceFull;
+import models.VirtualDatacenterFull;
+import models.VirtualMachineFull;
 import monitor.VmEventHandler;
 
 import org.jclouds.abiquo.AbiquoContext;
@@ -52,8 +55,10 @@ import org.jclouds.abiquo.domain.enterprise.Role;
 import org.jclouds.abiquo.domain.enterprise.User;
 import org.jclouds.abiquo.domain.infrastructure.Datacenter;
 import org.jclouds.abiquo.domain.network.PrivateNetwork;
+import org.jclouds.abiquo.domain.task.AsyncTask;
 import org.jclouds.abiquo.features.services.AdministrationService;
 import org.jclouds.abiquo.features.services.CloudService;
+import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
 import org.jclouds.rest.AuthorizationException;
 
@@ -69,6 +74,7 @@ import portal.util.CurrentUserContext;
 
 import com.abiquo.model.enumerator.HypervisorType;
 import com.abiquo.server.core.cloud.VirtualApplianceState;
+import com.abiquo.server.core.cloud.VirtualMachineState;
 
 public class Mobile extends Controller {
 
@@ -272,7 +278,7 @@ public class Mobile extends Controller {
 			// String template_path = template.getIconUrl();
 			//String template_name = template.getName();
 			//String template_path = template.getPath();
-			render(vappFull, user);
+			render(vappFull, user, offerPurchasedId);
         	
 	    } else {
 
@@ -544,6 +550,25 @@ public class Mobile extends Controller {
 			}
 		}
 	}
+	
+	public static void confirmation(final Integer purchasedOfferId, final String action) {
+		Logger.info("-----INSIDE Index()-----");
+		String user = session.get("username");
+		if ( user != null)
+		{
+			/*final Offer offer = Offer.findById(offerId);
+			render(user, offer);*/
+			if (action.equals("reset")) resetConfirmation(purchasedOfferId);
+			else if (action.equals("delete")) deleteConfirmation(purchasedOfferId);
+			else purchaseConfirmation(purchasedOfferId);
+		}
+		else 
+		{			
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+		Logger.info("-----EXITING Index()-----");
+	}
 
 	public static void purchaseConfirmation(final Integer offerId) {
 		Logger.info("-----INSIDE Index()-----");
@@ -560,6 +585,54 @@ public class Mobile extends Controller {
 		}
 		Logger.info("-----EXITING Index()-----");
 	}
+	
+	public static void resetConfirmation(final Integer purchasedOfferId) {
+		Logger.info("-----INSIDE Index()-----");
+		String user = session.get("username");
+		if ( user != null)
+		{			
+			render(user, purchasedOfferId);
+		}
+		else 
+		{			
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+		Logger.info("-----EXITING Index()-----");
+	}
+	
+	public static void deleteConfirmation(final Integer purchasedOfferId) {
+		Logger.info("-----INSIDE Index()-----");
+		String user = session.get("username");
+		if ( user != null)
+		{			
+			render(user, purchasedOfferId);
+		}
+		else 
+		{			
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+		Logger.info("-----EXITING Index()-----");
+	}
+	
+	public static void upgradeConfirmation(final Integer purchasedOfferId) {
+		Logger.info("-----INSIDE Index()-----");
+		String user = session.get("username");
+		if ( user != null)
+		{			
+			render(user, purchasedOfferId);
+		}
+		else 
+		{			
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+		Logger.info("-----EXITING Index()-----");
+	}
+	
+
+
 
 	/**
 	 * 1. Customer buy offer as a User. Deployment needs CLOUD_ADMIN privilege.
@@ -686,7 +759,8 @@ public class Mobile extends Controller {
 					final String nickUser = userAbiquo.getNick();
 					final String emailUser = userAbiquo.getEmail();
 					final Integer idEnterprise = userAbiquo.getEnterprise().getId();
-					userToSave = new UserPortal(idUser,nickUser, emailUser, idEnterprise);					
+					userToSave = new UserPortal(idUser,nickUser, emailUser, idEnterprise);			
+					userToSave.save();
 				}
 				
 				offerPurchased.setUser(userToSave);
@@ -814,7 +888,8 @@ public class Mobile extends Controller {
 					offerPurchased.save();
 					Logger.info("DEPLOY INFO SAVED ......");
 					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
-					render(vdc_name, enterprise_id);
+					final String action = "deployed";
+					render("/Mobile/action.html",vdc_name, enterprise_id, action);
 				}
 
 			} catch (AuthorizationException ae) {
@@ -839,6 +914,245 @@ public class Mobile extends Controller {
 		}
 	}
 	
+	public static void deleteOffer(final Integer purchasedOfferId) {
+		/*Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
+				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
+				+ " , String va_param:: " + vappId + ")");*/
+
+		String deploy_username = null;
+		String deploy_password = null;
+		Integer deploy_enterprise_id = null;
+
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext contextt = Context.getContext(user, password);
+		if (contextt != null) {
+			AbiquoUtils.setAbiquoUtilsContext(contextt);
+
+			/* ---------------------------- */
+			/*
+			 * Retrieve the deploy username and password for current user's
+			 * Enterprise.
+			 */
+			Enterprise current_enterprise = AbiquoUtils
+					.getCurrentUserEnterprise();
+			Integer enterprise_id = current_enterprise.getId();
+			/*List<MKT_Configuration> mkt_conf = MarketDAO
+					.getMKTConfiguration(enterprise_id);
+
+			for (MKT_Configuration mkt : mkt_conf) {
+				deploy_username = mkt.getMkt_deploy_user();
+				deploy_password = mkt.getMkt_deploy_pw();
+				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
+			}*/
+			
+			deploy_username = user;
+			deploy_password = password;
+			deploy_enterprise_id = current_enterprise.getId();
+			
+			Logger.info(" UNDEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :"
+					+ deploy_enterprise_id + "  " + deploy_username + "  "
+					+ deploy_password);
+			/* ---------------------------- */
+
+			/* Create context with deploy username and password for deployments */
+			AbiquoContext context = Context.getContext(deploy_username,
+					deploy_password);
+
+			VirtualDatacenter vdc_toDeploy = null;
+			VirtualAppliance virtualapp_todeploy = null;
+			VirtualMachine vm_todeploy = null;
+			VirtualDatacenter virtualDC = null;
+			String vdc_name = null;
+			try {			
+				Enterprise enterprise = AbiquoUtils
+						.getEnterprise(deploy_enterprise_id);
+				String useremail = session.get("email");
+				String vdc_user = session.get("username");
+				String vdcname = Helper.vdcNameGen(vdc_user);
+				Logger.info("CURRENT USER EMAIL ID: " + useremail);
+				Logger.info(" vdcname : " + vdcname);
+
+				
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
+//				List<VirtualMachine> lvm = vapp.listVirtualMachines();
+//				
+//				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
+//				for (VirtualMachine virtualMachine : lvm) {
+//					virtualMachine.undeploy();					
+//				}
+//				
+//				VirtualMachine[] arr = new VirtualMachine[lvm.size()];
+//				monitor.awaitCompletionUndeploy(lvm.toArray(arr));
+//				
+//				for (VirtualMachine virtualMachine : lvm) {
+//					virtualMachine.delete();					
+//				
+//				}
+				
+				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
+				AsyncTask[] undeployTasks = vapp.undeploy();			
+				monitorVapp.awaitCompletionUndeploy(vapp);
+				
+				if (vapp.getState() == VirtualApplianceState.NOT_DEPLOYED) {
+					vapp.delete();
+					vdc.delete();
+					offerPurchased.delete();
+				} else {
+					
+					AbiquoUtils.checkErrorsInTasks(undeployTasks);
+					Logger.info("Tasks Checked");
+					
+				}
+				
+				
+				Logger.info("OFFER DELETED ......");
+				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
+				final String action = "deleted";
+				render("/Mobile/action.html", vdc_name, enterprise_id, action);				
+
+			} catch (AuthorizationException ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED IN deploy()");
+				String message = "Deployment cannot proceed further. Please Check deploy user and password for your enterprise.";
+				render("/errors/error.html", message);
+			} catch (Exception ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED  IN deploy()");
+				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
+				render("/errors/error.html", message);
+				if (context != null) {
+					context.close();
+				}
+
+			}
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	public static void resetOffer(final Integer purchasedOfferId) {
+		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+		/*Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
+				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
+				+ " , String va_param:: " + vappId + ")");*/
+
+		String deploy_username = null;
+		String deploy_password = null;
+		Integer deploy_enterprise_id = null;
+
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext contextt = Context.getContext(user, password);
+		if (contextt != null) {
+			AbiquoUtils.setAbiquoUtilsContext(contextt);
+
+			/* ---------------------------- */
+			/*
+			 * Retrieve the deploy username and password for current user's
+			 * Enterprise.
+			 */
+			Enterprise current_enterprise = AbiquoUtils
+					.getCurrentUserEnterprise();
+			Integer enterprise_id = current_enterprise.getId();
+			/*List<MKT_Configuration> mkt_conf = MarketDAO
+					.getMKTConfiguration(enterprise_id);
+
+			for (MKT_Configuration mkt : mkt_conf) {
+				deploy_username = mkt.getMkt_deploy_user();
+				deploy_password = mkt.getMkt_deploy_pw();
+				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
+			}*/
+			
+			deploy_username = user;
+			deploy_password = password;
+			deploy_enterprise_id = current_enterprise.getId();
+			
+			Logger.info(" UNDEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :"
+					+ deploy_enterprise_id + "  " + deploy_username + "  "
+					+ deploy_password);
+			/* ---------------------------- */
+
+			/* Create context with deploy username and password for deployments */
+			AbiquoContext context = Context.getContext(deploy_username,
+					deploy_password);
+
+			VirtualDatacenter vdc_toDeploy = null;
+			VirtualAppliance virtualapp_todeploy = null;
+			VirtualMachine vm_todeploy = null;
+			VirtualDatacenter virtualDC = null;
+			String vdc_name = null;
+			try {			
+				Enterprise enterprise = AbiquoUtils
+						.getEnterprise(deploy_enterprise_id);
+				String useremail = session.get("email");
+				String vdc_user = session.get("username");
+				String vdcname = Helper.vdcNameGen(vdc_user);
+				Logger.info("CURRENT USER EMAIL ID: " + useremail);
+				Logger.info(" vdcname : " + vdcname);
+
+				
+				
+				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
+				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
+				
+				List<VirtualMachine> lvm = vapp.listVirtualMachines();
+				VirtualMachine[] arr = new VirtualMachine[lvm.size()];				
+				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
+				
+				for (VirtualMachine virtualMachine : lvm) {
+					virtualMachine.changeState(VirtualMachineState.OFF);
+				}
+				monitor.awaitState(VirtualMachineState.OFF,lvm.toArray(arr));
+				
+				for (VirtualMachine virtualMachine : lvm) {
+					virtualMachine.changeState(VirtualMachineState.ON);
+				}
+				monitor.awaitState(VirtualMachineState.ON,lvm.toArray(arr));
+						
+				if (vapp.getState() == VirtualApplianceState.DEPLOYED) {
+					Logger.info("OFFER RESET SUCCESSFULLY");
+				} else {					
+					//AbiquoUtils.checkErrorsInTasks(deployTasks);
+					Logger.info("Tasks Checked");					
+				}				
+				
+				Logger.info("OFFER RESUMED ......");
+				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
+				final String action = "reseted";
+				render("/Mobile/action.html", vdc_name, enterprise_id, action);				
+
+			} catch (AuthorizationException ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED IN deploy()");
+				String message = "Deployment cannot proceed further. Please Check deploy user and password for your enterprise.";
+				render("/errors/error.html", message);
+			} catch (Exception ae) {
+
+				Logger.warn(ae, "EXCEPTION OCCURED  IN deploy()");
+				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
+				render("/errors/error.html", message);
+				if (context != null) {
+					context.close();
+				}
+
+			}
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
 	
 	// public static void register(@Required final String username,
 	// 		@Required final String password, @Required final String email) {

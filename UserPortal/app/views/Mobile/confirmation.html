@@ -15,15 +15,13 @@
 <body> 
 
 	<div data-role="page">
-
 		<div data-role="header" data-theme="e">
-			<h1>Thank you!</h1>
+			<h1>Success!</h1>
 		</div><!-- /header -->
 		<div data-role="content" data-theme="d">
-			<h4>Offer has been successfully purchased.</h4>
-			<p>An email will be send with more deteiled information.</p>
-			<a href="@@{Mobile.listOffersPurchased()}" data-role="button" data-theme="b">Go to Purchased Offers</a>
-			<a href="@@{Mobile.listOffersToPurchase()}" data-role="button">Return to Marketplace</a>
+			<h4>${header}</h4>
+			<p>${descriprion}</p>
+			<a href="${actionHref}" data-role="button" data-theme="b" data-rel="dialog" data-transition="slideup">${actionMessage}</a>
 		</div>
 </div><!-- /page -->
 

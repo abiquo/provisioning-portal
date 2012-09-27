@@ -43,7 +43,7 @@ import play.Play;
 
 /**
  * 
- * @author Harpreet Kaur This class includes methods that return Abiquo cloud
+ * @author David López This class includes methods that return Abiquo cloud
  *         and admin service , resources like enterprise, vdc, vapp and virtual
  *         machine
  */
@@ -252,7 +252,7 @@ public class AbiquoUtils {
 			if (vdc != null) {
 				va = vdc.getVirtualAppliance(va_id);
 				//TODO Price from vApp
-				// Price = va.getPrice();				
+				//Price = va.getPrice();
 			}
 		}
 		return Price;
