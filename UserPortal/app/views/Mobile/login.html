@@ -28,9 +28,8 @@
                           <div class="clearfix">
                               <input type="password" name="password" id="password" placeholder="Password">
                           </div>
-                          <button name="signIn" class="btn btn-warning primary" type="submit">Sign in</button>
-                          <hr />
-                          <a id="showRegister" href="#"> Don't have an account?</a>
+                          <button data-role="button" data-theme="a">Sign in</button>                          
+                          <button data-role="button" data-theme="c">Register</button>
                           #{if flash.error}
                           	<br /><br /><h4><i class="icon-exclamation-sign"></i> ${flash.error}</h4>
                           #{/if} 

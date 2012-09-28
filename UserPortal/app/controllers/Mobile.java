@@ -278,7 +278,7 @@ public class Mobile extends Controller {
 			// String template_path = template.getIconUrl();
 			//String template_name = template.getName();
 			//String template_path = template.getPath();
-			render(vappFull, user, offerPurchasedId);
+			render(vappFull, user, offerPurchased);
         	
 	    } else {
 
