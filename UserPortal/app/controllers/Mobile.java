@@ -348,8 +348,8 @@ public class Mobile extends Controller {
 				}
 				finally{
 							flash.clear();
-							if (context!= null)
-								context.close();
+							/*if (context!= null)
+								//context.close();*/
 				}
 			
 		}
@@ -419,7 +419,7 @@ public class Mobile extends Controller {
 				render();
 			} finally {
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 			}
 
@@ -472,7 +472,7 @@ public class Mobile extends Controller {
 
 			} finally {
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 
 			}
@@ -548,7 +548,7 @@ public class Mobile extends Controller {
 			} finally {
 				flash.clear();
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 			}
 		}
@@ -730,13 +730,13 @@ public class Mobile extends Controller {
 				Datacenter datacenter = enterprise.listAllowedDatacenters().get(0);
 				Logger.info(" Datacenter to deploy: ", datacenter);
 
-				PrivateNetwork network = PrivateNetwork.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context)
+				PrivateNetwork network = PrivateNetwork.builder(context.getApiContext())
 						.name("10.80.0.0").gateway("10.80.0.1")
 						.address("10.80.0.0").mask(22).build();
 				Logger.info(" Network Built");
 
 				vdc_toDeploy = VirtualDatacenter
-						.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, datacenter, enterprise).name(vdcname)
+						.builder(context.getApiContext(), datacenter, enterprise).name(vdcname)
 						.cpuCountLimits(0, 0).hdLimitsInMb(0, 0)
 						.publicIpsLimits(0, 0).ramLimits(0, 0)
 						.storageLimits(0, 0).vlansLimits(0, 0)
@@ -746,7 +746,7 @@ public class Mobile extends Controller {
 				vdc_toDeploy.save();
 				Logger.info(" 1. VDC CREATED ");
 				virtualapp_todeploy = VirtualAppliance
-						.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, vdc_toDeploy).name(va_param).build();
+						.builder(context.getApiContext(), vdc_toDeploy).name(va_param).build();
 				virtualapp_todeploy.save();
 
 				Logger.info(" 2. VAPP CREATED ");
@@ -824,7 +824,7 @@ public class Mobile extends Controller {
 						// String description = aVM.getDescription();
 
 						vm_todeploy = VirtualMachine
-								.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, virtualapp_todeploy,
+								.builder(context.getApiContext(), virtualapp_todeploy,
 										vm_template_todeploy).nameLabel(vmName)
 								.cpu(cpu).ram(ram).password("vmpassword")
 								.build();
@@ -848,7 +848,7 @@ public class Mobile extends Controller {
 						for (Nodes_Resources resource : resources) {
 							Long size = resource.getValue();
 							HardDisk disk = HardDisk
-									.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, vdc_toDeploy)
+									.builder(context.getApiContext(), vdc_toDeploy)
 									.sizeInMb(size).build();
 							disk.save();
 							hardDisk_toattach.add(disk);
@@ -906,7 +906,7 @@ public class Mobile extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 			}
 
@@ -1029,7 +1029,7 @@ public class Mobile extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 
 			}
@@ -1145,7 +1145,7 @@ public class Mobile extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 
 			}
@@ -1251,7 +1251,7 @@ public class Mobile extends Controller {
 	// 			flash.clear();
 	// 		    if (context != null)
 	// 		    {
-	// 		        context.close();
+	// 		        //context.close();
 	// 		    }
 	// 		}
 	// 	}

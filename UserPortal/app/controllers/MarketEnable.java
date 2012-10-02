@@ -90,7 +90,7 @@ public class MarketEnable extends Controller {
 			} finally {
 				flash.clear();
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 			}
 		} else {
@@ -130,7 +130,7 @@ public class MarketEnable extends Controller {
 			} finally {
 				flash.clear();
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 			}
 		} else {

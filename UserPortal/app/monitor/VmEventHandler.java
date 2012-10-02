@@ -162,7 +162,7 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine>
     private void unregisterAndClose()
     {
         context.getMonitoringService().unregister(this);
-        //context.close();
+        ////context.close();
         System.out.println("Terminating monitoring thread");
     }
 }

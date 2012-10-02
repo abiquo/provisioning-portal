@@ -144,7 +144,7 @@ public class ProducerRemote extends Controller {
 
 			} finally {
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 
 			}
@@ -201,7 +201,7 @@ public class ProducerRemote extends Controller {
 				render();
 			} finally {
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 			}
 
@@ -282,7 +282,8 @@ public class ProducerRemote extends Controller {
 					Integer id_datacenter = virtualDC.getDatacenter().getId();
 					HypervisorType hypervisor = virtualDC.getHypervisorType();
 
-					PrivateNetwork network = PrivateNetwork.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context)
+		
+					PrivateNetwork network = PrivateNetwork.builder(context.getApiContext())
 							.name("10.80.0.0").gateway("10.80.0.1")
 							.address("10.80.0.0").mask(22).build();
 
@@ -383,7 +384,7 @@ public class ProducerRemote extends Controller {
 					render();
 				} finally {
 					if (context != null) {
-						context.close();
+						//context.close();
 					}
 				}
 			} else {
@@ -439,7 +440,7 @@ public class ProducerRemote extends Controller {
 			} finally {
 				flash.clear();
 				if (context != null) {
-					context.close();
+					//context.close();
 				}
 			}
 		} else {

@@ -130,9 +130,9 @@ public class Login extends Controller {
 				login_page();
 			} finally {
 				flash.clear();
-				if (context != null) {
-					context.close();
-				}
+				/*if (context != null) {
+					//context.close();
+				}*/
 			}
 		}
 	}
@@ -165,7 +165,7 @@ public class Login extends Controller {
 				
 				context = Context.getApiClient(admin, passwordAdmin);
 			    // Create a new enterprise with a given set of limits
-			    Enterprise enterprise = Enterprise.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context)
+			    Enterprise enterprise = Enterprise.builder(context.getApiContext())
 			        .name(username)
 			        .cpuCountLimits(5, 10)      // Number of CPUs: Maximum 10, warn when 5 are in use
 			        .ramLimits(2048, 4096)      // Ram in MB: 4GB total, warn when 2GB are in use
@@ -192,7 +192,7 @@ public class Login extends Controller {
 			        context.getAdministrationService().findRole(RolePredicates.name(rolePortal));
 
 			    // Create the user with the selected role in the just created enterprise
-			    User enterpriseUser = User.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, enterprise, role) 
+			    User enterpriseUser = User.builder(context.getApiContext(), enterprise, role) 
 			        .name(username, username)       // The name and surname
 			        .email(email) // The email address
 			        .nick(username)              // The login username
@@ -231,7 +231,7 @@ public class Login extends Controller {
 				flash.clear();
 			    if (context != null)
 			    {
-			        context.close();
+			        //context.close();
 			    }
 			}
 		}

@@ -122,8 +122,9 @@ public class Producer extends Controller {
 				}
 				finally{
 							flash.clear();
-							if (context!= null)
-								context.close();
+							if (context!= null) {
+								//context.close();
+							}
 				}
 			
 	}
