@@ -90,10 +90,10 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine>
     	try{
         if (handles(event))
         {
-            System.out.println("VM " + event.getTarget().getName() + " deployed");
+            System.out.println("VM " + event.getTarget().getNameLabel() + " deployed");
             unregisterAndClose();
             VirtualMachine vm = event.getTarget();
-            System.out.println(" Virtual Machine to monitor  :" + vm.getName() + " with id " + vm.getId());
+            System.out.println(" Virtual Machine to monitor  :" + vm.getNameLabel() + " with id " + vm.getId());
             System.out.println("VDC : " +vm.getVirtualDatacenter().getId());
             Mails.updateUserConsumption_onSuccess(vm.getVirtualDatacenter().getId()  ,vm.getVirtualAppliance() ,vm.getId(),vm);
             //Mails.sendEmail(vm.getVirtualDatacenter().getId()  ,vm.getVirtualAppliance().getId() , vm.getId());
@@ -115,10 +115,10 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine>
     	
         if (handles(event))
         {
-            System.out.println("Deployment for" + event.getTarget().getName() + " failed");
+            System.out.println("Deployment for" + event.getTarget().getNameLabel() + " failed");
             unregisterAndClose();
             VirtualMachine vm = event.getTarget();
-            System.out.println(" Virtual Machine to monitor  :" + vm.getName() + " with id " + vm.getId());
+            System.out.println(" Virtual Machine to monitor  :" + vm.getNameLabel() + " with id " + vm.getId());
             Mails.updateUserConsumption_onFailure(vm.getVirtualDatacenter().getId()  ,vm.getVirtualAppliance() ,vm);
 
         }
@@ -143,7 +143,7 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine>
         	
         if (handles(event))
         {
-            System.out.println("Deployment for vm " + event.getTarget().getName() + " timed out");
+            System.out.println("Deployment for vm " + event.getTarget().getNameLabel() + " timed out");
             //Mails.welcome(); 
             // Stop listening to events and close the context (in this example when the vm is
             // deployed the application should end)

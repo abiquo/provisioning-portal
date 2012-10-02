@@ -125,7 +125,7 @@ public class Mails extends Mailer {
 				    String vmpassword = vm.getPassword();
 					int port =  vm.getVncPort();
 					String ip = vm.getVncAddress();
-					String name = vm.getName();
+					String name = vm.getNameLabel();
 					Logger.info(" PASSWORD : " + vmpassword + "  IP :" + ip + "  PORT :" + port);
 				
 					/* update portal database */
@@ -196,7 +196,7 @@ public class Mails extends Mailer {
 	                } 
 				    
 				    String offerName  = vapp.getName();
-				    String name = vm.getName();
+				    String name = vm.getNameLabel();
 					/* get user email id */
 					EntityManager em  = JPA.em();
 					Query query1 =	em.createQuery(" select p from User_Consumption as p where p.vdc_id = ?1");

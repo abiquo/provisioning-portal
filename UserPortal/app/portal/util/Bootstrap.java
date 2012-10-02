@@ -25,7 +25,6 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import org.jclouds.abiquo.AbiquoContext;
-import org.jclouds.abiquo.AbiquoContextFactory;
 
 import play.Play;
 import play.jobs.Job;

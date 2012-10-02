@@ -37,6 +37,8 @@ import models.Nodes_Resources;
 import models.Offer;
 import models.OfferPurchased;
 
+import org.jclouds.abiquo.AbiquoApi;
+import org.jclouds.abiquo.AbiquoAsyncApi;
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.HardDisk;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
@@ -44,6 +46,7 @@ import org.jclouds.abiquo.domain.cloud.VirtualDatacenter;
 import org.jclouds.abiquo.domain.cloud.VirtualMachine;
 import org.jclouds.abiquo.domain.cloud.VirtualMachineTemplate;
 import org.jclouds.abiquo.domain.network.PrivateNetwork;
+import org.jclouds.rest.RestContext;
 
 import play.Logger;
 import play.data.validation.Required;
@@ -79,7 +82,7 @@ public class ProducerRemote extends Controller {
 		 * );
 		 */
 
-		AbiquoContext context = Context.getContext(user, password);
+		AbiquoContext context = Context.getApiClient(user, password);
 		AbiquoUtils.setAbiquoUtilsContext(context);
 		Iterable<VirtualDatacenter> vdc_list = AbiquoUtils.getAllVDC();
 		
@@ -105,7 +108,7 @@ public class ProducerRemote extends Controller {
 		String user = session.get("username");
 		String password = session.get("password");
 		if (user != null) {
-			AbiquoContext context = Context.getContext(user, password);
+			AbiquoContext context = Context.getApiClient(user, password);
 			AbiquoUtils.setAbiquoUtilsContext(context);
 			try {
 				VirtualDatacenter virtualDatacenter = AbiquoUtils
@@ -171,7 +174,7 @@ public class ProducerRemote extends Controller {
 		String password = session.get("password");
 		Logger.info("Session user in vmDetails(): " + user);
 		if (user != null) {
-			AbiquoContext context = Context.getContext(user, password);
+			AbiquoContext context = Context.getApiClient(user, password);
 
 			try {
 				VirtualMachine virtualMachine = AbiquoUtils.getVMDetails(vdc,
@@ -264,7 +267,7 @@ public class ProducerRemote extends Controller {
 				Integer id_va_param = offer.getVirtualAppliance();
 				String lease_period = offerSubscription.getLeasePeriod();
 
-				AbiquoContext context = Context.getContext(user, password);
+				AbiquoContext context = Context.getApiClient(user, password);
 				try {
 					/*
 					 * formatter = new SimpleDateFormat("yyyy-M-d"); datee =
@@ -279,7 +282,7 @@ public class ProducerRemote extends Controller {
 					Integer id_datacenter = virtualDC.getDatacenter().getId();
 					HypervisorType hypervisor = virtualDC.getHypervisorType();
 
-					PrivateNetwork network = PrivateNetwork.builder(context)
+					PrivateNetwork network = PrivateNetwork.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context)
 							.name("10.80.0.0").gateway("10.80.0.1")
 							.address("10.80.0.0").mask(22).build();
 
@@ -407,7 +410,7 @@ public class ProducerRemote extends Controller {
 			VirtualAppliance va = null;
 			List<VirtualMachine> vmList = null;
 
-			AbiquoContext context = Context.getContext(user, password);
+			AbiquoContext context = Context.getApiClient(user, password);
 			try {
 				AbiquoUtils.setAbiquoUtilsContext(context);
 				virtualDC = AbiquoUtils.getVDCDetails(vdc_id_param);

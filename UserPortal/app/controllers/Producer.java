@@ -76,7 +76,7 @@ public class Producer extends Controller {
 		String password =session.get("password");
 		if ( user != null )
 		{
-			AbiquoContext context = Context.getContext(user,password);
+			AbiquoContext context = Context.getApiClient(user,password);
 			AbiquoUtils.setAbiquoUtilsContext(context);
 			try {
 					if (id_vdc != null )

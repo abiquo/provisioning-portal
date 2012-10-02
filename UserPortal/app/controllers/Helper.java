@@ -30,7 +30,6 @@ import models.Offer;
 
 import org.apache.ivy.ant.IvyAntSettings.Credentials;
 import org.jclouds.abiquo.AbiquoContext;
-import org.jclouds.abiquo.AbiquoContextFactory;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
 import org.jclouds.abiquo.domain.cloud.VirtualDatacenter;
 import org.jclouds.abiquo.domain.cloud.VirtualMachine;
@@ -123,7 +122,7 @@ public class Helper extends Controller{
 				
 			}
 			Logger.info(" DEPLOY  USERNAME + PASSWORD :" + username +"  " + password );
-			AbiquoContext context = Context.getContext(username, password);
+			AbiquoContext context = Context.getApiClient(username, password);
 			AbiquoUtils.setAbiquoUtilsContext(context);
 			VirtualMachine vm = AbiquoUtils.getVMDetails(vdc_id, vapp_id, vm_id);
 			return vm;

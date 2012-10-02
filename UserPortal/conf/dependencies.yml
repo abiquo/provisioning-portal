@@ -2,7 +2,7 @@
 
 require:
     - play -> crud
-    - org.jclouds.provider -> jclouds-abiquo 2.2.3
+    - org.jclouds.labs -> abiquo 1.5.1
     # Force dependencies that already come with Play
     - com.google.code.gson -> gson 2.1:
         force: true
@@ -15,6 +15,7 @@ repositories:
             - com.abiquo -> *
             - com.abiquo.abicloud -> *
             - org.jclouds.provider -> *
+
     - jclouds:
         type: iBiblio
         root: "https://oss.sonatype.org/content/repositories/snapshots"

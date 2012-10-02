@@ -25,6 +25,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.jclouds.abiquo.AbiquoApi;
+import org.jclouds.abiquo.AbiquoAsyncApi;
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.enterprise.Enterprise;
 import org.jclouds.abiquo.domain.enterprise.Role;
@@ -35,6 +37,7 @@ import org.jclouds.abiquo.features.services.AdministrationService;
 import org.jclouds.abiquo.predicates.enterprise.RolePredicates;
 import org.jclouds.abiquo.predicates.infrastructure.DatacenterPredicates;
 import org.jclouds.rest.AuthorizationException;
+import org.jclouds.rest.RestContext;
 
 import play.Logger;
 import play.Play;
@@ -77,7 +80,7 @@ public class Login extends Controller {
 			session.put("username", username);
 			session.put("password", password);
 
-			AbiquoContext context = Context.getContext(username, password);
+			AbiquoContext context = Context.getApiClient(username, password);
 			// Cache.set(session.getId() + "-context", context, "30mn");
 			// AbiquoUtils.setContext(context);
 			// PortalContext userContext = new PortalContext();
@@ -92,7 +95,7 @@ public class Login extends Controller {
 					AdministrationService adminService = context
 							.getAdministrationService();
 					if (adminService != null) {
-						User currentUser = adminService.getCurrentUserInfo();
+						User currentUser = adminService.getCurrentUser();
 						flash.put("currentUserInfo", currentUser);
 						Integer enterpriseID = currentUser.getEnterprise()
 								.getId();
@@ -160,9 +163,9 @@ public class Login extends Controller {
 				final String datacenterName = props.getProperty("datacenter");
 				final String rolePortal = props.getProperty("role");
 				
-				context = Context.getContext (admin, passwordAdmin);
+				context = Context.getApiClient(admin, passwordAdmin);
 			    // Create a new enterprise with a given set of limits
-			    Enterprise enterprise = Enterprise.builder(context)
+			    Enterprise enterprise = Enterprise.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context)
 			        .name(username)
 			        .cpuCountLimits(5, 10)      // Number of CPUs: Maximum 10, warn when 5 are in use
 			        .ramLimits(2048, 4096)      // Ram in MB: 4GB total, warn when 2GB are in use
@@ -189,7 +192,7 @@ public class Login extends Controller {
 			        context.getAdministrationService().findRole(RolePredicates.name(rolePortal));
 
 			    // Create the user with the selected role in the just created enterprise
-			    User enterpriseUser = User.builder(context, enterprise, role) 
+			    User enterpriseUser = User.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, enterprise, role) 
 			        .name(username, username)       // The name and surname
 			        .email(email) // The email address
 			        .nick(username)              // The login username

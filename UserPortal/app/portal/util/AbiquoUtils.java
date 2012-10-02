@@ -153,7 +153,7 @@ public class AbiquoUtils {
 			final String admin =  props.getProperty("admin");
 			final String password =  props.getProperty("password");
 			
-			AbiquoContext adminContext = Context.getContext(admin, password);
+			AbiquoContext adminContext = Context.getApiClient(admin, password);
 			vdc = adminContext.getCloudService().getVirtualDatacenter(virtualDatacenterId);
 			
 		}
@@ -211,7 +211,7 @@ public class AbiquoUtils {
 		Enterprise enterprise = null;
 		AdministrationService adminService = getAdmin();
 		if (adminService != null) {
-			User user = adminService.getCurrentUserInfo();
+			User user = adminService.getCurrentUser();
 			if (user != null) {
 				enterprise = user.getEnterprise();
 			}

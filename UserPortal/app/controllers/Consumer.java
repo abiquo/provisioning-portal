@@ -37,6 +37,8 @@ import models.OfferPurchased;
 import models.UserPortal;
 import monitor.VmEventHandler;
 
+import org.jclouds.abiquo.AbiquoApi;
+import org.jclouds.abiquo.AbiquoAsyncApi;
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.HardDisk;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
@@ -53,6 +55,7 @@ import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
 import org.jclouds.abiquo.predicates.enterprise.EnterprisePredicates;
 import org.jclouds.rest.AuthorizationException;
+import org.jclouds.rest.RestContext;
 
 import play.Logger;
 import play.mvc.Controller;
@@ -92,10 +95,10 @@ public class Consumer extends Controller {
 			 */
 			Logger.info("------------EXITING CONSUMER SERVICECATALOG()--------------");
 			
-			AbiquoContext contextt = Context.getContext(user, password);
+			AbiquoContext contextt = Context.getApiClient(user, password);
             if (contextt != null) {
                 AbiquoUtils.setAbiquoUtilsContext(contextt);
-                final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
+                final User userAbiquo = contextt.getAdministrationService().getCurrentUser();
             	final Integer numOffers = ProducerDAO.getOffersPurchasedFromEnterpriseId(userAbiquo.getEnterprise().getId()).size();
             	render(result1, user, enterpriseID, numOffers);            
 			} else {
@@ -171,10 +174,10 @@ public class Consumer extends Controller {
 
     if (user != null) {
             Logger.info("CURRENT USER EMAIL ID: " + user);
-            AbiquoContext contextt = Context.getContext(user, password);
+            AbiquoContext contextt = Context.getApiClient(user, password);
             if (contextt != null) {
                     AbiquoUtils.setAbiquoUtilsContext(contextt);
-                    final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
+                    final User userAbiquo = contextt.getAdministrationService().getCurrentUser();
                     final CloudService cloudService = contextt.getCloudService();
                     final Integer idEnterprise = userAbiquo.getEnterprise().getId();
 
@@ -275,7 +278,7 @@ public class Consumer extends Controller {
 		String user = session.get("username");
 		String password = session.get("password");
 
-		AbiquoContext contextt = Context.getContext(user, password);
+		AbiquoContext contextt = Context.getApiClient(user, password);
 		if (contextt != null) {
 			AbiquoUtils.setAbiquoUtilsContext(contextt);
 
@@ -305,7 +308,7 @@ public class Consumer extends Controller {
 			
 			
 			/* Create context with deploy username and password for deployments */
-			AbiquoContext context = Context.getContext(deploy_username,
+			AbiquoContext context = Context.getApiClient(deploy_username,
 					deploy_password);
 
 			VirtualDatacenter vdc_toDeploy = null;
@@ -334,13 +337,13 @@ public class Consumer extends Controller {
 				Datacenter datacenter = enterprise.listAllowedDatacenters().get(0);
 				Logger.info(" Datacenter to deploy: ", datacenter);
 
-				PrivateNetwork network = PrivateNetwork.builder(context)
+				PrivateNetwork network = PrivateNetwork.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context)
 						.name("10.80.0.0").gateway("10.80.0.1")
 						.address("10.80.0.0").mask(22).build();
 				Logger.info(" Network Built");
 
 				vdc_toDeploy = VirtualDatacenter
-						.builder(context, datacenter, enterprise).name(vdcname)
+						.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, datacenter, enterprise).name(vdcname)
 						.cpuCountLimits(0, 0).hdLimitsInMb(0, 0)
 						.publicIpsLimits(0, 0).ramLimits(0, 0)
 						.storageLimits(0, 0).vlansLimits(0, 0)
@@ -350,13 +353,13 @@ public class Consumer extends Controller {
 				vdc_toDeploy.save();
 				Logger.info(" 1. VDC CREATED ");
 				virtualapp_todeploy = VirtualAppliance
-						.builder(context, vdc_toDeploy).name(va_param).build();
+						.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, vdc_toDeploy).name(va_param).build();
 				virtualapp_todeploy.save();
 
 				Logger.info(" 2. VAPP CREATED ");
 
 				/* Save the deploy info to the portal database : user, vdc etc */
-				final User userAbiquo = contextt.getAdministrationService().getCurrentUserInfo();
+				final User userAbiquo = contextt.getAdministrationService().getCurrentUser();
 				final Integer idUser = userAbiquo.getId();
 				final OfferPurchased offerPurchased = new OfferPurchased();
 				UserPortal userToSave = UserPortal.findById(idUser);
@@ -428,8 +431,8 @@ public class Consumer extends Controller {
 						// String description = aVM.getDescription();
 
 						vm_todeploy = VirtualMachine
-								.builder(context, virtualapp_todeploy,
-										vm_template_todeploy).name(vmName)
+								.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, virtualapp_todeploy,
+										vm_template_todeploy).nameLabel(vmName)
 								.cpu(cpu).ram(ram).password("vmpassword")
 								.build();
 						vm_todeploy.save();
@@ -437,7 +440,7 @@ public class Consumer extends Controller {
 						Deploy_Bundle_Nodes deploy_Bundle_Nodes = new Deploy_Bundle_Nodes();
 						deploy_Bundle_Nodes.setCpu(cpu);
 						deploy_Bundle_Nodes.setNode_name(vmName);
-						deploy_Bundle_Nodes.setNode_name(vm_todeploy.getName());
+						deploy_Bundle_Nodes.setNode_name(vm_todeploy.getNameLabel());
 						deploy_Bundle_Nodes.setNode_id(vm_todeploy.getId());
 						deploy_Bundle_Nodes.setRam(ram);
 						deploy_Bundle_Nodes.setVdrp_password("");
@@ -452,7 +455,7 @@ public class Consumer extends Controller {
 						for (Nodes_Resources resource : resources) {
 							Long size = resource.getValue();
 							HardDisk disk = HardDisk
-									.builder(context, vdc_toDeploy)
+									.builder((RestContext<AbiquoApi, AbiquoAsyncApi>) context, vdc_toDeploy)
 									.sizeInMb(size).build();
 							disk.save();
 							hardDisk_toattach.add(disk);
@@ -602,7 +605,7 @@ public class Consumer extends Controller {
 		String user = session.get("username");
 		String password = session.get("password");
 
-		AbiquoContext contextt = Context.getContext(user, password);
+		AbiquoContext contextt = Context.getApiClient(user, password);
 		if (contextt != null) {
 			AbiquoUtils.setAbiquoUtilsContext(contextt);
 
@@ -633,7 +636,7 @@ public class Consumer extends Controller {
 			/* ---------------------------- */
 
 			/* Create context with deploy username and password for deployments */
-			AbiquoContext context = Context.getContext(deploy_username,
+			AbiquoContext context = Context.getApiClient(deploy_username,
 					deploy_password);
 
 			VirtualDatacenter vdc_toDeploy = null;
@@ -706,7 +709,7 @@ public class Consumer extends Controller {
 		String user = session.get("username");
 		String password = session.get("password");
 
-		AbiquoContext contextt = Context.getContext(user, password);
+		AbiquoContext contextt = Context.getApiClient(user, password);
 		if (contextt != null) {
 			AbiquoUtils.setAbiquoUtilsContext(contextt);
 
@@ -737,7 +740,7 @@ public class Consumer extends Controller {
 			/* ---------------------------- */
 
 			/* Create context with deploy username and password for deployments */
-			AbiquoContext context = Context.getContext(deploy_username,
+			AbiquoContext context = Context.getApiClient(deploy_username,
 					deploy_password);
 
 			VirtualDatacenter vdc_toDeploy = null;
@@ -829,7 +832,7 @@ public class Consumer extends Controller {
 		String user = session.get("username");
 		String password = session.get("password");
 
-		AbiquoContext contextt = Context.getContext(user, password);
+		AbiquoContext contextt = Context.getApiClient(user, password);
 		if (contextt != null) {
 			AbiquoUtils.setAbiquoUtilsContext(contextt);
 
@@ -860,7 +863,7 @@ public class Consumer extends Controller {
 			/* ---------------------------- */
 
 			/* Create context with deploy username and password for deployments */
-			AbiquoContext context = Context.getContext(deploy_username,
+			AbiquoContext context = Context.getApiClient(deploy_username,
 					deploy_password);
 
 			VirtualDatacenter vdc_toDeploy = null;
@@ -934,7 +937,7 @@ public class Consumer extends Controller {
 		String user = session.get("username");
 		String password = session.get("password");
 
-		AbiquoContext contextt = Context.getContext(user, password);
+		AbiquoContext contextt = Context.getApiClient(user, password);
 		if (contextt != null) {
 			AbiquoUtils.setAbiquoUtilsContext(contextt);
 
@@ -965,7 +968,7 @@ public class Consumer extends Controller {
 			/* ---------------------------- */
 
 			/* Create context with deploy username and password for deployments */
-			AbiquoContext context = Context.getContext(deploy_username,
+			AbiquoContext context = Context.getApiClient(deploy_username,
 					deploy_password);
 
 			VirtualDatacenter vdc_toDeploy = null;

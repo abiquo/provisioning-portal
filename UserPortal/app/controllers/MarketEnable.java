@@ -60,7 +60,7 @@ public class MarketEnable extends Controller {
 	public static void marketEnable() {
 		String user = session.get("username");
 		String password = session.get("password");
-		AbiquoContext context = Context.getContext(user, password);
+		AbiquoContext context = Context.getApiClient(user, password);
 		if (context != null) {
 			AbiquoUtils.setAbiquoUtilsContext(context);
 			try {
@@ -111,7 +111,7 @@ public class MarketEnable extends Controller {
 		Logger.info("------------------------- INSIDE Enable()-----------------");
 		String user = session.get("username");
 		String password = session.get("password");
-		AbiquoContext context = Context.getContext(user, password);
+		AbiquoContext context = Context.getApiClient(user, password);
 		if (context != null) {
 			try {
 				List<MKT_Configuration> resultSet1 = MarketDAO
