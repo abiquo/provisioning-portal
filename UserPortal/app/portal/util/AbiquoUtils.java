@@ -36,10 +36,10 @@ import org.jclouds.abiquo.domain.task.AsyncTask;
 import org.jclouds.abiquo.features.services.AdministrationService;
 import org.jclouds.abiquo.features.services.CloudService;
 
-import com.abiquo.server.core.task.enums.TaskState;
-
 import play.Logger;
 import play.Play;
+
+import com.abiquo.server.core.task.enums.TaskState;
 
 /**
  * 
@@ -152,7 +152,7 @@ public class AbiquoUtils {
 			}           
 			final String admin =  props.getProperty("admin");
 			final String password =  props.getProperty("password");
-			
+		
 			AbiquoContext adminContext = Context.getApiClient(admin, password);
 			vdc = adminContext.getCloudService().getVirtualDatacenter(virtualDatacenterId);
 			

@@ -20,29 +20,16 @@
  ******************************************************************************/
 package portal.util;
 
-import play.*;
-import play.jobs.Job;
-import play.mvc.*;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.Properties;
 
 import org.jclouds.ContextBuilder;
 import org.jclouds.abiquo.AbiquoApiMetadata;
 import org.jclouds.abiquo.AbiquoContext;
 
-import org.jclouds.abiquo.domain.enterprise.Enterprise;
-import org.jclouds.abiquo.domain.enterprise.User;
-import org.jclouds.abiquo.features.services.AdministrationService;
-import org.jclouds.abiquo.features.services.CloudService;
-import org.jclouds.abiquo.handlers.AbiquoErrorHandler;
-import org.jclouds.abiquo.predicates.enterprise.UserPredicates;
-import org.jclouds.http.HttpResponseException;
-
-import com.google.common.collect.ImmutableSet;
-import com.google.inject.Module;
+import play.Play;
 
 
 
@@ -50,16 +37,15 @@ public class Context {
 
 	 /** Context */
     private static AbiquoContext context;
+    private static String userInContext;
 	
     // ----------------------------------------------------------------------------
     // --- JCLOUDS API PROPER METHODS TO IVOKE API!
     // ----------------------------------------------------------------------------
     public static AbiquoContext getApiClient(final String username, final String password)
-    {
-        if (context == null)
-        {
-        	if ( username != null && password != null)
-    		{
+    {        
+    	if ( username != null && password != null)
+		{
     		Properties props = new Properties();    		
     		 //load a properties file
     		try {
@@ -92,11 +78,16 @@ public class Context {
     		} catch (IOException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
-    		}          
-    		
-        }
+    		}     	        
         }
         return context;
+    }
+    
+    public static void closeContext() {    	
+    	if (context != null) {
+    		context.close();
+    		context = null;
+    	}
     }
 	
 //	public static final AbiquoContext getContext(String username, String password) 

@@ -511,7 +511,7 @@ public class Consumer extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 			}
 
@@ -683,7 +683,7 @@ public class Consumer extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 
 			}
@@ -806,7 +806,7 @@ public class Consumer extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 
 			}
@@ -911,7 +911,7 @@ public class Consumer extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 
 			}
@@ -1026,7 +1026,7 @@ public class Consumer extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 
 			}

@@ -63,6 +63,7 @@ public class Login extends Controller {
 		session.remove("username");
 		session.remove("password");
 		session.clear();
+		Context.closeContext();
 		Cache.delete(session.getId());
 		login_page();
 		Logger.info("-----EXITING LOGOUT()-----");
@@ -79,8 +80,8 @@ public class Login extends Controller {
 
 			session.put("username", username);
 			session.put("password", password);
-
 			AbiquoContext context = Context.getApiClient(username, password);
+			
 			// Cache.set(session.getId() + "-context", context, "30mn");
 			// AbiquoUtils.setContext(context);
 			// PortalContext userContext = new PortalContext();
@@ -92,6 +93,7 @@ public class Login extends Controller {
 				Logger.info("context: " + context);
 
 				if (context != null) {
+					
 					AdministrationService adminService = context
 							.getAdministrationService();
 					if (adminService != null) {
@@ -131,7 +133,7 @@ public class Login extends Controller {
 			} finally {
 				flash.clear();
 				/*if (context != null) {
-					//context.close();
+					context.close();
 				}*/
 			}
 		}
@@ -231,7 +233,7 @@ public class Login extends Controller {
 				flash.clear();
 			    if (context != null)
 			    {
-			        //context.close();
+			        context.close();
 			    }
 			}
 		}

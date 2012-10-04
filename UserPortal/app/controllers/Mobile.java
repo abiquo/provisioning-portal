@@ -349,7 +349,7 @@ public class Mobile extends Controller {
 				finally{
 							flash.clear();
 							/*if (context!= null)
-								//context.close();*/
+								context.close();*/
 				}
 			
 		}
@@ -419,7 +419,7 @@ public class Mobile extends Controller {
 				render();
 			} finally {
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 			}
 
@@ -472,7 +472,7 @@ public class Mobile extends Controller {
 
 			} finally {
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 
 			}
@@ -548,7 +548,7 @@ public class Mobile extends Controller {
 			} finally {
 				flash.clear();
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 			}
 		}
@@ -906,7 +906,7 @@ public class Mobile extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 			}
 
@@ -1029,7 +1029,7 @@ public class Mobile extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 
 			}
@@ -1145,7 +1145,7 @@ public class Mobile extends Controller {
 				String message = "Deployment cannot proceed further. Please contact your System Administrator.";
 				render("/errors/error.html", message);
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 
 			}
@@ -1251,7 +1251,7 @@ public class Mobile extends Controller {
 	// 			flash.clear();
 	// 		    if (context != null)
 	// 		    {
-	// 		        //context.close();
+	// 		        context.close();
 	// 		    }
 	// 		}
 	// 	}

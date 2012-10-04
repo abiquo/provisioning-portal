@@ -123,7 +123,7 @@ public class Producer extends Controller {
 				finally{
 							flash.clear();
 							if (context!= null) {
-								//context.close();
+								context.close();
 							}
 				}
 			

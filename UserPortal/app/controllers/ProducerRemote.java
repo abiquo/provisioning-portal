@@ -144,7 +144,7 @@ public class ProducerRemote extends Controller {
 
 			} finally {
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 
 			}
@@ -201,7 +201,7 @@ public class ProducerRemote extends Controller {
 				render();
 			} finally {
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 			}
 
@@ -371,6 +371,7 @@ public class ProducerRemote extends Controller {
 					// offerSub.setStart_date(datee);
 					scOffer.setDefaultServiceLevel(virtualDC.getName());
 					scOffer.setDefaultLeasePeriod(lease_period);
+					scOffer.setId(offer.getId());
 					scOffer.save();
 					Logger.info("-----------EXITING ADDTOSERVICECATALOG()------------");
 					render(user);
@@ -384,7 +385,7 @@ public class ProducerRemote extends Controller {
 					render();
 				} finally {
 					if (context != null) {
-						//context.close();
+						context.close();
 					}
 				}
 			} else {
@@ -440,7 +441,7 @@ public class ProducerRemote extends Controller {
 			} finally {
 				flash.clear();
 				if (context != null) {
-					//context.close();
+					context.close();
 				}
 			}
 		} else {

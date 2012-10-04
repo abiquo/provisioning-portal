@@ -144,7 +144,7 @@ public class UndeployScheduler extends Job {
 			
 		}
 		finally{
-				//context.close();
+				context.close();
 	    }
 			
 	}
