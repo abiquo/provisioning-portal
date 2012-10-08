@@ -1,9 +1,16 @@
 # Application dependencies
 
 require:
+    - play
     - play -> crud
     - org.jclouds.labs -> abiquo 1.5.1
-    # Force dependencies that already come with Play
+    - org.hibernate -> hibernate-core 3.6.9.Final:
+        force: true
+    - org.hibernate -> hibernate-validator 4.2.0.Final
+#    - org.hibernate -> hibernate-core 3.6.1:
+#        force: true
+
+# Force dependencies that already come with Play
     - com.google.code.gson -> gson 2.1:
         force: true
     
@@ -19,6 +26,14 @@ repositories:
     - jclouds:
         type: iBiblio
         root: "https://oss.sonatype.org/content/repositories/snapshots"
+
+    - jboss:
+        type: iBiblio
+        root: "https://repository.jboss.org/nexus/content/groups/public"
+        contains:
+            - org.jboss -> *
+            - org.jboss.javaee -> *
+            - org.hibernate -> *
 #    - localrepo:
 #        type: iBiblio
 #        root: "file:////${user.home}/.m2/repository/"
