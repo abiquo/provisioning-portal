@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.hamcrest.core.IsNull"/>
+<fullyQualifiedTypeName name="org.jclouds.abiquo.AbiquoContext"/>
+<fullyQualifiedTypeName name="org.jclouds.abiquo.AbiquoContextFactory"/>
+<fullyQualifiedTypeName name="org.jclouds.abiquo.domain.enterprise.Enterprise"/>
+<fullyQualifiedTypeName name="org.jclouds.abiquo.domain.infrastructure.Datacenter"/>
+<fullyQualifiedTypeName name="org.jclouds.abiquo.predicates.enterprise.RolePredicates"/>
+<fullyQualifiedTypeName name="org.jclouds.abiquo.domain.exception.AbiquoException"/>
+<fullyQualifiedTypeName name="models.Deploy_Bundle"/>
+<fullyQualifiedTypeName name="controllers.ConsumerDAO"/>
+<fullyQualifiedTypeName name="models.Deploy_Bundle_Nodes"/>
+<fullyQualifiedTypeName name="models.Deploy_Nodes_Resources"/>
+<fullyQualifiedTypeName name="models.Nodes"/>
+<fullyQualifiedTypeName name="models.Nodes_Resources"/>
+<fullyQualifiedTypeName name="models.MKT_Configuration"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="models.Offer"/>
+<fullyQualifiedTypeName name="org.jclouds.abiquo.domain.enterprise.User"/>
+<fullyQualifiedTypeName name="javax.persistence.Transient"/>
+<fullyQualifiedTypeName name="play.db.jpa.GenericModel"/>
+<fullyQualifiedTypeName name="javax.persistence.GeneratedValue"/>
+<fullyQualifiedTypeName name="javax.persistence.OneToOne"/>
+<fullyQualifiedTypeName name="javax.persistence.JoinTable"/>
+<fullyQualifiedTypeName name="models.OfferPurchased"/>
+<fullyQualifiedTypeName name="controllers.ProducerDAO"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="org.jclouds.abiquo.domain.cloud.VirtualAppliance"/>
+<fullyQualifiedTypeName name="portal.util.AbiquoUtils"/>
+<fullyQualifiedTypeName name="models.UserPortal"/>
+</qualifiedTypeNameHistroy>

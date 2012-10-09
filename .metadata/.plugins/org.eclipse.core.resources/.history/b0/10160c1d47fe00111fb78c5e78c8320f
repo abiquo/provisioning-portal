@@ -1,0 +1,96 @@
+<!-------------------------------------------------------------------------------
+# Abiquo community edition
+# cloud management application for hybrid clouds
+#  Copyright (C) 2008-2010 - Abiquo Holdings S.L.
+# 
+#  This application is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU LESSER GENERAL PUBLIC
+#  LICENSE as published by the Free Software Foundation under
+#  version 3 of the License
+# 
+#  This software is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#  LESSER GENERAL PUBLIC LICENSE v.3 for more details.
+# 
+#  You should have received a copy of the GNU Lesser General Public
+#  License along with this library; if not, write to the
+#  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+#  Boston, MA 02111-1307, USA.
+#------------------------------------------------------------------------------->
+<script type="text/javascript">
+ $('.accordion').accordion({
+       event: "click hoverintent",
+       clearStyle: true,
+       autoHeight: false
+       /*       create : function(event,ui) {
+            $('#content').load( $(this).find('a').attr('href') );
+       }*/
+ }); 
+ $('.accordion').bind('accordionchange', function(event, ui) {
+     /*var clicked = $(ui.newHeader).find('a').attr('href');
+     ui.newContent.load(clicked);*/
+ });
+</script>
+ 
+ <div class="accordion">        
+   #{list offersPurchased , as:'offerPurchased'}    
+    <h3><a href="#">${offerPurchased.offer.name}</a></h3>    
+    <div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span4">
+                <ul class="thumbnails span">
+                <li>
+               	    #{if 'DEPLOYED' == offerPurchased.virtualApplianceState.name()}
+                	 <!-- <a href="#" class="thumbnail offerDetails" url="@{Consumer.offerDetails(offerPurchased.id)}">     -->
+	                    <a href="#" class="thumbnail">
+	                  		<img src="@{Helper.displayIcon(offerPurchased.offer.id, offerPurchased.offer.icon)}" height="100px" width="120" >
+	                    </a>
+	                    <div class="btn-group">
+		                    <button url="@{Consumer.offerDetails(offerPurchased.offer.id)}" class="btn offerDetails"><i class="icon-info-sign"></i> Info</button>
+		                    <button url="@{Consumer.resetOffer(offerPurchased.id)}" class="btn btn-warning resetConfirm" ><i class="icon-repeat icon-white"></i> Reset</button>
+		                    <button url="@{Consumer.deleteOffer(offerPurchased.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i> Delete</button>
+	                    </div>
+                    #{/if}
+               		#{else}
+	               		<a href="#" class="thumbnail ui-state-disabled">     
+	                		 <img src="@{'/public/images/user/server_off.png'}" height="100px" width="120" >
+	                	</a>
+	                    <div class="btn-group">
+		                     <button url="@{Consumer.offerDetails(offerPurchased.offer.id)}" class="btn offerDetails"><i class="icon-info-sign"></i> Info</button>
+		                    <button url="@{Consumer.resumeOffer(offerPurchased.id)}" class="btn btn-success resumeConfirm" ><i class="icon-play icon-white"></i> Resume</button>
+		                    <button url="@{Consumer.deleteOffer(offerPurchased.id)}" class="btn btn-danger deleteConfirm" ><i class="icon-trash icon-white"></i> Delete</button>
+	                    </div>
+               		#{/else}
+                    <!-- <button url="@{Consumer.offerDetails(offerPurchased.id)}" class="btn offerDetails"><i class="icon-info-sign"></i>Info</button>
+                     <button url="@{Consumer.PurchaseConfirmation(offerPurchased.id)}" class="btn btn-danger purchaseConfirm" ><i class="icon-trash icon-white"></i>Delete</button> -->
+                </li>                 
+                </ul>
+            </div>
+            <div class="span8">                
+                <div style="display: none;">${offerPurchased.id}</div>               
+                 <table class="table table-bordered">
+                      <thead class="ui-widget-header">  
+                        <tr>
+                            <td><div class="ui-widget">Resource</div></td>
+                            <td><div class="ui-widget">Description</div></td>
+                        </tr>
+                     </thead> 
+                    <tbody class="ui-widget-content">                    
+                      <tr>
+                        <td class="ui-widget"><strong>State</strong></td>
+                        <td class="ui-widget">${offerPurchased.virtualApplianceState}</td>
+                      </tr>
+                      <tr>
+                        <td class="ui-widget"><strong>Price</strong></td>
+                        <td class="ui-widget"><strong>-</strong></td>
+                      </tr>                     
+                    </tbody>
+                  </table>          
+            </div>
+        </div>
+    </div>                        
+   </div>
+   #{/list}
+ </div>

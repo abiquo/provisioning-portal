@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Login</title>
+  <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+  
+   <link type="text/css" href="@@{'/public/stylesheets/custom-theme/jquery-ui-1.8.21.custom.css'}" rel="stylesheet" />
+   <link rel="stylesheet" href="@@{'/public/stylesheets/bootstrap.css'}" type="text/css" />
+   
+   <script type="text/javascript" src="@@{'/public/javascripts/jquery-1.7.2.min.js'}"></script>
+   <script type="text/javascript" src="@@{'/public/javascripts/jquery-ui-1.8.21.custom.min.js'}"></script>
+   <script type="text/javascript" src="@@{'/public/javascripts/jquery.form.js'}"></script> 
+   <script type="text/javascript" src="@@{'/public/javascripts/jquery.validate.js'}"></script>
+   <script>
+	  $(document).ready(function(){
+	    $("#loginFormCenter").validate();
+	  });
+   </script>
+    <!-- Le styles -->
+    <script src="@@{'/public/javascripts/bootstrap.js'}"></script>   
+    <link rel="icon" type="image/x-icon" href="@@{'/public/images/favicon.ico'}" />
+        <link rel="shortcut icon" type="image/x-icon" href="@@{'/public/images/favicon.ico'}">
+    <style type="text/css">
+      /* Override some defaults */
+      html, body {
+        /*background-color: #eee;*/
+        background-image:url("@@{'public/images/simple-sky-cloud.jpg'}");
+        background-repeat:no-repeat;
+        background-size:100%;
+      }
+      body {
+        padding-top: 100px; 
+      }
+      .container {
+        width: 300px;
+      }
+
+      /* The white background content wrapper */
+      .container > .content {
+        background-color: #fff;
+        padding: 20px;
+        margin: 0 -20px; 
+        -webkit-border-radius: 10px 10px 10px 10px;
+           -moz-border-radius: 10px 10px 10px 10px;
+                border-radius: 10px 10px 10px 10px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+                box-shadow: 0 1px 2px rgba(0,0,0,.15);
+      }
+
+    .login-form {
+      margin-left: 65px;
+    }
+    #loginForm {
+      margin: -10px;
+    }
+    .brandTop {
+       margin:0px;
+      margin-top: 2px;
+    }
+  
+    legend {
+      margin-right: -50px;
+      font-weight: bold;
+      color: #404040;
+    }
+    
+    .front-signin, .front-signup {
+    background: -moz-linear-gradient(center top , #FFFFFF 0px, #DDDDDD 100%) repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #CCCCCC;
+    border-left: 1px solid #EEEEEE;
+    border-right: 1px solid #EEEEEE;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	}
+	.front-welcome, .front-signin, .front-signup {
+	    border-radius: 4px 4px 4px 4px;
+	}
+	.front-signup {
+	    height: 206px;
+	    left: 536px;
+	    position: absolute;
+	    top: 121px;
+	    width: 300px;
+	}
+
+    </style>
+</head>
+
+<body>
+<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div id="logo" class="pull-left"><img src="@@{'/public/images/logo-abiquo.png'}" width="188" height="50" /></div><br />
+          <a class="brand" href="#">Marketplace</a>          
+          <!-- <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>/.nav-collapse -->
+          <!-- <div>
+	          <form id="loginForm" action="@{Login.connect()}" method="GET" class="form-inline pull-right">
+	              <input type="text" class="input-small" name="username" placeholder="Username">
+	              <input type="password" class="input-small" name="password" placeholder="Password">
+	              <!-- <label class="checkbox">
+	                <input type="checkbox"> Remember me
+	              </label> 
+	              <button type="submit" id="frmSubmit" class="btn btn-warning">Login</button>
+	         </form>
+         </div> -->
+        </div>
+      </div>
+    </div>
+<div id="page-wrapper">
+  <div id="page">
+    <div id="header">
+      <div class="container">
+      <div class="content hero-unit">
+          <div class="row">
+              <div class="login-form">
+                  <h2>Login</h2>
+                  <form id="loginFormCenter" action="@@{Login.connect()}" method="GET">
+                      <fieldset>
+                          <div class="clearfix">
+                              <input type="text" name="username" placeholder="Username">
+                          </div>
+                          <div class="clearfix">
+                              <input type="password" name="password" placeholder="Password">
+                          </div>
+                          <button name="signIn" class="btn btn-warning primary" type="submit">Sign in <i class="icon-ok icon-white"></i></button>
+                          #{if flash.error}
+                          	<br /><br /><h4><i class="icon-exclamation-sign"></i> ${flash.error}</h4>
+                          #{/if} 
+                      </fieldset>
+                  </form>
+              </div>
+          </div>          
+      </div>
+       <div class="content hero-unit">
+          <div class="row">
+          	 <div class="resgister-form">
+		       <h2>Registers</h2>		
+		       <form method="post" class="signup" action="https://twitter.com/signup">
+		         <div class="clearfix">
+		           <input type="text" maxlength="20" name="user[name]" autocomplete="off" class="text-input" placeholder="Name">		           
+		         </div>
+		         <div class="clearfix">
+		           <input type="text" name="user[email]" autocomplete="off" class="text-input email-input"  placeholder="Email">		          
+		         </div>
+		         <div class="clearfix">
+		           <input type="password" name="user[user_password]" class="text-input"  placeholder="Password">		        
+		         </div>		
+		         <input type="hidden" name="context" value="front">
+		         <input type="hidden" name="authenticity_token" value="55e84e86d7151d139d9fa32075f4cc8215577269">
+		         <button class="btn signup-btn" type="submit">
+		           Register
+		         </button>
+		       </form>
+		     </div>
+          </div>
+       </div>
+  </div> <!-- /container -->  
+    </div>
+    <div id="main"> 
+   
+      <!-- <div id="form">        
+        <form id="loginForm" action="@{Login.connect()}" method="GET">
+          <h2>Login</h2>
+          <ul style="float:left;">
+          #{if flash.error}
+    		<p style="color:#c00">
+        	${flash.error}
+    		</p>
+			#{/if}
+            <li class="field" >
+              <label>Username:</label>
+              <input type="text" name="username" />
+            </li>
+            <li class="field" >
+              <label>Password:</label>
+              <input type="password" name="password" />
+            </li>
+            <li>
+              <label>&nbsp;</label>             
+                <input type="submit" value="Login" id="frmSubmit"  class="btn btn-warning" />              
+            </li>
+          </ul>
+        </form>
+      </div>-->
+    </div>
+  </div>
+</div>
+</body>
+<div class="navbar navbar-fixed-bottom">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>-->
+      <!-- <a class="brand" href="#">abiquo Marketplace</a> -->         
+      <!-- <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="@@{'/public/javascripts/events.js'}"></script>
+</html>

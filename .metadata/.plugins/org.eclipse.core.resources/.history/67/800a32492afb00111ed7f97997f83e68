@@ -1,0 +1,294 @@
+/*******************************************************************************
+ * Abiquo community edition
+ * cloud management application for hybrid clouds
+ *  Copyright (C) 2008-2010 - Abiquo Holdings S.L.
+ * 
+ *  This application is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU LESSER GENERAL PUBLIC
+ *  LICENSE as published by the Free Software Foundation under
+ *  version 3 of the License
+ * 
+ *  This software is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  LESSER GENERAL PUBLIC LICENSE v.3 for more details.
+ * 
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ *  Boston, MA 02111-1307, USA.
+ ******************************************************************************/
+package models;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+import play.data.validation.MaxSize;
+import play.db.jpa.Blob;
+import play.db.jpa.GenericModel;
+
+/**
+ * 
+ * @author David López Offer( i.e virtual appliance) added to service catalog
+ *         by the producer. 
+ */
+@Entity
+/*
+ * @Table( uniqueConstraints = {
+ * 
+ * @UniqueConstraint(columnNames = "sc_offer_name")})
+ */
+@NamedQueries({
+		@NamedQuery(name = "getAllOffersByState", query = "select p from Offer as p where p.state = ?1 order by p.id asc"),
+		//@NamedQuery(name = "getAvailableOffersByState", query = "select p from Offer as p  where p.id in ( select s.id from OfferPurchased as s where s.enterprise_id = ?1 ) and  p.state = ?2"),
+		@NamedQuery(name = "getAllOffers", query = "select p.id from Offer as p "),
+		@NamedQuery(name = "groupByVDC", query = "select p from Offer as p GROUP BY p.id"),
+		@NamedQuery(name = "groupByVDC_EnterpriseView", query = "select p from Offer as p GROUP BY p.defaultServiceLevel"),
+		@NamedQuery(name = "getOfferDetails", query = "select p from Offer as p where p.id = ?1 "),
+		@NamedQuery(name = "getVappListForVDC", query = "select p from Offer as p where p.virtualDatacenter = ?1") })
+		//@NamedQuery(name = "getVappListForVDC_EnterpriseView", query = "select p from Offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) and  p.virtualDataCenter_name = ?2") })
+public class Offer extends GenericModel {
+
+	@Id
+	private Integer offer_id;
+	
+	// References
+    private Integer datacenter;	
+	private Integer virtualAppliance;
+	private Integer virtualDatacenter;
+	private String  virtualDatacenterName;
+	
+	// Extra data
+	private String name;
+	public String iconName;
+	public Blob icon;
+	private Blob image;
+	@Column(length = 30)
+	@MaxSize(30)
+	private String shortDescription;
+	public Integer getId() {
+		return offer_id;
+	}
+
+	@MaxSize(255)
+	private String longDescription;
+	private String hypervisorType;
+
+
+	@Column(length = 40)
+	private String serviceType;
+	private String state;
+	
+	// Network
+	@Column(length = 45)
+	private String defaultNetworkType;
+	
+	// Pricing
+	private String price;
+	
+	private String defaultLeasePeriod;
+	
+	private String defaultServiceLevel;
+	
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getIconName() {
+		return iconName;
+	}
+
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
+	}
+
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
+
+	public String getLongDescription() {
+		return longDescription;
+	}
+
+	public void setLongDescription(String longDescription) {
+		this.longDescription = longDescription;
+	}
+
+	public String getDefaultNetworkType() {
+		return defaultNetworkType;
+	}
+
+	public void setDefaultNetworkType(String defaultNetworkType) {
+		this.defaultNetworkType = defaultNetworkType;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Nodes.class)
+	@JoinTable(name = "Offer_Node", joinColumns = { @JoinColumn(name = "offer_id") }, inverseJoinColumns = { @JoinColumn(name = "id_node") })
+	private Set<Nodes> nodes = new HashSet<Nodes>();
+
+	public Set<Nodes> getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(Set<Nodes> nodes) {
+		this.nodes = nodes;
+	}
+
+	public Offer() {
+		
+	}
+
+	public Offer(final Integer id, final String name,
+			final String icon_name, final Blob icon, final Blob image,
+			final String shortDescription, final String longDescription,
+			final Integer datacenter, final String hypervisorType,
+			final String defaultNetworkType,
+			final Integer idVirtualDataCenter_ref, final String serviceType,
+			final String virtualDataCenter_name) {
+		super();
+		this.icon = icon;
+		this.image = image;
+		this.shortDescription = shortDescription;
+		this.longDescription = longDescription;
+		this.datacenter = datacenter;
+		this.hypervisorType = hypervisorType;
+		this.defaultNetworkType = defaultNetworkType;
+		this.serviceType = serviceType;
+		setState("NOT_PURCHASED");
+	}
+
+	@Override
+	public void _delete() {
+		super._delete();
+		icon.getFile().delete();
+		// image.getFile().delete();
+	}
+
+	public Blob getIcon() {
+		return icon;
+	}
+
+	public void setIcon(final Blob icon) {
+		this.icon = icon;
+	}
+	
+	public Integer getDatacenter() {
+		return datacenter;
+	}
+
+	public void setDatacenter(final Integer datacenter) {
+		this.datacenter = datacenter;
+	}
+
+	public String getHypervisorType() {
+		return hypervisorType;
+	}
+
+	public void setHypervisorType(final String hypervisorType) {
+		this.hypervisorType = hypervisorType;
+	}
+
+	@Override
+	public String toString() {
+		return "sc_offer [ID :" + offer_id + ", Name : " + name
+				+ ", Icon: " + icon + " , Datacenter:" + datacenter
+				+ ", Hypervisor Type: " + hypervisorType + ", Service Type:"
+				+ serviceType + "]";
+	}
+
+	public Blob getImage() {
+		return image;
+	}
+
+	public void setImage(final Blob image) {
+		this.image = image;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(final String state) {
+		this.state = state;
+	}
+
+	public Integer getVirtualAppliance() {
+		return virtualAppliance;
+	}
+
+	public void setVirtualAppliance(Integer virtualAppliance) {
+		this.virtualAppliance = virtualAppliance;
+	}
+	
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public void setVirtualDatacenter(Integer virtualDatacenter) {
+		this.virtualDatacenter = virtualDatacenter;
+	}
+	public Integer getVirtualDatacenter() {
+		return virtualDatacenter;
+	}
+
+	public String getVirtualDatacenterName() {
+		return virtualDatacenterName;
+	}
+
+	public void setVirtualDatacenterName(String virtualDatacenterName) {
+		this.virtualDatacenterName = virtualDatacenterName;
+	}
+
+	public String getDefaultLeasePeriod() {
+		return defaultLeasePeriod;
+	}
+
+	public void setDefaultLeasePeriod(String defaultLeasePeriod) {
+		this.defaultLeasePeriod = defaultLeasePeriod;
+	}
+
+	public String getDefaultServiceLevel() {
+		return defaultServiceLevel;
+	}
+
+	public void setDefaultServiceLevel(String defaultServiceLevel) {
+		this.defaultServiceLevel = defaultServiceLevel;
+	}
+
+}

@@ -1,0 +1,21 @@
+1346743800479	Delete element
+1346743860058	Delete element
+1346743879123	Delete element
+1346743907632	Delete element
+1346743939604	Delete element
+1346743983916	Delete element
+1346744028219	Delete element
+1346744072489	Delete element
+1346744149673	Rename type 'sc_offer'
+1346744168758	Rename type 'sc_offers_subscriptions'
+1346744274702	Delete element
+1346744285061	Delete element
+1346744877879	Encapsulate field 'virtualAppliance'
+1346745518314	Encapsulate field 'idAbiquo'
+1346745962355	Encapsulate field 'idVirtualApplianceUser'
+1346746585457	Rename type 'UserDetails'
+1346832320259	Encapsulate field 'virtualDatacenterName'
+1346833698640	Delete element
+1346918201956	Encapsulate field 'defaultLeasePeriod'
+1346918348478	Encapsulate field 'defaultServiceLevel'
+1347014733158	Rename type 'User'
