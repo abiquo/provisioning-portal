@@ -2846,3 +2846,63 @@ Caused by: java.lang.ArrayIndexOutOfBoundsException: -2
 12:32:27,189 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
 12:32:29,692 INFO  ~ Connected to jdbc:mysql://localhost/portal
 12:32:38,018 INFO  ~ Application 'UserPortal' is now started !
+15:01:41,969 INFO  ~ Starting /home/dlopez/provisioningShow/provisioning-portal/UserPortal
+15:01:41,972 INFO  ~ Module crud is available (/opt/play-1.2/modules/crud)
+15:01:42,367 WARN  ~ You're running Play! in DEV mode
+15:01:42,415 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+15:01:46,126 ERROR ~ 
+
+@6c1b8ij46
+Internal Server Error (500) for request GET /
+
+Oops: UnexpectedException
+An unexpected error occured caused by exception UnexpectedException: While applying class play.classloading.enhancers.LocalvariablesNamesEnhancer on controllers.Consumer
+
+play.exceptions.UnexpectedException: While applying play.CorePlugin@7b5a6029 on controllers.Consumer
+	at play.plugins.PluginCollection.enhance(PluginCollection.java:511)
+	at play.classloading.ApplicationClasses$ApplicationClass.enhance(ApplicationClasses.java:235)
+	at play.classloading.ApplicationClassloader.loadApplicationClass(ApplicationClassloader.java:165)
+	at play.classloading.ApplicationClassloader.getAllClasses(ApplicationClassloader.java:429)
+	at play.Play.start(Play.java:505)
+	at play.Play.detectChanges(Play.java:618)
+	at play.Invoker$Invocation.init(Invoker.java:198)
+	at Invocation.HTTP Request(Play!)
+Caused by: play.exceptions.UnexpectedException: While applying class play.classloading.enhancers.LocalvariablesNamesEnhancer on controllers.Consumer
+	at play.CorePlugin.enhance(CorePlugin.java:302)
+	at play.plugins.PluginCollection.enhance(PluginCollection.java:506)
+	... 7 more
+Caused by: java.lang.ArrayIndexOutOfBoundsException: -2
+	at javassist.bytecode.stackmap.Tracer.doALOAD(Tracer.java:306)
+	at javassist.bytecode.stackmap.Tracer.doOpcode0_53(Tracer.java:200)
+	at javassist.bytecode.stackmap.Tracer.doOpcode(Tracer.java:94)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:182)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:192)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:141)
+	at javassist.bytecode.stackmap.MapMaker.make(MapMaker.java:96)
+	at javassist.bytecode.MethodInfo.rebuildStackMap(MethodInfo.java:416)
+	at javassist.bytecode.MethodInfo.rebuildStackMapIf6(MethodInfo.java:398)
+	at javassist.CtBehavior.insertBefore(CtBehavior.java:719)
+	at javassist.CtBehavior.insertBefore(CtBehavior.java:685)
+	at play.classloading.enhancers.LocalvariablesNamesEnhancer.enhanceThisClass(LocalvariablesNamesEnhancer.java:296)
+	at play.CorePlugin.enhance(CorePlugin.java:297)
+	... 8 more
+15:05:42,042 INFO  ~ Starting /home/dlopez/provisioningShow/provisioning-portal/UserPortal
+15:05:42,046 INFO  ~ Module crud is available (/opt/play-1.2/modules/crud)
+15:05:42,501 WARN  ~ You're running Play! in DEV mode
+15:05:42,549 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+15:05:47,043 INFO  ~ Connected to jdbc:mysql://localhost/portal
+15:05:55,906 INFO  ~ Application 'UserPortal' is now started !

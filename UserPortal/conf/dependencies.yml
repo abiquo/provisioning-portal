@@ -6,6 +6,7 @@ require:
     - org.hibernate -> hibernate-core 3.6.9.Final:
         force: true
     - org.hibernate -> hibernate-validator 4.2.0.Final
+    - javassist -> javassist 3.9.0.GA
 #    - org.hibernate -> hibernate-core 3.6.1:
 #        force: true
 

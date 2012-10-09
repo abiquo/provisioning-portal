@@ -333,7 +333,9 @@ public class Consumer extends Controller {
 				Logger.info(" Hypervisor to deploy: ", hypervisor);
 
 				// get first datacenter allowed. For developement only will be one.
-				Datacenter datacenter = enterprise.listAllowedDatacenters().get(0);
+				// get first datacenter allowed. For developement only will be one.
+				Datacenter datacenter = virtualDC.getDatacenter(); 
+						//enterprise.listAllowedDatacenters().get(0);
 				Logger.info(" Datacenter to deploy: ", datacenter);
 
 				PrivateNetwork network = PrivateNetwork.builder(context.getApiContext())

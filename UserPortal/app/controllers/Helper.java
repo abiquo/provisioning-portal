@@ -53,11 +53,13 @@ public class Helper extends Controller{
 		
 		//POR-%user-%userdefinedname-%UTC
 		java.util.Date date= new java.util.Date();
-		///imestamp tstamp = new Timestamp(date.getDay() + date.);		
+		
+		Timestamp tstamp = new Timestamp(date.getTime());	
+		
 		String prefix = "POR";
-		String vdc_generated_name = prefix +"-"+ username +"-"+ date.toString();
+		String vdc_generated_name = prefix +"-"+ username + "-" + tstamp;				
 		 		
-		return vdc_generated_name;
+		return vdc_generated_name.substring(0, 35);
 	}
 	
 	/**
