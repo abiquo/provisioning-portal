@@ -48,6 +48,8 @@ import portal.util.Context;
 
 public class Helper extends Controller{
 	
+	private final static Integer LENGTH = 35;
+	
 	
 	static String vdcNameGen(String username ){
 		
@@ -59,7 +61,8 @@ public class Helper extends Controller{
 		String prefix = "POR";
 		String vdc_generated_name = prefix +"-"+ username + "-" + tstamp;				
 		 		
-		return vdc_generated_name.substring(0, 35);
+		vdc_generated_name = vdc_generated_name.length() > LENGTH ? vdc_generated_name.substring(0, LENGTH) : vdc_generated_name;
+		return vdc_generated_name;
 	}
 	
 	/**

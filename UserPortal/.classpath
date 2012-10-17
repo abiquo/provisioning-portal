@@ -3,10 +3,8 @@
 	<classpathentry excluding="views/**" kind="src" path="app"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="crud"/>
-	
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/opt/play-1.2/framework/play-1.2.4.jar" sourcepath="/opt/play-1.2/framework/src" />
-	<classpathentry kind="lib" path="/home/dlopez/provisioning-portal/UserPortal/lib/abiquo-1.5.1.jar"/>
+	<classpathentry kind="lib" path="/opt/play-1.2/framework/play-1.2.4.jar" sourcepath="/opt/play-1.2/framework/src"/>
 	<classpathentry kind="lib" path="/home/dlopez/provisioning-portal/UserPortal/lib/jclouds-core-1.5.1.jar"/>
 	<classpathentry kind="lib" path="/home/dlopez/provisioning-portal/UserPortal/lib/slf4j-api-1.6.4.jar"/>
 	<classpathentry kind="lib" path="/home/dlopez/provisioning-portal/UserPortal/lib/oauth-20100527.jar"/>
@@ -136,6 +134,6 @@
 	<classpathentry kind="lib" path="/opt/play-1.2/framework/lib/ehcache-core-2.0.0.jar"/>
 	<classpathentry kind="lib" path="/opt/play-1.2/framework/lib/org.eclipse.jdt.core-3.8.0.v_C03.jar"/>
 	<classpathentry kind="lib" path="/opt/play-1.2/framework/lib/signpost-core-1.2.jar"/>
-	
+	<classpathentry kind="lib" path="/home/dlopez/provisioning-portal/UserPortal/lib/abiquo-1.6.0-20121015.231441-44.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

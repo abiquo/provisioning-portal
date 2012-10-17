@@ -246,13 +246,13 @@ public class AbiquoUtils {
 	public static String getVAPrice(final Integer virtualDatacenterId, final Integer va_id) {
 		VirtualDatacenter vdc = null;
 		VirtualAppliance va = null;
-		String Price = "0";
+		String Price = null;
 		if (virtualDatacenterId != null && va_id != null) {			
 			vdc = getVDCDetails(virtualDatacenterId);
 			if (vdc != null) {
 				va = vdc.getVirtualAppliance(va_id);
 				//TODO Price from vApp
-				//Price = va.getPrice();
+				Price = va.getPrice();
 			}
 		}
 		return Price;

@@ -426,7 +426,7 @@ public class Consumer extends Controller {
 					Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = new HashSet<Deploy_Bundle_Nodes>();
 					for (Nodes aVM : vmlist_todeploy) {
 						String vmName = aVM.getNode_name();
-						VirtualMachineTemplate vm_template_todeploy = enterprise.getTemplateInRepository(datacenter, aVM.getIdImage());
+						VirtualMachineTemplate vm_template_todeploy = virtualDC.getAvailableTemplate(aVM.getIdImage());						
 						int cpu = aVM.getCpu();
 						int ram = aVM.getRam();
 						// String description = aVM.getDescription();

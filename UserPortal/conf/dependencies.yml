@@ -13,7 +13,9 @@ require:
 # Force dependencies that already come with Play
     - com.google.code.gson -> gson 2.1:
         force: true
-    
+#    - org.jclouds.labs -> abiquo 1.6.0-SNAPSHOT:
+#        force: true
+
 repositories:
     - abiquo:
         type: iBiblio
@@ -25,7 +27,10 @@ repositories:
 
     - jclouds:
         type: iBiblio
-        root: "https://oss.sonatype.org/content/repositories/snapshots"
+        root: "https://oss.sonatype.org/content/repositories/snapshots"      
+#        contains:
+#            - org.jclouds.labs -> *
+#        m2compatible: true
 
     - jboss:
         type: iBiblio
