@@ -28,6 +28,8 @@ import java.util.Properties;
 import org.jclouds.ContextBuilder;
 import org.jclouds.abiquo.AbiquoApiMetadata;
 import org.jclouds.abiquo.AbiquoContext;
+import org.jclouds.compute.ComputeService;
+import org.jclouds.compute.ComputeServiceContext;
 
 import play.Play;
 
@@ -38,6 +40,7 @@ public class Context {
 	 /** Context */
     private static AbiquoContext context;
     private static String userInContext;
+    
 	
     // ----------------------------------------------------------------------------
     // --- JCLOUDS API PROPER METHODS TO IVOKE API!

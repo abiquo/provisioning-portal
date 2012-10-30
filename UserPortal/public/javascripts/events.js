@@ -135,6 +135,48 @@ $(document).ready(function () {
         //prevent the browser to follow the link
         return false;    
     });
+    /*$(".vnc").live('click', function(){
+        //alert($(this).attr("id").toString());
+        var url = $(this).attr("url").toString();
+        var dialog = $('<div style="display:none" class="loading dialog"></div>');
+        var posy = $(document).height() / 8;
+        var posx = $(document).width() / 4;
+           
+        dialog.dialog({
+        	autoOpen: false,        	
+            // add a close listener to prevent adding multiple divs to the document
+            close: function(event, ui) {
+                // remove div with all data and events
+                dialog.remove();
+            },           
+            width: '800px',   
+            //heigth: 'auto',
+            resizable: false,
+            modal: true,
+            buttons: [{             
+                text: "Cancel",
+                class: "btn btn-danger",
+                click: function() {
+                    $( this ).dialog( "close" );
+                }
+            }]
+        });
+                
+        // load remote content
+        dialog.load(
+            url, function (responseText, textStatus, XMLHttpRequest) {
+                // remove the loading class
+                dialog.removeClass('loading');
+                //$(this).setContent("Success");
+                $(this).dialog('open');                
+            }
+        );
+        //prevent the browser to follow the link
+        return false;    
+    });*/
+    
+    //$('#noVNC_connect_button').on('ready', click());
+    
     $(".configureExistingOffer").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("id").toString();

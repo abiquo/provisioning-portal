@@ -41,7 +41,7 @@ import portal.util.Context;
 
 /**
  * 
- * @author Harpreet Kaur Producer creates service cataolog entries. MarketEnable
+ * @author David Lopez Producer creates service cataolog entries. MarketEnable
  *         defines the service catalog offers for each enterprise. Example - 10
  *         offers available in Servivce catalog. After MarketEnablement :
  *         enterprise 1 user's can see 5 offers whereas enterprise 2 user's can

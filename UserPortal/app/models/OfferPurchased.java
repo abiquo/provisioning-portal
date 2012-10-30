@@ -20,31 +20,33 @@
  ******************************************************************************/
 package models;
 
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.abiquo.server.core.cloud.VirtualApplianceState;
+import org.jclouds.abiquo.domain.cloud.VirtualMachine;
 
 import play.db.jpa.GenericModel;
+
+import com.abiquo.server.core.cloud.VirtualApplianceState;
 
 /**
  * 
@@ -78,6 +80,9 @@ public class OfferPurchased extends GenericModel{
 	private Integer idVirtualApplianceUser;
 	private Integer idVirtualDatacenterUser;	
 	private VirtualApplianceState virtualApplianceState;
+	
+	//vm updated from jClouds
+	private LinkedList<VirtualMachine> virtualMachines = new LinkedList<VirtualMachine>();
 	
 	// Relations
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -177,5 +182,13 @@ public class OfferPurchased extends GenericModel{
 
 	public void setVirtualApplianceState(VirtualApplianceState virtualApplianceState) {
 		this.virtualApplianceState = virtualApplianceState;
+	}
+
+	public LinkedList<VirtualMachine> getVirtualMachines() {
+		return virtualMachines;
+	}
+
+	public void setVirtualMachines(LinkedList<VirtualMachine> list) {
+		this.virtualMachines = list;
 	}
 }

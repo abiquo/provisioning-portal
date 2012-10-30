@@ -20,11 +20,15 @@
  ******************************************************************************/
 package controllers;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import models.Deploy_Bundle;
@@ -37,8 +41,6 @@ import models.OfferPurchased;
 import models.UserPortal;
 import monitor.VmEventHandler;
 
-import org.jclouds.abiquo.AbiquoApi;
-import org.jclouds.abiquo.AbiquoAsyncApi;
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.HardDisk;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
@@ -54,9 +56,9 @@ import org.jclouds.abiquo.features.services.CloudService;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
 import org.jclouds.rest.AuthorizationException;
-import org.jclouds.rest.RestContext;
 
 import play.Logger;
+import play.Play;
 import play.mvc.Controller;
 import portal.util.AbiquoUtils;
 import portal.util.Context;
@@ -64,9 +66,10 @@ import portal.util.Context;
 import com.abiquo.model.enumerator.HypervisorType;
 import com.abiquo.server.core.cloud.VirtualApplianceState;
 import com.abiquo.server.core.cloud.VirtualMachineState;
+import com.ning.http.client.Request;
 
 /**
- * @author Harpreet Kaur This class is invoked when a user with role USER logs
+ * @author David Lopez This class is invoked when a user with role USER logs
  *         in. User is served with pre-defined service catalog defined for his
  *         enterprise. He can browse through various service catalog offers and
  *         can buy them . If user selects to buy the offer, the selected offer
@@ -190,9 +193,12 @@ public class Consumer extends Controller {
                     List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromEnterpriseId(idEnterprise);
                     for (OfferPurchased offerPurchased : offersPurchased) {                    	
                     	VirtualDatacenter vdc = cloudService.getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
-                    	VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
+                    	VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());                    	
 						offerPurchased.setVirtualApplianceState(vapp != null ? vapp.getState() : VirtualApplianceState.UNKNOWN );
 						offerPurchased.save();
+						
+						// we recover nodes information from jclouds - no need to be persisted.
+						offerPurchased.setVirtualMachines((LinkedList<VirtualMachine>) vapp.listVirtualMachines());
 					}
                      
 
@@ -339,8 +345,8 @@ public class Consumer extends Controller {
 				Logger.info(" Datacenter to deploy: ", datacenter);
 
 				PrivateNetwork network = PrivateNetwork.builder(context.getApiContext())
-						.name("10.80.0.0").gateway("10.80.0.1")
-						.address("10.80.0.0").mask(22).build();
+						.name("192.168.0.0").gateway("192.168.0.1")
+						.address("192.168.0.0").mask(22).build();
 				Logger.info(" Network Built");
 
 				vdc_toDeploy = VirtualDatacenter
@@ -549,23 +555,120 @@ public class Consumer extends Controller {
 		}
 	}
 	
-	public static void offerDetailsPurchased(final Integer offer_id) {
+	public static void offerDetailsPurchased(final Integer offerPurchasedId) {
 		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
 
 		String user = session.get("username");
+		String password = session.get("password");
 		if (user != null) {
 			Set<Nodes> nodes_list = null;
 			Set<Nodes_Resources> nodes_resources = null;			
 			
-			Offer offer = Offer.findById(offer_id);	
-			nodes_list = offer.getNodes();
+			OfferPurchased offerPurchased = OfferPurchased.findById(offerPurchasedId);			
+			nodes_list = offerPurchased.getOffer().getNodes();	
 
-			for (Nodes node : nodes_list) {
-				nodes_resources = node.getResources();
-			}
+	        AbiquoContext contextt = Context.getApiClient(user, password);
+	        if (contextt != null) {
+                AbiquoUtils.setAbiquoUtilsContext(contextt);
+	               // final User userAbiquo = contextt.getAdministrationService().getCurrentUser();
+                final CloudService cloudService = contextt.getCloudService();
+	              //  final Integer idEnterprise = userAbiquo.getEnterprise().getId();
+		              
+            	VirtualDatacenter vdc = cloudService.getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+            	VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());                  	
+				List<VirtualMachine> listVM = vapp.listVirtualMachines();
+				
+									
+//				//ComputeService compute = contextt.getComputeService();
+//				ArrayList<String> monitor = new ArrayList<String>();
+//				for (VirtualMachine vm : listVM) {
+//					/*RunScriptOptions options = RunScriptOptions.Builder
+//							.overrideAuthenticateSudo(true)
+//							.overrideLoginUser("user")
+//							.overrideLoginPassword("abiquo");*/
+//					ExecResponse execResult = compute.runScriptOnNode(vm.getId().toString(), "top -b -n1 | head -n5", null);
+//					monitor.add(execResult.getOutput());
+//				}
+//				
+//				
+//				for (Nodes node : nodes_list) {
+//					nodes_resources = node.getResources();				
+//				}
+//			
 			
+			
+//			try {
+//				//TODO: connect ssh to retrieve data from each vm
+//				ProcessBuilder pb = new ProcessBuilder(
+//						"ssh",
+//						"-t",
+//	                    "root@127.0.0.1", 
+//	                    "-o StrictHostKeyChecking=no",
+//	                    "abiquo",
+//	                    "top -b -n1");
+//				pb.redirectErrorStream(); //redirect stderr to stdout
+//				Process process = pb.start();
+//				InputStream inputStream = process.getInputStream();
+//				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));						
+//				
+//				String line;
+//				while((line = reader.readLine())!= null) {
+//					monitor.add(line);
+//				}
+//				process.waitFor();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
-			render(offer, nodes_list, nodes_resources, user);
+		render(offerPurchased, listVM, nodes_resources, user);
+	      }
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	public static void vncConnection(final String vncAddress, final String vncPort, final String vncPassword) {
+		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
+
+		String user = session.get("username");
+		if (user != null) {			
+			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
+			
+			try {
+				//TODO: connect ssh to retrieve data from each vm
+				
+				Properties props = new Properties();
+				 //load a properties file				
+				props.load(new FileInputStream(Play.getFile("conf/config.properties")));
+				         
+				final String noVNCPath =  props.getProperty("noVNC");
+				final String noVNCPort =  props.getProperty("noVNCPort");
+				final String noVNCServer =  props.getProperty("noVNCServer");
+				//final String sp = noVNCPath + "utils/websockify --web " + noVNCPath + " " + noVNCPort + " " + vncAddress + ":" + vncPort;
+				ProcessBuilder pb = new ProcessBuilder(
+						"public/noVNC/utils/websockify",
+						"--web",
+						"public/noVNC/",
+						noVNCPort,
+						vncAddress + ":" + vncPort
+						);
+				pb.redirectErrorStream(); //redirect stderr to stdout
+				Process process = pb.start();			
+				play.mvc.Http.Request current = play.mvc.Http.Request.current();
+				String url = current.url;
+				render(vncAddress, vncPort, vncPassword, noVNCServer,noVNCPort, url);
+				//process.waitFor();				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 		
 
 		} else {
 

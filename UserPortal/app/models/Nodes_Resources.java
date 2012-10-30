@@ -36,7 +36,7 @@ import play.db.jpa.Model;
 
 /**
  * 
- * @author Harpreet Kaur
+ * @author David Lopez
  * The virtual machine resources such as harddisks , network.
  * Currently only harddisk is considered .
  * 

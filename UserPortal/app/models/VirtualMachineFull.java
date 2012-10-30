@@ -17,8 +17,9 @@ public class VirtualMachineFull {
 
 	private String template_name;
 	private String template_path;
-	
-	
+	//VNC details
+	private String vncAddresss;
+	private Integer vncPort;	
 	
 	public VirtualMachineFull(final VirtualMachine virtualMachine) {
 		setVirtualMachine(virtualMachine);
@@ -70,6 +71,22 @@ public class VirtualMachineFull {
 
 	public void setTemplate_path(String template_path) {
 		this.template_path = template_path;
+	}
+
+	public String getVncAddresss() {
+		return vncAddresss;
+	}
+
+	public void setVncAddresss(String vncAddresss) {
+		this.vncAddresss = vncAddresss;
+	}
+
+	public Integer getVncPort() {
+		return vncPort;
+	}
+
+	public void setVncPort(Integer vncPort) {
+		this.vncPort = vncPort;
 	}
 
 }

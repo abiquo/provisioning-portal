@@ -39,7 +39,7 @@ import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
 /**
  * 
- * @author Harpreet Kaur
+ * @author David Lopez
  * VIRTUAL MACHINES CONTIANED IN AN OFFER
  * REFER ALSO sc_offer
  */
@@ -55,6 +55,8 @@ public class Nodes extends GenericModel{
 	private Integer hd;
 	private String icon;
 	private String description;
+	private String vncAddress;
+	private Integer vncPort;
 	
 	@ManyToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Offer.class)
 	@JoinTable(name = "Offer_Node", joinColumns = { @JoinColumn(name = "id_node") }, inverseJoinColumns = { @JoinColumn(name = "offer_id") })
@@ -169,6 +171,22 @@ public class Nodes extends GenericModel{
 
 	public void setHd(Integer hd) {
 		this.hd = hd;
+	}
+
+	public String getVncAddress() {
+		return vncAddress;
+	}
+
+	public void setVncAddress(String vncAddress) {
+		this.vncAddress = vncAddress;
+	}
+
+	public Integer getVncPort() {
+		return vncPort;
+	}
+
+	public void setVncPort(Integer vncPort) {
+		this.vncPort = vncPort;
 	}
 	
 }

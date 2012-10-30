@@ -19,7 +19,7 @@
  *  Boston, MA 02111-1307, USA.
  ******************************************************************************/
 /**
- * @author Harpreet Kaur
+ * @author David Lopez
  *  Producer component of provisioning portal .
  *  Includes methods that talks to Abiquo server and retrieve required information about vdc, vapp and vm
  */

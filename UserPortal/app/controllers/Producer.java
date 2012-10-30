@@ -44,7 +44,7 @@ import portal.util.Context;
 
 /**
  * 
- * @author Harpreet Kaur
+ * @author David Lopez
  * If user logged in has CLOUD_ADMIN role ,he can creates service cataloge entries .
  * he chooses entries from abiquo flex GUI client (ProducerRemote) and add to portal database (ProducerLocal)
  */

@@ -37,7 +37,7 @@ import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
 /**
  * 
- * @author Harpreet Kaur
+ * @author David Lopez
  * This model saves the market configuration details.
  */
 @Entity
