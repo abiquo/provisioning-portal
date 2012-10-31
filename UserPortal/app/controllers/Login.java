@@ -99,8 +99,6 @@ public class Login extends Controller {
 					if (adminService != null) {
 						User currentUser = adminService.getCurrentUser();
 						flash.put("currentUserInfo", currentUser);
-						Integer enterpriseID = currentUser.getEnterprise()
-								.getId();
 
 						String useremail = currentUser.getEmail();
 						session.put("email", useremail);
@@ -111,7 +109,7 @@ public class Login extends Controller {
 							if (role.getName().contentEquals("CLOUD_ADMIN")) {
 								ProducerLocal.admin();
 							} else {
-								Consumer.ServiceCatalog(enterpriseID);
+								Consumer.ServiceCatalog();
 							}
 						}
 					}

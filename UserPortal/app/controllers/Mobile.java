@@ -21,12 +21,15 @@
 package controllers;
 
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.persistence.Query;
@@ -66,6 +69,7 @@ import org.jclouds.rest.AuthorizationException;
 import org.jclouds.rest.RestContext;
 
 import play.Logger;
+import play.Play;
 import play.cache.Cache;
 import play.data.validation.Required;
 import play.data.validation.Validation;
@@ -1149,6 +1153,92 @@ public class Mobile extends Controller {
 				}
 
 			}
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	public static void vncConnection(final String vncAddress, final String vncPort, final String vncPassword) {
+		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------"); 
+
+		String user = session.get("username");
+		if (user != null) {			
+			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
+			
+			try {
+				//TODO: connect ssh to retrieve data from each vm				
+				Properties props = new Properties();
+				 //load a properties file				
+				props.load(new FileInputStream(Play.getFile("conf/config.properties")));
+				         
+				final String noVNCPath =  props.getProperty("noVNC");
+				final String noVNCPort =  props.getProperty("noVNCPort");
+				final String noVNCServer =  props.getProperty("noVNCServer");
+				//final String sp = noVNCPath + "utils/websockify --web " + noVNCPath + " " + noVNCPort + " " + vncAddress + ":" + vncPort;
+				ProcessBuilder pb = new ProcessBuilder(
+						"public/noVNC/utils/websockify",
+						"--web",
+						"public/noVNC/",
+						noVNCPort,
+						vncAddress + ":" + vncPort
+						);
+				pb.redirectErrorStream(); //redirect stderr to stdout
+				Process process = pb.start();			
+				play.mvc.Http.Request current = play.mvc.Http.Request.current();
+				String url = current.url;
+				String domain = current.domain;
+				render(vncAddress, vncPort, vncPassword, noVNCServer,noVNCPort, url, user, domain);
+				//process.waitFor();				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 		
+
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	public static void vncLayer(final String vncAddress, final String vncPort, final String vncPassword) {
+		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------"); 
+
+		String user = session.get("username");
+		if (user != null) {			
+			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
+			
+			try {
+				//TODO: connect ssh to retrieve data from each vm				
+				Properties props = new Properties();
+				 //load a properties file				
+				props.load(new FileInputStream(Play.getFile("conf/config.properties")));
+				         
+				final String noVNCPath =  props.getProperty("noVNC");
+				final String noVNCPort =  props.getProperty("noVNCPort");
+				final String noVNCServer =  props.getProperty("noVNCServer");
+				//final String sp = noVNCPath + "utils/websockify --web " + noVNCPath + " " + noVNCPort + " " + vncAddress + ":" + vncPort;
+				ProcessBuilder pb = new ProcessBuilder(
+						"public/noVNC/utils/websockify",
+						"--web",
+						"public/noVNC/",
+						noVNCPort,
+						vncAddress + ":" + vncPort
+						);
+				pb.redirectErrorStream(); //redirect stderr to stdout
+				Process process = pb.start();			
+				play.mvc.Http.Request current = play.mvc.Http.Request.current();
+				String url = current.url;
+				String domain = current.domain;
+				render(vncAddress, vncPort, vncPassword, noVNCServer,noVNCPort, url, user, domain);
+				//process.waitFor();				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 		
 
 		} else {
 

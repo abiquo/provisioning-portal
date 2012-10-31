@@ -41,7 +41,7 @@
 				<p><strong>Description:</strong> ${vm?.virtualMachine.description}</p>				
 				<p class="ui-li-aside"><strong>State:</strong>${vm?.virtualMachine.state}</p>
 				</a>
-				<a href="http://10.60.1.250:6080/vnc.html?host=10.60.1.250&port=6080" data-rel="dialog" data-transition="slideup">Purchase offer</a>
+				<a href="@@{Mobile.vncConnection(vm?.virtualMachine.vncAddress,vm?.virtualMachine.vncPort,vm?.virtualMachine.password)}" data-prefetch>Purchase offer</a>
 			</li> 
 			#{/list}
 		</ul>

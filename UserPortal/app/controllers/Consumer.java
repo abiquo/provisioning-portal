@@ -82,15 +82,14 @@ public class Consumer extends Controller {
 	 * 
 	 * @param enterpriseID
 	 */
-	public static void ServiceCatalog(final Integer enterpriseID) {
+	public static void ServiceCatalog() {
 
 		Logger.info("---------INSIDE CONSUMER SERVICECATALOG()------------");
-		Logger.info("Enterprie ID for current User " + enterpriseID);
+		Logger.info("Enterprie ID for current User ");
 		String user = session.get("username");
 	    String password = session.get("password");
 
-		if (user != null) {
-			List<Offer> result1 = ProducerDAO.groupByVDC_EnterpriseView(enterpriseID);
+		if (user != null) {		
 			/*
 			 * List<sc_offer> result2 = ProducerDAO
 			 * .getVappListForVDC_EnterpriseView(enterpriseID, vdc_name_param);
@@ -102,7 +101,7 @@ public class Consumer extends Controller {
                 AbiquoUtils.setAbiquoUtilsContext(contextt);
                 final User userAbiquo = contextt.getAdministrationService().getCurrentUser();
             	final Integer numOffers = ProducerDAO.getOffersPurchasedFromEnterpriseId(userAbiquo.getEnterprise().getId()).size();
-            	render(result1, user, enterpriseID, numOffers);            
+            	render(user, numOffers);            
 			} else {
 
 				flash.error("You are not connected.Please Login");
@@ -663,7 +662,8 @@ public class Consumer extends Controller {
 				Process process = pb.start();			
 				play.mvc.Http.Request current = play.mvc.Http.Request.current();
 				String url = current.url;
-				render(vncAddress, vncPort, vncPassword, noVNCServer,noVNCPort, url);
+				String domain = current.domain;
+				render(vncAddress, vncPort, vncPassword, noVNCServer,noVNCPort, url, user, domain);
 				//process.waitFor();				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

@@ -27,10 +27,12 @@ GET     /mobile/confirmation             		Mobile.confirmation
 GET     /mobile/purchaseConfirmation            Mobile.purchaseConfirmation
 GET     /mobile/resetConfirmation               Mobile.resetConfirmation
 GET     /mobile/deleteConfirmation              Mobile.deleteConfirmation
-GET     /mobile/upgradeConfirmation             Mobile.upgradeConfirmation
+GET     /mobile/upgradeConfirmation             Mobile.upgradeConfirmation 
 GET     /mobile/listOffersToPurchase            Mobile.listOffersToPurchase
 GET     /mobile/listOffersPurchased             Mobile.listOffersPurchased
 GET     /mobile/manageOffer             		Mobile.manageOffer
+GET 	/mobile/vnc							    Mobile.vncConnection
+GET 	/mobile/layervnc					    Mobile.vncLayer
 
 
 
