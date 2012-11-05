@@ -21,11 +21,13 @@
 package controllers;
 
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,8 +49,6 @@ import models.VirtualDatacenterFull;
 import models.VirtualMachineFull;
 import monitor.VmEventHandler;
 
-import org.jclouds.abiquo.AbiquoApi;
-import org.jclouds.abiquo.AbiquoAsyncApi;
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.HardDisk;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
@@ -66,7 +66,6 @@ import org.jclouds.abiquo.features.services.CloudService;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
 import org.jclouds.rest.AuthorizationException;
-import org.jclouds.rest.RestContext;
 
 import play.Logger;
 import play.Play;
@@ -1166,39 +1165,11 @@ public class Mobile extends Controller {
 
 		String user = session.get("username");
 		if (user != null) {			
-			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
-			
-			try {
-				//TODO: connect ssh to retrieve data from each vm				
-				Properties props = new Properties();
-				 //load a properties file				
-				props.load(new FileInputStream(Play.getFile("conf/config.properties")));
-				         
-				final String noVNCPath =  props.getProperty("noVNC");
-				final String noVNCPort =  props.getProperty("noVNCPort");
-				final String noVNCServer =  props.getProperty("noVNCServer");
-				//final String sp = noVNCPath + "utils/websockify --web " + noVNCPath + " " + noVNCPort + " " + vncAddress + ":" + vncPort;
-				ProcessBuilder pb = new ProcessBuilder(
-						"public/noVNC/utils/websockify",
-						"--web",
-						"public/noVNC/",
-						noVNCPort,
-						vncAddress + ":" + vncPort
-						);
-				pb.redirectErrorStream(); //redirect stderr to stdout
-				Process process = pb.start();			
-				play.mvc.Http.Request current = play.mvc.Http.Request.current();
-				String url = current.url;
-				String domain = current.domain;
-				render(vncAddress, vncPort, vncPassword, noVNCServer,noVNCPort, url, user, domain);
-				//process.waitFor();				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 		
+			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");			
+			render(vncAddress, vncPort, vncPassword, user);		 		
 
 		} else {
-
+			
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
@@ -1233,8 +1204,12 @@ public class Mobile extends Controller {
 				play.mvc.Http.Request current = play.mvc.Http.Request.current();
 				String url = current.url;
 				String domain = current.domain;
+				Integer newPortRaw = Integer.parseInt(noVNCPort);
+				Integer newPort = newPortRaw == 6900 ? 6080 : newPortRaw + 1;
+				
+				props.setProperty("noVNCPort", newPort.toString() );
+				props.save(new FileOutputStream(new File("conf/config.properties")), ""); 
 				render(vncAddress, vncPort, vncPassword, noVNCServer,noVNCPort, url, user, domain);
-				//process.waitFor();				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

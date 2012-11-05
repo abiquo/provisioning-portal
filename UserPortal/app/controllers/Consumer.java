@@ -20,7 +20,9 @@
  ******************************************************************************/
 package controllers;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,7 +68,6 @@ import portal.util.Context;
 import com.abiquo.model.enumerator.HypervisorType;
 import com.abiquo.server.core.cloud.VirtualApplianceState;
 import com.abiquo.server.core.cloud.VirtualMachineState;
-import com.ning.http.client.Request;
 
 /**
  * @author David Lopez This class is invoked when a user with role USER logs
@@ -663,6 +664,11 @@ public class Consumer extends Controller {
 				play.mvc.Http.Request current = play.mvc.Http.Request.current();
 				String url = current.url;
 				String domain = current.domain;
+				Integer newPortRaw = Integer.parseInt(noVNCPort);
+				Integer newPort = newPortRaw == 6900 ? 6080 : newPortRaw + 1;
+				
+				props.setProperty("noVNCPort", newPort.toString() );
+				props.save(new FileOutputStream(new File("conf/config.properties")), "");		
 				render(vncAddress, vncPort, vncPassword, noVNCServer,noVNCPort, url, user, domain);
 				//process.waitFor();				
 			} catch (IOException e) {
