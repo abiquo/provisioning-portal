@@ -20,11 +20,15 @@
  ******************************************************************************/
 package portal.util;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.persistence.Query;
@@ -33,21 +37,32 @@ import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
 import org.jclouds.abiquo.domain.cloud.VirtualDatacenter;
 import org.jclouds.abiquo.domain.cloud.VirtualMachine;
+import org.jclouds.abiquo.domain.enterprise.Enterprise;
 import org.jclouds.abiquo.domain.task.AsyncTask;
+import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.predicates.cloud.VirtualDatacenterPredicates;
 import org.jclouds.abiquo.predicates.cloud.VirtualMachinePredicates;
+import org.jclouds.rest.AuthorizationException;
 
+import com.abiquo.server.core.cloud.VirtualApplianceState;
+
+import controllers.Consumer;
 import controllers.Helper;
+import controllers.Login;
+import controllers.Mails;
 
 import models.Deploy_Bundle;
 import models.Deploy_Bundle_Nodes;
+import models.Offer;
 import models.OfferPurchased;
 
 import play.Logger;
+import play.Play;
 import play.db.jpa.JPA;
 import play.jobs.Every;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
+import play.libs.Mail;
 
 /**
  * Undeploys the virtual applinace after lease period has expired.
@@ -55,7 +70,7 @@ import play.jobs.OnApplicationStart;
  * Set @Every ()to required undeploy timer. 
  */
 
-/*@OnApplicationStart
+@OnApplicationStart
 @Every("1min")
 public class UndeployScheduler extends Job {
 
@@ -63,45 +78,76 @@ public class UndeployScheduler extends Job {
 	public void doJob()
 	{
 			Logger.info(" ------------INSIDE  doJob-------------");
-			Query query = JPA.em().createQuery("select p from User_Consumption as p");
-			List<User_Consumption> result = query.getResultList();
+			Query query = JPA.em().createQuery("select op from OfferPurchased as op");
+			List<OfferPurchased> result = query.getResultList();
 			Logger.info("No of Results retrieved : " + result.size());
-			for ( User_Consumption record : result )
+			for ( OfferPurchased record : result )
 			{
-					Integer vdc_id = record.getVdc_id();
-					Date exp_date = record.getExpiration_date();
-					Logger.info("exp date:"+ exp_date);
-					Date current_date = new Date();
-					Calendar cal1 = Calendar.getInstance();
-					Calendar cal2 = Calendar.getInstance();
-					cal1.setTime(exp_date);
-					cal2.setTime(current_date);
-					if(cal1.before(cal2))
+					Date currentDate = new Date();
+					Date expDate = record.getExpiration();
+					if(expDate.before(currentDate))
 					{
-								Logger.info("Lease has expired.");
-								Set<Deploy_Bundle> deployed_vapps = record.getNodes();
-    		
-								for (Deploy_Bundle deployed_vapp  :deployed_vapps)
-								{
-										Integer vapp_id = deployed_vapp.getVapp_id();
-										Set<Deploy_Bundle_Nodes> deployed_vms = deployed_vapp.getNodes();
-  
-										for ( Deploy_Bundle_Nodes deployed_vm : deployed_vms)
-										{
-												Integer vm_id = deployed_vm.getNode_id();
-												Logger.info("vdc, vapp, vm " + vdc_id +" "+  vapp_id +"  " +  vm_id );
-												undeployOffer(vdc_id, vapp_id, vm_id);
-    						
-    			    			   				
-										}
-								}
-					}
-    	
+						Logger.info("Lease has expired.");			
+						Mails.sendExtendEmail(record.getUser().getNick(), record.getOffer().getName(), record.getUser().getEmail(), record.getExpiration());						
+					}    	
 			}
 			Logger.info(" ------------EXITING  doJob-------------");
 	}
+	public static void deleteOffer(OfferPurchased offerPurchased){
+		
+		Properties props = new Properties();
+		 //load a properties file				
+		try {
+			props.load(new FileInputStream(Play.getFile("conf/config.properties")));
+			final String admin =  props.getProperty("admin");
+			final String password =  props.getProperty("password");
+			AbiquoContext context = Context.getApiClient(admin, password);
+			if (context != null) {
+				AbiquoUtils.setAbiquoUtilsContext(context);
+				try {						
+
+					VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
+					VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
+					
+					VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
+					AsyncTask[] undeployTasks = vapp.undeploy();			
+					monitorVapp.awaitCompletionUndeploy(vapp);
+					
+					if (vapp.getState() == VirtualApplianceState.NOT_DEPLOYED) {
+						vapp.delete();
+						vdc.delete();
+						offerPurchased.delete();
+					} else {
+						
+						AbiquoUtils.checkErrorsInTasks(undeployTasks);
+						Logger.info("Tasks Checked");
+						
+					}				
+					
+					Logger.info("OFFER DELETED ......");
+					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
+					
+				} catch (AuthorizationException ae) {
+
+					Logger.warn(ae, "EXCEPTION OCCURED IN deploy()");		
+				} catch (Exception ae) {
+
+					Logger.warn(ae, "EXCEPTION OCCURED  IN deploy()");
+					if (context != null) {
+						context.close();
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
-	 static void undeployOffer(Integer vdc_id, Integer vapp_id, Integer vm_id)
+	 /*static void undeployOffer(Integer vdc_id, Integer vapp_id, Integer vm_id)
 	 {
 		 AbiquoContext context = null;
 	try{
@@ -147,7 +193,7 @@ public class UndeployScheduler extends Job {
 				context.close();
 	    }
 			
-	}
+	}*/
 	
 }
-*/
+

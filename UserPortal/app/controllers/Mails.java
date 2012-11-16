@@ -77,6 +77,27 @@ public class Mails extends Mailer {
 
  }
   
+	/** 
+	 * Confirmation Email sent to user after deployment success.
+	 * @param vncPort
+	 * @param vncAddress
+	 * @param password
+	 * @param name
+	 * @param offerName
+	 * @param useremail
+	 * @param exp_date
+	 */
+public static void sendExtendEmail(String username , String offerName, String useremail, Date expDate)
+{
+	  
+	  	Logger.info("INSIDE MAILS SENDEMAIL()....");
+	  	setSubject("Abiquo Confirmation");
+	    addRecipient("zain.malik@abiquo.com");
+	    setFrom("Admin <provisioning-portal@abiquo.com>");
+		Logger.info("SENDING EMAIL TO  ...." + useremail);
+		send(offerName, username, useremail, expDate);
+}
+  
   /**
    * Email sent if deployment fails.
    * @param offerName

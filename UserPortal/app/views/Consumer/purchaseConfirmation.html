@@ -18,6 +18,25 @@
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
+<script type="text/javascript">
+<!--
+$( "#datepicker" ).datepicker({
+    changeMonth: true,
+    changeYear: true,
+    focus: false,
+    numberOfMonths: 3,
+    showButtonPanel: true
+});
+
+$( "#finalPurchaseConfirm" ).mouseover(function(){
+	var url = $("#urlPurchase").attr("url");	
+	$('.input-deploy').each(function() {
+		url = url + "&" + $(this).attr('id') + "=" + $(this).attr('value');
+	})	
+	$("#urlPurchase").attr("url",url);
+});
+//-->
+</script>
 <div id="purchaseConfirmation">
 <table class="table table-bordered table-condensed table-striped">
     <thead class="ui-widget-header">
@@ -27,7 +46,7 @@
    </thead>
    <tbody>
       <tr>
-         <td><strong>Offer Name</strong></td><td>${offer.name}</td>
+         <td><strong>Offer Name</strong></td><td><input type="text" id="name" class="input-deploy input-deploy-name" value="${offer.name}"/></td>
       </tr>
      <tr>
          <td><strong>Short-Description</strong></td><td>${offer.shortDescription}</td>
@@ -60,9 +79,9 @@
    
    <table class="table table-bordered table-condensed table-striped middle">
    <tbody>
-    <tr><td><strong>Default Lease Period</strong></td><td>${offer.serviceType}</td></tr>
+    <tr><td><strong>Default Lease Period</strong></td><td>${offer.serviceType} - <input type="text" id="datepicker" class="input-deploy input-deploy-date"  /></td></tr>
     </tbody>
     <tfoot class="ui-widget-header"><tr><td><strong>Final Price</strong></td><td><strong>${offer.price}</strong></td></tr></tfoot>
     </table> 	
-   <div class="btn btn-warning finalPurchaseConfirm" url="@{Consumer.deploy(offer.datacenter, offer.virtualDatacenter, offer.id, offer.name , offer.defaultLeasePeriod)}"><i class="icon-shopping-cart icon-white"></i>Purchase</div>             
+   <div id="urlPurchase" class="btn btn-warning finalPurchaseConfirm" url="@{Consumer.deploy(offer.datacenter, offer.virtualDatacenter, offer.id, offer.name , offer.defaultLeasePeriod )}"><i class="icon-shopping-cart icon-white"></i>Purchase</div>             
  </div>       

@@ -28,7 +28,7 @@ $(document).ready(function () {
 		});    	        
         return false;
     });
-        
+
     $('.publishCheck').live('click', function() {	
 
     	var $state = $(this).find('#state');	
@@ -444,11 +444,18 @@ $(document).ready(function () {
     $(".finalPurchaseConfirm").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
+        url = url + "&new_name=" + $('.input-deploy-name').attr('value').toString();
+        url = url + "&new_lease_period=" + $('.input-deploy-date').attr('value').toString();
         
-        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
-	    				'<div><div><h3><i class="icon-tasks"></i>Deploying Offer</h3></div><br />Please Wait...<br /></div>' +
-	    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
-
+        if ($(this).is('.extend')) {
+        	var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+    				'<div><div><h3><i class="icon-tasks"></i>Extending Lease Period</h3></div><br />Please Wait...<br /></div>' +
+    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
+        } else {
+        	var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+    				'<div><div><h3><i class="icon-tasks"></i>Deploying Offer</h3></div><br />Please Wait...<br /></div>' +
+    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
+        }
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
         

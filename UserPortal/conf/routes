@@ -80,6 +80,8 @@ GET 	/consumer/undeploy					    Consumer.undeploy
 GET 	/consumer/deleteOffer					Consumer.deleteOffer
 GET 	/consumer/resumeOffer					Consumer.resumeOffer
 GET 	/consumer/resetOffer					Consumer.resetOffer
+GET 	/consumer/extendOffer					Consumer.extendOffer
+GET 	/consumer/extend    					Consumer.extend
 GET 	/helper/displayIcon						Helper.displayIcon
 GET 	/helper/displayIconName				    Helper.displayIconName
 GET 	/helper/displayImage 					Helper.displayImage

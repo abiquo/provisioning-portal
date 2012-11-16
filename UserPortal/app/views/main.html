@@ -28,6 +28,25 @@
       <script type="text/javascript" src="@{'/public/javascripts/vnc.js'}"></script>
       <script type="text/javascript" src="@{'/public/javascripts/ui.js'}"></script>
       <script type="text/javascript" src="@{'/public/javascripts/start.js'}"></script>
+      <script type="text/javascript">
+
+$( "#datepicker" ).datepicker({
+  changeMonth: true,
+    changeYear: true,
+    focus: true,
+    numberOfMonths: 3,
+    showButtonPanel: true
+});
+
+/* $( "#finalPurchaseConfirm" ).mouseover(function(){
+  var url = $("#urlPurchase").attr("url");  
+  $('.input-deploy').each(function() {
+    url = url + "&" + $(this).attr('id') + "=" + $(this).attr('value');
+  })  
+  $("#urlPurchase").attr("url",url);
+}) */
+
+</script>
         <!-- <script type="text/javascript" src="@{'/public/javascripts/jquery.qtip.min.js'}"></script> -->
         <!--  <script type="text/javascript" src="@{'/public/javascripts/jquery.liveready-1.0-min.js'}"></script>-->
         

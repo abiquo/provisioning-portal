@@ -43,6 +43,7 @@ import models.OfferPurchased;
 import models.UserPortal;
 import monitor.VmEventHandler;
 
+import org.apache.commons.lang.StringUtils;
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.HardDisk;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
@@ -57,6 +58,7 @@ import org.jclouds.abiquo.domain.task.AsyncTask;
 import org.jclouds.abiquo.features.services.CloudService;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
 import org.jclouds.abiquo.monitor.VirtualMachineMonitor;
+import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.rest.AuthorizationException;
 
 import play.Logger;
@@ -68,7 +70,6 @@ import portal.util.Context;
 import com.abiquo.model.enumerator.HypervisorType;
 import com.abiquo.server.core.cloud.VirtualApplianceState;
 import com.abiquo.server.core.cloud.VirtualMachineState;
-
 /**
  * @author David Lopez This class is invoked when a user with role USER logs
  *         in. User is served with pre-defined service catalog defined for his
@@ -266,10 +267,10 @@ public class Consumer extends Controller {
 	 *            The virtual appliance name.
 	 * @param lease_period
 	 */
-	@SuppressWarnings("null")
+	@SuppressWarnings({ "null", "deprecation" })
 	public static void Deploy(final Integer id_datacenter,
 			final Integer vdc_id_param, final Integer sc_offer_id,
-			final String va_param, final String lease_period) {
+			final String va_param, final String lease_period, @Nullable final String new_name, @Nullable final String new_lease_period) {
 		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " + id_datacenter
 				+ ", INTEGER VDC_ID_PARAM :: " + vdc_id_param
@@ -360,7 +361,8 @@ public class Consumer extends Controller {
 				vdc_toDeploy.save();
 				Logger.info(" 1. VDC CREATED ");
 				virtualapp_todeploy = VirtualAppliance
-						.builder(context.getApiContext(), vdc_toDeploy).name(va_param).build();
+						.builder(context.getApiContext(), vdc_toDeploy)
+						.name(va_param).build();
 				virtualapp_todeploy.save();
 
 				Logger.info(" 2. VAPP CREATED ");
@@ -395,9 +397,11 @@ public class Consumer extends Controller {
 					cal.add(Calendar.DATE, 90);
 
 				}
+				Date expiration = null;
+				if (new_lease_period != null) expiration = new Date(new_lease_period);
 				Logger.info("--------------------");
 				offerPurchased.setStart(current);
-				offerPurchased.setExpiration(cal.getTime());
+				offerPurchased.setExpiration(expiration == null ? cal.getTime() : expiration);
 				// user_consumption.setVdc_name(vdc_toDeploy.getName());
 				offerPurchased.setLeasePeriod(lease_period);
 				offerPurchased.setIdVirtualDatacenterUser(vdc_toDeploy.getId());
@@ -501,7 +505,7 @@ public class Consumer extends Controller {
 					deploy_Bundle.setNodes(deploy_Bundle_Nodes_list);
 
 					offerPurchased.setNodes(deploy_bundle_set);
-					offerPurchased.setServiceLevel(offer.getDefaultServiceLevel());
+					offerPurchased.setServiceLevel(new_name == null ? offer.getDefaultServiceLevel() : new_name);
 					offerPurchased.save();
 					Logger.info("DEPLOY INFO SAVED ......");
 					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
@@ -1148,5 +1152,51 @@ public class Consumer extends Controller {
 			Login.login_page();
 		}
 	}
+	
+	public static void extendOffer(final Integer purchasedOfferId, final Date expiration) {
+		Logger.info("---------INSIDE EXTEND OFFER ---------------");
 
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext context = Context.getApiClient(user, password);
+		if (context != null) {
+			OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);
+			if (offerPurchased != null) {
+				render(user, offerPurchased);
+			} else {
+				String message = "Offer Purchased does not exists";
+				render("/errors/error.html", message);
+			}				
+		} else {
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static void extend(final Integer purchasedOfferId, @Nullable final String new_name, @Nullable final String new_lease_period) {
+		Logger.info("---------INSIDE EXTEND OFFER ---------------");
+
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext context = Context.getApiClient(user, password);
+		if (context != null) {
+			OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);
+			if (offerPurchased != null) {				
+				Date dateExp = new Date(new_lease_period);
+				offerPurchased.setExpiration(dateExp);
+				offerPurchased.getOffer().setName(new_name);
+				offerPurchased.save();
+				render(user, offerPurchased);
+			} else {
+				String message = "Offer Purchased does not exists";
+				render("/errors/error.html", message);
+			}				
+		} else {
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
 }
