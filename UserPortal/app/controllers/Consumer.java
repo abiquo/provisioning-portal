@@ -1153,7 +1153,7 @@ public class Consumer extends Controller {
 		}
 	}
 	
-	public static void extendOffer(final Integer purchasedOfferId, final Date expiration) {
+	public static void extendOffer(final Integer purchasedOfferId) {
 		Logger.info("---------INSIDE EXTEND OFFER ---------------");
 
 		String user = session.get("username");

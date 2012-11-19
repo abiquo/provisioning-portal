@@ -22,7 +22,7 @@
 	<table class="detailTable table table-bordered table-condensed table-striped">
 	 <thead class="ui-widget-header">
 	     <tr>
-	         <td width="350px"><strong><center>${offerPurchased.offer.name}<center></strong></td><td width="700px"><strong><center>Details</center></strong></td>	        
+	         <td width="350px"><strong><center>${offerPurchased.serviceLevel}<center></strong></td><td width="700px"><strong><center>Details</center></strong></td>	        
 	     </tr>
      </thead>
      <tbody>
@@ -33,7 +33,8 @@
 		         		<tr><td width="200px"><strong><center>Short-Description<center></strong></td><td width="200px"><center>${offerPurchased.offer.shortDescription}</center></td></tr>
 	         			<tr><td width="auto"><strong><center>Description<center></strong></td><td width="auto"><center>${offerPurchased.offer.longDescription}</center></td></tr>          
 	         			<tr><td width="auto"><strong><center>Quality of Service<center></strong></td><td width="auto"><center>${offerPurchased.offer.defaultServiceLevel}</center></td></tr>
-	         			<tr><td width="auto"><strong><center>Lease Period<center></strong></td><td width="auto"><center>${offerPurchased.offer.serviceType}</center></td></tr>     
+	         			<tr><td width="auto"><strong><center>Purchased on<center></strong></td><td width="auto"><center>${offerPurchased.start}</center></td></tr>     
+	         			<tr><td width="auto"><strong><center>Expires on<center></strong></td><td width="auto"><center>${offerPurchased.expiration}</center></td></tr>     
          			</tbody>   
 	         	</table>	        
 	         </td>	               

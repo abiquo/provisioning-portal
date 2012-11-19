@@ -23,46 +23,38 @@ package portal.util;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Calendar;
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.persistence.Query;
 
+import models.OfferPurchased;
+
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang.time.DurationFormatUtils;
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
 import org.jclouds.abiquo.domain.cloud.VirtualDatacenter;
-import org.jclouds.abiquo.domain.cloud.VirtualMachine;
-import org.jclouds.abiquo.domain.enterprise.Enterprise;
 import org.jclouds.abiquo.domain.task.AsyncTask;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
-import org.jclouds.abiquo.predicates.cloud.VirtualDatacenterPredicates;
-import org.jclouds.abiquo.predicates.cloud.VirtualMachinePredicates;
 import org.jclouds.rest.AuthorizationException;
-
-import com.abiquo.server.core.cloud.VirtualApplianceState;
-
-import controllers.Consumer;
-import controllers.Helper;
-import controllers.Login;
-import controllers.Mails;
-
-import models.Deploy_Bundle;
-import models.Deploy_Bundle_Nodes;
-import models.Offer;
-import models.OfferPurchased;
+import org.joda.time.Days;
+import org.joda.time.Months;
 
 import play.Logger;
 import play.Play;
 import play.db.jpa.JPA;
-import play.jobs.Every;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
-import play.libs.Mail;
+
+import com.abiquo.server.core.cloud.VirtualApplianceState;
+import com.google.common.collect.Lists;
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
+import controllers.Mails;
 
 /**
  * Undeploys the virtual applinace after lease period has expired.
@@ -71,7 +63,6 @@ import play.libs.Mail;
  */
 
 @OnApplicationStart
-@Every("1min")
 public class UndeployScheduler extends Job {
 
 	@Override
@@ -85,11 +76,21 @@ public class UndeployScheduler extends Job {
 			{
 					Date currentDate = new Date();
 					Date expDate = record.getExpiration();
-					if(expDate.before(currentDate))
+					
+					//Get days from difference
+				    Integer days = Integer.parseInt(DurationFormatUtils.formatDurationHMS(expDate.getTime() - currentDate.getTime()).split(":")[0]) / 24;
+				    			    
+				    final Collection<Integer> daysToSendMail = Lists.newArrayList(1,2,3,4,5,7,15,30);
+				    if(expDate.before(currentDate))
 					{
-						Logger.info("Lease has expired.");			
-						Mails.sendExtendEmail(record.getUser().getNick(), record.getOffer().getName(), record.getUser().getEmail(), record.getExpiration());						
-					}    	
+						Logger.info("Lease has expired.");		
+						deleteOffer(record);
+						Mails.sendExpiredEmail(record);						
+					}    
+				    else if (daysToSendMail.contains(days)) {
+				    	Logger.info("Lease is almost expired.");			
+						Mails.sendExtendEmail(record);	
+				    } 	
 			}
 			Logger.info(" ------------EXITING  doJob-------------");
 	}
@@ -117,13 +118,10 @@ public class UndeployScheduler extends Job {
 						vapp.delete();
 						vdc.delete();
 						offerPurchased.delete();
-					} else {
-						
+					} else {						
 						AbiquoUtils.checkErrorsInTasks(undeployTasks);
-						Logger.info("Tasks Checked");
-						
-					}				
-					
+						Logger.info("Tasks Checked");						
+					}									
 					Logger.info("OFFER DELETED ......");
 					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
 					

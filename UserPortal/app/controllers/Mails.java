@@ -87,15 +87,28 @@ public class Mails extends Mailer {
 	 * @param useremail
 	 * @param exp_date
 	 */
-public static void sendExtendEmail(String username , String offerName, String useremail, Date expDate)
-{
-	  
+public static void sendExtendEmail(OfferPurchased op)
+{    
+	
 	  	Logger.info("INSIDE MAILS SENDEMAIL()....");
 	  	setSubject("Abiquo Confirmation");
-	    addRecipient("zain.malik@abiquo.com");
+	    addRecipient("david.lopez@abiquo.com"); // tochange
 	    setFrom("Admin <provisioning-portal@abiquo.com>");
-		Logger.info("SENDING EMAIL TO  ...." + useremail);
-		send(offerName, username, useremail, expDate);
+		Logger.info("SENDING EMAIL TO  ...." + op.getUser().getEmail());
+		
+		@SuppressWarnings("deprecation")
+		final String urlserver = Http.Request.current().getBase() + "/consumer/extendOffer?purchasedOfferId=" +op.getEntityId().toString();
+		send(op, urlserver);
+}
+public static void sendExpiredEmail(OfferPurchased op)
+{    
+	
+	  	Logger.info("INSIDE MAILS SENDEMAIL()....");
+	  	setSubject("Abiquo Confirmation");
+	    addRecipient("david.lopez@abiquo.com"); // tochange
+	    setFrom("Admin <provisioning-portal@abiquo.com>");
+		Logger.info("SENDING EMAIL TO  ...." + op.getUser().getEmail());
+		send(op);
 }
   
   /**
