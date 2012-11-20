@@ -18,39 +18,46 @@
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
- #{if flash.error}
-<p style="color:#c00">
-  	${flash.error}
-</p>
-#{/if}
-#{else}
-<div id="marketplace" >
+#{if flash.error}
+<p style="color: #c00">${flash.error}</p>
+#{/if} #{else}
+<div id="marketplace">
 	<table class="table table-bordered">
-  		 <thead class="ui-widget-header">
-   			<tr>
-       			<td><div class="ui-widget">Marketplace</div></td>
-     			<td><div class="ui-widget">Action</div></td>
-            </tr>
- 	     </thead>
-   		 <tbody class="ui-widget-content">
- 		    #{list enterpriseEnabledList , as:'enterpriseEnabledList'} 		    
-       		<tr>
-   			<td><div class="ui-widget"><h4>${enterpriseEnabledList.enterprise.name}</h4></div></td>
-   		     <td>
-       			  #{if enterpriseEnabledList.enabled}
-       			    <button class="enableMarketplace btn" id="enableMarket_${enterpriseEnabledList.enterprise.id}_${enterpriseEnabledList.enterprise.name}" url="@{enable(enterpriseEnabledList.enterprise.id, enterpriseEnabledList.enterprise.name)}"><i class="icon-cog"></i>Configure</button>
-       			    <button class="publishMarketplace btn" id="publishMarket_${enterpriseEnabledList.enterprise.id}_${enterpriseEnabledList.enterprise.name}" url="@{publishMarket(enterpriseEnabledList.enterprise.id, enterpriseEnabledList.enterprise.name)}"><i class="icon-globe"></i>Publish</button>
-       			  #{/if}
-       			  #{else}
-       			     <button class="enableMarketplace btn" id="enableMarket_${enterpriseEnabledList.enterprise.id}_${enterpriseEnabledList.enterprise.name}" url="@{enable(enterpriseEnabledList.enterprise.id, enterpriseEnabledList.enterprise.name)}"><i class="icon-ok"></i>Enable</button>
-       			  #{/else}
-       		 </td>
-       		</tr>       	
-       		#{/list}
-   		</tbody>
-	</table>  
+		<thead class="ui-widget-header">
+			<tr>
+				<td><div class="ui-widget">Marketplace</div></td>
+				<td><div class="ui-widget">Action</div></td>
+			</tr>
+		</thead>
+		<tbody class="ui-widget-content">
+			#{list enterpriseEnabledList , as:'enterpriseEnabledList'}
+			<tr>
+				<td><div class="ui-widget">
+						<h4>${enterpriseEnabledList.enterprise.name}</h4>
+					</div></td>
+				<td>#{if enterpriseEnabledList.enabled}
+					<button class="enableMarketplace btn"
+						id="enableMarket_${enterpriseEnabledList.enterprise.id}_${enterpriseEnabledList.enterprise.name}"
+						url="@{enable(enterpriseEnabledList.enterprise.id, enterpriseEnabledList.enterprise.name)}">
+						<i class="icon-cog"></i>Configure
+					</button>
+					<button class="publishMarketplace btn"
+						id="publishMarket_${enterpriseEnabledList.enterprise.id}_${enterpriseEnabledList.enterprise.name}"
+						url="@{publishMarket(enterpriseEnabledList.enterprise.id, enterpriseEnabledList.enterprise.name)}">
+						<i class="icon-globe"></i>Publish
+					</button> #{/if} #{else}
+					<button class="enableMarketplace btn"
+						id="enableMarket_${enterpriseEnabledList.enterprise.id}_${enterpriseEnabledList.enterprise.name}"
+						url="@{enable(enterpriseEnabledList.enterprise.id, enterpriseEnabledList.enterprise.name)}">
+						<i class="icon-ok"></i>Enable
+					</button> #{/else}
+				</td>
+			</tr>
+			#{/list}
+		</tbody>
+	</table>
 </div>
 
-<div id="enableMarketplaceForm" ></div>
-<div id="publishMarketplaceForm" ></div>
+<div id="enableMarketplaceForm"></div>
+<div id="publishMarketplaceForm"></div>
 #{/else}

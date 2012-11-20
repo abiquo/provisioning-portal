@@ -18,12 +18,10 @@
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
 #----------------------------------------------------------------------------- -->
- #{if flash.error}
-    		<p style="color:#c00">
-        	${flash.error}
-    		</p>
-			#{/if}
-			
+#{if flash.error}
+<p style="color: #c00">${flash.error}</p>
+#{/if}
+
 <script type="text/javascript">
 
  $('#accordionOffers').accordion({
@@ -50,21 +48,22 @@
    //ui.oldContent // jQuery object, previous content
  });
 </script>
-#{ifnot vdc_list}    
-    <h4> No Service Levels Defined, Contact Cloud Administrator  !!!</h4>
-#{/ifnot}
+#{ifnot vdc_list}
+<h4>No Service Levels Defined, Contact Cloud Administrator !!!</h4>
+#{/ifnot} #{else}
 
-#{else}
-     
 <div id="accordionOffers">
 	#{list vdc_list, as:'vdc'}
-	    <h3><a class="offerUrl" href="@{Producer.listAllOffers(vdc.id, vdc.name)}">${vdc?.name}</a></h3>
-	    <div id="content">
-	       <div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">	     
-             <div class="bar" style="width: 100%"></div>
-            </div>      
-        </div>	
-    #{/list}
+	<h3>
+		<a class="offerUrl" href="@{Producer.listAllOffers(vdc.id, vdc.name)}">${vdc?.name}</a>
+	</h3>
+	<div id="content">
+		<div class="progress progress-warning progress-striped active"
+			style="margin-bottom: 9px;">
+			<div class="bar" style="width: 100%"></div>
+		</div>
+	</div>
+	#{/list}
 </div>
 #{/else}
 <!-- <p><a href ="@{ProducerLocal.admin()}"> Home  </a></p> -->

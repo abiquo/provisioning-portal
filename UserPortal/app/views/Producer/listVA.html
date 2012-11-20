@@ -18,60 +18,48 @@
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
-#{extends 'main.html' /}
-#{set title:'List Virtual Appliance(s)' /}
-        <style type="text/css">
-    
-   
-    
-   ul.vdclist {
-  display: inline;
-    position: absolute;
-    top: 2em;
-    left: 1em;
-    width: 9em 
-    } 
-    li {
-    font-size= 400%
-    }
-    
-    
- 
-  </style>
-   
-   #{ifnot vaList}
-    
-    <h3> No virtual Appliances   !!!</h3>
-#{/ifnot}
-#{else}
-  
-<h1>Displaying Virtual Appliances for ${virtualDatacenter.name} </h1>
+#{extends 'main.html' /} #{set title:'List Virtual Appliance(s)' /}
+<style type="text/css">
+ul.vdclist {
+	display: inline;
+	position: absolute;
+	top: 2em;
+	left: 1em;
+	width: 9em
+}
+
+li {font-size = 400%
+	
+}
+</style>
+
+#{ifnot vaList}
+
+<h3>No virtual Appliances !!!</h3>
+#{/ifnot} #{else}
+
+<h1>Displaying Virtual Appliances for ${virtualDatacenter.name}</h1>
 
 
 
 <table>
-       <thead>
-           <tr>
-               <th><strong>Virtual Appliance Name</strong></th>
-              
-               <th>Action</th>
-               
-           </tr>
-       </thead>
-       <tbody>
-           #{list vaList, as:'va'}
-               <tr>
-                   <td>${va.name}</td>
-                   
-                   <td>
-                      
-                       
-                         #{a @Producer.listVM(vdc,va.name)}  List VM(s) #{/a}
-                         
-                   </td>
-               </tr>
-           #{/list}
-       </tbody>
-   </table> 
+	<thead>
+		<tr>
+			<th><strong>Virtual Appliance Name</strong></th>
+
+			<th>Action</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		#{list vaList, as:'va'}
+		<tr>
+			<td>${va.name}</td>
+
+			<td>#{a @Producer.listVM(vdc,va.name)} List VM(s) #{/a}</td>
+		</tr>
+		#{/list}
+	</tbody>
+</table>
 <a href="@{Producer.listVDC()}">Home </a>
 #{/else}

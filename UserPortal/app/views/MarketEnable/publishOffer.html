@@ -19,14 +19,8 @@
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
 #{if flash.error}
-        <p style="color:#c00">
-        ${flash.error}
-        </p>
-#{/if}
-#{ifnot resultSet}
-    No Pubished offers available
-#{/ifnot}
-#{else}
+<p style="color: #c00">${flash.error}</p>
+#{/if} #{ifnot resultSet} No Pubished offers available #{/ifnot} #{else}
 
 <script type="text/javascript">
 	$('.checkPub').click( function(e) {
@@ -36,55 +30,59 @@
 
 </script>
 <div id="formOffer">
-<form name ="saveOffer" action ="@{MarketEnable.saveMarketView(enterprise_id, scOffer, scOfferState, subscoffer?.service_level, enterprise_name)}" method= "POST">
-   <table class="table table-bordered" >
-   <thead class="ui-widget-header">
-                     <tr>
-                         <th class="ui-widget"><strong><h3>Offer Icon</h3></strong></th>
-                         <th class="ui-widget"><strong><h3>Offer Name</h3></strong></th>
-                         <th class="ui-widget"><strong><h3>Publish?</h3></strong></th>
-                 </tr>
-          </thead>
-   <tbody class="ui-widget-content">
-   #{list resultSet1, as:'subscoffers'}        
-       <tr>
-               <td><img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}" width="100" height="100" /></td>
-               #{list subscoffers.sc_offer, as:'sc_offer'}
-	               <td><span><h4>${sc_offer.sc_offer_name}</h4></span></td>	              
-               #{/list}                      
-               #{list sc_offer.nodes, as:'nodes'}#{/list}
-               </td>
-               #{list sc_offer.sc_offer_id, as:'scOffer'}                                         	  
-	               #{if 'PUBLISHED' == sc_offer.state}		             
-	                   <td>
-	                   	   <div class="publishCheck">	 
-	                   	    <div class="btn-group">                  	   	   
-			                   <input id="check" type="button" class="btn btn-danger active" name ="scOffer" value ="Actived">
-			                   <input type="button" class="listVM btn" id="@{ProducerRemote.listVM(sc_offer.idVirtualDataCenter_ref,scOffer)}" value ="Details">
-		                   	</div>
-			                   <input type="hidden" name="scOffer" value="${scOffer}">   
-			                   <input type="hidden" id="state" name="scOfferState" value="false">   			                   
-		                   </div>		                   		                   
-	                   </td>		            
-	              #{/if}
-	              #{else}
-	              		<td>
-	              		   <div class="publishCheck">
-	              		   	  <div class="btn-group">
-				                   <input id="check" type="button" class="btn btn-warning" name ="scOffer" value ="Publish">
-				                   <input type="button" class="listVM btn" id="@{ProducerRemote.listVM(sc_offer.idVirtualDataCenter_ref,scOffer)}" value="Details"> 
-				              </div>           
-				                   <input type="hidden" name="scOffer" value="${scOffer}">   
-				                   <input type="hidden" id="state" name="scOfferState" value="false">	
-		                   </div>		                  
-	                   </td>
-	              #{/else}	           
-              #{/list}  
-           </tr>
-       #{/list}
-   </tbody>
-    </table>
-   <input type="submit" class="btn btn-warning" value ="Save" >
-</form>
+	<form name="saveOffer"
+		action="@{MarketEnable.saveMarketView(enterprise_id, scOffer, scOfferState, subscoffer?.service_level, enterprise_name)}"
+		method="POST">
+		<table class="table table-bordered">
+			<thead class="ui-widget-header">
+				<tr>
+					<th class="ui-widget"><strong><h3>Offer Icon</h3></strong></th>
+					<th class="ui-widget"><strong><h3>Offer Name</h3></strong></th>
+					<th class="ui-widget"><strong><h3>Publish?</h3></strong></th>
+				</tr>
+			</thead>
+			<tbody class="ui-widget-content">
+				#{list resultSet1, as:'subscoffers'}
+				<tr>
+					<td><img
+						src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id)}"
+						width="100" height="100" /></td> #{list subscoffers.sc_offer,
+					as:'sc_offer'}
+					<td><span><h4>${sc_offer.sc_offer_name}</h4></span></td> #{/list}
+					#{list sc_offer.nodes, as:'nodes'}#{/list}
+					</td> #{list sc_offer.sc_offer_id, as:'scOffer'} #{if 'PUBLISHED' ==
+					sc_offer.state}
+					<td>
+						<div class="publishCheck">
+							<div class="btn-group">
+								<input id="check" type="button" class="btn btn-danger active"
+									name="scOffer" value="Actived"> <input type="button"
+									class="listVM btn"
+									id="@{ProducerRemote.listVM(sc_offer.idVirtualDataCenter_ref,scOffer)}"
+									value="Details">
+							</div>
+							<input type="hidden" name="scOffer" value="${scOffer}"> <input
+								type="hidden" id="state" name="scOfferState" value="false">
+						</div>
+					</td> #{/if} #{else}
+					<td>
+						<div class="publishCheck">
+							<div class="btn-group">
+								<input id="check" type="button" class="btn btn-warning"
+									name="scOffer" value="Publish"> <input type="button"
+									class="listVM btn"
+									id="@{ProducerRemote.listVM(sc_offer.idVirtualDataCenter_ref,scOffer)}"
+									value="Details">
+							</div>
+							<input type="hidden" name="scOffer" value="${scOffer}"> <input
+								type="hidden" id="state" name="scOfferState" value="false">
+						</div>
+					</td> #{/else} #{/list}
+				</tr>
+				#{/list}
+			</tbody>
+		</table>
+		<input type="submit" class="btn btn-warning" value="Save">
+	</form>
 </div>
 #{/else}

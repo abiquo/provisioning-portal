@@ -34,29 +34,27 @@ import play.db.jpa.GenericModel;
 
 /**
  * 
- * @author David López
- * Deployed virtual machine resources such as harddisk and networks. 
- * Currently only harddisk is taken into consideration.
- * Refer User_Consumption, Deploy_Bundle, Deploy_Bundle_Nodes
+ * @author David López Deployed virtual machine resources such as harddisk and
+ *         networks. Currently only harddisk is taken into consideration. Refer
+ *         User_Consumption, Deploy_Bundle, Deploy_Bundle_Nodes
  */
 @Entity
 public class Deploy_Nodes_Resources extends GenericModel {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer iddeploy_nodes_resources;
-	
+
 	private Integer sequence;
 	private Integer resourceType;
 	private Long value;
 
-	@ManyToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "Deploy_Node_Resource", joinColumns = { @JoinColumn(name = "iddeploy_nodes_resources") }, inverseJoinColumns = { @JoinColumn(name = "idbundle_nodes") })
 	private Deploy_Bundle_Nodes deploy_Bundle_Nodes;
 
-	
 	public Deploy_Nodes_Resources() {
 		super();
-		
+
 	}
 
 	public Deploy_Nodes_Resources(Integer iddeploy_nodes_resources,
@@ -109,6 +107,5 @@ public class Deploy_Nodes_Resources extends GenericModel {
 	public void setDeploy_Bundle_Nodes(Deploy_Bundle_Nodes deploy_Bundle_Nodes) {
 		this.deploy_Bundle_Nodes = deploy_Bundle_Nodes;
 	}
-	
-	
+
 }

@@ -35,17 +35,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import play.db.jpa.GenericModel;
+
 /**
  * 
- * @author David López
- * Virtual machine details that gets deployed when user buy an offer.
- * Refer also OfferPurchased, Deploy_Bundle
+ * @author David López Virtual machine details that gets deployed when user buy
+ *         an offer. Refer also OfferPurchased, Deploy_Bundle
  */
 
 @Entity
 public class Deploy_Bundle_Nodes extends GenericModel {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idbundle_nodes;
 	private String node_template_name;
 	private String node_name;
@@ -55,24 +55,20 @@ public class Deploy_Bundle_Nodes extends GenericModel {
 	private String vdrpIP;
 	private Integer vdrpPort;
 	private String vdrp_password;
-	
-	@ManyToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)
 	@JoinTable(name = "Bundle_Node", joinColumns = { @JoinColumn(name = "idbundle_nodes") }, inverseJoinColumns = { @JoinColumn(name = "bundle_id") })
 	private Deploy_Bundle deploy_bundle;
-	
-	@OneToMany(cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Nodes_Resources.class)
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Deploy_Nodes_Resources.class)
 	@JoinTable(name = "Deploy_Node_Resource", joinColumns = { @JoinColumn(name = "idbundle_nodes") }, inverseJoinColumns = { @JoinColumn(name = "iddeploy_nodes_resources") })
-	
 	private Set<Deploy_Nodes_Resources> resources = new HashSet<Deploy_Nodes_Resources>();
 
-	
-	
 	public Deploy_Bundle_Nodes() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
 	public Integer getIdbundle_nodes() {
 		return idbundle_nodes;
 	}
@@ -81,16 +77,13 @@ public class Deploy_Bundle_Nodes extends GenericModel {
 		this.idbundle_nodes = idbundle_nodes;
 	}
 
-	
 	public String getNode_template_name() {
 		return node_template_name;
 	}
 
-
 	public void setNode_template_name(String node_template_name) {
 		this.node_template_name = node_template_name;
 	}
-
 
 	public String getNode_name() {
 		return node_name;
@@ -100,16 +93,13 @@ public class Deploy_Bundle_Nodes extends GenericModel {
 		this.node_name = node_name;
 	}
 
-	
 	public Integer getNode_id() {
 		return node_id;
 	}
 
-
 	public void setNode_id(Integer node_id) {
 		this.node_id = node_id;
 	}
-
 
 	public Integer getCpu() {
 		return cpu;
@@ -166,8 +156,5 @@ public class Deploy_Bundle_Nodes extends GenericModel {
 	public void setResources(Set<Deploy_Nodes_Resources> resources) {
 		this.resources = resources;
 	}
-	
-	
 
-	
 }

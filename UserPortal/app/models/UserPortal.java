@@ -28,39 +28,37 @@ import javax.persistence.NamedQuery;
 
 import play.db.jpa.GenericModel;
 import play.mvc.Controller;
+
 /**
  * 
- * @author David López
- * This model saves all offer entries in a service catalog and their details
- * It might need design reconsideration in future. 
- * start_date and expiration date - not clear 
+ * @author David López This model saves all offer entries in a service catalog
+ *         and their details It might need design reconsideration in future.
+ *         start_date and expiration date - not clear
  */
 @Entity
-@NamedQueries({
-@NamedQuery(name="getUser",query=" select p from UserPortal as p where p.id = ?1")
-})
-public class UserPortal extends GenericModel{
-	
+@NamedQueries({ @NamedQuery(name = "getUser", query = " select p from UserPortal as p where p.id = ?1") })
+public class UserPortal extends GenericModel {
+
 	@Id
-	private Integer idAbiquo;	
+	private Integer idAbiquo;
 	private Integer idEnterprise;
 	private String nick;
 	private String email;
-	
-	
+
 	public UserPortal() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public UserPortal(final Integer idAbiquo, final String nick, final String email, final Integer idEnterprise) {
+
+	public UserPortal(final Integer idAbiquo, final String nick,
+			final String email, final Integer idEnterprise) {
 		super();
 		this.idAbiquo = idAbiquo;
 		this.email = email;
 		this.nick = nick;
 		this.idEnterprise = idEnterprise;
 	}
-	
+
 	public Integer getIdAbiquo() {
 		return idAbiquo;
 	}
@@ -93,5 +91,4 @@ public class UserPortal extends GenericModel{
 		this.idEnterprise = idEnterprise;
 	}
 
- 
 }

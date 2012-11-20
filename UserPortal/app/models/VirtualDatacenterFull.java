@@ -9,8 +9,9 @@ public class VirtualDatacenterFull {
 
 	private VirtualDatacenter virtualDatacenter;
 	private ArrayList<VirtualAppliance> listVirtualAppliances;
-	
-	public VirtualDatacenterFull(final VirtualDatacenter virtualDatacenter, final ArrayList<VirtualAppliance> listVirtualAppliances ) {
+
+	public VirtualDatacenterFull(final VirtualDatacenter virtualDatacenter,
+			final ArrayList<VirtualAppliance> listVirtualAppliances) {
 		this.setVirtualDatacenter(virtualDatacenter);
 		this.setListVirtualAppliances(listVirtualAppliances);
 	}
@@ -19,7 +20,8 @@ public class VirtualDatacenterFull {
 		return listVirtualAppliances;
 	}
 
-	public void setListVirtualAppliances(ArrayList<VirtualAppliance> listVirtualAppliances) {
+	public void setListVirtualAppliances(
+			ArrayList<VirtualAppliance> listVirtualAppliances) {
 		this.listVirtualAppliances = listVirtualAppliances;
 	}
 

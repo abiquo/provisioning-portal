@@ -33,88 +33,93 @@ import org.jclouds.compute.ComputeServiceContext;
 
 import play.Play;
 
-
-
 public class Context {
 
-	 /** Context */
-    private static AbiquoContext context;
-    private static String userInContext;
-    
-	
-    // ----------------------------------------------------------------------------
-    // --- JCLOUDS API PROPER METHODS TO IVOKE API!
-    // ----------------------------------------------------------------------------
-    public static AbiquoContext getApiClient(final String username, final String password)
-    {        
-    	if ( username != null && password != null)
-		{
-    		Properties props = new Properties();    		
-    		 //load a properties file
-    		try {
-    			props.load(new FileInputStream(Play.getFile("conf/config.properties")));
-    			props.put("abiquo.endpoint", props.getProperty("api"));
-                //String token = generateToken(userSession);
+	/** Context */
+	private static AbiquoContext context;
+	private static String userInContext;
 
-                //Properties props = new Properties();
-                // We will use token based authentication
-                //props.setProperty(AbiquoProperties.CREDENTIAL_IS_TOKEN, "true");
-                // Do not retry methods that fail with 5xx error codes
-                props.put("jclouds.max-retries", "0");
-                // Custom timeouts in ms
-                // External storage operations take a while in some storage devices
-                props.put("jclouds.timeouts.CloudClient.createVolume", "90000");
-                props.put("jclouds.timeouts.CloudClient.updateVolume", "90000");
-                props.put("jclouds.timeouts.CloudClient.replaceVolumes", "90000");
-                props.put("jclouds.timeouts.CloudClient.deleteVolume", "90000");
-                props.put("jclouds.timeouts.CloudClient.makePersistentVirtualMachine", "300000");
+	// ----------------------------------------------------------------------------
+	// --- JCLOUDS API PROPER METHODS TO IVOKE API!
+	// ----------------------------------------------------------------------------
+	public static AbiquoContext getApiClient(final String username,
+			final String password) {
+		if (username != null && password != null) {
+			Properties props = new Properties();
+			// load a properties file
+			try {
+				props.load(new FileInputStream(Play
+						.getFile("conf/config.properties")));
+				props.put("abiquo.endpoint", props.getProperty("api"));
+				// String token = generateToken(userSession);
 
-                context = ContextBuilder.newBuilder(new AbiquoApiMetadata()) //
-                    .endpoint(props.getProperty("api")) //
-                    .credentials(username, password) //
-                    //.modules(ImmutableSet.<Module> of(new SLF4JLoggingModule())) //
-                    .overrides(props) //
-                    .build(AbiquoContext.class);
-    		} catch (FileNotFoundException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}     	        
-        }
-        return context;
-    }
-    
-    public static void closeContext() {    	
-    	if (context != null) {
-    		context.close();
-    		context = null;
-    	}
-    }
-	
-//	public static final AbiquoContext getContext(String username, String password) 
-//    {
-//		AbiquoContext context = null;		
-//		if ( username != null && password != null)
-//		{
-//		Properties props = new Properties();
-//		 //load a properties file
-//		try {
-//			props.load(new FileInputStream(Play.getFile("conf/config.properties")));
-//			
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}           
-//		props.put("abiquo.endpoint", props.getProperty("api"));
-//		
-//		//props.put("abiquo.endpoint", "http://67.111.53.253/api");
-//		context = new AbiquoContextFactory().createContext(username ,password ,props);
-//		}
-//    	return context;
-//    }
+				// Properties props = new Properties();
+				// We will use token based authentication
+				// props.setProperty(AbiquoProperties.CREDENTIAL_IS_TOKEN,
+				// "true");
+				// Do not retry methods that fail with 5xx error codes
+				props.put("jclouds.max-retries", "0");
+				// Custom timeouts in ms
+				// External storage operations take a while in some storage
+				// devices
+				props.put("jclouds.timeouts.CloudClient.createVolume", "90000");
+				props.put("jclouds.timeouts.CloudClient.updateVolume", "90000");
+				props.put("jclouds.timeouts.CloudClient.replaceVolumes",
+						"90000");
+				props.put("jclouds.timeouts.CloudClient.deleteVolume", "90000");
+				props.put(
+						"jclouds.timeouts.CloudClient.makePersistentVirtualMachine",
+						"300000");
+
+				context = ContextBuilder.newBuilder(new AbiquoApiMetadata()) //
+						.endpoint(props.getProperty("api")) //
+						.credentials(username, password) //
+						// .modules(ImmutableSet.<Module> of(new
+						// SLF4JLoggingModule())) //
+						.overrides(props) //
+						.build(AbiquoContext.class);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return context;
+	}
+
+	public static void closeContext() {
+		if (context != null) {
+			context.close();
+			context = null;
+		}
+	}
+
+	// public static final AbiquoContext getContext(String username, String
+	// password)
+	// {
+	// AbiquoContext context = null;
+	// if ( username != null && password != null)
+	// {
+	// Properties props = new Properties();
+	// //load a properties file
+	// try {
+	// props.load(new FileInputStream(Play.getFile("conf/config.properties")));
+	//
+	// } catch (FileNotFoundException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// props.put("abiquo.endpoint", props.getProperty("api"));
+	//
+	// //props.put("abiquo.endpoint", "http://67.111.53.253/api");
+	// context = new AbiquoContextFactory().createContext(username ,password
+	// ,props);
+	// }
+	// return context;
+	// }
 }

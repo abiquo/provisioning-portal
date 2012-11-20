@@ -35,25 +35,24 @@ import javax.persistence.NamedQuery;
 import play.data.validation.Required;
 import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
+
 /**
  * 
- * @author David Lopez
- * This model saves the market configuration details.
+ * @author David Lopez This model saves the market configuration details.
  */
 @Entity
 @NamedQueries({
-@NamedQuery(name="getMktConfi",query=" select p from MKT_Configuration as p where p.id = ?1"),
-@NamedQuery(name="getMktConfiguration",query=" select p from MKT_Configuration as p where p.enterprise_id = ?1"),
-@NamedQuery(name="getDeployEnterprise",query=" select p from MKT_Configuration as p where p.deploy_enterprise_id = ?1")
-})
-public class MKT_Configuration extends GenericModel{
+		@NamedQuery(name = "getMktConfi", query = " select p from MKT_Configuration as p where p.id = ?1"),
+		@NamedQuery(name = "getMktConfiguration", query = " select p from MKT_Configuration as p where p.enterprise_id = ?1"),
+		@NamedQuery(name = "getDeployEnterprise", query = " select p from MKT_Configuration as p where p.deploy_enterprise_id = ?1") })
+public class MKT_Configuration extends GenericModel {
 
 	@Id
 	private Integer enterprise_id;
 	private String enterprise_name;
 	@Required
 	private Integer deploy_enterprise_id;
-	/*private String mkt_deploy_enterprise;*/
+	/* private String mkt_deploy_enterprise; */
 	@Required
 	private String mkt_deploy_user;
 	@Required
@@ -62,32 +61,33 @@ public class MKT_Configuration extends GenericModel{
 	private String mkt_theme_css;
 	private String mkt_branding_icon;
 	private String mkt_url;
-	
+
 	public MKT_Configuration() {
 		super();
-		
+
 	}
-	
-	
 
 	public String getMkt_deploy_pw() {
 		return mkt_deploy_pw;
 	}
+
 	public void setMkt_deploy_pw(String mkt_deploy_pw) {
 		this.mkt_deploy_pw = mkt_deploy_pw;
 	}
+
 	public String getMkt_deploy_user() {
 		return mkt_deploy_user;
 	}
+
 	public void setMkt_deploy_user(String mkt_deploy_user) {
 		this.mkt_deploy_user = mkt_deploy_user;
 	}
-	/*public String getMkt_deploy_enterprise() {
-		return mkt_deploy_enterprise;
-	}
-	public void setMkt_deploy_enterprise(String mkt_deploy_enterprise) {
-		this.mkt_deploy_enterprise = mkt_deploy_enterprise;
-	}*/
+
+	/*
+	 * public String getMkt_deploy_enterprise() { return mkt_deploy_enterprise;
+	 * } public void setMkt_deploy_enterprise(String mkt_deploy_enterprise) {
+	 * this.mkt_deploy_enterprise = mkt_deploy_enterprise; }
+	 */
 
 	public Integer getEnterprise_id() {
 		return enterprise_id;
@@ -129,55 +129,38 @@ public class MKT_Configuration extends GenericModel{
 		this.mkt_url = mkt_url;
 	}
 
-
-
 	public String getEnterprise_name() {
 		return enterprise_name;
 	}
-
-
 
 	public void setEnterprise_name(String enterprise_name) {
 		this.enterprise_name = enterprise_name;
 	}
 
-
-
 	public Integer getDeploy_enterprise_id() {
 		return deploy_enterprise_id;
 	}
-
-
 
 	public void setDeploy_enterprise_id(Integer deploy_enterprise_id) {
 		this.deploy_enterprise_id = deploy_enterprise_id;
 	}
 
+	/*
+	 * public sc_offers_subscriptions getScOffer() { return scOffer; }
+	 * 
+	 * 
+	 * 
+	 * public void setScOffer(sc_offers_subscriptions scOffer) { this.scOffer =
+	 * scOffer; }
+	 */
 
+	/*
+	 * public Integer getMarket_id() { return market_id; }
+	 * 
+	 * 
+	 * 
+	 * public void setMarket_id(Integer market_id) { this.market_id = market_id;
+	 * }
+	 */
 
-	
-	/*public sc_offers_subscriptions getScOffer() {
-		return scOffer;
-	}
-
-
-
-	public void setScOffer(sc_offers_subscriptions scOffer) {
-		this.scOffer = scOffer;
-	}*/
-
-
-/*
-	public Integer getMarket_id() {
-		return market_id;
-	}
-
-
-
-	public void setMarket_id(Integer market_id) {
-		this.market_id = market_id;
-	}
-	
-	*/
-	
 }

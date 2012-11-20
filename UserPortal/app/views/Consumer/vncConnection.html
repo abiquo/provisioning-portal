@@ -22,228 +22,251 @@
 <html>
 <head>
 <title>Login</title>
-  <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
-  
-   <link type="text/css" href="@@{'/public/stylesheets/custom-theme/jquery-ui-1.8.21.custom.css'}" rel="stylesheet" />
-   <link rel="stylesheet" href="@@{'/public/stylesheets/bootstrap.css'}" type="text/css" />
-   
-   <script type="text/javascript" src="@@{'/public/javascripts/jquery-1.7.2.min.js'}"></script>
-   <script type="text/javascript" src="@@{'/public/javascripts/jquery-ui-1.8.21.custom.min.js'}"></script>
-   <script type="text/javascript" src="@@{'/public/javascripts/jquery.form.js'}"></script> 
-   <script type="text/javascript" src="@@{'/public/javascripts/jquery.validate.js'}"></script>
-   <!--
+<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+
+<link type="text/css"
+	href="@@{'/public/stylesheets/custom-theme/jquery-ui-1.8.21.custom.css'}"
+	rel="stylesheet" />
+<link rel="stylesheet" href="@@{'/public/stylesheets/bootstrap.css'}"
+	type="text/css" />
+
+<script type="text/javascript"
+	src="@@{'/public/javascripts/jquery-1.7.2.min.js'}"></script>
+<script type="text/javascript"
+	src="@@{'/public/javascripts/jquery-ui-1.8.21.custom.min.js'}"></script>
+<script type="text/javascript"
+	src="@@{'/public/javascripts/jquery.form.js'}"></script>
+<script type="text/javascript"
+	src="@@{'/public/javascripts/jquery.validate.js'}"></script>
+<!--
     noVNC example: simple example using default UI
     Copyright (C) 2012 Joel Martin
     noVNC is licensed under the LGPL-3 (see LICENSE.txt)
     This file is licensed under the 2-Clause BSD license (see LICENSE.txt).
     -->
-    <title>noVNC</title>
+<title>noVNC</title>
 
-    <meta charset="utf-8">
+<meta charset="utf-8">
 
-    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
                 Remove this if you use the .htaccess -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <!-- Apple iOS Safari settings -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <!-- App Start Icon  -->
-    <link rel="apple-touch-startup-image" href="images/screen_320x460.png" />
-    <!-- For iOS devices set the icon to use if user bookmarks app on their homescreen -->
-    <link rel="apple-touch-icon" href="images/screen_57x57.png">
-    <!--
+<!-- Apple iOS Safari settings -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta names="apple-mobile-web-app-status-bar-style"
+	content="black-translucent" />
+<!-- App Start Icon  -->
+<link rel="apple-touch-startup-image" href="images/screen_320x460.png" />
+<!-- For iOS devices set the icon to use if user bookmarks app on their homescreen -->
+<link rel="apple-touch-icon" href="images/screen_57x57.png">
+<!--
     <link rel="apple-touch-icon-precomposed" href="images/screen_57x57.png" />
     -->
 
 
-    <!-- Stylesheets -->    
-    <link rel="stylesheet" href="@{'/public/stylesheets/base.css'}"/>
-    <link rel="alternate stylesheet" href="@{'/public/stylesheets/black.css'}" TITLE="Black" />
-    <link rel="alternate stylesheet" href="@{'/public/stylesheets/blue.css'}" TITLE="Blue" />
-    
+<!-- Stylesheets -->
+<link rel="stylesheet" href="@{'/public/stylesheets/base.css'}" />
+<link rel="alternate stylesheet"
+	href="@{'/public/stylesheets/black.css'}" TITLE="Black" />
+<link rel="alternate stylesheet"
+	href="@{'/public/stylesheets/blue.css'}" TITLE="Blue" />
 
-    <!--
+
+<!--
     <script type='text/javascript'
         src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
     -->
 
-	<script type="text/javascript" src="@{'/public/javascripts/vnc.js'}"></script>
-	<script type="text/javascript" src="@{'/public/javascripts/ui.js'}"></script>
-	<script type="text/javascript" src="@{'/public/javascripts/start.js'}"></script>
-        <link rel="icon" type="image/x-icon" href="@{'/public/images/favicon.ico'}" />
-        <link rel="shortcut icon" type="image/x-icon" href="@{'/public/images/favicon.ico'}">
-            <script src="@{'/public/javascripts/bootstrap.js'}"></script>    
-    <script type="text/javascript" src="@{'/public/javascripts/events.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/vnc.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/ui.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/start.js'}"></script>
+<link rel="icon" type="image/x-icon"
+	href="@{'/public/images/favicon.ico'}" />
+<link rel="shortcut icon" type="image/x-icon"
+	href="@{'/public/images/favicon.ico'}">
+<script src="@{'/public/javascripts/bootstrap.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/events.js'}"></script>
 
 </head>
 
 <body>
-<div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <div id="logo" class="pull-left"><img src="@@{'/public/images/logo-abiquo.png'}" width="188" height="50" /></div><br />
-          <a class="brand" href="@@{Consumer.ServiceCatalog()}">Back to Marketplace</a>
-           <div class="btn-group pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> ${user}
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- <li><a href="#">Profile</a></li>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+				</a>
+				<div id="logo" class="pull-left">
+					<img src="@@{'/public/images/logo-abiquo.png'}" width="188"
+						height="50" />
+				</div>
+				<br /> <a class="brand" href="@@{Consumer.ServiceCatalog()}">Back
+					to Marketplace</a>
+				<div class="btn-group pull-right">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="icon-user"></i> ${user} <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<!-- <li><a href="#">Profile</a></li>
               <li class="divider"></li>-->
-              <li><a href="@{Login.logout()}">Sign Out</a></li>
-            </ul>
-         </div>           
-        </div>        
-      </div>
-    </div>
-<div id="page-wrapper">
-  <div id="page">
-    <div id="header">
-      <div id="containerVNC" class="container">
-       <div id="noVNC-control-bar">
-        <div id="noVNC-menu-bar" style="display:none;">
-        </div>
-        <!--noVNC Mobile Device only Buttons-->
-        <div class="noVNC-buttons-left">
-            <input type="image" src="@{'/public/images/drag.png'}"
-                id="noVNC_view_drag_button" class="noVNC_status_button"
-                title="Move/Drag Viewport">
-            <div id="noVNC_mobile_buttons">
-                <input type="image" src="@{'/public/images/mouse_none.png'}"
-                    id="noVNC_mouse_button0" class="noVNC_status_button">
-                <input type="image" src="@{'/public/images/mouse_left.png'}"
-                    id="noVNC_mouse_button1" class="noVNC_status_button">
-                <input type="image" src="@{'/public/images/mouse_middle.png'}"
-                    id="noVNC_mouse_button2" class="noVNC_status_button">
-                <input type="image" src="@{'/public/images/mouse_right.png'}"
-                    id="noVNC_mouse_button4" class="noVNC_status_button">
-                <input type="image" src="@{'/public/images/keyboard.png'}"
-                    id="showKeyboard" class="noVNC_status_button"
-                    value="Keyboard" title="Show Keyboard"/>
-                <input type="email"
-                    autocapitalize="off" autocorrect="off"
-                    id="keyboardinput" class="noVNC_status_button"/>
-            </div>
-        </div>
+						<li><a href="@{Login.logout()}">Sign Out</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="page-wrapper">
+		<div id="page">
+			<div id="header">
+				<div id="containerVNC" class="container">
+					<div id="noVNC-control-bar">
+						<div id="noVNC-menu-bar" style="display: none;"></div>
+						<!--noVNC Mobile Device only Buttons-->
+						<div class="noVNC-buttons-left">
+							<input type="image" src="@{'/public/images/drag.png'}"
+								id="noVNC_view_drag_button" class="noVNC_status_button"
+								title="Move/Drag Viewport">
+							<div id="noVNC_mobile_buttons">
+								<input type="image" src="@{'/public/images/mouse_none.png'}"
+									id="noVNC_mouse_button0" class="noVNC_status_button"> <input
+									type="image" src="@{'/public/images/mouse_left.png'}"
+									id="noVNC_mouse_button1" class="noVNC_status_button"> <input
+									type="image" src="@{'/public/images/mouse_middle.png'}"
+									id="noVNC_mouse_button2" class="noVNC_status_button"> <input
+									type="image" src="@{'/public/images/mouse_right.png'}"
+									id="noVNC_mouse_button4" class="noVNC_status_button"> <input
+									type="image" src="@{'/public/images/keyboard.png'}"
+									id="showKeyboard" class="noVNC_status_button" value="Keyboard"
+									title="Show Keyboard" /> <input type="email"
+									autocapitalize="off" autocorrect="off" id="keyboardinput"
+									class="noVNC_status_button" />
+							</div>
+						</div>
 
-        <!--noVNC Buttons-->
-        <div class="noVNC-buttons-right">
-            <input type="image" src="@{'/public/images/ctrlaltdel.png'}"
-                 id="sendCtrlAltDelButton" class="noVNC_status_button"
-                title="Send Ctrl-Alt-Del" />
-            <input type="image" src="@{'/public/images/clipboard.png'}"
-                id="clipboardButton" class="noVNC_status_button"
-                title="Clipboard" />
-            <input type="image" src="@{'/public/images/settings.png'}"
-                id="settingsButton" class="noVNC_status_button"
-                title="Settings" />
-            <input type="image" src="@{'/public/images/connect.png'}"
-                id="connectButton" class="noVNC_status_button"
-                title="Connect" />
-            <input type="image" src="@{'/public/images/disconnect.png'}"
-                id="disconnectButton" class="noVNC_status_button"
-                title="Disconnect" />
-        </div>
+						<!--noVNC Buttons-->
+						<div class="noVNC-buttons-right">
+							<input type="image" src="@{'/public/images/ctrlaltdel.png'}"
+								id="sendCtrlAltDelButton" class="noVNC_status_button"
+								title="Send Ctrl-Alt-Del" /> <input type="image"
+								src="@{'/public/images/clipboard.png'}" id="clipboardButton"
+								class="noVNC_status_button" title="Clipboard" /> <input
+								type="image" src="@{'/public/images/settings.png'}"
+								id="settingsButton" class="noVNC_status_button" title="Settings" />
+							<input type="image" src="@{'/public/images/connect.png'}"
+								id="connectButton" class="noVNC_status_button" title="Connect" />
+							<input type="image" src="@{'/public/images/disconnect.png'}"
+								id="disconnectButton" class="noVNC_status_button"
+								title="Disconnect" />
+						</div>
 
-        <!-- Description Panel -->
-        <!-- Shown by default when hosted at for kanaka.github.com -->
-        <div id="noVNC_description" style="display:none;" class="">
-            noVNC is a browser based VNC client implemented using HTML5 Canvas
-            and WebSockets. You will either need a VNC server with WebSockets
-            support (such as <a href="http://libvncserver.sourceforge.net/">libvncserver</a>)
-            or you will need to use
-            <a href="https://github.com/kanaka/websockify">websockify</a>
-            to bridge between your browser and VNC server. See the noVNC
-            <a href="https://github.com/kanaka/noVNC">README</a>
-            and <a href="http://kanaka.github.com/noVNC">website</a>
-            for more information.
-            <br />
-            <input id="descriptionButton" type="button" value="Close">
-        </div>
+						<!-- Description Panel -->
+						<!-- Shown by default when hosted at for kanaka.github.com -->
+						<div id="noVNC_description" style="display: none;" class="">
+							noVNC is a browser based VNC client implemented using HTML5
+							Canvas and WebSockets. You will either need a VNC server with
+							WebSockets support (such as <a
+								href="http://libvncserver.sourceforge.net/">libvncserver</a>) or
+							you will need to use <a
+								href="https://github.com/kanaka/websockify">websockify</a> to
+							bridge between your browser and VNC server. See the noVNC <a
+								href="https://github.com/kanaka/noVNC">README</a> and <a
+								href="http://kanaka.github.com/noVNC">website</a> for more
+							information. <br /> <input id="descriptionButton" type="button"
+								value="Close">
+						</div>
 
-        <!-- Clipboard Panel -->
-        <div id="noVNC_clipboard" class="triangle-right top">
-            <textarea id="noVNC_clipboard_text" rows=5>
+						<!-- Clipboard Panel -->
+						<div id="noVNC_clipboard" class="triangle-right top">
+							<textarea id="noVNC_clipboard_text" rows=5>
             </textarea>
-            <br />
-            <input id="noVNC_clipboard_clear_button" type="button"
-                value="Clear">
-        </div>
+							<br /> <input id="noVNC_clipboard_clear_button" type="button"
+								value="Clear">
+						</div>
 
-        <!-- Settings Panel -->
-        <div id="noVNC_settings" class="triangle-right top">
-            <span id="noVNC_settings_menu">
-                <ul>
-                    <li><input id="noVNC_encrypt" type="checkbox"> Encrypt</li>
-                    <li><input id="noVNC_true_color" type="checkbox" checked> True Color</li>
-                    <li><input id="noVNC_cursor" type="checkbox"> Local Cursor</li>
-                    <li><input id="noVNC_clip" type="checkbox"> Clip to Window</li>
-                    <li><input id="noVNC_shared" type="checkbox"> Shared Mode</li>
-                    <li><input id="noVNC_view_only" type="checkbox"> View Only</li>
-                    <li><input id="noVNC_connectTimeout" type="input"> Connect Timeout (s)</li>
-                    <li><input id="noVNC_path" type="input" value="websockify"> Path</li>
-                    <li><input id="noVNC_repeaterID" type="input" value=""> Repeater ID</li>
-                    <hr>
-                    <!-- Stylesheet selection dropdown -->
-                    <li><label><strong>Style: </strong>
-                        <select id="noVNC_stylesheet" name="vncStyle">
-                            <option value="default">default</option>
-                        </select></label>
-                    </li>
+						<!-- Settings Panel -->
+						<div id="noVNC_settings" class="triangle-right top">
+							<span id="noVNC_settings_menu">
+								<ul>
+									<li><input id="noVNC_encrypt" type="checkbox">
+										Encrypt</li>
+									<li><input id="noVNC_true_color" type="checkbox" checked>
+										True Color</li>
+									<li><input id="noVNC_cursor" type="checkbox">
+										Local Cursor</li>
+									<li><input id="noVNC_clip" type="checkbox"> Clip
+										to Window</li>
+									<li><input id="noVNC_shared" type="checkbox">
+										Shared Mode</li>
+									<li><input id="noVNC_view_only" type="checkbox">
+										View Only</li>
+									<li><input id="noVNC_connectTimeout" type="input">
+										Connect Timeout (s)</li>
+									<li><input id="noVNC_path" type="input" value="websockify">
+										Path</li>
+									<li><input id="noVNC_repeaterID" type="input" value="">
+										Repeater ID</li>
+									<hr>
+									<!-- Stylesheet selection dropdown -->
+									<li><label><strong>Style: </strong> <select
+											id="noVNC_stylesheet" name="vncStyle">
+												<option value="default">default</option>
+										</select></label></li>
 
-                    <!-- Logging selection dropdown -->
-                    <li><label><strong>Logging: </strong>
-                        <select id="noVNC_logging" name="vncLogging">
-                        </select></label>
-                    </li>
-                    <hr>
-                    <li><input type="button" id="noVNC_apply" value="Apply"></li>
-                </ul>
-            </span>
-        </div>
+									<!-- Logging selection dropdown -->
+									<li><label><strong>Logging: </strong> <select
+											id="noVNC_logging" name="vncLogging">
+										</select></label></li>
+									<hr>
+									<li><input type="button" id="noVNC_apply" value="Apply"></li>
+								</ul>
+							</span>
+						</div>
 
-        <!-- Connection Panel -->
-        <div id="noVNC_controls" style="display: none;" class="triangle-right top">
-            <ul>
-                <li><label><strong>Host: </strong><input id="noVNC_host" value="${domain}"/></label></li>
-                <li><label><strong>Port: </strong><input id="noVNC_port" value="${noVNCPort}"/></label></li>
-                <li><label><strong>Password: </strong><input id="noVNC_password" value="${vncPassword}"/></label></li>
-                <li><input id="noVNC_connect_button" type="button" value="Connect"></li>
-            </ul>
-        </div>
+						<!-- Connection Panel -->
+						<div id="noVNC_controls" style="display: none;"
+							class="triangle-right top">
+							<ul>
+								<li><label><strong>Host: </strong><input
+										id="noVNC_host" value="${domain}" /></label></li>
+								<li><label><strong>Port: </strong><input
+										id="noVNC_port" value="${noVNCPort}" /></label></li>
+								<li><label><strong>Password: </strong><input
+										id="noVNC_password" value="${vncPassword}" /></label></li>
+								<li><input id="noVNC_connect_button" type="button"
+									value="Connect"></li>
+							</ul>
+						</div>
 
-    </div> <!-- End of noVNC-control-bar -->
-    <div id="noVNC_screen">
-        <div id="noVNC_screen_pad"></div>
+					</div>
+					<!-- End of noVNC-control-bar -->
+					<div id="noVNC_screen">
+						<div id="noVNC_screen_pad"></div>
 
-        <div id="noVNC_status_bar" class="noVNC_status_bar">
-                <div id="noVNC_status">Loading</div>
-        </div>
+						<div id="noVNC_status_bar" class="noVNC_status_bar">
+							<div id="noVNC_status">Loading</div>
+						</div>
 
-        <h1 id="noVNC_logo"><span>no</span><br />VNC</h1>
+						<h1 id="noVNC_logo">
+							<span>no</span><br />VNC
+						</h1>
 
-        <!-- HTML5 Canvas -->
-        <div id="noVNC_container">
-            <canvas id="noVNC_canvas" width="640px" height="20px">
-                        Canvas not supported.
-            </canvas>
-        </div>
-    </div>
-   </div>
- </div>
-</div>  
-    <div class="navbar navbar-fixed-bottom">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<!-- HTML5 Canvas -->
+						<div id="noVNC_container">
+							<canvas id="noVNC_canvas" width="640px" height="20px">
+							Canvas not supported. </canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="navbar navbar-fixed-bottom">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -256,29 +279,30 @@
               <li><a href="#contact">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-  </div> <!-- /container -->  
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
 </body>
 <div class="navbar navbar-fixed-bottom">
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+			<!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>-->
-      <!-- <a class="brand" href="#">abiquo Marketplace</a> -->         
-      <!-- <div class="nav-collapse">
+			<!-- <a class="brand" href="#">abiquo Marketplace</a> -->
+			<!-- <div class="nav-collapse">
         <ul class="nav">
           <li class="active"><a href="#">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div><!--/.nav-collapse -->
-    </div>
-  </div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript" src="@@{'/public/javascripts/events.js'}"></script>
 </html>

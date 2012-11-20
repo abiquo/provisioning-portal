@@ -37,14 +37,14 @@ import javax.persistence.OneToOne;
 
 import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
+
 /**
  * 
- * @author David Lopez
- * VIRTUAL MACHINES CONTIANED IN AN OFFER
- * REFER ALSO sc_offer
+ * @author David Lopez VIRTUAL MACHINES CONTIANED IN AN OFFER REFER ALSO
+ *         sc_offer
  */
 @Entity
-public class Nodes extends GenericModel{
+public class Nodes extends GenericModel {
 
 	@Id
 	private Integer id_node;
@@ -57,20 +57,17 @@ public class Nodes extends GenericModel{
 	private String description;
 	private String vncAddress;
 	private Integer vncPort;
-	
-	@ManyToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Offer.class)
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Offer.class)
 	@JoinTable(name = "Offer_Node", joinColumns = { @JoinColumn(name = "id_node") }, inverseJoinColumns = { @JoinColumn(name = "offer_id") })
-	
 	private Offer offer;
-		
-	@OneToMany(cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Nodes_Resources.class)
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Nodes_Resources.class)
 	@JoinTable(name = "Node_Resource", joinColumns = { @JoinColumn(name = "id_node") }, inverseJoinColumns = { @JoinColumn(name = "id_nodes_resources") })
-	
 	private Set<Nodes_Resources> resources = new HashSet<Nodes_Resources>();
 
-	
 	public Nodes() {
-		
+
 	}
 
 	public Nodes(Integer id_node, String node_name, Integer idImage,
@@ -159,11 +156,13 @@ public class Nodes extends GenericModel{
 	public void setResources(Set<Nodes_Resources> resources) {
 		this.resources = resources;
 	}
-	
+
 	@Override
-	public String toString(){
-	return "Node [ID :"+ id_node + ", CPU: " + cpu +", RAM: "+ ram +" , ICON:"+ icon + ", Offer: "+ offer + ", Nodes_Resources:" + resources + "]";
-}
+	public String toString() {
+		return "Node [ID :" + id_node + ", CPU: " + cpu + ", RAM: " + ram
+				+ " , ICON:" + icon + ", Offer: " + offer
+				+ ", Nodes_Resources:" + resources + "]";
+	}
 
 	public Integer getHd() {
 		return hd;
@@ -188,5 +187,5 @@ public class Nodes extends GenericModel{
 	public void setVncPort(Integer vncPort) {
 		this.vncPort = vncPort;
 	}
-	
+
 }

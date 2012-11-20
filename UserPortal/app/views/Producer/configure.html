@@ -18,29 +18,62 @@
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
 #----------------------------------------------------------------------------- -->
- #{if flash.error}
-    		<p style="color:#c00">
-        	${flash.error}
-    		</p>
+#{if flash.error}
+<p style="color: #c00">${flash.error}</p>
 #{/if}
-<h2>Configure Offer </h2>
-<form name="configure" action ="@{Producer.addToServiceCatalog(virtualDC.id , va.id, sc_offers,icon)}" method = "POST" enctype="multipart/form-data">
-<p> Offer ID <input type ="text" name = "sc_offers.sc_offer_id" size="25" value = "${va.id}" readonly/></p> 
-<p> Service Level  <input type ="text" name = "sc_offers.virtualDataCenter_name" size="25" value = "${virtualDC.name}" readonly/></p> 
-<p> Offer Name <input type ="text" name = "sc_offers.sc_offer_name" size="50" value = "${va.name}" /></p> 
-#{list vmList, as:'vm'}
-<p>CPU <input type ="text" name = "sc_offers.sc_offer_name" size="25" value = "${vm.cpu}" /></p>
-<p>RAM <input type ="text" name = "sc_offers.sc_offer_name" size="25" value = "${vm.ram}" /></p>
-#{/list}
-<p>Selection Icon <input type ="file" name = "icon"  />  </p> 
-<p>Details Image <input type ="file" name = "sc_offers.image" value = "" /> </p> 
-<p>Short Description <input type ="text" name = "sc_offers.short_description" value = "" /> </p> 
-<p> Long Description <textarea rows="5" cols="70" name = "sc_offers.description"></textarea></p>
+<h2>Configure Offer</h2>
+<form name="configure"
+	action="@{Producer.addToServiceCatalog(virtualDC.id , va.id, sc_offers,icon)}"
+	method="POST" enctype="multipart/form-data">
+	<p>
+		Offer ID <input type="text" name="sc_offers.sc_offer_id" size="25"
+			value="${va.id}" readonly />
+	</p>
+	<p>
+		Service Level <input type="text"
+			name="sc_offers.virtualDataCenter_name" size="25"
+			value="${virtualDC.name}" readonly />
+	</p>
+	<p>
+		Offer Name <input type="text" name="sc_offers.sc_offer_name" size="50"
+			value="${va.name}" />
+	</p>
+	#{list vmList, as:'vm'}
+	<p>
+		CPU <input type="text" name="sc_offers.sc_offer_name" size="25"
+			value="${vm.cpu}" />
+	</p>
+	<p>
+		RAM <input type="text" name="sc_offers.sc_offer_name" size="25"
+			value="${vm.ram}" />
+	</p>
+	#{/list}
+	<p>
+		Selection Icon <input type="file" name="icon" />
+	</p>
+	<p>
+		Details Image <input type="file" name="sc_offers.image" value="" />
+	</p>
+	<p>
+		Short Description <input type="text"
+			name="sc_offers.short_description" value="" />
+	</p>
+	<p>
+		Long Description
+		<textarea rows="5" cols="70" name="sc_offers.description"></textarea>
+	</p>
 
-<p>Offer Start Date <input type ="text" name = "offer_start_ate" value = "" /> </p> 
-<p>Offer Retire Date<input type ="text" name = "offer_expire_date" value = "" /> yyyy-mm-dd </p> 
-<p>Default Lease Period  : 60 days </p> 
-<p><input type ="submit" name = "submit" value ="Enable  "/> 
- <input type ="button" value ="Cancel"/> </p>  
+	<p>
+		Offer Start Date <input type="text" name="offer_start_ate" value="" />
+	</p>
+	<p>
+		Offer Retire Date<input type="text" name="offer_expire_date" value="" />
+		yyyy-mm-dd
+	</p>
+	<p>Default Lease Period : 60 days</p>
+	<p>
+		<input type="submit" name="submit" value="Enable  " /> <input
+			type="button" value="Cancel" />
+	</p>
 </form>
 

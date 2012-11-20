@@ -19,10 +19,9 @@
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
 #{if flash.error}
-    <p style="color:#c00">
-        ${flash.error}
-    </p>
-#{/if}
-#{else}
-<div><h1>Success</h1></div>
+<p style="color: #c00">${flash.error}</p>
+#{/if} #{else}
+<div>
+	<h1>Success</h1>
+</div>
 #{/else}

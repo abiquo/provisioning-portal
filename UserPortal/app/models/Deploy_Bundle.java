@@ -45,47 +45,47 @@ import play.db.jpa.GenericModel;
 
 /**
  * 
- * @author David López
- * The offer i.e virtual appliance details that gets deployed 
- * Refer also OfferPurchased
+ * @author David López The offer i.e virtual appliance details that gets
+ *         deployed Refer also OfferPurchased
  */
 @Entity
-@NamedQueries({
-	@NamedQuery(name = "getVdcIdByVappId", query = "select d.vdc_name from Deploy_Bundle as d where d.vapp_id = ?1")
-})
-public class Deploy_Bundle extends GenericModel{
+@NamedQueries({ @NamedQuery(name = "getVdcIdByVappId", query = "select d.vdc_name from Deploy_Bundle as d where d.vapp_id = ?1") })
+public class Deploy_Bundle extends GenericModel {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer bundle_id;
 	private Integer deploy_datacenter;
 	private String deploy_hypervisorType;
-	//@Column(length = 45)
+	// @Column(length = 45)
 	private String deploy_network;
-	
+
 	private Integer vdc_name;
 	@Column(length = 30)
 	private String vapp_name;
 	private Integer vapp_id;
 	/*
-	@ManyToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = User_Consumption.class)
-	@JoinTable(name = "UserConsumption_DeployNode", joinColumns = { @JoinColumn(name = "bundle_id") }, inverseJoinColumns = { @JoinColumn(name = "iduser_consumption") })
-	*/
-//	@OneToOne( cascade = CascadeType.ALL, mappedBy = "id")
-//	@PrimaryKeyJoinColumns({@PrimaryKeyJoinColumn(name ="bundle_id"), @PrimaryKeyJoinColumn(name = "id")})
+	 * @ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+	 * targetEntity = User_Consumption.class)
+	 * 
+	 * @JoinTable(name = "UserConsumption_DeployNode", joinColumns = {
+	 * @JoinColumn(name = "bundle_id") }, inverseJoinColumns = {
+	 * @JoinColumn(name = "iduser_consumption") })
+	 */
+	// @OneToOne( cascade = CascadeType.ALL, mappedBy = "id")
+	// @PrimaryKeyJoinColumns({@PrimaryKeyJoinColumn(name ="bundle_id"),
+	// @PrimaryKeyJoinColumn(name = "id")})
 	@Transient
 	private OfferPurchased offerPurchased;
-	
-	@OneToMany( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle_Nodes.class)
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Deploy_Bundle_Nodes.class)
 	@JoinTable(name = "Bundle_Node", joinColumns = { @JoinColumn(name = "bundle_id") }, inverseJoinColumns = { @JoinColumn(name = "idbundle_nodes") })
 	private Set<Deploy_Bundle_Nodes> nodes = new HashSet<Deploy_Bundle_Nodes>();
 
-	
 	public Deploy_Bundle() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 
 	public Integer getBundle_id() {
 		return bundle_id;
@@ -135,11 +135,9 @@ public class Deploy_Bundle extends GenericModel{
 		this.vapp_name = vapp_name;
 	}
 
-	
 	public Integer getVapp_id() {
 		return vapp_id;
 	}
-
 
 	public void setVapp_id(Integer vapp_id) {
 		this.vapp_id = vapp_id;
@@ -160,6 +158,5 @@ public class Deploy_Bundle extends GenericModel{
 	public void setNodes(Set<Deploy_Bundle_Nodes> nodes) {
 		this.nodes = nodes;
 	}
-	
 
 }

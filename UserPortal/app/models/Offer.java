@@ -42,8 +42,8 @@ import play.db.jpa.GenericModel;
 
 /**
  * 
- * @author David López Offer( i.e virtual appliance) added to service catalog
- *         by the producer. 
+ * @author David López Offer( i.e virtual appliance) added to service catalog by
+ *         the producer.
  */
 @Entity
 /*
@@ -53,24 +53,27 @@ import play.db.jpa.GenericModel;
  */
 @NamedQueries({
 		@NamedQuery(name = "getAllOffersByState", query = "select p from Offer as p where p.state = ?1 order by p.id asc"),
-		//@NamedQuery(name = "getAvailableOffersByState", query = "select p from Offer as p  where p.id in ( select s.id from OfferPurchased as s where s.enterprise_id = ?1 ) and  p.state = ?2"),
+		// @NamedQuery(name = "getAvailableOffersByState", query =
+		// "select p from Offer as p  where p.id in ( select s.id from OfferPurchased as s where s.enterprise_id = ?1 ) and  p.state = ?2"),
 		@NamedQuery(name = "getAllOffers", query = "select p.id from Offer as p "),
 		@NamedQuery(name = "groupByVDC", query = "select p from Offer as p GROUP BY p.id"),
 		@NamedQuery(name = "groupByVDC_EnterpriseView", query = "select p from Offer as p GROUP BY p.defaultServiceLevel"),
 		@NamedQuery(name = "getOfferDetails", query = "select p from Offer as p where p.id = ?1 "),
 		@NamedQuery(name = "getVappListForVDC", query = "select p from Offer as p where p.virtualDatacenter = ?1") })
-		//@NamedQuery(name = "getVappListForVDC_EnterpriseView", query = "select p from Offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) and  p.virtualDataCenter_name = ?2") })
+// @NamedQuery(name = "getVappListForVDC_EnterpriseView", query =
+// "select p from Offer as p where p.sc_offer_id in ( select s.sc_offer_id from mkt_enterprise_view as s where s.enterprise_id = ?1 ) and  p.virtualDataCenter_name = ?2")
+// })
 public class Offer extends GenericModel {
 
 	@Id
 	private Integer id;
-	
+
 	// References
-    private Integer datacenter;	
+	private Integer datacenter;
 	private Integer virtualAppliance;
 	private Integer virtualDatacenter;
-	private String  virtualDatacenterName;
-	
+	private String virtualDatacenterName;
+
 	// Extra data
 	private String name;
 	public String iconName;
@@ -79,6 +82,7 @@ public class Offer extends GenericModel {
 	@Column(length = 30)
 	@MaxSize(30)
 	private String shortDescription;
+
 	public Integer getId() {
 		return id;
 	}
@@ -87,23 +91,21 @@ public class Offer extends GenericModel {
 	private String longDescription;
 	private String hypervisorType;
 
-
 	@Column(length = 40)
 	private String serviceType;
 	private String state;
-	
+
 	// Network
 	@Column(length = 45)
 	private String defaultNetworkType;
-	
+
 	// Pricing
 	private String price;
-	
+
 	private String defaultLeasePeriod;
-	
+
 	private String defaultServiceLevel;
-	
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -169,14 +171,13 @@ public class Offer extends GenericModel {
 	}
 
 	public Offer() {
-		
+
 	}
 
-	public Offer(final Integer id, final String name,
-			final String icon_name, final Blob icon, final Blob image,
-			final String shortDescription, final String longDescription,
-			final Integer datacenter, final String hypervisorType,
-			final String defaultNetworkType,
+	public Offer(final Integer id, final String name, final String icon_name,
+			final Blob icon, final Blob image, final String shortDescription,
+			final String longDescription, final Integer datacenter,
+			final String hypervisorType, final String defaultNetworkType,
 			final Integer idVirtualDataCenter_ref, final String serviceType,
 			final String virtualDataCenter_name) {
 		super();
@@ -205,7 +206,7 @@ public class Offer extends GenericModel {
 	public void setIcon(final Blob icon) {
 		this.icon = icon;
 	}
-	
+
 	public Integer getDatacenter() {
 		return datacenter;
 	}
@@ -224,10 +225,9 @@ public class Offer extends GenericModel {
 
 	@Override
 	public String toString() {
-		return "sc_offer [ID :" + id + ", Name : " + name
-				+ ", Icon: " + icon + " , Datacenter:" + datacenter
-				+ ", Hypervisor Type: " + hypervisorType + ", Service Type:"
-				+ serviceType + "]";
+		return "sc_offer [ID :" + id + ", Name : " + name + ", Icon: " + icon
+				+ " , Datacenter:" + datacenter + ", Hypervisor Type: "
+				+ hypervisorType + ", Service Type:" + serviceType + "]";
 	}
 
 	public Blob getImage() {
@@ -253,7 +253,7 @@ public class Offer extends GenericModel {
 	public void setVirtualAppliance(Integer virtualAppliance) {
 		this.virtualAppliance = virtualAppliance;
 	}
-	
+
 	public String getServiceType() {
 		return serviceType;
 	}
@@ -265,6 +265,7 @@ public class Offer extends GenericModel {
 	public void setVirtualDatacenter(Integer virtualDatacenter) {
 		this.virtualDatacenter = virtualDatacenter;
 	}
+
 	public Integer getVirtualDatacenter() {
 		return virtualDatacenter;
 	}

@@ -19,17 +19,12 @@
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
 #{if flash.error}
-		<p style="color:#c00">
-    	${flash.error}
-		</p>
+<p style="color: #c00">${flash.error}</p>
 #{/if}
 <div id="publishMarketplaceOriginForm">
-<!-- <h2><u>${enterprise_name}</u> </h2> -->
-#{ifnot resultSet}
-    No Pubished offers available
-#{/ifnot}
-#{else}
-<script type="text/javascript">
+	<!-- <h2><u>${enterprise_name}</u> </h2> -->
+	#{ifnot resultSet} No Pubished offers available #{/ifnot} #{else}
+	<script type="text/javascript">
 $('#tabnav a[href^="' + location.pathname + location.search + '"]').addClass('active');
 $( "#tabss" ).tabs({
     ajaxOptions: {
@@ -41,15 +36,14 @@ $( "#tabss" ).tabs({
 });
 </script>
 
-<div id="tabss">
-      <ul>  
-         #{list resultSet, as:'subscoffer'}
-	      <li><a href = "@{publishOffersPerMarket(subscoffer.service_level,enterprise_id,enterprise_name)}"> ${subscoffer.service_level}</a></li>
-	 	 #{/list}
-	</ul>
+	<div id="tabss">
+		<ul>
+			#{list resultSet, as:'subscoffer'}
+			<li><a
+				href="@{publishOffersPerMarket(subscoffer.service_level,enterprise_id,enterprise_name)}">
+					${subscoffer.service_level}</a></li> #{/list}
+		</ul>
+	</div>
 </div>
-</div>
-#{ifnot resultSet1} 
-#{/ifnot}
-#{/else}
+#{ifnot resultSet1} #{/ifnot} #{/else}
 <!-- <p><a href ="@{ProducerLocal.admin()}"> Home  </a></p> -->

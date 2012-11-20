@@ -1,140 +1,156 @@
 <html>
-    <head>
-        <title>Test results for uiUserBasicPath.test.html</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <style type="text/css">
-            body {
-                font-family: Arial, Sans;
-                margin: 0;
-                padding: 0;
-            }
-            table {
-                width: 100%;
-                border: none;
-            }
-            #header {
-                padding: 15px;
-                margin-bottom: 20px;
-            }
-            #results {
-                padding: 15px;
-            }
-            #header h1 {
-                margin-top: 0;
-            }
-            #header.passed {
-				background: #81CF5A !important;
-			}
-            .passed span {
-                background: #81CF5A !important;
-                padding: 3px 5px;
-            }
-			#header.failed {
-				background: #EF6868 !important;
-			}
-            .failed span {
-                background: #EF6868 !important;
-                padding: 3px 5px;
-            }
-            table .source {
-                margin-top: 10px;
-            }
-            table .source span {
-                color: #fff;
-                font-size: 85%;
-                padding: 1px 3px;
-                background: #666;
-            }
-            table .sourceLine {
-                border-left: 3px solid #c00;
-                padding: 4px 3px;
-                color: #000;
-                font-size: 85%;
-                margin-bottom: 10px;
-            }
-            .error {
-				color: #c00;
-			}
-            table td, table th {
-				padding: 5px;
-                border: none;
-			}
-            .status_passed {
-                background: #9BCF81 !important;
-            }
-            .status_failed {
-                background: #EF8686 !important;
-            }
-            .status_done {
-                background: #EFEFD1 !important;
-            }
-        </style>
-    </head>
-    <body>
+<head>
+<title>Test results for uiUserBasicPath.test.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+body {
+	font-family: Arial, Sans;
+	margin: 0;
+	padding: 0;
+}
 
-        <div id="header" class="block passed">
-            <h1>
-                uiUserBasicPath.test.html
-            </h1>
-            <p>
-                PASSED
-            </p>
-        </div>
+table {
+	width: 100%;
+	border: none;
+}
 
-        <div id="results">
-            <div>
-<table cellpadding="1" cellspacing="1" border="1">
-<thead>
-<tr class="title status_passed"><td rowspan="1" colspan="3">uiUserBasicPath</td></tr>
-</thead><tbody>
-<tr style="cursor: pointer; " class="  status_done">
-	<td>open</td>
-	<td>/</td>
-	<td></td>
-</tr>
-<tr style="cursor: pointer; " class="  status_done">
-	<td>type</td>
-	<td>name=username</td>
-	<td>userent</td>
-</tr>
-<tr style="cursor: pointer; " class="  status_done">
-	<td>type</td>
-	<td>name=password</td>
-	<td>userent</td>
-</tr>
-<tr style="cursor: pointer; " class="  status_done">
-	<td>clickAndWait</td>
-	<td>//button[@type='submit']</td>
-	<td></td>
-</tr>
-<tr style="cursor: pointer; " class="  status_done">
-	<td>waitForPageToLoad</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr style="cursor: pointer; " class="  status_done">
-	<td>click</td>
-	<td>link=Purchased Offers</td>
-	<td></td>
-</tr>
-<tr style="cursor: pointer; " class="  status_done">
-	<td>click</td>
-	<td>link=userent</td>
-	<td></td>
-</tr>
-<tr style="cursor: pointer; " class="  status_done">
-	<td>clickAndWait</td>
-	<td>link=Sign Out</td>
-	<td></td>
-</tr>
+#header {
+	padding: 15px;
+	margin-bottom: 20px;
+}
+
+#results {
+	padding: 15px;
+}
+
+#header h1 {
+	margin-top: 0;
+}
+
+#header.passed {
+	background: #81CF5A !important;
+}
+
+.passed span {
+	background: #81CF5A !important;
+	padding: 3px 5px;
+}
+
+#header.failed {
+	background: #EF6868 !important;
+}
+
+.failed span {
+	background: #EF6868 !important;
+	padding: 3px 5px;
+}
+
+table .source {
+	margin-top: 10px;
+}
+
+table .source span {
+	color: #fff;
+	font-size: 85%;
+	padding: 1px 3px;
+	background: #666;
+}
+
+table .sourceLine {
+	border-left: 3px solid #c00;
+	padding: 4px 3px;
+	color: #000;
+	font-size: 85%;
+	margin-bottom: 10px;
+}
+
+.error {
+	color: #c00;
+}
+
+table td,table th {
+	padding: 5px;
+	border: none;
+}
+
+.status_passed {
+	background: #9BCF81 !important;
+}
+
+.status_failed {
+	background: #EF8686 !important;
+}
+
+.status_done {
+	background: #EFEFD1 !important;
+}
+</style>
+</head>
+<body>
+
+	<div id="header" class="block passed">
+		<h1>uiUserBasicPath.test.html</h1>
+		<p>PASSED</p>
+	</div>
+
+	<div id="results">
+		<div>
+			<table cellpadding="1" cellspacing="1" border="1">
+				<thead>
+					<tr class="title status_passed">
+						<td rowspan="1" colspan="3">uiUserBasicPath</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr style="cursor: pointer;" class="  status_done">
+						<td>open</td>
+						<td>/</td>
+						<td></td>
+					</tr>
+					<tr style="cursor: pointer;" class="  status_done">
+						<td>type</td>
+						<td>name=username</td>
+						<td>userent</td>
+					</tr>
+					<tr style="cursor: pointer;" class="  status_done">
+						<td>type</td>
+						<td>name=password</td>
+						<td>userent</td>
+					</tr>
+					<tr style="cursor: pointer;" class="  status_done">
+						<td>clickAndWait</td>
+						<td>//button[@type='submit']</td>
+						<td></td>
+					</tr>
+					<tr style="cursor: pointer;" class="  status_done">
+						<td>waitForPageToLoad</td>
+						<td>5000</td>
+						<td></td>
+					</tr>
+					<tr style="cursor: pointer;" class="  status_done">
+						<td>click</td>
+						<td>link=Purchased Offers</td>
+						<td></td>
+					</tr>
+					<tr style="cursor: pointer;" class="  status_done">
+						<td>click</td>
+						<td>link=userent</td>
+						<td></td>
+					</tr>
+					<tr style="cursor: pointer;" class="  status_done">
+						<td>clickAndWait</td>
+						<td>link=Sign Out</td>
+						<td></td>
+					</tr>
 
 
-</tbody></table>
+				</tbody>
+			</table>
 
 
-</div>
-        </div>
+		</div>
+	</div>
 
-    </body>
+</body>
 </html>
 

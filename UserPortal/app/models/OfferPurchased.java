@@ -20,7 +20,6 @@
  ******************************************************************************/
 package models;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -50,60 +49,61 @@ import com.abiquo.server.core.cloud.VirtualApplianceState;
 
 /**
  * 
- * @author David López
- * This model saves all offer entries in a service catalog and their details
- * It might need design reconsideration in future. 
- * start_date and expiration date - not clear 
+ * @author David López This model saves all offer entries in a service catalog
+ *         and their details It might need design reconsideration in future.
+ *         start_date and expiration date - not clear
  */
 @Entity
 @NamedQueries({
-@NamedQuery(name="listSubscribedOffers",query=" select p from OfferPurchased as p "),
-@NamedQuery(name="getSubscribedOffers",query=" select p from Offer as p where p.defaultServiceLevel = ?1"),
-@NamedQuery(name="getSubscribedOffers1",query=" select p.offer from OfferPurchased as p where p.serviceLevel = ?1"),
-@NamedQuery(name="getSubscribedOffersGroupByServiceLevels",query="select p from OfferPurchased as p order by p.serviceLevel ASC"),
-@NamedQuery(name="deleteOffer",query="delete from OfferPurchased as p where p.id = ?1"),
-@NamedQuery(name="getOffersPurchasedFromUserId",query="select p from OfferPurchased as p where p.user.idAbiquo = ?1"),
-@NamedQuery(name="getOffersPurchasedFromEnterpriseId",query="select p from OfferPurchased as p where p.user.idEnterprise = ?1"),
-@NamedQuery(name="getSubscribedOfferDetails ",query="select p from OfferPurchased as p where p.id = ?1")
-})
+		@NamedQuery(name = "listSubscribedOffers", query = " select p from OfferPurchased as p "),
+		@NamedQuery(name = "getSubscribedOffers", query = " select p from Offer as p where p.defaultServiceLevel = ?1"),
+		@NamedQuery(name = "getSubscribedOffers1", query = " select p.offer from OfferPurchased as p where p.serviceLevel = ?1"),
+		@NamedQuery(name = "getSubscribedOffersGroupByServiceLevels", query = "select p from OfferPurchased as p order by p.serviceLevel ASC"),
+		@NamedQuery(name = "deleteOffer", query = "delete from OfferPurchased as p where p.id = ?1"),
+		@NamedQuery(name = "getOffersPurchasedFromUserId", query = "select p from OfferPurchased as p where p.user.idAbiquo = ?1"),
+		@NamedQuery(name = "getOffersPurchasedFromEnterpriseId", query = "select p from OfferPurchased as p where p.user.idEnterprise = ?1"),
+		@NamedQuery(name = "getSubscribedOfferDetails ", query = "select p from OfferPurchased as p where p.id = ?1") })
+@AttributeOverrides({ @AttributeOverride(name = "id", column = @Column(name = "id")) })
+public class OfferPurchased extends GenericModel {
 
-@AttributeOverrides({@AttributeOverride(name = "id", column = @Column(name = "id"))})
-public class OfferPurchased extends GenericModel{
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	private Date start;
 	private Date expiration;
-	
+
 	private Integer idVirtualApplianceUser;
-	private Integer idVirtualDatacenterUser;	
+	private Integer idVirtualDatacenterUser;
 	private VirtualApplianceState virtualApplianceState;
-	
-	//vm updated from jClouds
+
+	// vm updated from jClouds
 	private LinkedList<VirtualMachine> virtualMachines = new LinkedList<VirtualMachine>();
-	
+
 	// Relations
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Offer offer; 
-	
+	private Offer offer;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	private UserPortal user; 
-		
-	//@OneToOne( cascade = CascadeType.ALL,  fetch = FetchType.LAZY, targetEntity = Deploy_Bundle.class)
-	//@JoinTable(name = "OfferPurchased_DeployNode", joinColumns = { @JoinColumn(name = "bundle_id") }, inverseJoinColumns = { @JoinColumn(name = "id") })
+	private UserPortal user;
+
+	// @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+	// targetEntity = Deploy_Bundle.class)
+	// @JoinTable(name = "OfferPurchased_DeployNode", joinColumns = {
+	// @JoinColumn(name = "bundle_id") }, inverseJoinColumns = {
+	// @JoinColumn(name = "id") })
 	@Transient
 	private Set<Deploy_Bundle> nodes = new HashSet<Deploy_Bundle>();
 
 	private String serviceLevel;
 	private String leasePeriod;
+
 	// private Integer allowed_enterprise_id;
-	
+
 	public OfferPurchased() {
 		super();
 	}
-	
+
 	public Date getStart() {
 		return start;
 	}
@@ -127,7 +127,7 @@ public class OfferPurchased extends GenericModel{
 	public void setIdVirtualApplianceUser(Integer idVirtualApplianceUser) {
 		this.idVirtualApplianceUser = idVirtualApplianceUser;
 	}
-	
+
 	public Offer getOffer() {
 		return offer;
 	}
@@ -135,7 +135,7 @@ public class OfferPurchased extends GenericModel{
 	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
-	
+
 	public UserPortal getUser() {
 		return user;
 	}
@@ -159,7 +159,7 @@ public class OfferPurchased extends GenericModel{
 	public void setLeasePeriod(String leasePeriod) {
 		this.leasePeriod = leasePeriod;
 	}
-	
+
 	public Set<Deploy_Bundle> getNodes() {
 		return nodes;
 	}
@@ -180,7 +180,8 @@ public class OfferPurchased extends GenericModel{
 		return virtualApplianceState;
 	}
 
-	public void setVirtualApplianceState(VirtualApplianceState virtualApplianceState) {
+	public void setVirtualApplianceState(
+			VirtualApplianceState virtualApplianceState) {
 		this.virtualApplianceState = virtualApplianceState;
 	}
 

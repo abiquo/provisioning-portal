@@ -19,64 +19,110 @@
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
 <div id="offerDetails" class="ui-widget">
-	<table class="detailTable table table-bordered table-condensed table-striped">
-	 <thead class="ui-widget-header">
-	     <tr>
-	         <td width="350px"><strong><center>${offerPurchased.serviceLevel}<center></strong></td><td width="700px"><strong><center>Details</center></strong></td>	        
-	     </tr>
-     </thead>
-     <tbody>
-      	 <tr><td><center><img src="@{Helper.displayIcon(offerPurchased.offer.id)}" width="140px" height="100px" ></center></td>
-      	 	 <td>
-	         	<table class="table table-striped table-bordered table-condensed" >
-	         		<tbody>
-		         		<tr><td width="200px"><strong><center>Short-Description<center></strong></td><td width="200px"><center>${offerPurchased.offer.shortDescription}</center></td></tr>
-	         			<tr><td width="auto"><strong><center>Description<center></strong></td><td width="auto"><center>${offerPurchased.offer.longDescription}</center></td></tr>          
-	         			<tr><td width="auto"><strong><center>Quality of Service<center></strong></td><td width="auto"><center>${offerPurchased.offer.defaultServiceLevel}</center></td></tr>
-	         			<tr><td width="auto"><strong><center>Purchased on<center></strong></td><td width="auto"><center>${offerPurchased.start}</center></td></tr>     
-	         			<tr><td width="auto"><strong><center>Expires on<center></strong></td><td width="auto"><center>${offerPurchased.expiration}</center></td></tr>     
-         			</tbody>   
-	         	</table>	        
-	         </td>	               
-      	 </tr>        
-  	 	</tbody>
-  	 	<tfoot class="ui-widget-header">
-     	<tr>
-     		<td width="auto"><strong><center>Price<center></strong></td>
-     		<td><strong><center>${offerPurchased.offer.price}</center></strong></td>
-        </tr>
-     </tfoot>	
-	</table>	 	
-	#{list listVM, as:'vm'}	
-		<table class="table table-bordered table-condensed table-striped middle">
-		   <thead class="ui-widget-header">
-	           <tr>
-	               <td width="200px"><strong><center>${vm.nameLabel}</center></strong></td>
-	               <td width="200px"><strong><center>CPU</center></strong></td>
-	               <td width="200px"><strong><center>RAM</center></strong></td>	       
-	               <td width="200px"><strong><center>HD</center></strong></td>	     
-	               <td width="200px"><strong><center>VNC</center></strong></td>	
-	           </tr> 
-	       </thead>
-	       <tbody>	 
-	     <tr>
-	        <td><center><img src="@{'/public/images/user/1341575776_Yellow_Server.png'}" width="100px" ></center></td>
-	        <td><strong><center>${vm.cpu}</center></strong></td>
-	        <td><strong><center>${vm.ram} MBytes</center></strong></td>	  
-	        <td><strong><center>${vm.hdInBytes} MBytes</center></strong></td>	     
-	        <td><strong><center><a class="btn btn-info vnc" id="page-help" href="@{Consumer.vncConnection(vm.vncAddress,vm.vncPort,vm.password)}">
-	        						<i class="icon-eye-open icon-white"></i>
-	        					</a></center></strong></td>	 
-	     </tr>     
-			</tbody>	
-		</table>
+	<table
+		class="detailTable table table-bordered table-condensed table-striped">
+		<thead class="ui-widget-header">
+			<tr>
+				<td width="350px"><strong><center>
+							${offerPurchased.serviceLevel}
+							<center></strong></td>
+				<td width="700px"><strong><center>Details</center></strong></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><center>
+						<img src="@{Helper.displayIcon(offerPurchased.offer.id)}"
+							width="140px" height="100px">
+					</center></td>
+				<td>
+					<table class="table table-striped table-bordered table-condensed">
+						<tbody>
+							<tr>
+								<td width="200px"><strong><center>
+											Short-Description
+											<center></strong></td>
+								<td width="200px"><center>${offerPurchased.offer.shortDescription}</center></td>
+							</tr>
+							<tr>
+								<td width="auto"><strong><center>
+											Description
+											<center></strong></td>
+								<td width="auto"><center>${offerPurchased.offer.longDescription}</center></td>
+							</tr>
+							<tr>
+								<td width="auto"><strong><center>
+											Quality of Service
+											<center></strong></td>
+								<td width="auto"><center>${offerPurchased.offer.defaultServiceLevel}</center></td>
+							</tr>
+							<tr>
+								<td width="auto"><strong><center>
+											Purchased on
+											<center></strong></td>
+								<td width="auto"><center>${offerPurchased.start}</center></td>
+							</tr>
+							<tr>
+								<td width="auto"><strong><center>
+											Expires on
+											<center></strong></td>
+								<td width="auto"><center>${offerPurchased.expiration}</center></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot class="ui-widget-header">
+			<tr>
+				<td width="auto"><strong><center>
+							Price
+							<center></strong></td>
+				<td><strong><center>${offerPurchased.offer.price}</center></strong></td>
+			</tr>
+		</tfoot>
+	</table>
+	#{list listVM, as:'vm'}
+	<table
+		class="table table-bordered table-condensed table-striped middle">
+		<thead class="ui-widget-header">
+			<tr>
+				<td width="200px"><strong><center>${vm.nameLabel}</center></strong></td>
+				<td width="200px"><strong><center>CPU</center></strong></td>
+				<td width="200px"><strong><center>RAM</center></strong></td>
+				<td width="200px"><strong><center>HD</center></strong></td>
+				<td width="200px"><strong><center>VNC</center></strong></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><center>
+						<img src="@{'/public/images/user/1341575776_Yellow_Server.png'}"
+							width="100px">
+					</center></td>
+				<td><strong><center>${vm.cpu}</center></strong></td>
+				<td><strong><center>${vm.ram} MBytes</center></strong></td>
+				<td><strong><center>${vm.hdInBytes} MBytes</center></strong></td>
+				<td><strong><center>
+							<a class="btn btn-info vnc" id="page-help"
+								href="@{Consumer.vncConnection(vm.vncAddress,vm.vncPort,vm.password)}">
+								<i class="icon-eye-open icon-white"></i>
+							</a>
+						</center></strong></td>
+			</tr>
+		</tbody>
+	</table>
 	#{list nodes_resources, as:'resource'}
-	 <tr>
-        <td></td><td><strong>Hard Disk ${resource.sequence}</strong></td><td>${resource.value}</td>
-     </tr>	
-	#{/list}  
-	#{/list}	
+	<tr>
+		<td></td>
+		<td><strong>Hard Disk ${resource.sequence}</strong></td>
+		<td>${resource.value}</td>
+	</tr>
+	#{/list} #{/list}
 	</tbody>
 	</table>
-    <div class="btn btn-danger purchaseConfirm" url="@{Consumer.PurchaseConfirmation(offerPurchased.offer.id)}"><i class="icon-shopping-cart icon-white"></i>Extend</div>
+	<div class="btn btn-danger purchaseConfirm"
+		url="@{Consumer.PurchaseConfirmation(offerPurchased.offer.id)}">
+		<i class="icon-shopping-cart icon-white"></i>Extend
+	</div>
 </div>

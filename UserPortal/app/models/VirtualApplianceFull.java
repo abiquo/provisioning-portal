@@ -9,8 +9,9 @@ public class VirtualApplianceFull {
 
 	private VirtualAppliance virtualAppliance;
 	private ArrayList<VirtualMachineFull> listVirtualMachines;
-	
-	public VirtualApplianceFull(final VirtualAppliance virtualAppliance, final ArrayList<VirtualMachineFull> listVirtualMachines ) {
+
+	public VirtualApplianceFull(final VirtualAppliance virtualAppliance,
+			final ArrayList<VirtualMachineFull> listVirtualMachines) {
 		this.setVirtualAppliance(virtualAppliance);
 		this.setListVirtualMachines(listVirtualMachines);
 	}
@@ -27,9 +28,9 @@ public class VirtualApplianceFull {
 		return listVirtualMachines;
 	}
 
-	public void setListVirtualMachines(ArrayList<VirtualMachineFull> listVirtualMachines) {
+	public void setListVirtualMachines(
+			ArrayList<VirtualMachineFull> listVirtualMachines) {
 		this.listVirtualMachines = listVirtualMachines;
 	}
 
-	
 }

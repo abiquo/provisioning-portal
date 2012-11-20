@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="searchSection">
-		<item value="Search JBoss Community" key="initialMessage"/>
+		<item value="Search JBoss Community" key="initialMessage" />
 		<list key="searchKey">
 		</list>
 	</section>

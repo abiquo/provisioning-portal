@@ -270,7 +270,8 @@ public class MarketEnable extends Controller {
 			Logger.info("Resultset1 for VDC offers  : " + resultSet1);
 			Logger.info("Resultset4 offers published : " + resultSet4);
 			Logger.info(" ---------------------EXITING PRODUCER publishOffersPerMarket()------");
-			render("/MarketEnable/publishOfferBack.html", resultSet, resultSet1, resultSet4, user, enterprise_id,
+			render("/MarketEnable/publishOfferBack.html", resultSet,
+					resultSet1, resultSet4, user, enterprise_id,
 					enterprise_name);
 		} else {
 			flash.error("You are not connected.Please Login");
@@ -287,8 +288,8 @@ public class MarketEnable extends Controller {
 	 * @param enterprise_name
 	 */
 	public static void saveMarketView(final Integer enterprise_id,
-			final List<Integer> scOffer, final List<Boolean> scOfferState, final String service_level,
-			final String enterprise_name) {
+			final List<Integer> scOffer, final List<Boolean> scOfferState,
+			final String service_level, final String enterprise_name) {
 		try {
 			Logger.info("------------------------- INSIDE saveMarketView()-----------------");
 			if (scOffer == null) {
@@ -300,28 +301,30 @@ public class MarketEnable extends Controller {
 						+ enterprise_id + " and name :" + enterprise_name
 						+ " and  Service level :" + service_level);
 
-				for (int i = 0; i < scOffer.size(); i++) {		
-						final Integer sc_offer_id = scOffer.get(i);
-						final Boolean hasToChangeState = scOfferState.get(i);
-						
-						if (hasToChangeState) {				
-							Offer offer = Offer.findById(sc_offer_id);	
-							if (offer.getState() == null) offer.setState("PUBLISHED");
-							else offer.setState(null);
-							offer.save();
-						}
-						/*mkt_enterprise_view mktView = new mkt_enterprise_view();
-						mktView.setEnterprise_id(enterprise_id);
-						mktView.setSc_offer_id(sc_offer_id);
-						mktView.setService_level(service_level);			
-						mktView.save();*/
+				for (int i = 0; i < scOffer.size(); i++) {
+					final Integer sc_offer_id = scOffer.get(i);
+					final Boolean hasToChangeState = scOfferState.get(i);
+
+					if (hasToChangeState) {
+						Offer offer = Offer.findById(sc_offer_id);
+						if (offer.getState() == null)
+							offer.setState("PUBLISHED");
+						else
+							offer.setState(null);
+						offer.save();
+					}
+					/*
+					 * mkt_enterprise_view mktView = new mkt_enterprise_view();
+					 * mktView.setEnterprise_id(enterprise_id);
+					 * mktView.setSc_offer_id(sc_offer_id);
+					 * mktView.setService_level(service_level); mktView.save();
+					 */
 				}
 				Logger.info("Market View Updated ");
 				Logger.info("------------------------- EXITING saveMarketView()-----------------");
 				publishMarket(enterprise_id, enterprise_name);
 			}
-		}
-		finally {
+		} finally {
 			flash.clear();
 		}
 

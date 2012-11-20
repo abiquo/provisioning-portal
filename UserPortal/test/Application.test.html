@@ -1,13 +1,7 @@
 *{ You can use plain selenium command using the selenium tag }*
 
-#{selenium}
-	clearSession()
-    // Open the home page, and check that no error occured
-    open('/')
-    assertNotTitle('Application error')
-    type('username','admin');
-    type('password','xabiquo');
-    clickAndWait('signIn');
-    waitForPageToLoad(3000);
-    clickAndWait('Sign Out');
-#{/selenium}
+#{selenium} clearSession() // Open the home page, and check that no
+error occured open('/') assertNotTitle('Application error')
+type('username','admin'); type('password','xabiquo');
+clickAndWait('signIn'); waitForPageToLoad(3000); clickAndWait('Sign
+Out'); #{/selenium}

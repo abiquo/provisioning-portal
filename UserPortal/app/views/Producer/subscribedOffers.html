@@ -18,47 +18,43 @@
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
 #----------------------------------------------------------------------------- -->
-<h2>Published Offers </h2>	
-<a href="@{Producer.listVDC()}"	 > Get Updates/ Un-Published Offers </a>			
+<h2>Published Offers</h2>
+<a href="@{Producer.listVDC()}"> Get Updates/ Un-Published Offers
+</a>
 
 <div id="tabcontainer">
-          <ul id="tabnav">
-          #{list resultSet, as:'subscoffer'}
-<li><a href = "@{displayOffer(subscoffer.service_level)}"> ${subscoffer.service_level}</a>
-</li>
-#{/list}
-</ul>
-#{ifnot resultSet1}
-    
-    
-#{/ifnot}
-#{else}
-<table width="100%" border="1"  > 
-<tr>
-    <th>Offer</th>
-    <th>Details</th>
-    <th>Action </th>
-  </tr>
-  
-#{list resultSet1, as:'subscoffers'}
-  
-<tr>
+	<ul id="tabnav">
+		#{list resultSet, as:'subscoffer'}
+		<li><a href="@{displayOffer(subscoffer.service_level)}">
+				${subscoffer.service_level}</a></li> #{/list}
+	</ul>
+	#{ifnot resultSet1} #{/ifnot} #{else}
+	<table width="100%" border="1">
+		<tr>
+			<th>Offer</th>
+			<th>Details</th>
+			<th>Action</th>
+		</tr>
 
-	<td>
-	<img src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id, subscoffers.sc_offer.icon)}" width="100" height=100" /></td>
-	#{list subscoffers.sc_offer, as:'sc_offer'}
-		<td><b> OfferId : </b> ${subscoffers.id} <b> Offer Name </b>: ${sc_offer.sc_offer_name} <br />
-		#{/list}
-		<b> Short Descriprtion </b> : ${sc_offer.short_description}<br />
-		<b> Description </b> :${sc_offer.description} <br />
-		#{list sc_offer.nodes, as:'nodes'}
-		<b> CPU </b>:${nodes.cpu}  <b> RAM : </b> ${nodes.ram} </b> <br />
-		#{/list}
-	</td>
-	<td> &nbsp;&nbsp;&nbsp;&nbsp;<a href ="@{Producer.configureExistingOffer(sc_offer.sc_offer_id)}"> Configure </a> &nbsp;&nbsp;&nbsp;
-	 <a href ="@{Producer.disableOffer(subscoffers.id)}"> Disable </a></td>
-  </tr>
-#{/list}
-</table>
-#{/else}
+		#{list resultSet1, as:'subscoffers'}
 
+		<tr>
+
+			<td><img
+				src="@{Helper.displayIcon(subscoffers.sc_offer.sc_offer_id, subscoffers.sc_offer.icon)}"
+				width="100" height=100 " /></td> #{list subscoffers.sc_offer,
+			as:'sc_offer'}
+			<td><b> OfferId : </b> ${subscoffers.id} <b> Offer Name </b>:
+				${sc_offer.sc_offer_name} <br /> #{/list} <b> Short
+					Descriprtion </b> : ${sc_offer.short_description}<br /> <b>
+					Description </b> :${sc_offer.description} <br /> #{list
+				sc_offer.nodes, as:'nodes'} <b> CPU </b>:${nodes.cpu} <b> RAM :
+			</b> ${nodes.ram} </b> <br /> #{/list}</td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;<a
+				href="@{Producer.configureExistingOffer(sc_offer.sc_offer_id)}">
+					Configure </a> &nbsp;&nbsp;&nbsp; <a
+				href="@{Producer.disableOffer(subscoffers.id)}"> Disable </a></td>
+		</tr>
+		#{/list}
+	</table>
+	#{/else}

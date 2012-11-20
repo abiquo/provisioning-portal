@@ -19,23 +19,27 @@
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
 <div class="ui-widget">
-<table class="table table-bordered table-condensed table-striped middle">
-	   <thead class="ui-widget-header">
-           <tr>
-               <td width="200px"><strong><center>${template_name}</center></strong></td>
-               <td width="200px"><strong><center>CPU</center></strong></td>
-               <td width="200px"><strong><center>RAM</center></strong></td>
-               <td width="200px"><strong><center>HD</center></strong></td>              
-           </tr>
-       </thead>
-       <tbody>	 
-     <tr>
-        <td><center><img src="@{'/public/images/user/1341575776_Yellow_Server.png'}" width="100" ></center></td>
-        <td><strong><center>${cpu}</center></strong></td>
-        <td><strong><center>${ram} MBytes</center></strong></td>
-        <td><strong><center>${hd} MBytes</center></strong></td>
-     </tr>     
- </tbody>
- </table>
+	<table
+		class="table table-bordered table-condensed table-striped middle">
+		<thead class="ui-widget-header">
+			<tr>
+				<td width="200px"><strong><center>${template_name}</center></strong></td>
+				<td width="200px"><strong><center>CPU</center></strong></td>
+				<td width="200px"><strong><center>RAM</center></strong></td>
+				<td width="200px"><strong><center>HD</center></strong></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><center>
+						<img src="@{'/public/images/user/1341575776_Yellow_Server.png'}"
+							width="100">
+					</center></td>
+				<td><strong><center>${cpu}</center></strong></td>
+				<td><strong><center>${ram} MBytes</center></strong></td>
+				<td><strong><center>${hd} MBytes</center></strong></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <!-- <a href="@{Producer.poe()}"> Home  </a> <br /> -->

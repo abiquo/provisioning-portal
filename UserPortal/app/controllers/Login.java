@@ -81,7 +81,7 @@ public class Login extends Controller {
 			session.put("username", username);
 			session.put("password", password);
 			AbiquoContext context = Context.getApiClient(username, password);
-			
+
 			// Cache.set(session.getId() + "-context", context, "30mn");
 			// AbiquoUtils.setContext(context);
 			// PortalContext userContext = new PortalContext();
@@ -93,7 +93,7 @@ public class Login extends Controller {
 				Logger.info("context: " + context);
 
 				if (context != null) {
-					
+
 					AdministrationService adminService = context
 							.getAdministrationService();
 					if (adminService != null) {
@@ -130,13 +130,13 @@ public class Login extends Controller {
 				login_page();
 			} finally {
 				flash.clear();
-				/*if (context != null) {
-					context.close();
-				}*/
+				/*
+				 * if (context != null) { context.close(); }
+				 */
 			}
 		}
 	}
-	
+
 	public static void register(@Required final String username,
 			@Required final String password, @Required final String email) {
 		if (Validation.hasErrors()) {
@@ -144,70 +144,85 @@ public class Login extends Controller {
 			login_page();
 		} else {
 			Logger.info("-------------- INSIDE REGISTER.CONNECT()--------------");
-		///////////
+			// /////////
 			// First of all create the Abiquo context pointing to the Abiquo API
-			/*AbiquoContext context = ContextBuilder.newBuilder(new AbiquoApiMetadata())
-			    .endpoint("http://10.60.21.33/api")
-			    .credentials("user", "password")
-			    .modules(ImmutableSet.<Module> of(new SLF4JLoggingModule()))
-			    .build(AbiquoContext.class);*/
+			/*
+			 * AbiquoContext context = ContextBuilder.newBuilder(new
+			 * AbiquoApiMetadata()) .endpoint("http://10.60.21.33/api")
+			 * .credentials("user", "password") .modules(ImmutableSet.<Module>
+			 * of(new SLF4JLoggingModule())) .build(AbiquoContext.class);
+			 */
 
-			AbiquoContext context = null;				  
-			try
-			{
+			AbiquoContext context = null;
+			try {
 				Properties props = new Properties();
-				props.load(new FileInputStream(Play.getFile("conf/config.properties")));
-				
+				props.load(new FileInputStream(Play
+						.getFile("conf/config.properties")));
+
 				final String admin = props.getProperty("admin");
 				final String passwordAdmin = props.getProperty("password");
 				final String datacenterName = props.getProperty("datacenter");
 				final String rolePortal = props.getProperty("role");
-				
+
 				context = Context.getApiClient(admin, passwordAdmin);
-			    // Create a new enterprise with a given set of limits
-			    Enterprise enterprise = Enterprise.builder(context.getApiContext())
-			        .name(username)
-			        .cpuCountLimits(5, 10)      // Number of CPUs: Maximum 10, warn when 5 are in use
-			        .ramLimits(2048, 4096)      // Ram in MB: 4GB total, warn when 2GB are in use
-			        .publicIpsLimits(5, 10)     // Available public IPs: 10, warn when 5 are in use
-			        //.storageLimits(5120 * 1204 * 1024, 10240 * 1204 * 1024) // External storage capacity: 10GB, warn when 5GB are in use
-			        .build();
+				// Create a new enterprise with a given set of limits
+				Enterprise enterprise = Enterprise
+						.builder(context.getApiContext()).name(username)
+						.cpuCountLimits(5, 10) // Number of CPUs: Maximum 10,
+												// warn when 5 are in use
+						.ramLimits(2048, 4096) // Ram in MB: 4GB total, warn
+												// when 2GB are in use
+						.publicIpsLimits(5, 10) // Available public IPs: 10,
+												// warn when 5 are in use
+						// .storageLimits(5120 * 1204 * 1024, 10240 * 1204 *
+						// 1024) // External storage capacity: 10GB, warn when
+						// 5GB are in use
+						.build();
 
-			    enterprise.save();
+				enterprise.save();
 
-			    // Allow the enterprise to use a Datacenter
-			   Datacenter datacenter =
-			        context.getAdministrationService().findDatacenter(DatacenterPredicates.name(datacenterName));
-			   
-			   enterprise.allowDatacenter(datacenter);
-			    
-			    /*Datacenter datacenter =
-				        context.getAdministrationService().getDatacenter(0);
+				// Allow the enterprise to use a Datacenter
+				Datacenter datacenter = context.getAdministrationService()
+						.findDatacenter(
+								DatacenterPredicates.name(datacenterName));
 
-			    enterprise.allowDatacenter(datacenter);*/
+				enterprise.allowDatacenter(datacenter);
 
-			    // Create an Enterprise administrator, so it can begin using the cloud infrastructure
-			    // and can start creating the users of the enterprise
-			    Role role =
-			        context.getAdministrationService().findRole(RolePredicates.name(rolePortal));
+				/*
+				 * Datacenter datacenter =
+				 * context.getAdministrationService().getDatacenter(0);
+				 * 
+				 * enterprise.allowDatacenter(datacenter);
+				 */
 
-			    // Create the user with the selected role in the just created enterprise
-			    User enterpriseUser = User.builder(context.getApiContext(), enterprise, role) 
-			        .name(username, username)       // The name and surname
-			        .email(email) // The email address
-			        .nick(username)              // The login username
-			        .password(password)       // The password
-			        .build();
+				// Create an Enterprise administrator, so it can begin using the
+				// cloud infrastructure
+				// and can start creating the users of the enterprise
+				Role role = context.getAdministrationService().findRole(
+						RolePredicates.name(rolePortal));
 
-			    enterpriseUser.save();
-			    
-			    connect(username, password);
+				// Create the user with the selected role in the just created
+				// enterprise
+				User enterpriseUser = User
+						.builder(context.getApiContext(), enterprise, role)
+						.name(username, username) // The name and surname
+						.email(email) // The email address
+						.nick(username) // The login username
+						.password(password) // The password
+						.build();
 
-			    // At this point, the new Enterprise is created and ready to begin consuming the resources
-			    // of the cloud
+				enterpriseUser.save();
+
+				connect(username, password);
+
+				// At this point, the new Enterprise is created and ready to
+				// begin consuming the resources
+				// of the cloud
 			} catch (AbiquoException ae) {
-				// ae.printStackTrace();				
-				if (ae.getMessage().trim().equals("ENTERPRISE-4 - Duplicate name for an enterprise")) {
+				// ae.printStackTrace();
+				if (ae.getMessage()
+						.trim()
+						.equals("ENTERPRISE-4 - Duplicate name for an enterprise")) {
 					flash.error("User already registered");
 				} else {
 					flash.error("Error creating new account");
@@ -229,10 +244,9 @@ public class Login extends Controller {
 				login_page();
 			} finally {
 				flash.clear();
-			    if (context != null)
-			    {
-			        context.close();
-			    }
+				if (context != null) {
+					context.close();
+				}
 			}
 		}
 	}

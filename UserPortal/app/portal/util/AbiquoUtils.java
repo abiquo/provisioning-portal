@@ -43,8 +43,8 @@ import com.abiquo.server.core.task.enums.TaskState;
 
 /**
  * 
- * @author David López This class includes methods that return Abiquo cloud
- *         and admin service , resources like enterprise, vdc, vapp and virtual
+ * @author David López This class includes methods that return Abiquo cloud and
+ *         admin service , resources like enterprise, vdc, vapp and virtual
  *         machine
  */
 public class AbiquoUtils {
@@ -130,32 +130,34 @@ public class AbiquoUtils {
 		}
 		return vdc;
 	}
-	
+
 	public static VirtualDatacenter getMarketplaceDetails(
 			final Integer virtualDatacenterId) {
-		
+
 		VirtualDatacenter vdc = null;
 		if (virtualDatacenterId != null) {
 			System.out.println(" AbiquoUtils getVDCDetails() Context: "
 					+ context);
-			
+
 			Properties props = new Properties();
-			 //load a properties file
+			// load a properties file
 			try {
-				props.load(new FileInputStream(Play.getFile("conf/config.properties")));
+				props.load(new FileInputStream(Play
+						.getFile("conf/config.properties")));
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}           
-			final String admin =  props.getProperty("admin");
-			final String password =  props.getProperty("password");
-		
+			}
+			final String admin = props.getProperty("admin");
+			final String password = props.getProperty("password");
+
 			AbiquoContext adminContext = Context.getApiClient(admin, password);
-			vdc = adminContext.getCloudService().getVirtualDatacenter(virtualDatacenterId);
-			
+			vdc = adminContext.getCloudService().getVirtualDatacenter(
+					virtualDatacenterId);
+
 		}
 		return vdc;
 	}
@@ -219,16 +221,16 @@ public class AbiquoUtils {
 		}
 		return enterprise;
 	}
-	
-	public static void deleteVirtualDatacenter(final Integer vdcId) {			
+
+	public static void deleteVirtualDatacenter(final Integer vdcId) {
 		try {
 			CloudService cloudService = getCloud();
 		} catch (Exception e) {
-			Logger.error("Unable to delete vdc: " + e.getCause() );
+			Logger.error("Unable to delete vdc: " + e.getCause());
 		}
 	}
-	
-	public static void checkErrorsInTasks(final AsyncTask[] undeployTasks) {			
+
+	public static void checkErrorsInTasks(final AsyncTask[] undeployTasks) {
 		try {
 			for (AsyncTask task : undeployTasks) {
 				task.refresh();
@@ -239,19 +241,20 @@ public class AbiquoUtils {
 				}
 			}
 		} catch (Exception e) {
-			Logger.error("Unable to check tasks state: " + e.getCause() );
+			Logger.error("Unable to check tasks state: " + e.getCause());
 		}
 	}
-	
-	public static String getVAPrice(final Integer virtualDatacenterId, final Integer va_id) {
+
+	public static String getVAPrice(final Integer virtualDatacenterId,
+			final Integer va_id) {
 		VirtualDatacenter vdc = null;
 		VirtualAppliance va = null;
 		String Price = null;
-		if (virtualDatacenterId != null && va_id != null) {			
+		if (virtualDatacenterId != null && va_id != null) {
 			vdc = getVDCDetails(virtualDatacenterId);
 			if (vdc != null) {
 				va = vdc.getVirtualAppliance(va_id);
-				//TODO Price from vApp
+				// TODO Price from vApp
 				Price = va.getPrice();
 			}
 		}

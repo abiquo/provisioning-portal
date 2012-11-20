@@ -18,41 +18,61 @@
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
-#{extends 'main.html' /}
-#{set title:'Home' /}
-<h1>Virtual Machine Details </h1> <br />
-<h3><u>RAM</u>  :</h3> ${ram}
-<h3><u>CPU</u> :</h3> ${cpu}
-<h3><u>Hard Disk </u>:</h3> ${hd}
-<h3><u>icon name </u>: </h3>${icon_name}
-<h3><u>icon path</u> :</h3> ${icon_path}
-<h3><u>Template path</u> :</h3> ${template_name}
-<h3><u>Template path</u> :</h3> ${template_path}
-<img src="${template_path}" /> 
-<h3><u>Attached Hard Disks :</u></h3>
-#{ifnot harddisk}
-    
-    No Hard disks attached  !!!
-#{/ifnot}
-#{else}
-  <table>
-       <thead>
-           <tr>
-               
-               <th>Size</th>
-               <th>Sequence</th>
-               
-           </tr>
-       </thead>
-       <tbody>
-           #{list harddisk, as:'hd'}
-               <tr>
-                   <td>${hd.sizeInMb}</td>
-                      <td>${hd.sequence}</td>
-               </tr>
-           #{/list}
-       </tbody>
-   </table> 
+#{extends 'main.html' /} #{set title:'Home' /}
+<h1>Virtual Machine Details</h1>
+<br />
+<h3>
+	<u>RAM</u> :
+</h3>
+${ram}
+<h3>
+	<u>CPU</u> :
+</h3>
+${cpu}
+<h3>
+	<u>Hard Disk </u>:
+</h3>
+${hd}
+<h3>
+	<u>icon name </u>:
+</h3>
+${icon_name}
+<h3>
+	<u>icon path</u> :
+</h3>
+${icon_path}
+<h3>
+	<u>Template path</u> :
+</h3>
+${template_name}
+<h3>
+	<u>Template path</u> :
+</h3>
+${template_path}
+<img src="${template_path}" />
+<h3>
+	<u>Attached Hard Disks :</u>
+</h3>
+#{ifnot harddisk} No Hard disks attached !!! #{/ifnot} #{else}
+<table>
+	<thead>
+		<tr>
+
+			<th>Size</th>
+			<th>Sequence</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		#{list harddisk, as:'hd'}
+		<tr>
+			<td>${hd.sizeInMb}</td>
+			<td>${hd.sequence}</td>
+		</tr>
+		#{/list}
+	</tbody>
+</table>
 <ul>
-#{/else}
-<a href="@{Producer.listVDC()}"> Home  </a> <br />
+	#{/else}
+	<a href="@{Producer.listVDC()}"> Home </a>
+	<br />

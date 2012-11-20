@@ -1,53 +1,58 @@
-<!DOCTYPE html> 
-<html> 
-	<head> 
-	<title>Abiquo Provisioning Portal</title> 
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<link rel="stylesheet" href="@{'/public/stylesheets/portalMobile.css'}" type="text/css" /> 	
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
-	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
-</head> 
-<body> 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Abiquo Provisioning Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="@{'/public/stylesheets/portalMobile.css'}"
+	type="text/css" />
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+</head>
+<body>
 
-<div data-role="page">
+	<div data-role="page">
 
-	<div data-role="header">
-		<h1>Abiquo Provisioning Portal</h1>
-	</div><!-- /header -->
+		<div data-role="header">
+			<h1>Abiquo Provisioning Portal</h1>
+		</div>
+		<!-- /header -->
 
-	<div data-role="content">		
-		<ul data-role="listview" data-inset="true" data-filter-theme="d" data-theme="a" data-divider-theme="d">
-			<li class="offerUrl">	
-				<a href="@{Mobile.listInactiveOffers()}">
-					<h3>Marketplace administration</h3>
-					<p>Configure of modify existings offers.</p>
-				</a>
-			</li>
-			<li class="offerUrl">	
-				<a href="@{Mobile.listInactiveOffers()}">
-					<h3>Extra</h3>
-					<p>Configure and enable virtual appliances to become marketplace offers.</p>
-				</a>
-			</li>
-		</ul>
-	</div><!--/content-primary -->		
+		<div data-role="content">
+			<ul data-role="listview" data-inset="true" data-filter-theme="d"
+				data-theme="a" data-divider-theme="d">
+				<li class="offerUrl"><a href="@{Mobile.listInactiveOffers()}">
+						<h3>Marketplace administration</h3>
+						<p>Configure of modify existings offers.</p>
+				</a></li>
+				<li class="offerUrl"><a href="@{Mobile.listInactiveOffers()}">
+						<h3>Extra</h3>
+						<p>Configure and enable virtual appliances to become
+							marketplace offers.</p>
+				</a></li>
+			</ul>
+		</div>
+		<!--/content-primary -->
 
-	<div class="content-secondary">
+		<div class="content-secondary">
 
-		<div data-role="collapsible" data-collapsed="true" data-theme="b" data-content-theme="d">
+			<div data-role="collapsible" data-collapsed="true" data-theme="b"
+				data-content-theme="d">
 
 				<h3>Help</h3>
 				<ul data-role="listview" data-theme="c" data-dividertheme="d">
 
 					<li data-role="list-divider">Sections</li>
 					<li><a href="#">About</a></li>
-					
-				</ul>
-		</div>
-	</div>		
-	<div><!-- /content -->		
-</div><!-- /page -->
 
+				</ul>
+			</div>
+		</div>
+		<div>
+			<!-- /content -->
+		</div>
+		<!-- /page -->
 </body>
 </html>

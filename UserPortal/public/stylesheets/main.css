@@ -1,61 +1,80 @@
 .ui-button-text {
-  font-size: inherit !important;
- } 
-
-.small-button {
-  font-size: .8em !important;
+	font-size: inherit !important;
 }
 
-.ui-button-loggin {height: 1.9em; font-size: 12px;}
+.small-button {
+	font-size: .8em !important;
+}
 
-.ui-button { display: inline-block; position: relative; padding: 0; margin-right: .1em; text-decoration: none !important; cursor: pointer; text-align: center;  overflow: visible;} }
+.ui-button-loggin {
+	height: 1.9em;
+	font-size: 12px;
+}
+
+.ui-button {
+	display: inline-block;
+	position: relative;
+	padding: 0;
+	margin-right: .1em;
+	text-decoration: none !important;
+	cursor: pointer;
+	text-align: center;
+	overflow: visible;
+}
+
+}
 div.fileinputs {
-    position: relative;
+	position: relative;
 }
 
 div.fakefile {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 1;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
 }
 
 #file {
-    display:none;
-}​
+	display: none;
+}
+
+​
 input.file {
-    position: relative;
-    text-align: right;
-    -moz-opacity:0 ;
-    filter:alpha(opacity: 0);
-    opacity: 0;
-    z-index: 2;
+	position: relative;
+	text-align: right;
+	-moz-opacity: 0;
+	filter: alpha(opacity :   0);
+	opacity: 0;
+	z-index: 2;
 }
 
-#main-wrapper{
-  background-image:url('../images/simple-sky-cloud.jpg');
-  /*background-repeat:no-repeat;*/
-  background-size:100%;
+#main-wrapper {
+	background-image: url('../images/simple-sky-cloud.jpg');
+	/*background-repeat:no-repeat;*/
+	background-size: 100%;
 }
 
-body{
-  background-image:url('../images/simple-sky-cloud.jpg');
-  /*background-repeat:no-repeat;*/
-  background-size:100%;
+body {
+	background-image: url('../images/simple-sky-cloud.jpg');
+	/*background-repeat:no-repeat;*/
+	background-size: 100%;
 }
 
-#tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+#tabs li .ui-icon-close {
+	float: left;
+	margin: 0.4em 0.2em 0 0;
+	cursor: pointer;
+}
 
 table.detailTable {
-    text-align:center; 
-    margin-left:auto; 
-    margin-right:auto; 
-    width:auto;
-  }
-  tr,td {text-align:left;}
-  
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: auto;
+}
 
+tr,td {
+	text-align: left;
+}
 
 /*body {text-align:center;}*/
-
-  

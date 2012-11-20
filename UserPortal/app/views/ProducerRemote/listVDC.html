@@ -19,53 +19,55 @@
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
 #{if flash.error}
-    		<p style="color:#c00">
-        	${flash.error}
-    		</p>
-			#{/if}
-#{ifnot vdc_list}
-    
-    <h4> No Service Levels Defined, Contact Cloud Administrator  !!!</h4>
-#{/ifnot}
-#{else}
-  
+<p style="color: #c00">${flash.error}</p>
+#{/if} #{ifnot vdc_list}
+
+<h4>No Service Levels Defined, Contact Cloud Administrator !!!</h4>
+#{/ifnot} #{else}
+
 <div id="listVDCForm">
-<h2><u>Un-Published Offers</u>  </h2>
- 	<div id="tabcontainer">
-          <ul id="tabnav">
- 				#{list vdc_list, as:'vdc'}
- 						<li><a href ="@{ProducerRemote.listVA(vdc.id)}">${vdc?.name}</a></li>
-				 #{/list}
-			</ul>
- 
- #{ifnot vaWithVm}
-    
-    <h4></h4>
-#{/ifnot}
-#{else}
+	<h2>
+		<u>Un-Published Offers</u>
+	</h2>
+	<div id="tabcontainer">
+		<ul id="tabnav">
+			#{list vdc_list, as:'vdc'}
+			<li><a href="@{ProducerRemote.listVA(vdc.id)}">${vdc?.name}</a></li>
+			#{/list}
+		</ul>
 
-<h4> Service Offers for ${virtualDatacenter.name} </h4>
+		#{ifnot vaWithVm}
 
-			<table border= "1">
-      			 <thead>
-           				<tr>
-               				<td><strong>Service Offer Name</strong></td>
-             				<td><strong>Action</strong></td>
-              			</tr>
-      			 </thead>
-       			 <tbody>
-        					#{list vaWithVm, as:'va'}
-  						<tr>
-                		   <td>${va.name}</td>
-                 			<td><p> #{a @ProducerRemote.listVM(virtualDatacenter.id,va.id)}  Offer-Details #{/a}&nbsp;&nbsp;&nbsp;
-                      				<a href ="@{ProducerRemote.configure(virtualDatacenter.id , va.id)}"> Enable  </a></p></td>
-               			</tr>
-               				#{/list}
-           
-       			</tbody>
-   			</table> 
+		<h4></h4>
+		#{/ifnot} #{else}
 
-#{/else}
-#{/else}
-</div>
-<p><a href ="@{ProducerLocal.admin()}"> Home  </a></p>
+		<h4>Service Offers for ${virtualDatacenter.name}</h4>
+
+		<table border="1">
+			<thead>
+				<tr>
+					<td><strong>Service Offer Name</strong></td>
+					<td><strong>Action</strong></td>
+				</tr>
+			</thead>
+			<tbody>
+				#{list vaWithVm, as:'va'}
+				<tr>
+					<td>${va.name}</td>
+					<td><p>
+							#{a @ProducerRemote.listVM(virtualDatacenter.id,va.id)}
+							Offer-Details #{/a}&nbsp;&nbsp;&nbsp; <a
+								href="@{ProducerRemote.configure(virtualDatacenter.id , va.id)}">
+								Enable </a>
+						</p></td>
+				</tr>
+				#{/list}
+
+			</tbody>
+		</table>
+
+		#{/else} #{/else}
+	</div>
+	<p>
+		<a href="@{ProducerLocal.admin()}"> Home </a>
+	</p>

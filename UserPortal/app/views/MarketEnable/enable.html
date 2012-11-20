@@ -19,13 +19,21 @@
 #  Boston, MA 02111-1307, USA.
 #------------------------------------------------------------------------------->
 <div id="dialog-form" title="Marketplace">
-	<form name="enableMarket" class="form-horizontal" action ="@{MarketEnable.enableMKTConfiguration(enterprise_id, enterprise_name)}"  >
+	<form name="enableMarket" class="form-horizontal"
+		action="@{MarketEnable.enableMKTConfiguration(enterprise_id, enterprise_name)}">
 		<fieldset>
-		  <h3 class="center"><i class="icon-exclamation-sign"></i>Do you want to Enable ${enterprise_name} Marketplace?</h3><br /><br />
-		  <input type ="text" name = "enterprise_id" value = "${enterprise_id}" style="display: none;"/>
-		  <input type ="text" name = "enterprise_name" value = "${enterprise_name}" style="display: none;"/>
-		  <input type ="text" id="url" name="url" value="@{MarketEnable.marketEnable()}" style="display: none;"/>
-		  <input class="btn btn-warning pull-right" type ="submit" name ="submit" value ="Enable"/> 			
+			<h3 class="center">
+				<i class="icon-exclamation-sign"></i>Do you want to Enable
+				${enterprise_name} Marketplace?
+			</h3>
+			<br />
+			<br /> <input type="text" name="enterprise_id"
+				value="${enterprise_id}" style="display: none;" /> <input
+				type="text" name="enterprise_name" value="${enterprise_name}"
+				style="display: none;" /> <input type="text" id="url" name="url"
+				value="@{MarketEnable.marketEnable()}" style="display: none;" /> <input
+				class="btn btn-warning pull-right" type="submit" name="submit"
+				value="Enable" />
 		</fieldset>
 	</form>
 </div>

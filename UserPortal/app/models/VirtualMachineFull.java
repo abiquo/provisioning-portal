@@ -8,19 +8,19 @@ import org.jclouds.abiquo.domain.cloud.VirtualMachineTemplate;
 
 public class VirtualMachineFull {
 	private VirtualMachine virtualMachine;
-	
+
 	private Integer cpu;
 	private Integer ram;
-	
-	//hd in MBytes
+
+	// hd in MBytes
 	private Integer hd;
 
 	private String template_name;
 	private String template_path;
-	//VNC details
+	// VNC details
 	private String vncAddresss;
-	private Integer vncPort;	
-	
+	private Integer vncPort;
+
 	public VirtualMachineFull(final VirtualMachine virtualMachine) {
 		setVirtualMachine(virtualMachine);
 	}

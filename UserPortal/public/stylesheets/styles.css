@@ -1,185 +1,203 @@
-body { 
-    transition:all 1s linear; 
-    -o-transition:all 1s linear; 
-    -moz-transition:all 1s linear; 
-    -webkit-transition:all 1s linear;
+body {
+	transition: all 1s linear;
+	-o-transition: all 1s linear;
+	-moz-transition: all 1s linear;
+	-webkit-transition: all 1s linear;
 }
+
 .offer {
-	float:left;
-	width:auto;
-	border:1px solid #666;
-	margin:10px auto 0;
-	background-color:#ddd;
+	float: left;
+	width: auto;
+	border: 1px solid #666;
+	margin: 10px auto 0;
+	background-color: #ddd;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px; /* future proofing */
 }
+
 .section {
-	padding:5%;
+	padding: 5%;
 }
+
 .offerIcon {
-	float:left;
-	display:none;
+	float: left;
+	display: none;
 }
+
 .offerIcon img {
-	background-color:#fff;
-	margin:0 auto;
-	display:block;
+	background-color: #fff;
+	margin: 0 auto;
+	display: block;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px; /* future proofing */
-	padding:5px;
-	border:1px solid #666;
+	padding: 5px;
+	border: 1px solid #666;
 }
+
 .offerName {
-	float:left;
-	width:100%;
+	float: left;
+	width: 100%;
 }
+
 .offerName h3 {
-	margin:0;
+	margin: 0;
 }
+
 .offerDesc {
-	float:left;
-	width:50%;
+	float: left;
+	width: 50%;
 }
+
 .offerDetails {
-	float:right;
-	width:50%;
+	float: right;
+	width: 50%;
 }
+
 .offerDetails ul {
-	padding:0;
-	margin:0;
+	padding: 0;
+	margin: 0;
 }
+
 .offerDetails ul li {
-	list-style:none;
+	list-style: none;
 }
+
 .offerActions {
-	float:left;
-	width:100%
+	float: left;
+	width: 100%
 }
+
 span {
-	display:inline-block;
-	width:30%;
-	text-align:right;
+	display: inline-block;
+	width: 30%;
+	text-align: right;
 }
 /*--- forms ---*/
 form ul {
-	padding:0;
+	padding: 0;
 }
+
 form ul li {
-	list-style:none;
+	list-style: none;
 	margin: 20px 0;
 }
+
 label {
-	display:block;
+	display: block;
 	font-weight: bold;
-	text-align:left;
+	text-align: left;
 }
-#col1, #col2 {
-	width:50%;
-	float:left;
+
+#col1,#col2 {
+	width: 50%;
+	float: left;
 }
 
 /*--- fancy links ---*/
 a.fancyLink {
-	text-decoration:none;
-	display:inline-block;
-	width:100%;
-	background-color:#f78f1e;
-	line-height:40px;
-	height:40px;
-	text-align:center;
-	color:#603813;
+	text-decoration: none;
+	display: inline-block;
+	width: 100%;
+	background-color: #f78f1e;
+	line-height: 40px;
+	height: 40px;
+	text-align: center;
+	color: #603813;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px; /* future proofing */
-	margin:0 auto 10px;
+	margin: 0 auto 10px;
 }
+
 .left {
-	float:left;
+	float: left;
 }
+
 .right {
-	float:right;
+	float: right;
 }
 
 @media screen and (min-width:480px) {
-	#main, .offer {
-		width:99%;
+	#main,.offer {
+		width: 99%;
 	}
 	.offerIcon {
-		display:block;
-		width:25%;
+		display: block;
+		width: 25%;
 	}
 	.offerName {
-		width:75%;
-		float:left;
+		width: 75%;
+		float: left;
 	}
 	.offerDesc {
-		width:50%;
-		float:left;
-		clear:left;
+		width: 50%;
+		float: left;
+		clear: left;
 	}
 	.offerDetails {
-		width:50%;
-		float:right;
+		width: 50%;
+		float: right;
 	}
 	.offerActions {
-		width:100%;
-		float:left;
+		width: 100%;
+		float: left;
 	}
 	a.fancyLink {
-		width:48%;
-	}
-}
-@media screen and (min-width:720px) {
-	#main, .offer {
-		width:99%;
-	}
-	.offerIcon {
-		width:15%;
-	}
-	.offerName {
-		width:35%;
-		float:left;
-	}
-	.offerDesc {
-		width:25%;
-		clear:none;
-	}
-	.offerDetails {
-		width:25%;
-		float:left;
-	}
-	.offerActions {
-		width:50%;
-		clear:left;
-		float:right;
-	}
-	a.fancyLink {
-		width:45%;
-	}
-}
-@media screen and (min-width:960px) {
-	#main, .offer {
-		width:99%;
-	}
-	.offerName {
-		width:20%;
-	}
-	.offerDesc {
-		width:25%;
-		clear:none;
-	}
-	.offerDetails {
-		width:20%;
-	}
-	.offerActions {
-		clear:none;
-		width:20%;
-		float:left;
-	}
-	a.fancyLink {
-		width:100%;
+		width: 48%;
 	}
 }
 
+@media screen and (min-width:720px) {
+	#main,.offer {
+		width: 99%;
+	}
+	.offerIcon {
+		width: 15%;
+	}
+	.offerName {
+		width: 35%;
+		float: left;
+	}
+	.offerDesc {
+		width: 25%;
+		clear: none;
+	}
+	.offerDetails {
+		width: 25%;
+		float: left;
+	}
+	.offerActions {
+		width: 50%;
+		clear: left;
+		float: right;
+	}
+	a.fancyLink {
+		width: 45%;
+	}
+}
+
+@media screen and (min-width:960px) {
+	#main,.offer {
+		width: 99%;
+	}
+	.offerName {
+		width: 20%;
+	}
+	.offerDesc {
+		width: 25%;
+		clear: none;
+	}
+	.offerDetails {
+		width: 20%;
+	}
+	.offerActions {
+		clear: none;
+		width: 20%;
+		float: left;
+	}
+	a.fancyLink {
+		width: 100%;
+	}
+}

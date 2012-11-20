@@ -20,7 +20,6 @@
  ******************************************************************************/
 package controllers;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -98,7 +97,7 @@ public class Mobile extends Controller {
 		session.remove("password");
 		session.clear();
 		Cache.delete(session.getId());
-		//login_page();
+		// login_page();
 		Logger.info("-----EXITING LOGOUT()-----");
 		render();
 	}
@@ -106,27 +105,21 @@ public class Mobile extends Controller {
 	public static void index() {
 		Logger.info("-----INSIDE Index()-----");
 		String user = session.get("username");
-		if ( user != null)
-		{
-			render(user);	
-		}
-		else 
-		{			
+		if (user != null) {
+			render(user);
+		} else {
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
 		Logger.info("-----EXITING Index()-----");
 	}
-	
+
 	public static void admin() {
 		Logger.info("-----INSIDE Index()-----");
 		String user = session.get("username");
-		if ( user != null)
-		{
-			render(user);	
-		}
-		else 
-		{			
+		if (user != null) {
+			render(user);
+		} else {
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
@@ -136,13 +129,10 @@ public class Mobile extends Controller {
 	public static void listActiveOffers() {
 		Logger.info("-----INSIDE Index()-----");
 		String user = session.get("username");
-		if ( user != null)
-		{
-			List<Offer> offers = ConsumerDAO.getPublishedOffers();			
-			render(offers,user);
-		}
-		else 
-		{			
+		if (user != null) {
+			List<Offer> offers = ConsumerDAO.getPublishedOffers();
+			render(offers, user);
+		} else {
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
@@ -152,48 +142,46 @@ public class Mobile extends Controller {
 	public static void listInactiveOffers() {
 		Logger.info("-----INSIDE Index()-----");
 		String user = session.get("username");
-		if ( user != null)
-		{	
-			ArrayList<VirtualDatacenterFull> vdcList = new ArrayList<VirtualDatacenterFull>(); 
-			
-				Iterable<VirtualDatacenter> vdc_list = ProducerRemote.listVirtualDatacenters();			
-				for (VirtualDatacenter virtualDatacenter : vdc_list) {
-					final Iterable<VirtualAppliance> listVirtualAppliances = virtualDatacenter.listVirtualAppliances();
-					ArrayList<VirtualAppliance> listVappWithVM = new ArrayList<VirtualAppliance>();
-					for ( VirtualAppliance virtualAppliance : listVirtualAppliances )
-					{
-						 Integer va_id = virtualAppliance.getId();
-						 Query query = JPA.em().createNamedQuery("getOfferDetails");
-						 query.setParameter(1,va_id);
-						 List<Offer> scOffer = query.getResultList();
-						 if ( scOffer.size() == 0)
-						 {
-						 	List<VirtualMachine> vmList = virtualAppliance.listVirtualMachines();
-						 	if (vmList.size()>0 )
-						 	{
-						 		listVappWithVM.add(virtualAppliance);
-						 	}
-						 }
+		if (user != null) {
+			ArrayList<VirtualDatacenterFull> vdcList = new ArrayList<VirtualDatacenterFull>();
+
+			Iterable<VirtualDatacenter> vdc_list = ProducerRemote
+					.listVirtualDatacenters();
+			for (VirtualDatacenter virtualDatacenter : vdc_list) {
+				final Iterable<VirtualAppliance> listVirtualAppliances = virtualDatacenter
+						.listVirtualAppliances();
+				ArrayList<VirtualAppliance> listVappWithVM = new ArrayList<VirtualAppliance>();
+				for (VirtualAppliance virtualAppliance : listVirtualAppliances) {
+					Integer va_id = virtualAppliance.getId();
+					Query query = JPA.em().createNamedQuery("getOfferDetails");
+					query.setParameter(1, va_id);
+					List<Offer> scOffer = query.getResultList();
+					if (scOffer.size() == 0) {
+						List<VirtualMachine> vmList = virtualAppliance
+								.listVirtualMachines();
+						if (vmList.size() > 0) {
+							listVappWithVM.add(virtualAppliance);
+						}
 					}
-					VirtualDatacenterFull vdFull = new VirtualDatacenterFull(virtualDatacenter, listVappWithVM);
-					vdcList.add(vdFull);					
 				}
-				render(vdcList,user);
-		}
-		else 
-		{			
+				VirtualDatacenterFull vdFull = new VirtualDatacenterFull(
+						virtualDatacenter, listVappWithVM);
+				vdcList.add(vdFull);
+			}
+			render(vdcList, user);
+		} else {
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
 		Logger.info("-----EXITING Index()-----");
 	}
-	
+
 	public static void listOffersToPurchase() {
-		//Logger.info("---------INSIDE CONSUMER listOffersToPurchase()---------------");
-		//Logger.info("Enterprie ID for current User " + enterpriseID);
+		// Logger.info("---------INSIDE CONSUMER listOffersToPurchase()---------------");
+		// Logger.info("Enterprie ID for current User " + enterpriseID);
 		String user = session.get("username");
 		if (user != null) {
-			Logger.info("CURRENT USER EMAIL ID: " + user);			
+			Logger.info("CURRENT USER EMAIL ID: " + user);
 			List<Offer> offers = ConsumerDAO.getPublishedOffers();
 			Logger.info("------------EXITING CONSUMER AVAILABLEOFFERS()--------------");
 			render(offers, user);
@@ -203,162 +191,170 @@ public class Mobile extends Controller {
 			Mobile.login();
 		}
 	}
-	
+
 	public static void listOffersPurchased() {
-	    Logger.info("---------INSIDE CONSUMER PURCHASEDOFFERS()---------------");
-	    Logger.info("Enterprie ID for current User ");
-	    String user = session.get("username");
-	    String password = session.get("password");
+		Logger.info("---------INSIDE CONSUMER PURCHASEDOFFERS()---------------");
+		Logger.info("Enterprie ID for current User ");
+		String user = session.get("username");
+		String password = session.get("password");
 
-	    if (user != null) {
-	            Logger.info("CURRENT USER EMAIL ID: " + user);
-	            AbiquoContext contextt = Context.getApiClient(user, password);
-	            if (contextt != null) {
-	                    AbiquoUtils.setAbiquoUtilsContext(contextt);
-	                    final User userAbiquo = contextt.getAdministrationService().getCurrentUser();
-	                    final CloudService cloudService = contextt.getCloudService();
-	                    final Integer idEnterprise = userAbiquo.getEnterprise().getId();
-	                    List<OfferPurchased> offersPurchased = ProducerDAO.getOffersPurchasedFromEnterpriseId(idEnterprise);
-	                    for (OfferPurchased offerPurchased : offersPurchased) {                    	
-	                    	VirtualDatacenter vdc = cloudService.getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
-	                    	VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
-							offerPurchased.setVirtualApplianceState(vapp != null ? vapp.getState() : VirtualApplianceState.UNKNOWN );
-							offerPurchased.save();
-						}
+		if (user != null) {
+			Logger.info("CURRENT USER EMAIL ID: " + user);
+			AbiquoContext contextt = Context.getApiClient(user, password);
+			if (contextt != null) {
+				AbiquoUtils.setAbiquoUtilsContext(contextt);
+				final User userAbiquo = contextt.getAdministrationService()
+						.getCurrentUser();
+				final CloudService cloudService = contextt.getCloudService();
+				final Integer idEnterprise = userAbiquo.getEnterprise().getId();
+				List<OfferPurchased> offersPurchased = ProducerDAO
+						.getOffersPurchasedFromEnterpriseId(idEnterprise);
+				for (OfferPurchased offerPurchased : offersPurchased) {
+					VirtualDatacenter vdc = cloudService
+							.getVirtualDatacenter(offerPurchased
+									.getIdVirtualDatacenterUser());
+					VirtualAppliance vapp = vdc
+							.getVirtualAppliance(offerPurchased
+									.getIdVirtualApplianceUser());
+					offerPurchased.setVirtualApplianceState(vapp != null ? vapp
+							.getState() : VirtualApplianceState.UNKNOWN);
+					offerPurchased.save();
+				}
 
-	                    Logger.info("------------EXITING CONSUMER PURCHASEDOFFERS()--------------");
-	                    render(offersPurchased, user);
-	            }
+				Logger.info("------------EXITING CONSUMER PURCHASEDOFFERS()--------------");
+				render(offersPurchased, user);
+			}
 
-	    } else {
+		} else {
 
-	            flash.error("You are not connected.Please Login");
-	            Login.login_page();
-	    }
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
 
 	}
-	
-	public static void manageOffer(final Integer offerPurchasedId) {
-	    Logger.info("---------INSIDE CONSUMER PURCHASEDOFFERS()---------------");
-	    Logger.info("Enterprie ID for current User ");
-	    String user = session.get("username");
-	    String password = session.get("password");
 
-	    AbiquoContext context = Context.getApiClient(user, password);		    	
-	    AbiquoUtils.setAbiquoUtilsContext(context);
-	    
-        final User userAbiquo = context.getAdministrationService().getCurrentUser();
-        //final CloudService cloudService = contextt.getCloudService();
-        final Enterprise userEnterprise =  userAbiquo.getEnterprise();
-        final Integer idEnterprise = userEnterprise.getId();
-        
-        final OfferPurchased offerPurchased = OfferPurchased.findById(offerPurchasedId);
-        
-        if (offerPurchased.getUser().getIdEnterprise() == idEnterprise) {	                   
-        	
-	    	VirtualDatacenter virtualDatacenter = context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());		    	
-			VirtualAppliance vapp = virtualDatacenter.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
-			
-			ArrayList<VirtualMachineFull> listVM = new ArrayList<VirtualMachineFull>(); 				
+	public static void manageOffer(final Integer offerPurchasedId) {
+		Logger.info("---------INSIDE CONSUMER PURCHASEDOFFERS()---------------");
+		Logger.info("Enterprie ID for current User ");
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext context = Context.getApiClient(user, password);
+		AbiquoUtils.setAbiquoUtilsContext(context);
+
+		final User userAbiquo = context.getAdministrationService()
+				.getCurrentUser();
+		// final CloudService cloudService = contextt.getCloudService();
+		final Enterprise userEnterprise = userAbiquo.getEnterprise();
+		final Integer idEnterprise = userEnterprise.getId();
+
+		final OfferPurchased offerPurchased = OfferPurchased
+				.findById(offerPurchasedId);
+
+		if (offerPurchased.getUser().getIdEnterprise() == idEnterprise) {
+
+			VirtualDatacenter virtualDatacenter = context.getCloudService()
+					.getVirtualDatacenter(
+							offerPurchased.getIdVirtualDatacenterUser());
+			VirtualAppliance vapp = virtualDatacenter
+					.getVirtualAppliance(offerPurchased
+							.getIdVirtualApplianceUser());
+
+			ArrayList<VirtualMachineFull> listVM = new ArrayList<VirtualMachineFull>();
 			for (VirtualMachine virtualMachine : vapp.listVirtualMachines()) {
-				VirtualMachineFull vmfull = new VirtualMachineFull(virtualMachine);
-				
+				VirtualMachineFull vmfull = new VirtualMachineFull(
+						virtualMachine);
+
 				vmfull.setCpu(virtualMachine.getCpu());
 				vmfull.setRam(virtualMachine.getRam());
 				vmfull.setHd((int) (virtualMachine.getHdInBytes() / (1024 * 1024)));
 
 				VirtualMachineTemplate vtemplate = virtualMachine.getTemplate();
 				vmfull.setTemplate_name(vtemplate.getName());
-				vmfull.setTemplate_path(vtemplate.getPath());				
-				
+				vmfull.setTemplate_path(vtemplate.getPath());
+
 				listVM.add(vmfull);
 			}
-			
-			VirtualApplianceFull vappFull = new VirtualApplianceFull(vapp, listVM);
-							
-			
-			/*List<HardDisk> harddisk = virtualMachine
-					.listAttachedHardDisks();*/
 
-			//VirtualMachineTemplate template = virtualMachine.getTemplate();
+			VirtualApplianceFull vappFull = new VirtualApplianceFull(vapp,
+					listVM);
+
+			/*
+			 * List<HardDisk> harddisk = virtualMachine
+			 * .listAttachedHardDisks();
+			 */
+
+			// VirtualMachineTemplate template = virtualMachine.getTemplate();
 			// String template_path = template.getIconUrl();
-			//String template_name = template.getName();
-			//String template_path = template.getPath();
+			// String template_name = template.getName();
+			// String template_path = template.getPath();
 			render(vappFull, user, offerPurchased, offerPurchasedId);
-        	
-	    } else {
 
-	            flash.error("You are not connected.Please Login");
-	            Login.login_page();
-	    }
+		} else {
+
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
 
 	}
 
-
-	public static void listAllOffers ( Integer id_vdc , String service_level  )
-	{
+	public static void listAllOffers(Integer id_vdc, String service_level) {
 		Iterable<VirtualDatacenter> vdc_list = null;
 		VirtualDatacenter virtualDatacenter = null;
 		List<VirtualAppliance> vaList = null;
 		List<VirtualAppliance> vaWithVm = new LinkedList<VirtualAppliance>();
-		String user =session.get("username");
-		String password =session.get("password");
-		if ( user != null )
-		{
-			AbiquoContext context = Context.getApiClient(user,password);
+		String user = session.get("username");
+		String password = session.get("password");
+		if (user != null) {
+			AbiquoContext context = Context.getApiClient(user, password);
 			AbiquoUtils.setAbiquoUtilsContext(context);
 			try {
-					if (id_vdc != null )
-					{
-						vdc_list = AbiquoUtils.getAllVDC();
-						 virtualDatacenter = AbiquoUtils.getVDCDetails(id_vdc);
-						if (virtualDatacenter != null )
-						{
-							vaList = virtualDatacenter.listVirtualAppliances();
-							for ( VirtualAppliance virtualAppliance : vaList )
-							{
-								 Integer va_id = virtualAppliance.getId();
-								 Query query = JPA.em().createNamedQuery("getOfferDetails");
-								 query.setParameter(1,va_id);
-								 List<Offer> scOffer = query.getResultList();
-								 if ( scOffer.size() == 0)
-								 {
-								 	List<VirtualMachine> vmList = virtualAppliance.listVirtualMachines();
-								 	if (vmList.size()>0 )
-								 	{
-								 			vaWithVm.add(virtualAppliance);
-								 			
-								 	}
-								 }
+				if (id_vdc != null) {
+					vdc_list = AbiquoUtils.getAllVDC();
+					virtualDatacenter = AbiquoUtils.getVDCDetails(id_vdc);
+					if (virtualDatacenter != null) {
+						vaList = virtualDatacenter.listVirtualAppliances();
+						for (VirtualAppliance virtualAppliance : vaList) {
+							Integer va_id = virtualAppliance.getId();
+							Query query = JPA.em().createNamedQuery(
+									"getOfferDetails");
+							query.setParameter(1, va_id);
+							List<Offer> scOffer = query.getResultList();
+							if (scOffer.size() == 0) {
+								List<VirtualMachine> vmList = virtualAppliance
+										.listVirtualMachines();
+								if (vmList.size() > 0) {
+									vaWithVm.add(virtualAppliance);
+
+								}
 							}
 						}
-							
 					}
-				  //List<OfferPurchased> resultSet = ProducerDAO.getSubscribedOffersGroupByServiceLevels();
-				  List<Offer> resultSet1 = ProducerDAO.getSubscribedOffers(service_level);
-				  Logger.info(" resultSet1 size " + resultSet1);
-				  Logger.info(" -----INSIDE PRODUCER DISPLAYOFFER()------");
-				  render(resultSet1,user, vaWithVm, virtualDatacenter , vdc_list);
-				} 
-				catch(Exception e)
-				{
-							flash.error("Unable to create context");
-						   // e.printStackTrace();
-							//Logger.info(" -----EXITING PRODUCER VMDETAILS()------" + e.printStackTrace(), "");
-							render("/ProducerRemote/listVDC.html");
-					
-					
+
 				}
-				finally{
-							flash.clear();
-							/*if (context!= null)
-								context.close();*/
-				}
-			
-		}
-		else 
-		{
-			
+				// List<OfferPurchased> resultSet =
+				// ProducerDAO.getSubscribedOffersGroupByServiceLevels();
+				List<Offer> resultSet1 = ProducerDAO
+						.getSubscribedOffers(service_level);
+				Logger.info(" resultSet1 size " + resultSet1);
+				Logger.info(" -----INSIDE PRODUCER DISPLAYOFFER()------");
+				render(resultSet1, user, vaWithVm, virtualDatacenter, vdc_list);
+			} catch (Exception e) {
+				flash.error("Unable to create context");
+				// e.printStackTrace();
+				// Logger.info(" -----EXITING PRODUCER VMDETAILS()------" +
+				// e.printStackTrace(), "");
+				render("/ProducerRemote/listVDC.html");
+
+			} finally {
+				flash.clear();
+				/*
+				 * if (context!= null) context.close();
+				 */
+			}
+
+		} else {
+
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
@@ -384,36 +380,42 @@ public class Mobile extends Controller {
 			AbiquoContext context = Context.getApiClient(user, password);
 			AbiquoUtils.setAbiquoUtilsContext(context);
 			try {
-				
-				VirtualDatacenter virtualDatacenter = context.getCloudService().getVirtualDatacenter(vdcId);
-				VirtualAppliance vapp = virtualDatacenter.getVirtualAppliance(vaId);
-				
-				ArrayList<VirtualMachineFull> listVM = new ArrayList<VirtualMachineFull>(); 				
+
+				VirtualDatacenter virtualDatacenter = context.getCloudService()
+						.getVirtualDatacenter(vdcId);
+				VirtualAppliance vapp = virtualDatacenter
+						.getVirtualAppliance(vaId);
+
+				ArrayList<VirtualMachineFull> listVM = new ArrayList<VirtualMachineFull>();
 				for (VirtualMachine virtualMachine : vapp.listVirtualMachines()) {
-					VirtualMachineFull vmfull = new VirtualMachineFull(virtualMachine);
-					
+					VirtualMachineFull vmfull = new VirtualMachineFull(
+							virtualMachine);
+
 					vmfull.setCpu(virtualMachine.getCpu());
 					vmfull.setRam(virtualMachine.getRam());
 					vmfull.setHd((int) (virtualMachine.getHdInBytes() / (1024 * 1024)));
-					
-					VirtualMachineTemplate vtemplate = virtualMachine.getTemplate();
+
+					VirtualMachineTemplate vtemplate = virtualMachine
+							.getTemplate();
 					vmfull.setTemplate_name(vtemplate.getName());
-					vmfull.setTemplate_path(vtemplate.getPath());				
-					
+					vmfull.setTemplate_path(vtemplate.getPath());
+
 					listVM.add(vmfull);
 				}
-				
-				VirtualApplianceFull vappFull = new VirtualApplianceFull(vapp, listVM);
-				
-								
-				
-				/*List<HardDisk> harddisk = virtualMachine
-						.listAttachedHardDisks();*/
 
-				//VirtualMachineTemplate template = virtualMachine.getTemplate();
+				VirtualApplianceFull vappFull = new VirtualApplianceFull(vapp,
+						listVM);
+
+				/*
+				 * List<HardDisk> harddisk = virtualMachine
+				 * .listAttachedHardDisks();
+				 */
+
+				// VirtualMachineTemplate template =
+				// virtualMachine.getTemplate();
 				// String template_path = template.getIconUrl();
-				//String template_name = template.getName();
-				//String template_path = template.getPath();
+				// String template_name = template.getName();
+				// String template_path = template.getPath();
 				render(vappFull, user);
 				Logger.info(" -----EXITING PRODUCER VMDETAILS()------");
 
@@ -432,7 +434,7 @@ public class Mobile extends Controller {
 			Login.login_page();
 		}
 	}
-	
+
 	public static void listVM(final Integer id_vdc_param,
 			final Integer id_va_param) {
 		Logger.info(" -----INSIDE PRODUCER LISTVM()------");
@@ -455,12 +457,15 @@ public class Mobile extends Controller {
 					for (VirtualMachine virtualMachine : vmList) {
 						virtualMachine.listAttachedNics();
 					}
-					
-					List<Offer> offers = ProducerDAO.getOfferDetails(id_va_param);
-					
-					//Price
-					final String price = AbiquoUtils.getVAPrice(id_vdc_param, id_va_param);					
-					render(vmList, virtualAppliance, virtualDatacenter, user, offers, price, id_vdc_param, id_va_param );
+
+					List<Offer> offers = ProducerDAO
+							.getOfferDetails(id_va_param);
+
+					// Price
+					final String price = AbiquoUtils.getVAPrice(id_vdc_param,
+							id_va_param);
+					render(vmList, virtualAppliance, virtualDatacenter, user,
+							offers, price, id_vdc_param, id_va_param);
 				}
 
 				else {
@@ -525,10 +530,10 @@ public class Mobile extends Controller {
 							Logger.info("Role of user" + role);
 
 							if (role.getName().contentEquals("CLOUD_ADMIN")) {
-								//ProducerLocal.admin();
+								// ProducerLocal.admin();
 								admin();
 							} else {
-								//Consumer.ServiceCatalog(enterpriseID);
+								// Consumer.ServiceCatalog(enterpriseID);
 								index();
 							}
 						}
@@ -556,20 +561,22 @@ public class Mobile extends Controller {
 			}
 		}
 	}
-	
-	public static void confirmation(final Integer purchasedOfferId, final String action) {
+
+	public static void confirmation(final Integer purchasedOfferId,
+			final String action) {
 		Logger.info("-----INSIDE Index()-----");
 		String user = session.get("username");
-		if ( user != null)
-		{
-			/*final Offer offer = Offer.findById(offerId);
-			render(user, offer);*/
-			if (action.equals("reset")) resetConfirmation(purchasedOfferId);
-			else if (action.equals("delete")) deleteConfirmation(purchasedOfferId);
-			else purchaseConfirmation(purchasedOfferId);
-		}
-		else 
-		{			
+		if (user != null) {
+			/*
+			 * final Offer offer = Offer.findById(offerId); render(user, offer);
+			 */
+			if (action.equals("reset"))
+				resetConfirmation(purchasedOfferId);
+			else if (action.equals("delete"))
+				deleteConfirmation(purchasedOfferId);
+			else
+				purchaseConfirmation(purchasedOfferId);
+		} else {
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
@@ -579,66 +586,51 @@ public class Mobile extends Controller {
 	public static void purchaseConfirmation(final Integer offerId) {
 		Logger.info("-----INSIDE Index()-----");
 		String user = session.get("username");
-		if ( user != null)
-		{
+		if (user != null) {
 			final Offer offer = Offer.findById(offerId);
 			render(user, offer);
-		}
-		else 
-		{			
+		} else {
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
 		Logger.info("-----EXITING Index()-----");
 	}
-	
+
 	public static void resetConfirmation(final Integer purchasedOfferId) {
 		Logger.info("-----INSIDE Index()-----");
 		String user = session.get("username");
-		if ( user != null)
-		{			
+		if (user != null) {
 			render(user, purchasedOfferId);
-		}
-		else 
-		{			
+		} else {
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
 		Logger.info("-----EXITING Index()-----");
 	}
-	
+
 	public static void deleteConfirmation(final Integer purchasedOfferId) {
 		Logger.info("-----INSIDE Index()-----");
 		String user = session.get("username");
-		if ( user != null)
-		{			
+		if (user != null) {
 			render(user, purchasedOfferId);
-		}
-		else 
-		{			
+		} else {
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
 		Logger.info("-----EXITING Index()-----");
 	}
-	
+
 	public static void upgradeConfirmation(final Integer purchasedOfferId) {
 		Logger.info("-----INSIDE Index()-----");
 		String user = session.get("username");
-		if ( user != null)
-		{			
+		if (user != null) {
 			render(user, purchasedOfferId);
-		}
-		else 
-		{			
+		} else {
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
 		Logger.info("-----EXITING Index()-----");
 	}
-	
-
-
 
 	/**
 	 * 1. Customer buy offer as a User. Deployment needs CLOUD_ADMIN privilege.
@@ -689,16 +681,17 @@ public class Mobile extends Controller {
 					.getCurrentUserEnterprise();
 			Integer enterprise_id = current_enterprise.getId();
 
-			/*for (MKT_Configuration mkt : mkt_conf) {
-				deploy_username = mkt.getMkt_deploy_user();
-				deploy_password = mkt.getMkt_deploy_pw();
-				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
-			}*/
-			
+			/*
+			 * for (MKT_Configuration mkt : mkt_conf) { deploy_username =
+			 * mkt.getMkt_deploy_user(); deploy_password =
+			 * mkt.getMkt_deploy_pw(); deploy_enterprise_id =
+			 * mkt.getDeploy_enterprise_id(); }
+			 */
+
 			deploy_username = user;
 			deploy_password = password;
 			deploy_enterprise_id = current_enterprise.getId();
-			
+
 			Logger.info(" DEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :"
 					+ deploy_enterprise_id + "  " + deploy_username + "  "
 					+ deploy_password);
@@ -714,7 +707,7 @@ public class Mobile extends Controller {
 			VirtualDatacenter virtualDC = null;
 			String vdc_name = null;
 			try {
-				//AbiquoUtils.setAbiquoUtilsContext(context);
+				// AbiquoUtils.setAbiquoUtilsContext(context);
 				Enterprise enterprise = AbiquoUtils
 						.getEnterprise(deploy_enterprise_id);
 				String useremail = session.get("email");
@@ -729,48 +722,55 @@ public class Mobile extends Controller {
 				HypervisorType hypervisor = virtualDC.getHypervisorType();
 				Logger.info(" Hypervisor to deploy: ", hypervisor);
 
-				// get first datacenter allowed. For developement only will be one.
-				Datacenter datacenter = enterprise.listAllowedDatacenters().get(0);
+				// get first datacenter allowed. For developement only will be
+				// one.
+				Datacenter datacenter = enterprise.listAllowedDatacenters()
+						.get(0);
 				Logger.info(" Datacenter to deploy: ", datacenter);
 
-				PrivateNetwork network = PrivateNetwork.builder(context.getApiContext())
-						.name("10.80.0.0").gateway("10.80.0.1")
-						.address("10.80.0.0").mask(22).build();
+				PrivateNetwork network = PrivateNetwork
+						.builder(context.getApiContext()).name("10.80.0.0")
+						.gateway("10.80.0.1").address("10.80.0.0").mask(22)
+						.build();
 				Logger.info(" Network Built");
 
 				vdc_toDeploy = VirtualDatacenter
-						.builder(context.getApiContext(), datacenter, enterprise).name(vdcname)
-						.cpuCountLimits(0, 0).hdLimitsInMb(0, 0)
-						.publicIpsLimits(0, 0).ramLimits(0, 0)
-						.storageLimits(0, 0).vlansLimits(0, 0)
+						.builder(context.getApiContext(), datacenter,
+								enterprise).name(vdcname).cpuCountLimits(0, 0)
+						.hdLimitsInMb(0, 0).publicIpsLimits(0, 0)
+						.ramLimits(0, 0).storageLimits(0, 0).vlansLimits(0, 0)
 						.hypervisorType(hypervisor).network(network).build();
 
 				Logger.info("VDC built  ");
 				vdc_toDeploy.save();
 				Logger.info(" 1. VDC CREATED ");
 				virtualapp_todeploy = VirtualAppliance
-						.builder(context.getApiContext(), vdc_toDeploy).name(va_param).build();
+						.builder(context.getApiContext(), vdc_toDeploy)
+						.name(va_param).build();
 				virtualapp_todeploy.save();
 
 				Logger.info(" 2. VAPP CREATED ");
 
 				/* Save the deploy info to the portal database : user, vdc etc */
-				final User userAbiquo = contextt.getAdministrationService().getCurrentUser();
+				final User userAbiquo = contextt.getAdministrationService()
+						.getCurrentUser();
 				final Integer idUser = userAbiquo.getId();
 				final OfferPurchased offerPurchased = new OfferPurchased();
 				UserPortal userToSave = UserPortal.findById(idUser);
-				
+
 				if (userToSave == null) {
-					// Try to recover from jClouds					
+					// Try to recover from jClouds
 					final String nickUser = userAbiquo.getNick();
 					final String emailUser = userAbiquo.getEmail();
-					final Integer idEnterprise = userAbiquo.getEnterprise().getId();
-					userToSave = new UserPortal(idUser,nickUser, emailUser, idEnterprise);			
+					final Integer idEnterprise = userAbiquo.getEnterprise()
+							.getId();
+					userToSave = new UserPortal(idUser, nickUser, emailUser,
+							idEnterprise);
 					userToSave.save();
 				}
-				
+
 				offerPurchased.setUser(userToSave);
-				
+
 				Date current = new Date();
 				Calendar cal = Calendar.getInstance();
 				if (lease_period.contentEquals("30 days")) {
@@ -790,11 +790,12 @@ public class Mobile extends Controller {
 				// user_consumption.setVdc_name(vdc_toDeploy.getName());
 				offerPurchased.setLeasePeriod(lease_period);
 				offerPurchased.setIdVirtualDatacenterUser(vdc_toDeploy.getId());
-				offerPurchased.setIdVirtualApplianceUser(virtualapp_todeploy.getId());
-				
+				offerPurchased.setIdVirtualApplianceUser(virtualapp_todeploy
+						.getId());
+
 				final Offer offer = Offer.findById(sc_offer_id);
-				//offer.setVirtualDatacenter(vdc_toDeploy.getId());
-				offerPurchased.setOffer(offer);				
+				// offer.setVirtualDatacenter(vdc_toDeploy.getId());
+				offerPurchased.setOffer(offer);
 
 				Set<Deploy_Bundle> deploy_bundle_set = new HashSet<Deploy_Bundle>();
 				Deploy_Bundle deploy_Bundle = new Deploy_Bundle();
@@ -810,24 +811,27 @@ public class Mobile extends Controller {
 				 * String query =
 				 * "select p from sc_offer as p where p.sc_offer_id = ?1";
 				 * JPAQuery result = sc_offer.find(query, sc_offer_id);
-				 */List<Offer> nodes = ProducerDAO
-						.getOfferDetails(sc_offer_id);
+				 */List<Offer> nodes = ProducerDAO.getOfferDetails(sc_offer_id);
 				for (Offer node : nodes) {
-					/////Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = new HashSet<Deploy_Bundle_Nodes>();
-					
-					/// Retrieve nodes from jClouds
-					Set<Nodes> vmlist_todeploy = node.getNodes();			
-					
+					// ///Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list =
+					// new HashSet<Deploy_Bundle_Nodes>();
+
+					// / Retrieve nodes from jClouds
+					Set<Nodes> vmlist_todeploy = node.getNodes();
+
 					Set<Deploy_Bundle_Nodes> deploy_Bundle_Nodes_list = new HashSet<Deploy_Bundle_Nodes>();
 					for (Nodes aVM : vmlist_todeploy) {
 						String vmName = aVM.getNode_name();
-						VirtualMachineTemplate vm_template_todeploy = enterprise.getTemplateInRepository(datacenter, aVM.getIdImage());
+						VirtualMachineTemplate vm_template_todeploy = enterprise
+								.getTemplateInRepository(datacenter,
+										aVM.getIdImage());
 						int cpu = aVM.getCpu();
 						int ram = aVM.getRam();
 						// String description = aVM.getDescription();
 
 						vm_todeploy = VirtualMachine
-								.builder(context.getApiContext(), virtualapp_todeploy,
+								.builder(context.getApiContext(),
+										virtualapp_todeploy,
 										vm_template_todeploy).nameLabel(vmName)
 								.cpu(cpu).ram(ram).password("vmpassword")
 								.build();
@@ -836,7 +840,8 @@ public class Mobile extends Controller {
 						Deploy_Bundle_Nodes deploy_Bundle_Nodes = new Deploy_Bundle_Nodes();
 						deploy_Bundle_Nodes.setCpu(cpu);
 						deploy_Bundle_Nodes.setNode_name(vmName);
-						deploy_Bundle_Nodes.setNode_name(vm_todeploy.getNameLabel());
+						deploy_Bundle_Nodes.setNode_name(vm_todeploy
+								.getNameLabel());
 						deploy_Bundle_Nodes.setNode_id(vm_todeploy.getId());
 						deploy_Bundle_Nodes.setRam(ram);
 						deploy_Bundle_Nodes.setVdrp_password("");
@@ -851,8 +856,9 @@ public class Mobile extends Controller {
 						for (Nodes_Resources resource : resources) {
 							Long size = resource.getValue();
 							HardDisk disk = HardDisk
-									.builder(context.getApiContext(), vdc_toDeploy)
-									.sizeInMb(size).build();
+									.builder(context.getApiContext(),
+											vdc_toDeploy).sizeInMb(size)
+									.build();
 							disk.save();
 							hardDisk_toattach.add(disk);
 							Deploy_Nodes_Resources deploy_Nodes_Resources = new Deploy_Nodes_Resources();
@@ -890,12 +896,14 @@ public class Mobile extends Controller {
 					deploy_Bundle.setNodes(deploy_Bundle_Nodes_list);
 
 					offerPurchased.setNodes(deploy_bundle_set);
-					offerPurchased.setServiceLevel(offer.getDefaultServiceLevel());
+					offerPurchased.setServiceLevel(offer
+							.getDefaultServiceLevel());
 					offerPurchased.save();
 					Logger.info("DEPLOY INFO SAVED ......");
 					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
 					final String action = "deployed";
-					render("/Mobile/action.html",vdc_name, enterprise_id, action);
+					render("/Mobile/action.html", vdc_name, enterprise_id,
+							action);
 				}
 
 			} catch (AuthorizationException ae) {
@@ -919,12 +927,14 @@ public class Mobile extends Controller {
 			Login.login_page();
 		}
 	}
-	
+
 	public static void deleteOffer(final Integer purchasedOfferId) {
-		/*Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
-		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
-				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");*/
+		/*
+		 * Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
+		 * Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " +
+		 * ", INTEGER SC_OFFER_ID :: " + sc_offer_id + " , String va_param:: " +
+		 * vappId + ")");
+		 */
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -945,19 +955,20 @@ public class Mobile extends Controller {
 			Enterprise current_enterprise = AbiquoUtils
 					.getCurrentUserEnterprise();
 			Integer enterprise_id = current_enterprise.getId();
-			/*List<MKT_Configuration> mkt_conf = MarketDAO
-					.getMKTConfiguration(enterprise_id);
+			/*
+			 * List<MKT_Configuration> mkt_conf = MarketDAO
+			 * .getMKTConfiguration(enterprise_id);
+			 * 
+			 * for (MKT_Configuration mkt : mkt_conf) { deploy_username =
+			 * mkt.getMkt_deploy_user(); deploy_password =
+			 * mkt.getMkt_deploy_pw(); deploy_enterprise_id =
+			 * mkt.getDeploy_enterprise_id(); }
+			 */
 
-			for (MKT_Configuration mkt : mkt_conf) {
-				deploy_username = mkt.getMkt_deploy_user();
-				deploy_password = mkt.getMkt_deploy_pw();
-				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
-			}*/
-			
 			deploy_username = user;
 			deploy_password = password;
 			deploy_enterprise_id = current_enterprise.getId();
-			
+
 			Logger.info(" UNDEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :"
 					+ deploy_enterprise_id + "  " + deploy_username + "  "
 					+ deploy_password);
@@ -972,7 +983,7 @@ public class Mobile extends Controller {
 			VirtualMachine vm_todeploy = null;
 			VirtualDatacenter virtualDC = null;
 			String vdc_name = null;
-			try {			
+			try {
 				Enterprise enterprise = AbiquoUtils
 						.getEnterprise(deploy_enterprise_id);
 				String useremail = session.get("email");
@@ -981,45 +992,49 @@ public class Mobile extends Controller {
 				Logger.info("CURRENT USER EMAIL ID: " + useremail);
 				Logger.info(" vdcname : " + vdcname);
 
-				
-				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
-				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
-//				List<VirtualMachine> lvm = vapp.listVirtualMachines();
-//				
-//				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
-//				for (VirtualMachine virtualMachine : lvm) {
-//					virtualMachine.undeploy();					
-//				}
-//				
-//				VirtualMachine[] arr = new VirtualMachine[lvm.size()];
-//				monitor.awaitCompletionUndeploy(lvm.toArray(arr));
-//				
-//				for (VirtualMachine virtualMachine : lvm) {
-//					virtualMachine.delete();					
-//				
-//				}
-				
-				VirtualApplianceMonitor monitorVapp = context.getMonitoringService().getVirtualApplianceMonitor();
-				AsyncTask[] undeployTasks = vapp.undeploy();			
+				final OfferPurchased offerPurchased = OfferPurchased
+						.findById(purchasedOfferId);
+				VirtualDatacenter vdc = context.getCloudService()
+						.getVirtualDatacenter(
+								offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased
+						.getIdVirtualApplianceUser());
+				// List<VirtualMachine> lvm = vapp.listVirtualMachines();
+				//
+				// VirtualMachineMonitor monitor =
+				// context.getMonitoringService().getVirtualMachineMonitor();
+				// for (VirtualMachine virtualMachine : lvm) {
+				// virtualMachine.undeploy();
+				// }
+				//
+				// VirtualMachine[] arr = new VirtualMachine[lvm.size()];
+				// monitor.awaitCompletionUndeploy(lvm.toArray(arr));
+				//
+				// for (VirtualMachine virtualMachine : lvm) {
+				// virtualMachine.delete();
+				//
+				// }
+
+				VirtualApplianceMonitor monitorVapp = context
+						.getMonitoringService().getVirtualApplianceMonitor();
+				AsyncTask[] undeployTasks = vapp.undeploy();
 				monitorVapp.awaitCompletionUndeploy(vapp);
-				
+
 				if (vapp.getState() == VirtualApplianceState.NOT_DEPLOYED) {
 					vapp.delete();
 					vdc.delete();
 					offerPurchased.delete();
 				} else {
-					
+
 					AbiquoUtils.checkErrorsInTasks(undeployTasks);
 					Logger.info("Tasks Checked");
-					
+
 				}
-				
-				
+
 				Logger.info("OFFER DELETED ......");
 				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
 				final String action = "deleted";
-				render("/Mobile/action.html", vdc_name, enterprise_id, action);				
+				render("/Mobile/action.html", vdc_name, enterprise_id, action);
 
 			} catch (AuthorizationException ae) {
 
@@ -1043,12 +1058,14 @@ public class Mobile extends Controller {
 			Login.login_page();
 		}
 	}
-	
+
 	public static void resetOffer(final Integer purchasedOfferId) {
 		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
-		/*Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " 
-				+ ", INTEGER SC_OFFER_ID :: " + sc_offer_id
-				+ " , String va_param:: " + vappId + ")");*/
+		/*
+		 * Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " +
+		 * ", INTEGER SC_OFFER_ID :: " + sc_offer_id + " , String va_param:: " +
+		 * vappId + ")");
+		 */
 
 		String deploy_username = null;
 		String deploy_password = null;
@@ -1069,19 +1086,20 @@ public class Mobile extends Controller {
 			Enterprise current_enterprise = AbiquoUtils
 					.getCurrentUserEnterprise();
 			Integer enterprise_id = current_enterprise.getId();
-			/*List<MKT_Configuration> mkt_conf = MarketDAO
-					.getMKTConfiguration(enterprise_id);
+			/*
+			 * List<MKT_Configuration> mkt_conf = MarketDAO
+			 * .getMKTConfiguration(enterprise_id);
+			 * 
+			 * for (MKT_Configuration mkt : mkt_conf) { deploy_username =
+			 * mkt.getMkt_deploy_user(); deploy_password =
+			 * mkt.getMkt_deploy_pw(); deploy_enterprise_id =
+			 * mkt.getDeploy_enterprise_id(); }
+			 */
 
-			for (MKT_Configuration mkt : mkt_conf) {
-				deploy_username = mkt.getMkt_deploy_user();
-				deploy_password = mkt.getMkt_deploy_pw();
-				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
-			}*/
-			
 			deploy_username = user;
 			deploy_password = password;
 			deploy_enterprise_id = current_enterprise.getId();
-			
+
 			Logger.info(" UNDEPLOY ENTERPRISE ID  + USERNAME + PASSWORD :"
 					+ deploy_enterprise_id + "  " + deploy_username + "  "
 					+ deploy_password);
@@ -1096,7 +1114,7 @@ public class Mobile extends Controller {
 			VirtualMachine vm_todeploy = null;
 			VirtualDatacenter virtualDC = null;
 			String vdc_name = null;
-			try {			
+			try {
 				Enterprise enterprise = AbiquoUtils
 						.getEnterprise(deploy_enterprise_id);
 				String useremail = session.get("email");
@@ -1105,37 +1123,40 @@ public class Mobile extends Controller {
 				Logger.info("CURRENT USER EMAIL ID: " + useremail);
 				Logger.info(" vdcname : " + vdcname);
 
-				
-				
-				final OfferPurchased offerPurchased = OfferPurchased.findById(purchasedOfferId);				
-				VirtualDatacenter vdc =  context.getCloudService().getVirtualDatacenter(offerPurchased.getIdVirtualDatacenterUser());
-				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased.getIdVirtualApplianceUser());
-				
+				final OfferPurchased offerPurchased = OfferPurchased
+						.findById(purchasedOfferId);
+				VirtualDatacenter vdc = context.getCloudService()
+						.getVirtualDatacenter(
+								offerPurchased.getIdVirtualDatacenterUser());
+				VirtualAppliance vapp = vdc.getVirtualAppliance(offerPurchased
+						.getIdVirtualApplianceUser());
+
 				List<VirtualMachine> lvm = vapp.listVirtualMachines();
-				VirtualMachine[] arr = new VirtualMachine[lvm.size()];				
-				VirtualMachineMonitor monitor = context.getMonitoringService().getVirtualMachineMonitor();
-				
+				VirtualMachine[] arr = new VirtualMachine[lvm.size()];
+				VirtualMachineMonitor monitor = context.getMonitoringService()
+						.getVirtualMachineMonitor();
+
 				for (VirtualMachine virtualMachine : lvm) {
 					virtualMachine.changeState(VirtualMachineState.OFF);
 				}
-				monitor.awaitState(VirtualMachineState.OFF,lvm.toArray(arr));
-				
+				monitor.awaitState(VirtualMachineState.OFF, lvm.toArray(arr));
+
 				for (VirtualMachine virtualMachine : lvm) {
 					virtualMachine.changeState(VirtualMachineState.ON);
 				}
-				monitor.awaitState(VirtualMachineState.ON,lvm.toArray(arr));
-						
+				monitor.awaitState(VirtualMachineState.ON, lvm.toArray(arr));
+
 				if (vapp.getState() == VirtualApplianceState.DEPLOYED) {
 					Logger.info("OFFER RESET SUCCESSFULLY");
-				} else {					
-					//AbiquoUtils.checkErrorsInTasks(deployTasks);
-					Logger.info("Tasks Checked");					
-				}				
-				
+				} else {
+					// AbiquoUtils.checkErrorsInTasks(deployTasks);
+					Logger.info("Tasks Checked");
+				}
+
 				Logger.info("OFFER RESUMED ......");
 				Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
 				final String action = "reseted";
-				render("/Mobile/action.html", vdc_name, enterprise_id, action);				
+				render("/Mobile/action.html", vdc_name, enterprise_id, action);
 
 			} catch (AuthorizationException ae) {
 
@@ -1159,61 +1180,64 @@ public class Mobile extends Controller {
 			Login.login_page();
 		}
 	}
-	
-	public static void vncConnection(final String vncAddress, final String vncPort, final String vncPassword) {
-		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------"); 
+
+	public static void vncConnection(final String vncAddress,
+			final String vncPort, final String vncPassword) {
+		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
 
 		String user = session.get("username");
-		if (user != null) {			
-			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");			
-			render(vncAddress, vncPort, vncPassword, user);		 		
+		if (user != null) {
+			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
+			render(vncAddress, vncPort, vncPassword, user);
 
 		} else {
-			
+
 			flash.error("You are not connected.Please Login");
 			Login.login_page();
 		}
 	}
-	
-	public static void vncLayer(final String vncAddress, final String vncPort, final String vncPassword) {
-		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------"); 
+
+	public static void vncLayer(final String vncAddress, final String vncPort,
+			final String vncPassword) {
+		Logger.info("---------INSIDE CONSUMER OFFERDETAILS()---------------");
 
 		String user = session.get("username");
-		if (user != null) {			
+		if (user != null) {
 			Logger.info("------------EXITING CONSUMER OFFERDETAILS()--------------");
-			
+
 			try {
-				//TODO: connect ssh to retrieve data from each vm				
+				// TODO: connect ssh to retrieve data from each vm
 				Properties props = new Properties();
-				 //load a properties file				
-				props.load(new FileInputStream(Play.getFile("conf/config.properties")));
-				         
-				final String noVNCPath =  props.getProperty("noVNC");
-				final String noVNCPort =  props.getProperty("noVNCPort");
-				final String noVNCServer =  props.getProperty("noVNCServer");
-				//final String sp = noVNCPath + "utils/websockify --web " + noVNCPath + " " + noVNCPort + " " + vncAddress + ":" + vncPort;
+				// load a properties file
+				props.load(new FileInputStream(Play
+						.getFile("conf/config.properties")));
+
+				final String noVNCPath = props.getProperty("noVNC");
+				final String noVNCPort = props.getProperty("noVNCPort");
+				final String noVNCServer = props.getProperty("noVNCServer");
+				// final String sp = noVNCPath + "utils/websockify --web " +
+				// noVNCPath + " " + noVNCPort + " " + vncAddress + ":" +
+				// vncPort;
 				ProcessBuilder pb = new ProcessBuilder(
-						"public/noVNC/utils/websockify",
-						"--web",
-						"public/noVNC/",
-						noVNCPort,
-						vncAddress + ":" + vncPort
-						);
-				pb.redirectErrorStream(); //redirect stderr to stdout
-				Process process = pb.start();			
+						"public/noVNC/utils/websockify", "--web",
+						"public/noVNC/", noVNCPort, vncAddress + ":" + vncPort);
+				pb.redirectErrorStream(); // redirect stderr to stdout
+				Process process = pb.start();
 				play.mvc.Http.Request current = play.mvc.Http.Request.current();
 				String url = current.url;
 				String domain = current.domain;
 				Integer newPortRaw = Integer.parseInt(noVNCPort);
 				Integer newPort = newPortRaw == 6900 ? 6080 : newPortRaw + 1;
-				
-				props.setProperty("noVNCPort", newPort.toString() );
-				props.save(new FileOutputStream(new File("conf/config.properties")), ""); 
-				render(vncAddress, vncPort, vncPassword, noVNCServer,noVNCPort, url, user, domain);
+
+				props.setProperty("noVNCPort", newPort.toString());
+				props.save(new FileOutputStream(new File(
+						"conf/config.properties")), "");
+				render(vncAddress, vncPort, vncPassword, noVNCServer,
+						noVNCPort, url, user, domain);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 		
+			}
 
 		} else {
 
@@ -1221,104 +1245,112 @@ public class Mobile extends Controller {
 			Login.login_page();
 		}
 	}
-	
+
 	// public static void register(@Required final String username,
-	// 		@Required final String password, @Required final String email) {
-	// 	if (Validation.hasErrors()) {
-	// 		flash.error("Username and password required");
-	// 		login_page();
-	// 	} else {
-	// 		Logger.info("-------------- INSIDE REGISTER.CONNECT()--------------");
-	// 	///////////
-	// 		// First of all create the Abiquo context pointing to the Abiquo API
-	// 		/*AbiquoContext context = ContextBuilder.newBuilder(new AbiquoApiMetadata())
-	// 		    .endpoint("http://10.60.21.33/api")
-	// 		    .credentials("user", "password")
-	// 		    .modules(ImmutableSet.<Module> of(new SLF4JLoggingModule()))
-	// 		    .build(AbiquoContext.class);*/
+	// @Required final String password, @Required final String email) {
+	// if (Validation.hasErrors()) {
+	// flash.error("Username and password required");
+	// login_page();
+	// } else {
+	// Logger.info("-------------- INSIDE REGISTER.CONNECT()--------------");
+	// ///////////
+	// // First of all create the Abiquo context pointing to the Abiquo API
+	// /*AbiquoContext context = ContextBuilder.newBuilder(new
+	// AbiquoApiMetadata())
+	// .endpoint("http://10.60.21.33/api")
+	// .credentials("user", "password")
+	// .modules(ImmutableSet.<Module> of(new SLF4JLoggingModule()))
+	// .build(AbiquoContext.class);*/
 
-	// 		AbiquoContext context = null;				  
-	// 		try
-	// 		{
-	// 			Properties props = new Properties();
-	// 			props.load(new FileInputStream(Play.getFile("conf/config.properties")));
-				
-	// 			final String admin = props.getProperty("admin");
-	// 			final String passwordAdmin = props.getProperty("password");
-	// 			final String datacenterName = props.getProperty("datacenter");
-	// 			final String rolePortal = props.getProperty("role");
-				
-	// 			context = Context.getContext (admin, passwordAdmin);
-	// 		    // Create a new enterprise with a given set of limits
-	// 		    Enterprise enterprise = Enterprise.builder(context)
-	// 		        .name(username)
-	// 		        .cpuCountLimits(5, 10)      // Number of CPUs: Maximum 10, warn when 5 are in use
-	// 		        .ramLimits(2048, 4096)      // Ram in MB: 4GB total, warn when 2GB are in use
-	// 		        .publicIpsLimits(5, 10)     // Available public IPs: 10, warn when 5 are in use
-	// 		        //.storageLimits(5120 * 1204 * 1024, 10240 * 1204 * 1024) // External storage capacity: 10GB, warn when 5GB are in use
-	// 		        .build();
+	// AbiquoContext context = null;
+	// try
+	// {
+	// Properties props = new Properties();
+	// props.load(new FileInputStream(Play.getFile("conf/config.properties")));
 
-	// 		    enterprise.save();
+	// final String admin = props.getProperty("admin");
+	// final String passwordAdmin = props.getProperty("password");
+	// final String datacenterName = props.getProperty("datacenter");
+	// final String rolePortal = props.getProperty("role");
 
-	// 		    // Allow the enterprise to use a Datacenter
-	// 		   Datacenter datacenter =
-	// 		        context.getAdministrationService().findDatacenter(DatacenterPredicates.name(datacenterName));
-			   
-	// 		   enterprise.allowDatacenter(datacenter);
-			    
-	// 		    /*Datacenter datacenter =
-	// 			        context.getAdministrationService().getDatacenter(0);
+	// context = Context.getContext (admin, passwordAdmin);
+	// // Create a new enterprise with a given set of limits
+	// Enterprise enterprise = Enterprise.builder(context)
+	// .name(username)
+	// .cpuCountLimits(5, 10) // Number of CPUs: Maximum 10, warn when 5 are in
+	// use
+	// .ramLimits(2048, 4096) // Ram in MB: 4GB total, warn when 2GB are in use
+	// .publicIpsLimits(5, 10) // Available public IPs: 10, warn when 5 are in
+	// use
+	// //.storageLimits(5120 * 1204 * 1024, 10240 * 1204 * 1024) // External
+	// storage capacity: 10GB, warn when 5GB are in use
+	// .build();
 
-	// 		    enterprise.allowDatacenter(datacenter);*/
+	// enterprise.save();
 
-	// 		    // Create an Enterprise administrator, so it can begin using the cloud infrastructure
-	// 		    // and can start creating the users of the enterprise
-	// 		    Role role =
-	// 		        context.getAdministrationService().findRole(RolePredicates.name(rolePortal));
+	// // Allow the enterprise to use a Datacenter
+	// Datacenter datacenter =
+	// context.getAdministrationService().findDatacenter(DatacenterPredicates.name(datacenterName));
 
-	// 		    // Create the user with the selected role in the just created enterprise
-	// 		    User enterpriseUser = User.builder(context, enterprise, role) 
-	// 		        .name(username, username)       // The name and surname
-	// 		        .email(email) // The email address
-	// 		        .nick(username)              // The login username
-	// 		        .password(password)       // The password
-	// 		        .build();
+	// enterprise.allowDatacenter(datacenter);
 
-	// 		    enterpriseUser.save();
-			    
-	// 		    connect(username, password);
+	// /*Datacenter datacenter =
+	// context.getAdministrationService().getDatacenter(0);
 
-	// 		    // At this point, the new Enterprise is created and ready to begin consuming the resources
-	// 		    // of the cloud
-	// 		} catch (AbiquoException ae) {
-	// 			// ae.printStackTrace();				
-	// 			if (ae.getMessage().trim().equals("ENTERPRISE-4 - Duplicate name for an enterprise")) {
-	// 				flash.error("User already registered");
-	// 			} else {
-	// 				flash.error("Error creating new account");
-	// 			}
-	// 			login_page();
-	// 		} catch (AuthorizationException ae) {
-	// 			// ae.printStackTrace();
-	// 			flash.error("Unauthorized User");
-	// 			login_page();
-	// 		} catch (FileNotFoundException e) {
-	// 			// TODO Auto-generated catch block
-	// 			e.printStackTrace();
-	// 		} catch (IOException e) {
-	// 			// TODO Auto-generated catch block
-	// 			e.printStackTrace();
-	// 		} catch (Exception e) {
-	// 			// e.printStackTrace();
-	// 			flash.error("Server Unreachable");
-	// 			login_page();
-	// 		} finally {
-	// 			flash.clear();
-	// 		    if (context != null)
-	// 		    {
-	// 		        context.close();
-	// 		    }
-	// 		}
-	// 	}
+	// enterprise.allowDatacenter(datacenter);*/
+
+	// // Create an Enterprise administrator, so it can begin using the cloud
+	// infrastructure
+	// // and can start creating the users of the enterprise
+	// Role role =
+	// context.getAdministrationService().findRole(RolePredicates.name(rolePortal));
+
+	// // Create the user with the selected role in the just created enterprise
+	// User enterpriseUser = User.builder(context, enterprise, role)
+	// .name(username, username) // The name and surname
+	// .email(email) // The email address
+	// .nick(username) // The login username
+	// .password(password) // The password
+	// .build();
+
+	// enterpriseUser.save();
+
+	// connect(username, password);
+
+	// // At this point, the new Enterprise is created and ready to begin
+	// consuming the resources
+	// // of the cloud
+	// } catch (AbiquoException ae) {
+	// // ae.printStackTrace();
+	// if
+	// (ae.getMessage().trim().equals("ENTERPRISE-4 - Duplicate name for an enterprise"))
+	// {
+	// flash.error("User already registered");
+	// } else {
+	// flash.error("Error creating new account");
+	// }
+	// login_page();
+	// } catch (AuthorizationException ae) {
+	// // ae.printStackTrace();
+	// flash.error("Unauthorized User");
+	// login_page();
+	// } catch (FileNotFoundException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (Exception e) {
+	// // e.printStackTrace();
+	// flash.error("Server Unreachable");
+	// login_page();
+	// } finally {
+	// flash.clear();
+	// if (context != null)
+	// {
+	// context.close();
+	// }
+	// }
+	// }
 	// }
 }

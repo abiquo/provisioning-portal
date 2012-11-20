@@ -1,158 +1,177 @@
 html {
-	height:100%
-
+	height: 100%
 }
+
 body {
 	font-family: Verdana, Arial, sans-serif;
-	color:#333333;
-	background-color:#333;
-	height:100%;
-	position:relative;
-	margin:0;
+	color: #333333;
+	background-color: #333;
+	height: 100%;
+	position: relative;
+	margin: 0;
 }
+
 h1 {
-	font-size: 1.5em;     
+	font-size: 1.5em;
 }
+
 #header {
-	width:100%;
-	overflow:hidden;
+	width: 100%;
+	overflow: hidden;
 }
+
 #page {
-	width:100%;
+	width: 100%;
 }
+
 #main-wrapper {
-	background-color:#fff;
-   
+	background-color: #fff;
 }
-#main {
-	/*min-height:500px;*/
-	padding:58px 0;
-	width:100%;
+
+#main { /*min-height:500px;*/
+	padding: 58px 0;
+	width: 100%;
 	max-width: 1024px;
 	min-width: 320px;
-	margin:0 auto;
-	overflow:hidden;
+	margin: 0 auto;
+	overflow: hidden;
 }
+
 #headingBottom {
-	width:100%;
-	overflow:hidden;
-	background-color:#333;
-	height:80px;
-	padding:0 10px;
+	width: 100%;
+	overflow: hidden;
+	background-color: #333;
+	height: 80px;
+	padding: 0 10px;
 }
+
 #headingBottom #logo {
-	padding:10px 0;
+	padding: 10px 0;
 }
+
 #main .ui-tabs .ui-tabs-hide {
 	display: none;
 }
+
 #headingTop {
-	float:right;
-	padding-right:10px;
-	background-color:#000000;
-	width:100%;
+	float: right;
+	padding-right: 10px;
+	background-color: #000000;
+	width: 100%;
 }
+
 #headingTop p {
-	color:#dddddd;
-	line-height:30px;
-	height:30px;
+	color: #dddddd;
+	line-height: 30px;
+	height: 30px;
 }
+
 #headingTop a {
-	color:#cccccc;
-	text-decoration:none;
+	color: #cccccc;
+	text-decoration: none;
 }
+
 #headingTop a:hover {
-	color:#ffffff;
+	color: #ffffff;
 }
+
 #footer-wrapper {
 	background-color: #333;
 	color: #FFFFFF;
 	width: 100%;
-	height:40px;
+	height: 40px;
 }
-#footer {
-	/*padding:0 10px;*/
+
+#footer { /*padding:0 10px;*/
+	
 }
+
 #footer p {
-	line-height:40px;
-	color:#ccc;
+	line-height: 40px;
+	color: #ccc;
 }
+
 #tabcontainer ul#tabnav a {
-	color:#333;
-	text-decoration:none;
+	color: #333;
+	text-decoration: none;
 }
+
 #tabcontainer ul#tabnav a:hover {
-	background:#dddddd;
-	font-weight:bold;
+	background: #dddddd;
+	font-weight: bold;
 }
+
 #tabcontainer ul#tabnav a.active {
 	background: none repeat scroll 0 0 #FFFFFF;
-    border-bottom-color: #FFFFFF;
-    font-weight: bold;
+	border-bottom-color: #FFFFFF;
+	font-weight: bold;
 }
+
 h1 {
-	margin-top:0;
+	margin-top: 0;
 }
+
 table {
-	font-size:1em;
-	width:100%;
-	border-collapse:collapse;
+	font-size: 1em;
+	width: 100%;
+	border-collapse: collapse;
 }
+
 td {
-	padding:5px;
+	padding: 5px;
 }
+
 .col2 {
-	font-weight:bold;
+	font-weight: bold;
 }
 /* Start fancy button */
 div.fancyButtons {
-	margin:20px 0;
+	margin: 20px 0;
 }
+
 div.fancyButton {
-	position:relative;
+	position: relative;
 }
+
 div.fancyButton a {
-	width:80%;
-	height:36px;
-	line-height:36px;
-	background-color:#f78f1E;
-	text-align:center;
-	display:block;
-	margin:0 auto;
+	width: 80%;
+	height: 36px;
+	line-height: 36px;
+	background-color: #f78f1E;
+	text-align: center;
+	display: block;
+	margin: 0 auto;
 	-moz-border-radius: 36px;
 	-webkit-border-radius: 36px;
 	border-radius: 36px; /* future proofing */
 	-khtml-border-radius: 36px; /* for old Konqueror browsers */
-	background-image:none;
-	text-decoration:none;
-	border:1px solid #f78f1E;
-	color:#603813;
-	font-weight:bold;
-	font-size:1.1em;
+	background-image: none;
+	text-decoration: none;
+	border: 1px solid #f78f1E;
+	color: #603813;
+	font-weight: bold;
+	font-size: 1.1em;
 }
-div.fancyButton a:hover {
-   /* Safari 4+, Chrome 1-9 */
-   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2F2727), to(#FFCC66));
 
-   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
-   background-image: -webkit-linear-gradient(top, #f78f1E, #FFCC66); 
-
-   /* Firefox 3.6+ */
-   background-image: -moz-linear-gradient(top, #f78f1E, #FFCC66);
-
-   /* IE 10+ */
-   background-image: -ms-linear-gradient(top, #f78f1E, #FFCC66);
-
-   /* Opera 11.10+ */
-   background-image: -o-linear-gradient(top, #f78f1E, #FFCC66);
-/* end fancy button */
+div.fancyButton a:hover { /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2F2727),
+		to(#FFCC66) );
+	/* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -webkit-linear-gradient(top, #f78f1E, #FFCC66);
+	/* Firefox 3.6+ */
+	background-image: -moz-linear-gradient(top, #f78f1E, #FFCC66);
+	/* IE 10+ */
+	background-image: -ms-linear-gradient(top, #f78f1E, #FFCC66);
+	/* Opera 11.10+ */
+	background-image: -o-linear-gradient(top, #f78f1E, #FFCC66);
+	/* end fancy button */
 }
+
 .floatRight {
-	float:right;
+	float: right;
 }
 
 /*--- pop-ups ---*/
 body#popUp {
-	background-color:#FFF;
+	background-color: #FFF;
 }
-

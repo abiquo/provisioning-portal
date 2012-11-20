@@ -85,7 +85,7 @@ public class ProducerRemote extends Controller {
 		AbiquoContext context = Context.getApiClient(user, password);
 		AbiquoUtils.setAbiquoUtilsContext(context);
 		Iterable<VirtualDatacenter> vdc_list = AbiquoUtils.getAllVDC();
-		
+
 		for (VirtualDatacenter virtualDatacenter : vdc_list) {
 			virtualDatacenter.listVirtualAppliances();
 		}
@@ -123,13 +123,16 @@ public class ProducerRemote extends Controller {
 					for (VirtualMachine virtualMachine : vmList) {
 						virtualMachine.listAttachedNics();
 					}
-					
-					List<Offer> offers = ProducerDAO.getOfferDetails(id_va_param);
-					
-					//Price
-					
-					final String price = AbiquoUtils.getVAPrice(id_vdc_param, id_va_param);					
-					render(vmList, virtualAppliance, virtualDatacenter, user, offers, price);
+
+					List<Offer> offers = ProducerDAO
+							.getOfferDetails(id_va_param);
+
+					// Price
+
+					final String price = AbiquoUtils.getVAPrice(id_vdc_param,
+							id_va_param);
+					render(vmList, virtualAppliance, virtualDatacenter, user,
+							offers, price);
 				}
 
 				else {
@@ -182,8 +185,8 @@ public class ProducerRemote extends Controller {
 				// context.getCloudService().getVirtualDatacenter(vdc).getVirtualAppliance(va).getVirtualMachine(vm);
 				final Integer cpu = virtualMachine.getCpu();
 				final Integer ram = virtualMachine.getRam();
-				
-				//hd in MBytes
+
+				// hd in MBytes
 				final Integer hd = (int) (virtualMachine.getHdInBytes() / (1024 * 1024));
 				List<HardDisk> harddisk = virtualMachine
 						.listAttachedHardDisks();
@@ -235,8 +238,10 @@ public class ProducerRemote extends Controller {
 			flash.error("Please enter valid data. See errors inline. Icon is required. Max characters for : Short Description - 30 and Long Description - 255 ");
 			params.flash();
 			Validation.keep();
-			/*configure(sc_offers.getIdVirtualDataCenter_ref(),
-					sc_offers.getSc_offer_id());*/
+			/*
+			 * configure(sc_offers.getIdVirtualDataCenter_ref(),
+			 * sc_offers.getSc_offer_id());
+			 */
 			render();
 
 		} else {
@@ -245,8 +250,7 @@ public class ProducerRemote extends Controller {
 			String password = session.get("password");
 			if (user != null) {
 				Logger.info("Session user in addToServiceCatalog(): " + user);
-				Logger.info(" and  vdc "
-						+ offer.getVirtualDatacenter()
+				Logger.info(" and  vdc " + offer.getVirtualDatacenter()
 						+ "  & va_id : " + offer.getId());
 				Logger.info(" lease period "
 						+ offerSubscription.getLeasePeriod());
@@ -282,15 +286,16 @@ public class ProducerRemote extends Controller {
 					Integer id_datacenter = virtualDC.getDatacenter().getId();
 					HypervisorType hypervisor = virtualDC.getHypervisorType();
 
-		
-					PrivateNetwork network = PrivateNetwork.builder(context.getApiContext())
-							.name("10.80.0.0").gateway("10.80.0.1")
-							.address("10.80.0.0").mask(22).build();
+					PrivateNetwork network = PrivateNetwork
+							.builder(context.getApiContext()).name("10.80.0.0")
+							.gateway("10.80.0.1").address("10.80.0.0").mask(22)
+							.build();
 
 					Offer scOffer = new Offer();
 					scOffer.setVirtualAppliance(va.getId());
 					scOffer.setName(va.getName());
-					scOffer.setPrice(AbiquoUtils.getVAPrice(vdc_id_param, id_va_param));
+					scOffer.setPrice(AbiquoUtils.getVAPrice(vdc_id_param,
+							id_va_param));
 					if (icon != null) {
 						scOffer.setIconName(offer.getIconName());
 						scOffer.setIconName(icon.getName());
@@ -303,16 +308,18 @@ public class ProducerRemote extends Controller {
 						scOffer.getImage().set(new FileInputStream(image),
 								MimeTypes.getContentType(image.getName()));
 					}
-					scOffer.setShortDescription(offer
-							.getShortDescription());
+					scOffer.setShortDescription(offer.getShortDescription());
 					scOffer.setDatacenter(id_datacenter);
 					scOffer.setHypervisorType(hypervisor.toString());
 					scOffer.setDefaultNetworkType(network.getAddress());
-					scOffer.setVirtualDatacenter(va.getVirtualDatacenter().getId());
+					scOffer.setVirtualDatacenter(va.getVirtualDatacenter()
+							.getId());
 					scOffer.setVirtualAppliance(va.getId());
-					
-					if (offerSubscription.getLeasePeriod().equals("100 years")) scOffer.setServiceType("Infinite");
-					else scOffer.setServiceType("Expire");
+
+					if (offerSubscription.getLeasePeriod().equals("100 years"))
+						scOffer.setServiceType("Infinite");
+					else
+						scOffer.setServiceType("Expire");
 					scOffer.setVirtualDatacenter(virtualDC.getId());
 
 					Set<Nodes> node_set = new HashSet<Nodes>();
@@ -328,7 +335,7 @@ public class ProducerRemote extends Controller {
 						int cpu = aVM.getCpu();
 						int ram = aVM.getRam();
 						// HD in GBytes
-						int hd = (int) (aVM.getHdInBytes() / (1024 * 1024) );
+						int hd = (int) (aVM.getHdInBytes() / (1024 * 1024));
 						// Long hd = aVM.getHdInBytes();
 						String description = aVM.getDescription();
 						node = new Nodes();
@@ -366,8 +373,8 @@ public class ProducerRemote extends Controller {
 
 					scOffer.setNodes(node_set);
 					scOffer.setState("PUBLISHED");
-					//OfferPurchased offerSub = new OfferPurchased();
-					//offerSub.setOffer(scOffer);
+					// OfferPurchased offerSub = new OfferPurchased();
+					// offerSub.setOffer(scOffer);
 					// offerSub.setStart_date(datee);
 					scOffer.setDefaultServiceLevel(virtualDC.getName());
 					scOffer.setDefaultLeasePeriod(lease_period);
@@ -424,9 +431,10 @@ public class ProducerRemote extends Controller {
 						Logger.info(" va  : " + virtualDC.getName());
 						vmList = va.listVirtualMachines();
 					}
-					
-					//Price
-					final String price = AbiquoUtils.getVAPrice(vdc_id_param, id_va_param);
+
+					// Price
+					final String price = AbiquoUtils.getVAPrice(vdc_id_param,
+							id_va_param);
 					Logger.info(" -----EXITING PRODUCER CONFIGURE()------");
 					render(va, virtualDC, vmList, user, price);
 				} else {
