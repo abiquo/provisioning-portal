@@ -41,9 +41,8 @@ import models.Nodes_Resources;
 import models.Offer;
 import models.OfferPurchased;
 import models.UserPortal;
-import monitor.VmEventHandler;
+import monitor.VappEventHandler;
 
-import org.apache.commons.lang.StringUtils;
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.HardDisk;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
@@ -312,13 +311,7 @@ public class Consumer extends Controller {
 			Enterprise current_enterprise = AbiquoUtils
 					.getCurrentUserEnterprise();
 			Integer enterprise_id = current_enterprise.getId();
-
-			/*for (MKT_Configuration mkt : mkt_conf) {
-				deploy_username = mkt.getMkt_deploy_user();
-				deploy_password = mkt.getMkt_deploy_pw();
-				deploy_enterprise_id = mkt.getDeploy_enterprise_id();
-			}*/
-			
+				
 			deploy_username = user;
 			deploy_password = password;
 			deploy_enterprise_id = current_enterprise.getId();
@@ -437,6 +430,8 @@ public class Consumer extends Controller {
 				deploy_Bundle.setOfferPurchased(offerPurchased);
 				deploy_Bundle.setVapp_id(virtualapp_todeploy.getId());
 				deploy_bundle_set.add(deploy_Bundle);
+			
+				//EventHandler handler = new VmEventHandler(context,vm_todeploy);
 				/*
 				 * String query =
 				 * "select p from sc_offer as p where p.sc_offer_id = ?1";
@@ -462,6 +457,7 @@ public class Consumer extends Controller {
 										vm_template_todeploy).nameLabel(vmName)
 								.cpu(cpu).ram(ram).password("vmpassword")
 								.build();
+
 						vm_todeploy.save();
 						Logger.info(" 3. VM CREATED");
 						Deploy_Bundle_Nodes deploy_Bundle_Nodes = new Deploy_Bundle_Nodes();
@@ -505,16 +501,10 @@ public class Consumer extends Controller {
 						}
 						vm_todeploy.attachHardDisks(disks);
 						Logger.info(" 4. HARDDISKS ATTACHED ");
-						VmEventHandler handler = new VmEventHandler(context,
-								vm_todeploy);
+					
 						Logger.info(" Handler created :");
-						VirtualMachineMonitor monitor = context
-								.getMonitoringService()
-								.getVirtualMachineMonitor();
-						monitor.register(handler);
 						vm_todeploy.deploy();
 						Logger.info("STARTING MONITORING ......");
-						monitor.monitorDeploy(vm_todeploy);
 
 					}
 					Logger.info("SAVING DEPLOY INFORMATION ......");
@@ -523,6 +513,21 @@ public class Consumer extends Controller {
 					offerPurchased.setNodes(deploy_bundle_set);
 					offerPurchased.setServiceLevel(new_name == null ? offer.getDefaultServiceLevel() : new_name);
 					offerPurchased.save();
+					
+					// Register the handler so it starts to listen to events
+
+					VirtualApplianceMonitor monitor = context.getMonitoringService().getVirtualApplianceMonitor();
+					VappEventHandler handler = new VappEventHandler(monitor);
+					
+					monitor.register(handler);
+
+					// Monitor the task and call the callback when it completes
+					monitor.monitorDeploy(virtualapp_todeploy);
+
+					// The 'monitor' method will not block and the program execution will continue
+					// normally. Events will be dispatched to handlers when monitor completes, fails
+					// or reaches timeout.
+					
 					//Mails.sendEmail(vncPort, vncAddress, password, name, offerName, useremail, exp_date)
 					Logger.info("DEPLOY INFO SAVED ......");
 					Logger.info("------------EXITING CONSUMER DEPLOY()--------------");
@@ -940,9 +945,9 @@ public class Consumer extends Controller {
 					vapp.delete();
 					vdc.delete();
 					offerPurchased.delete();
-					Mails.sendEmail("Deleting offer", offerPurchased
+					Mails.sendEmailMessage("Deleting offer", offerPurchased
 							.getServiceLevel(), offerPurchased.getOffer()
-							.getName(), useremail);
+							.getName(), useremail, offerPurchased.getExpiration().toString());
 				} else {
 
 					AbiquoUtils.checkErrorsInTasks(undeployTasks);
@@ -1057,9 +1062,9 @@ public class Consumer extends Controller {
 
 				if (vapp.getState() == VirtualApplianceState.DEPLOYED) {
 					Logger.info("OFFER DEPLOYED SUCCESSFULLY");
-					Mails.sendEmail("Resuming offer", offerPurchased
+					Mails.sendEmailMessage("Resuming offer", offerPurchased
 							.getServiceLevel(), offerPurchased.getOffer()
-							.getName(), useremail);
+							.getName(), useremail, offerPurchased.getExpiration().toString());
 				} else {
 					AbiquoUtils.checkErrorsInTasks(deployTasks);
 					Logger.info("Tasks Checked");
@@ -1183,9 +1188,9 @@ public class Consumer extends Controller {
 
 				if (vapp.getState() == VirtualApplianceState.DEPLOYED) {
 					Logger.info("OFFER RESET SUCCESSFULLY");
-					Mails.sendEmail("Reseting offer", offerPurchased
+					Mails.sendEmailMessage("Reseting offer", offerPurchased
 							.getServiceLevel(), offerPurchased.getOffer()
-							.getName(), useremail);
+							.getName(), useremail,offerPurchased.getExpiration().toString());
 				} else {
 					// AbiquoUtils.checkErrorsInTasks(deployTasks);
 					Logger.info("Tasks Checked");
@@ -1260,9 +1265,9 @@ public class Consumer extends Controller {
 				offerPurchased.setExpiration(dateExp);
 				offerPurchased.getOffer().setName(new_name);
 				offerPurchased.save();
-				Mails.sendEmail("Extending lease period", offerPurchased
+				Mails.sendEmailMessage("Extending lease period", offerPurchased
 						.getServiceLevel(),
-						offerPurchased.getOffer().getName(), offerPurchased.getUser().getEmail());
+						offerPurchased.getOffer().getName(), offerPurchased.getUser().getEmail(), offerPurchased.getExpiration().toString());
 				render(user, offerPurchased);
 			} else {
 				String message = "Offer Purchased does not exists";

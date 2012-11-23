@@ -64,18 +64,15 @@ public class Mails extends Mailer {
 	 * @param useremail
 	 * @param exp_date
 	 */
-	public static void sendEmail(Integer vncPort, String vncAddress,
-			String password, String name, String offerName, String useremail,
-			Date exp_date) {
+	public static void sendEmail(OfferPurchased op, VirtualAppliance vapp) {
 
 		Logger.info("INSIDE MAILS SENDEMAIL()....");
 		setSubject("Abiquo Confirmation");
-		addRecipient(useremail);
+		addRecipient(op.getUser().getEmail());
 		setFrom("Admin <provisioning-portal@abiquo.com>");
-		Logger.info("SENDING EMAIL TO  ...." + useremail);
-		send(offerName, name, vncPort, vncAddress, useremail, password,
-				exp_date);
-
+		Logger.info("SENDING EMAIL TO  ...." + op.getUser().getEmail());
+		List<VirtualMachine> vms = vapp.listVirtualMachines();
+		send(op, vms);
 	}
 
 	/**
@@ -93,7 +90,7 @@ public class Mails extends Mailer {
 
 		Logger.info("INSIDE MAILS SENDEMAIL()....");
 		setSubject("Abiquo Confirmation");
-		addRecipient("david.lopez@abiquo.com"); // tochange
+		addRecipient(op.getUser().getEmail()); 
 		setFrom("Admin <provisioning-portal@abiquo.com>");
 		Logger.info("SENDING EMAIL TO  ...." + op.getUser().getEmail());
 
@@ -108,7 +105,7 @@ public class Mails extends Mailer {
 
 		Logger.info("INSIDE MAILS SENDEMAIL()....");
 		setSubject("Abiquo Confirmation");
-		addRecipient("david.lopez@abiquo.com"); // tochange
+		addRecipient(op.getUser().getEmail()); 
 		setFrom("Admin <provisioning-portal@abiquo.com>");
 		Logger.info("SENDING EMAIL TO  ...." + op.getUser().getEmail());
 		send(op);
@@ -133,21 +130,21 @@ public class Mails extends Mailer {
 	}
 
 	/**
-	 * Email sent if deployment fails.
+	 * Email sent with message
 	 * 
 	 * @param offerName
 	 * @param name
 	 * @param useremail
 	 */
-	public static void sendEmail(String message, String offerName, String name,
-			String useremail) {
+	public static void sendEmailMessage(String message, String offerName, String name,
+			String useremail, String expDate) {
 
 		Logger.info("INSIDE Mails.sendFailureEmail()....");
 		setSubject("Abiquo Confirmation");
 		addRecipient(useremail);
 		setFrom("Admin <provisioning-portal@abiquo.com>");
 		Logger.info("SENDING EMAIL TO  ...." + useremail);
-		send(message, name, offerName, useremail);
+		send(message, name, offerName, useremail, expDate);
 	}
 
 	/**
@@ -224,8 +221,7 @@ public class Mails extends Mailer {
 
 			}
 			Logger.info(" preparaing to send mail.....");
-			Mails.sendEmail(port, ip, vmpassword, name, offerName, emailID,
-					exp_date);
+			//Mails.sendEmail(port, ip, vmpassword, name, offerName, emailID,exp_date);
 		} finally {
 			JPA.local.get().entityManager.close();
 			JPA.local.remove();

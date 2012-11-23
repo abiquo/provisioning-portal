@@ -97,7 +97,7 @@ public class VmEventHandler extends AbstractEventHandler<VirtualMachine> {
 						.println("VDC : " + vm.getVirtualDatacenter().getId());
 				Mails.updateUserConsumption_onSuccess(vm.getVirtualDatacenter()
 						.getId(), vm.getVirtualAppliance(), vm.getId(), vm);
-				// Mails.sendEmail(vm.getVirtualDatacenter().getId()
+				//Mails.sendEmail(vncPort, vncAddress, password, name, offerName, useremail, exp_date)ail(vm.getVirtualDatacenter().getId()
 				// ,vm.getVirtualAppliance().getId() , vm.getId());
 
 			}

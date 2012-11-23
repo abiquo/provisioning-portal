@@ -1,0 +1,19 @@
+#{extends '/Mails/sendEmailWrapper.html' /} 
+<layout label="Text only">
+<title>Cloud Services Confirmation</title>
+    <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+        <tbody><tr>
+            <td class="w580" width="580">
+                <p align="left" class="article-title"><singleline label="Title">${message} successfully done </singleline></p>
+                <div align="left" class="article-content">
+                    <multiline label="Description">Thank you for using Cloud Services, your order is ready. Please review the order information below. For assistance contact your cloud administrator              
+						<p>Email:  <b>${useremail}</b></p>
+						<p>Offer name: <b>${offerName} </b></p>
+						<p>Offer expiration date: <b>${expDate} </b></p>
+                    </multiline>
+                </div>
+            </td>
+        </tr>
+        <tr><td class="w580" width="580" height="10"></td></tr>
+    </tbody></table>
+</layout>

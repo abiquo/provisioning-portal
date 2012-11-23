@@ -1,48 +1,35 @@
-<!-------------------------------------------------------------------------------
-# Abiquo community edition
-# cloud management application for hybrid clouds
-#  Copyright (C) 2008-2010 - Abiquo Holdings S.L.
-# 
-#  This application is free software; you can redistribute it and/or
-#  modify it under the terms of the GNU LESSER GENERAL PUBLIC
-#  LICENSE as published by the Free Software Foundation under
-#  version 3 of the License
-# 
-#  This software is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#  LESSER GENERAL PUBLIC LICENSE v.3 for more details.
-# 
-#  You should have received a copy of the GNU Lesser General Public
-#  License along with this library; if not, write to the
-#  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-#  Boston, MA 02111-1307, USA.
-#------------------------------------------------------------------------------->
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+#{extends '/Mails/sendEmailWrapper.html' /} 
+<layout label="Text only">
 <title>Cloud Services Confirmation</title>
-</head>
-<body>
-<p>-----------------<p>
-<p> ${message} done <p>
-<p>-----------------<p>
-<p>Thank you for using Cloud Services. Your order is ready.<p>
-<P>You may receive multiple E-mails for Orders with multiple VMs<p>
-<p>Please review the order information below<p>
-<p>For assistance contact your cloud administrator<p>
-<p><p>
-<p>USER:  <b>${useremail}</b><br>
-<p>Service Catalog Offer Name:<p> <b>${offerName} </b><br />
-<p>Virtual Machine Expiration Date:<p> <b>${exp_date} </b><br />
-<p>Virtual Machine Name:<p> <b>${name} </b><br />
-<p>This Virtual Machine can be accessed using VNC at the following location<p><br>
-<b> Address: ${vncAddress} </b><br / >
-<b> Port: ${vncPort} </b> <br / >
-<b> Password: ${password} </b><br / >
-<p>You can use any VNC utility to access the Virtual Machine and enter above details<p>
-<p>TightVNC can be downloaded from http://www.tightvnc.com/download.php<p><br>
-<p>UltraVNC can be downloaded from http://www.uvnc.com/downloads/ultravnc.html<p><br>
-</body>
-</html>
+    <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
+        <tbody><tr>
+            <td class="w580" width="580">
+                <p align="left" class="article-title"><singleline label="Title">Your CloudApp has been deployed successfully</singleline></p>
+                <div align="left" class="article-content">
+                    <multiline label="Description">Please review the order information below. For assistance contact your cloud administrator
+                    	<p>User:  <b>${op.user.nick}</b></p>
+						<p>Email:  <b>${op.user.email}</b></p>
+						<p>Offer name: <b>${op.offer.name} </b></p>
+						<p>Offer starting date: <b>${op.start} </b></p>
+						<p>Offer expiration date: <b>${op.expiration} </b></p>											
+						<p><b>List of virtual machines deployed:</b><p>
+						#{list vms, as:'vm'}
+						<b>Virtual machine name: ${vm.nameLabel} </b><br />
+						<b>Cpu's: ${vm.cpu} </b><br />
+						<b>Ram: ${vm.ram} MB</b><br />
+						<b>Description: ${vm.description} </b><br />	
+						<p>This virtual machine can be accessed using VNC at the following location<p>
+						<b> Address: ${vm.vncAddress} </b><br / >
+						<b> Port: ${vm.vncPort} </b> <br / >
+						<b> Password: ${vm.password} </b><br / >
+						#{/list}
+						<p>You can use any VNC utility to access the Virtual Machine and enter above details<p>
+						<p>TightVNC can be downloaded from http://www.tightvnc.com/download.php<p>
+						<p>UltraVNC can be downloaded from http://www.uvnc.com/downloads/ultravnc.html<p>
+                    </multiline>
+                </div>
+            </td>
+        </tr>
+        <tr><td class="w580" width="580" height="10"></td></tr>
+    </tbody></table>
+</layout>

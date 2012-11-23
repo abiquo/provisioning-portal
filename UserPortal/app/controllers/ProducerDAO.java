@@ -43,7 +43,20 @@ public class ProducerDAO {
 		return resultSet;
 
 	}
+	
+	public static List<OfferPurchased> getOffersPurchasedFromVappId(
+			final Integer vappId) {
+		Logger.info(" -----INSIDE PRODUCERDAO getOffersPurchasedFromUserId()------");
 
+		Query query = JPA.em().createNamedQuery("getOffersPurchasedFromVappId");
+		query.setParameter(1, vappId);
+		List<OfferPurchased> resultSet = query.getResultList();
+		Logger.info(" -----EXITING PRODUCERDAO getOffersPurchasedFromUserId()------");
+
+		return resultSet;
+
+	}
+	
 	static List<OfferPurchased> getOffersPurchasedFromEnterpriseId(
 			final Integer enterpriseId) {
 		Logger.info(" -----INSIDE PRODUCERDAO getOffersPurchasedFromEnterpriseId()------");
