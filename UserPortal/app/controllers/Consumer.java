@@ -499,8 +499,10 @@ public class Consumer extends Controller {
 						for (int i = 0; i < hardDisk_toattach.size(); i++) {
 							disks[i] = hardDisk_toattach.get(i);
 						}
-						vm_todeploy.attachHardDisks(disks);
-						Logger.info(" 4. HARDDISKS ATTACHED ");
+						if (disks.length > 0) {
+							vm_todeploy.attachHardDisks(disks);
+							Logger.info(" 4. HARDDISKS ATTACHED ");
+						}
 					
 						Logger.info(" Handler created :");
 						vm_todeploy.deploy();

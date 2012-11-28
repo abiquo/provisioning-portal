@@ -1,103 +1,86 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Abiquo Provisioning Portal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
-<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script
-	src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
-</head>
-<body>
+#{extends '/Mobile/layoutMobile.html' /} 
+<div data-role="page">
 
-	<div data-role="page">
+	<div data-role="header">
+		<a href="@@{Mobile.admin()}" data-icon="home" data-iconpos="notext"
+			data-direction="reverse">Home</a> <a href="#" data-icon="back"
+			data-iconpos="notext" data-direction="reverse" data-rel="back">Back</a>
+		<h1>Abiquo Provisioning Portal</h1>
+	</div>
+	<!-- /header -->
 
-		<div data-role="header">
-			<a href="@@{Mobile.admin()}" data-icon="home" data-iconpos="notext"
-				data-direction="reverse">Home</a> <a href="#" data-icon="back"
-				data-iconpos="notext" data-direction="reverse" data-rel="back">Back</a>
-			<h1>Abiquo Provisioning Portal</h1>
+	<div data-role="content">
+		<ul data-role="listview" data-inset="true" data-theme="a"
+			data-divider-theme="a">
+			<li data-role="list-divider"><h2>${vappFull?.virtualAppliance.name}</h2></li>
+			<li><a href="#">
+					<h3>${vm?.template_name}</h3>
+					<p>
+						<strong>Started on:</strong> ${offerPurchased?.start}
+					</p>
+					<p>
+						<strong>Expires on:</strong> ${offerPurchased?.start}
+					</p>
+					<p>
+						<strong>Description:</strong>
+						${offerPurchased?.offer.longDescription}
+					</p>
+					<p>
+						<strong>Price:</strong> ${offerPurchased?.offer.price}
+					</p>
+					<p class="ui-li-aside">
+						<strong>State:</strong>${offerPurchased?.virtualApplianceState.name()}
+					</p>
+			</a> <a href="#" data-rel="dialog" data-transition="slideup">Purchase
+					offer</a></li>
+		</ul>
+		<ul data-role="listview" data-inset="true" data-filter="true"
+			data-filter-placeholder="Search vm..." data-filter-theme="a"
+			data-theme="a" data-divider-theme="a" data-split-icon="info">
+			<li data-role="list-divider">Virtual Machines</li> #{list
+			vappFull.listVirtualMachines, as:'vm'}
+			<li><a href="#">
+					<h3>${vm?.template_name}</h3>
+					<p>
+						<strong>CPU:</strong> ${vm?.virtualMachine.cpu}
+					</p>
+					<p>
+						<strong>RAM:</strong> ${vm?.virtualMachine.ram} MB
+					</p>
+					<p>
+						<strong>Description:</strong> ${vm?.virtualMachine.description}
+					</p>
+					<p class="ui-li-aside">
+						<strong>State:</strong>${vm?.virtualMachine.state}
+					</p>
+			</a> <a
+				href="@@{Mobile.vncConnection(vm?.virtualMachine.vncAddress,vm?.virtualMachine.vncPort,vm?.virtualMachine.password)}"
+				data-prefetch>Purchase offer</a></li> #{/list}
+		</ul>
+		<div data-role="controlgroup">
+			<a href="@@{Mobile.confirmation(offerPurchasedId, 'reset')}"
+				data-role="button" data-icon="refresh" data-theme="b"
+				data-transition="slideup" data-rel="dialog">Reset Offer</a> <a
+				href="@@{Mobile.confirmation(offerPurchasedId, 'delete')}"
+				data-role="button" data-icon="delete" data-theme="b"
+				data-transition="slideup" data-rel="dialog">Delete Offer</a> <a
+				href="#" data-role="button" data-icon="plus" data-theme="b"
+				data-rel="dialog" data-transition="slideup" data-rel="dialog">Upgrade</a>
 		</div>
-		<!-- /header -->
+	</div>
+	<!--/content-primary -->
+	<div class="content-secondary">
 
-		<div data-role="content">
-			<ul data-role="listview" data-inset="true" data-theme="d"
-				data-divider-theme="a">
-				<li data-role="list-divider"><h2>${vappFull?.virtualAppliance.name}</h2></li>
-				<li><a href="#">
-						<h3>${vm?.template_name}</h3>
-						<p>
-							<strong>Started on:</strong> ${offerPurchased?.start}
-						</p>
-						<p>
-							<strong>Expires on:</strong> ${offerPurchased?.start}
-						</p>
-						<p>
-							<strong>Description:</strong>
-							${offerPurchased?.offer.longDescription}
-						</p>
-						<p>
-							<strong>Price:</strong> ${offerPurchased?.offer.price}
-						</p>
-						<p class="ui-li-aside">
-							<strong>State:</strong>${offerPurchased?.virtualApplianceState.name()}
-						</p>
-				</a> <a href="#" data-rel="dialog" data-transition="slideup">Purchase
-						offer</a></li>
+		<div data-role="collapsible" data-collapsed="true" data-theme="b"
+			data-content-theme="b">
+
+			<h3>Help</h3>
+			<ul data-role="listview" data-theme="a" data-dividertheme="a">
+
+				<li data-role="list-divider">Sections</li>
+				<li><a href="#">About</a></li>
+
 			</ul>
-			<ul data-role="listview" data-inset="true" data-filter="true"
-				data-filter-placeholder="Search vm..." data-filter-theme="d"
-				data-theme="d" data-divider-theme="d" data-split-icon="info">
-				<li data-role="list-divider">Virtual Machines</li> #{list
-				vappFull.listVirtualMachines, as:'vm'}
-				<li><a href="#">
-						<h3>${vm?.template_name}</h3>
-						<p>
-							<strong>CPU:</strong> ${vm?.virtualMachine.cpu}
-						</p>
-						<p>
-							<strong>RAM:</strong> ${vm?.virtualMachine.ram} MB
-						</p>
-						<p>
-							<strong>Description:</strong> ${vm?.virtualMachine.description}
-						</p>
-						<p class="ui-li-aside">
-							<strong>State:</strong>${vm?.virtualMachine.state}
-						</p>
-				</a> <a
-					href="@@{Mobile.vncConnection(vm?.virtualMachine.vncAddress,vm?.virtualMachine.vncPort,vm?.virtualMachine.password)}"
-					data-prefetch>Purchase offer</a></li> #{/list}
-			</ul>
-			<div data-role="controlgroup">
-				<a href="@@{Mobile.confirmation(offerPurchasedId, 'reset')}"
-					data-role="button" data-icon="refresh" data-theme="a"
-					data-transition="slideup" data-rel="dialog">Reset Offer</a> <a
-					href="@@{Mobile.confirmation(offerPurchasedId, 'delete')}"
-					data-role="button" data-icon="delete" data-theme="a"
-					data-transition="slideup" data-rel="dialog">Delete Offer</a> <a
-					href="#" data-role="button" data-icon="plus" data-theme="a"
-					data-rel="dialog" data-transition="slideup" data-rel="dialog">Upgrade</a>
-			</div>
 		</div>
-		<!--/content-primary -->
-		<div class="content-secondary">
-
-			<div data-role="collapsible" data-collapsed="true" data-theme="b"
-				data-content-theme="d">
-
-				<h3>Help</h3>
-				<ul data-role="listview" data-theme="c" data-dividertheme="d">
-
-					<li data-role="list-divider">Sections</li>
-					<li><a href="#">About</a></li>
-
-				</ul>
-			</div>
-		</div>
-		<div>
-			<!-- /content -->
-		</div>
-		<!-- /page -->
-</body>
-</html>
+	</div>
+</div>

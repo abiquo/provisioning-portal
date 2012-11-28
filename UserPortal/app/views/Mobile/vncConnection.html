@@ -1,49 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Abiquo Provisioning Portal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
-<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script
-	src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
-</head>
-<body>
-
-	<div data-role="page">
-
-		<div data-role="header">
-			<a href="@@{Mobile.admin()}" data-icon="home" data-iconpos="notext"
-				data-direction="reverse">Home</a> <a href="#" data-icon="back"
-				data-iconpos="notext" data-direction="reverse" data-rel="back">Back</a>
-			<h1>Abiquo Provisioning Portal</h1>
+#{extends '/Mobile/layoutMobile.html' /} 
+<div data-role="page">
+	<div data-role="header">
+		<a href="@@{Mobile.admin()}" data-icon="home" data-iconpos="notext"
+			data-direction="reverse">Home</a> <a href="#" data-icon="back"
+			data-iconpos="notext" data-direction="reverse" data-rel="back">Back</a>
+		<h1>Abiquo Provisioning Portal</h1>
+	</div>
+	<!-- /header -->
+	<div data-role="content">
+		<iframe class="frameVNC"
+			src="@@{Mobile.vncLayer(vncAddress,vncPort,vncPassword)}"
+			width="100%" height="768px" scrolling="no" frameborder="0" seamless></iframe>
+	</div>
+	<!--/content-primary -->
+	<div class="content-secondary">
+		<div data-role="collapsible" data-collapsed="true" data-theme="b"
+			data-content-theme="b">
+			<h3>Help</h3>
+			<ul data-role="listview" data-theme="a" data-dividertheme="a">
+				<li data-role="list-divider">Sections</li>
+				<li><a href="#">About</a></li>
+			</ul>
 		</div>
-		<!-- /header -->
-
-		<div data-role="content">
-			<iframe class="frameVNC"
-				src="@@{Mobile.vncLayer(vncAddress,vncPort,vncPassword)}"
-				width="100%" height="768px" scrolling="no" frameborder="0" seamless></iframe>
-		</div>
-		<!--/content-primary -->
-		<div class="content-secondary">
-
-			<div data-role="collapsible" data-collapsed="true" data-theme="b"
-				data-content-theme="d">
-
-				<h3>Help</h3>
-				<ul data-role="listview" data-theme="c" data-dividertheme="d">
-
-					<li data-role="list-divider">Sections</li>
-					<li><a href="#">About</a></li>
-
-				</ul>
-			</div>
-		</div>
-		<div>
-			<!-- /content -->
-		</div>
-		<!-- /page -->
-</body>
-</html>
+	</div>
+</div>

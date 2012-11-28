@@ -269,9 +269,9 @@ public class Mobile extends Controller {
 				vmfull.setRam(virtualMachine.getRam());
 				vmfull.setHd((int) (virtualMachine.getHdInBytes() / (1024 * 1024)));
 
-				VirtualMachineTemplate vtemplate = virtualMachine.getTemplate();
-				vmfull.setTemplate_name(vtemplate.getName());
-				vmfull.setTemplate_path(vtemplate.getPath());
+				//VirtualMachineTemplate vtemplate = virtualMachine.getNameLabel();
+				vmfull.setTemplate_name(virtualMachine.getNameLabel());
+				//vmfull.setTemplate_path(vtemplate.getPath());
 
 				listVM.add(vmfull);
 			}

@@ -1,35 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Abiquo Provisioning Portal - Purchasing Offer</title>
-<link rel="stylesheet"
-	href="../../css/themes/default/jquery.mobile-1.1.1.css" />
-<link rel="stylesheet" href="../_assets/css/jqm-docs.css" />
-
-<script src="//code.jquery.com/jquery-1.7.1.min.js"></script>
-<script src="../../docs/_assets/js/jqm-docs.js"></script>
-<script src="../../js/jquery.mobile-1.1.1.js"></script>
-
-</head>
-<body>
-
-	<div data-role="page">
-		<div data-role="header" data-theme="e">
-			<h1>Delete?</h1>
-		</div>
-		<!-- /header -->
-		<div data-role="content" data-theme="d">
-			<h4>This offer costs $20 and includes selected vm.</h4>
-			<p>Your offer will be deleted after confirmation</p>
-			<a href="@@{Mobile.deleteOffer(purchasedOfferId)}" data-role="button"
-				data-theme="b" data-rel="dialog" data-transition="slideup">Delete
-				offer</a> <a href="@@{Mobile.index()}" data-role="button"
-				data-rel="back">No thanks</a>
-		</div>
+#{extends '/Mobile/layoutMobile.html' /} 
+<div data-role="page">
+	<div data-role="header" data-theme="a">
+		<h1>Delete?</h1>
 	</div>
-	<!-- /page -->
-
-</body>
-</html>
+	<!-- /header -->
+	<div data-role="content" data-theme="a">
+		<h4>This offer costs $20 and includes selected vm.</h4>
+		<p>Your offer will be deleted after confirmation</p>
+		<a href="@@{Mobile.deleteOffer(purchasedOfferId)}" data-role="button"
+			data-theme="a" data-rel="dialog" data-transition="slideup">Delete
+			offer</a> <a href="@@{Mobile.index()}" data-role="button"
+			data-rel="back">No thanks</a>
+	</div>
+</div>

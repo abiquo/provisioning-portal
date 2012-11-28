@@ -1,68 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Abiquo Provisioning Portal</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
-<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script
-	src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
-</head>
-<body>
+#{extends '/Mobile/layoutMobile.html' /} 
+<div data-role="page">
 
-	<div data-role="page">
+	<div data-role="header">
+		<a href="@@{Mobile.login()}" data-icon="home" data-iconpos="notext"
+			data-direction="reverse">Logout</a>
+		<h1>Abiquo Provisioning Portal</h1>
+	</div>
+	<!-- /header -->
 
-		<div data-role="header">
-			<a href="@@{Mobile.login()}" data-icon="home" data-iconpos="notext"
-				data-direction="reverse">Logout</a>
-			<h1>Abiquo Provisioning Portal</h1>
-		</div>
-		<!-- /header -->
+	<div data-role="content">
+		<ul data-role="listview" data-inset="true" data-filter="true"
+			data-filter-placeholder="Search offer..." data-filter-theme="a"
+			data-theme="a" data-divider-theme="a">
 
-		<div data-role="content">
-			<ul data-role="listview" data-inset="true" data-filter="true"
-				data-filter-placeholder="Search offer..." data-filter-theme="d"
-				data-theme="d" data-divider-theme="d">
+			#{list vdcList, as:'vdc'}
+			<li class="offerUrl" data-role="list-divider">${vdc?.virtualDatacenter.name}</li>
+			#{list vdc?.listVirtualAppliances, as: 'vapp'}
+			<li><a
+				href="@@{Mobile.details(vdc?.virtualDatacenter.id,vapp.id)}">${vapp?.name}<span
+					class="ui-li-count">20$/month</span></a></li> #{/list} #{/list}
+		</ul>
+	</div>
+	<!--/content-primary -->
 
-				#{list vdcList, as:'vdc'}
-				<li class="offerUrl" data-role="list-divider">${vdc?.virtualDatacenter.name}</li>
-				#{list vdc?.listVirtualAppliances, as: 'vapp'}
-				<li><a
-					href="@@{Mobile.details(vdc?.virtualDatacenter.id,vapp.id)}">${vapp?.name}<span
-						class="ui-li-count">20$/month</span></a></li> #{/list} #{/list}
+	<div class="content-secondary">
+
+		<div data-role="collapsible" data-collapsed="true" data-theme="a"
+			data-content-theme="a">
+
+			<h3>Help</h3>
+			<ul data-role="listview" data-theme="a" data-dividertheme="a">
+
+				<li data-role="list-divider">Sections</li>
+				<li><a href="#">About</a></li>
+
 			</ul>
 		</div>
-		<!--/content-primary -->
-
-		<div class="content-secondary">
-
-			<div data-role="collapsible" data-collapsed="true" data-theme="b"
-				data-content-theme="d">
-
-				<h3>Help</h3>
-				<ul data-role="listview" data-theme="c" data-dividertheme="d">
-
-					<li data-role="list-divider">Sections</li>
-					<li><a href="#">About</a></li>
-
+	</div>
+	<div>
+		<!-- /content -->
+		<div data-role="footer" data-id="foo1" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="@{Mobile.listInactiveOffers()}"
+						class="ui-btn-active ui-state-persist" data-icon="plus">Inactive
+							Offers</a></li>
+					<li><a href="@{Mobile.listActiveOffers()}" data-icon="grid">Active
+							Offers</a></li>
 				</ul>
 			</div>
+			<!-- /navbar -->
 		</div>
-		<div>
-			<!-- /content -->
-			<div data-role="footer" data-id="foo1" data-position="fixed">
-				<div data-role="navbar">
-					<ul>
-						<li><a href="@{Mobile.listInactiveOffers()}"
-							class="ui-btn-active ui-state-persist" data-icon="plus">Inactive
-								Offers</a></li>
-						<li><a href="@{Mobile.listActiveOffers()}" data-icon="grid">Active
-								Offers</a></li>
-					</ul>
-				</div>
-				<!-- /navbar -->
-			</div>
-			<!-- /page -->
-</body>
-</html>
+	</div>
+</div>
