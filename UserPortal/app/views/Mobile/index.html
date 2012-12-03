@@ -9,11 +9,11 @@
 	<div data-role="content">
 		<ul data-role="listview" data-inset="true" data-filter-theme="a"
 			data-theme="a" data-divider-theme="a">
-			<li class="offerUrl"><a href="@{Mobile.listOffersToPurchase()}">
+			<li class="offerUrl"><a href="@{Mobile.listOffersToPurchase()}" data-prefetch>
 					<h3>Marketplace</h3>
 					<p>Purchase offers.</p>
 			</a></li>
-			<li class="offerUrl"><a href="@{Mobile.listOffersPurchased()}">
+			<li class="offerUrl"><a href="@{Mobile.listOffersPurchased()}" data-prefetch>
 					<h3>Purchased Offers</h3>
 					<p>Manage and monitor your offers.</p>
 			</a></li>

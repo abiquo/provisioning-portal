@@ -16,19 +16,18 @@
 			<li class="offerUrl" data-role="list-divider">Offers</li>
 			 #{list offersPurchased , as:'offerPurchased'}
 			 <li>
-			<a href="@@{Mobile.manageOffer(offerPurchased?.id)}" class="ui-link-inherit" data-rel="dialog"
-							data-transition="slideup">
-				<div class="ui-btn-inner ui-li ui-li-has-alt">					
+			<a href="@@{Mobile.manageOffer(offerPurchased?.id)}" class="ui-link-inherit">
+				<div class="ui-li ui-li-has-alt">					
 					<div class="ui-btn-text" style="position:relative; padding-left: 1px;" >	
-					<img src="@@{Helper.displayIcon(offerPurchased?.offer.id)}" class="ui-li-thumb" style="position:relative">	
+					<img src="@@{Helper.displayIcon(offerPurchased?.offer.id)}" class="ui-li-thumb" 
+					style="position:relative;padding-left:10px;">
 						<h3 class="ui-li-heading">${offerPurchased?.offer.name}</h3>
 						<p class="ui-li-desc">${offerPurchased?.offer.shortDescription}</p>		
 						<p class="ui-li-desc">${offerPurchased?.offer.price}</p>	
 						</span>
 					</div>
 				</div>
-			</a><a href="@@{Mobile.purchaseConfirmation(offer?.id)}" class="ui-link-inherit" data-rel="dialog"
-							data-transition="slideup">Purchase offer</a>
+			</a><a href="@@{Mobile.manageOffer(offerPurchased?.id)}" class="ui-link-inherit">Manage offer</a>
 			</li> 			
 			#{/list} 
 			#{else}

@@ -17,11 +17,10 @@
 			<li class="offerUrl" data-role="list-divider" >Offers</li>
 			#{list offers , as:'offer'}
 			<li>
-			<a href="@@{Mobile.purchaseConfirmation(offer?.id)}" class="ui-link-inherit" data-rel="dialog"
-							data-transition="slideup">
-				<div class="ui-btn-inner ui-li ui-li-has-alt">					
+			<a href="@@{Mobile.purchaseConfirmation(offer?.id)}" class="ui-link-inherit" data-rel="dialog" data-transition="pop">
+				<div class="ui-li ui-li-has-alt">					
 					<div class="ui-btn-text" style="position:relative; padding-left: 1px;" >	
-					<img src="@@{Helper.displayIcon(offer?.id)}" class="ui-li-thumb" style="position:relative">	
+					<img src="@@{Helper.displayIcon(offer?.id)}"class="ui-li-thumb" style="position:relative;padding-left:10px;">
 						<h3 class="ui-li-heading">${offer?.name}</h3>
 						<p class="ui-li-desc">${offer?.shortDescription}</p>		
 						</span>

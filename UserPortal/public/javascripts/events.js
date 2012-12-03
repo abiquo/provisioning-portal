@@ -441,6 +441,7 @@ $(document).ready(function () {
         );       
         return false;    
     }); 
+
     $(".finalPurchaseConfirm").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
@@ -450,11 +451,12 @@ $(document).ready(function () {
         if ($(this).is('.extend')) {
         	var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
     				'<div><div><h3><i class="icon-tasks"></i>Extending Lease Period</h3></div><br />Please Wait...<br /></div>' +
-    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
+                    '<div id="progressbar" class="ui-progressbar ui-progressbar-value" style="width: 100%"></div></div>').appendTo('body');
+
         } else {
         	var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
     				'<div><div><h3><i class="icon-tasks"></i>Deploying Offer</h3></div><br />Please Wait...<br /></div>' +
-    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
+    				'<div id="progressbar" class="ui-progressbar ui-progressbar-value" style="width: 100%"></div></div>').appendTo('body');
         }
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
@@ -481,12 +483,21 @@ $(document).ready(function () {
                 }
             }]
         });
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('#progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('#progressbar').progressbar({value: pCnt});
+            }
+        },10);
         // load remote content
         dialog.load(
             url, function (responseText, textStatus, XMLHttpRequest) {
                 // remove the loading class
                 dialog.removeClass('progress progress-warning progress-striped active');
-                
             }
         );               
         return false;    
