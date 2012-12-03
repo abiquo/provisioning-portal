@@ -17,7 +17,7 @@
 #  License along with this library; if not, write to the
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
-#------------------------------------------------------------------------------->
+#----------------------------------------------------------------------------- -->
 <script type="text/javascript">
  $('.accordion').accordion({
        event: "click hoverintent",
@@ -33,52 +33,18 @@
      ui.newContent.load(clicked);*/
  });
 </script>
-<style>
-.row-fluid {
-	border: 1px solid #DDDDDD;
-	border-radius: 48px 16px 2px 16px;
-	box-shadow: 0 1px 0 #FFFFFF inset;
-	float: left;
-	list-style: none outside none;
-	margin: 0 0 1px;
-	padding: 20px 10px 4px 0px;
-	position: relative;
-	width: 100%;
-	background-image: linear-gradient(bottom, rgb(255, 162, 0) 0%,
-		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
-	background-image: -o-linear-gradient(bottom, rgb(255, 162, 0) 0%,
-		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
-	background-image: -moz-linear-gradient(bottom, rgb(255, 162, 0) 0%,
-		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
-	background-image: -webkit-linear-gradient(bottom, rgb(255, 162, 0) 0%,
-		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
-	background-image: -ms-linear-gradient(bottom, rgb(255, 162, 0) 0%,
-		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
-	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(255,
-		162, 0) ), color-stop(0.03, rgb(237, 237, 237) ),
-		color-stop(0.92, rgb(255, 255, 255) ) );
-}
-
-.thumbnailPurchase {
-	position: relative;
-	left: 12px;
-}
-
-.table-offer {
-	position: relative;
-	left: -16x;
-}
-</style>
 <div class="accordion">#{set level:'first' /} #{list result2 ,
 	as:'sc_offer'} #{if 'PUBLISHED' == sc_offer.state} #{if
 	sc_offer.defaultServiceLevel != level} #{if level != 'first' } #{set
-	separator:'false' /}</div>
+	separator:'false' /}
+</div>
 #{/if} #{set separator:'true' /}
-<h3>
-	<a href="#">${sc_offer.defaultServiceLevel}</a>
-</h3>
-<div class="container-fluid">
-	#{set level: sc_offer.defaultServiceLevel /} #{/if} #{if separator ==
+	<h3>
+		<a href="#">${sc_offer.defaultServiceLevel}</a>
+	</h3>
+	<div class="container-fluid">
+	#{set level: sc_offer.defaultServiceLevel /} 
+	#{/if} #{if separator ==
 	'true'} #{set separator:'false' /} #{/if} #{else} #{/else}
 	<div class="row-fluid">
 		<div class="span3">
@@ -126,7 +92,9 @@
 			</table>
 		</div>
 	</div>
-	#{/if} #{/list} #{else}
+	#{/if} 
+	#{/list} 
+	#{else}
 	<div>
 		<h3>
 			<a href="#">No offers available in marketplace</a>

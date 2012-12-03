@@ -52,6 +52,10 @@ input.file {
 	background-image: url('../images/simple-sky-cloud.jpg');
 	/*background-repeat:no-repeat;*/
 	background-size: 100%;
+	margin: 0 auto;
+	position: relative;
+	top: 58px; 
+	width: 75%;
 }
 
 body {
@@ -75,6 +79,42 @@ table.detailTable {
 
 tr,td {
 	text-align: left;
+}
+
+/*******Tables service catalog **************/
+.row-fluid {
+	border: 1px solid #DDDDDD;
+	border-radius: 48px 16px 2px 16px;
+	box-shadow: 0 1px 0 #FFFFFF inset;
+	float: left;
+	list-style: none outside none;
+	margin: 0 0 1px;
+	padding: 20px 10px 4px 0px;
+	position: relative;
+	width: 100%;
+	background-image: linear-gradient(bottom, rgb(255, 162, 0) 0%,
+		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
+	background-image: -o-linear-gradient(bottom, rgb(255, 162, 0) 0%,
+		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
+	background-image: -moz-linear-gradient(bottom, rgb(255, 162, 0) 0%,
+		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
+	background-image: -webkit-linear-gradient(bottom, rgb(255, 162, 0) 0%,
+		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
+	background-image: -ms-linear-gradient(bottom, rgb(255, 162, 0) 0%,
+		rgb(237, 237, 237) 3%, rgb(255, 255, 255) 92% );
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(255,
+		162, 0) ), color-stop(0.03, rgb(237, 237, 237) ),
+		color-stop(0.92, rgb(255, 255, 255) ) );
+}
+
+.thumbnailPurchase {
+	position: relative;
+	left: 12px;
+}
+
+.table-offer {
+	position: relative;
+	left: -16x;
 }
 
 /*body {text-align:center;}*/
