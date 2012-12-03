@@ -498,6 +498,7 @@ $(document).ready(function () {
             url, function (responseText, textStatus, XMLHttpRequest) {
                 // remove the loading class
                 dialog.removeClass('progress progress-warning progress-striped active');
+                console.dir(responseText);                
             }
         );               
         return false;    
