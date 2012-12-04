@@ -103,6 +103,7 @@ $(document).ready(function () {
                 dialog.remove();
             },           
             width: '800px',   
+            draggable: false,
             //heigth: 'auto',
             resizable: false,
             modal: true,
@@ -192,6 +193,7 @@ $(document).ready(function () {
                 // remove div with all data and events
                 dialog.remove();
             },           
+            draggable: false,
             width: 'auto',          
             resizable: false,
             modal: true,
@@ -231,6 +233,7 @@ $(document).ready(function () {
             },
             width: 'auto',          
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [{             
                 text: "Cancel",
@@ -296,6 +299,7 @@ $(document).ready(function () {
             },
             modal: true,
             resizable: false,
+            draggable: false,
             width: '800px',          
             buttons: [{             
                 text: "Close",
@@ -343,6 +347,7 @@ $(document).ready(function () {
             },         	
             width: 'auto',          
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [{             
                 text: "Cancel",
@@ -383,6 +388,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: 'auto',
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [{             
                 text: "Cancel",
@@ -422,6 +428,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',   
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [{             
                 text: "Cancel",
@@ -474,6 +481,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [{             
                 text: "Close",
@@ -524,6 +532,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',   
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [
                 {             
@@ -575,6 +584,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [{             
                 text: "Close",
@@ -619,6 +629,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [{             
                 text: "Close",
@@ -662,6 +673,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [{             
                 text: "Close",
@@ -706,6 +718,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
+            draggable: false,
             modal: true,
             buttons: [{             
                 text: "Close",
@@ -849,6 +862,7 @@ $(document).ready(function () {
 		        //show: { effect: 'show'},
 		        width: 'auto',     
 		        resizable: false,
+                draggable: false,
 		        modal: true,
 		        buttons: [{             
 		            text: "Accept",
@@ -909,6 +923,7 @@ $(document).ready(function () {
 		        //show: { effect: 'show'},
 		        width: 'auto',     
 		        resizable: false,
+                draggable: false,
 		        modal: true,
 		        buttons: [{             
 		            text: "Accept",
@@ -969,6 +984,7 @@ $(document).ready(function () {
 		        //show: { effect: 'show'},
 		        width: 'auto',     
 		        resizable: false,
+                draggable: false,
 		        modal: true,
 		        buttons: [{             
 		            text: "Accept",

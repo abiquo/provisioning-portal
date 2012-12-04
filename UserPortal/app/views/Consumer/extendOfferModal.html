@@ -1,0 +1,92 @@
+<div id="purchaseConfirmation">
+	<table class="table table-bordered table-condensed table-striped">
+		<thead class="ui-widget-header">
+			<tr>
+				<td><strong>Extend lease period</strong></td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><strong>Offer Name</strong></td>
+				<td><input type="text" id="name"
+					class="input-deploy input-deploy-name"
+					value="${offerPurchased.offer.name}" /></td>
+			</tr>
+			<tr>
+				<td><strong>Short-Description</strong></td>
+				<td>${offerPurchased.offer.shortDescription}</td>
+			</tr>
+			<tr>
+				<td><strong>Quality of Service</strong></td>
+				<td>${offerPurchased.offer.defaultServiceLevel}</td>
+			</tr>
+		</tbody>
+	</table>
+	#{list offerPurchased.offer.nodes, as:'node'}
+	<table
+		class="table table-bordered table-condensed table-striped middle">
+		<thead class="ui-widget-header">
+			<tr>
+				<th width="200px"><strong><center>${node.node_name}</center></strong></th>
+				<td width="200px"><center>CPU</center></td>
+				<td width="200px"><center>RAM</center></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><center>
+						<img src="@{'/public/images/user/1341575776_Yellow_Server.png'}"
+							width="100">
+					</center></td>
+				<td><strong><center>${node.cpu}</center></strong></td>
+				<td><strong><center>${node.ram} MBytes</center></strong></td>
+			</tr>
+		</tbody>
+	</table>
+	#{/list}
+
+	<table
+		class="table table-bordered table-condensed table-striped middle">
+		#{list nodes_resources, as:'resource'}
+		<tr>
+			<td><strong>Hard Disk ${resource.sequence}</strong></td>
+			<td>${resource.value}</td>
+		</tr>
+		#{/list}
+	</table>
+
+	<table
+		class="table table-bordered table-condensed table-striped middle">
+		<tbody>
+			<tr>
+				<td><strong>Extend Deploy to </strong></td>
+				<td><input type="text" id="datepicker"
+					class="input-deploy input-deploy-date" /></td>
+			</tr>
+		</tbody>
+		<tfoot class="ui-widget-header">
+			<tr>
+				<td><strong>Final Price</strong></td>
+				<td><strong>${offerPurchased.offer.price}</strong></td>
+			</tr>
+		</tfoot>
+	</table>
+	<div id="urlPurchase"
+		class="btn btn-warning finalPurchaseConfirm extend"
+		url="@{Consumer.extend(offerPurchased.id)}">
+		<i class="icon-shopping-cart icon-white"></i>Extend
+	</div>
+
+	<script type="text/javascript">
+
+   $( "#datepicker" ).datepicker({
+	    changeMonth: true,
+	    changeYear: true,
+	    focus: false,
+	    numberOfMonths: 3,
+	    showButtonPanel: true
+	});
+
+	</script>
+</div>

@@ -117,4 +117,13 @@ tr,td {
 	left: -16x;
 }
 
+.ui-widget-overlay {
+	height: 100% !important;
+}
+
+.ui-dialog {
+	position: fixed !important;
+	margin: 0 auto !important;
+}
+
 /*body {text-align:center;}*/

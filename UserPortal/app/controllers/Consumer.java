@@ -43,6 +43,7 @@ import models.OfferPurchased;
 import models.UserPortal;
 import monitor.VappEventHandler;
 
+import org.apache.commons.lang.StringUtils;
 import org.jclouds.abiquo.AbiquoContext;
 import org.jclouds.abiquo.domain.cloud.HardDisk;
 import org.jclouds.abiquo.domain.cloud.VirtualAppliance;
@@ -1249,6 +1250,28 @@ public class Consumer extends Controller {
 		}
 	}
 
+	public static void extendOfferModal(final Integer purchasedOfferId) {
+		Logger.info("---------INSIDE EXTEND OFFER ---------------");
+
+		String user = session.get("username");
+		String password = session.get("password");
+
+		AbiquoContext context = Context.getApiClient(user, password);
+		if (context != null) {
+			OfferPurchased offerPurchased = OfferPurchased
+					.findById(purchasedOfferId);
+			if (offerPurchased != null) {
+				render(user, offerPurchased);
+			} else {
+				String message = "Offer Purchased does not exists";
+				render("/errors/error.html", message);
+			}
+		} else {
+			flash.error("You are not connected.Please Login");
+			Login.login_page();
+		}
+	}
+
 	@SuppressWarnings("deprecation")
 	public static void extend(final Integer purchasedOfferId,
 			@Nullable final String new_name,
@@ -1262,7 +1285,7 @@ public class Consumer extends Controller {
 		if (context != null) {
 			OfferPurchased offerPurchased = OfferPurchased
 					.findById(purchasedOfferId);
-			if (offerPurchased != null) {
+			if (offerPurchased != null && StringUtils.isNotEmpty(new_lease_period)) {
 				Date dateExp = new Date(new_lease_period);
 				offerPurchased.setExpiration(dateExp);
 				offerPurchased.getOffer().setName(new_name);
@@ -1271,6 +1294,9 @@ public class Consumer extends Controller {
 						.getServiceLevel(),
 						offerPurchased.getOffer().getName(), offerPurchased.getUser().getEmail(), offerPurchased.getExpiration().toString());
 				render(user, offerPurchased);
+			} else if (StringUtils.isEmpty(new_lease_period)) {
+				String message = "Please set a new lease period before extend.";
+				render("/errors/error.html", message);
 			} else {
 				String message = "Offer Purchased does not exists";
 				render("/errors/error.html", message);
