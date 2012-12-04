@@ -17,26 +17,8 @@
 #  License along with this library; if not, write to the
 #  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 #  Boston, MA 02111-1307, USA.
-#------------------------------------------------------------------------------->
-<script type="text/javascript">
-<!--
-$( "#datepicker" ).datepicker({
-    changeMonth: true,
-    changeYear: true,
-    focus: false,
-    numberOfMonths: 3,
-    showButtonPanel: true
-});
+#----------------------------------------------------------------------------- -->
 
-$( "#finalPurchaseConfirm" ).mouseover(function(){
-	var url = $("#urlPurchase").attr("url");	
-	$('.input-deploy').each(function() {
-		url = url + "&" + $(this).attr('id') + "=" + $(this).attr('value');
-	})	
-	$("#urlPurchase").attr("url",url);
-});
-//-->
-</script>
 <div id="purchaseConfirmation">
 	<table class="table table-bordered table-condensed table-striped">
 		<thead class="ui-widget-header">
@@ -103,6 +85,11 @@ $( "#finalPurchaseConfirm" ).mouseover(function(){
 				<td>${offer.serviceType} - <input type="text" id="datepicker"
 					class="input-deploy input-deploy-date" /></td>
 			</tr>
+			<tr>
+				<td><strong>Add public IP's</strong></td>
+				<td><input id="spinner" name="value" />
+				</td>
+			</tr>
 		</tbody>
 		<tfoot class="ui-widget-header">
 			<tr>
@@ -116,3 +103,28 @@ $( "#finalPurchaseConfirm" ).mouseover(function(){
 		<i class="icon-shopping-cart icon-white"></i>Purchase
 	</div>
 </div>
+
+<script type="text/javascript">
+<!--
+$("#spinner").spinner({
+	min: 0,
+	max: 5
+});
+$( "#datepicker" ).datepicker({
+    changeMonth: true,
+    changeYear: true,
+    focus: false,
+    numberOfMonths: 3,
+    showButtonPanel: true
+});
+
+
+$( "#finalPurchaseConfirm" ).mouseover(function(){
+	var url = $("#urlPurchase").attr("url");	
+	$('.input-deploy').each(function() {
+		url = url + "&" + $(this).attr('id') + "=" + $(this).attr('value');
+	})	
+	$("#urlPurchase").attr("url",url);
+});
+//-->
+</script>
