@@ -122,8 +122,11 @@ tr,td {
 }
 
 .ui-dialog {
-	position: fixed !important;
-	margin: 0 auto !important;
+	margin: 58px auto !important;
+	z-index: 1;
 }
 
+.ui-progressbar .ui-progressbar-value {
+ 	background-image: url(../images/pbar-ani.gif) !important; 
+ }
 /*body {text-align:center;}*/

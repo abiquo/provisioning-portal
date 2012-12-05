@@ -90,7 +90,19 @@ $(document).ready(function () {
     $(".offerDetails").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
-        var dialog = $('<div style="display:none" class="loading dialog"></div>').appendTo('body');
+        var dialog = $('<div id="progressbar" class="loading dialog"></div>').appendTo('body');
+        
+        $('#progressbar').progressbar();
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('#progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('#progressbar').progressbar({value: pCnt});
+            }
+        },10);
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
            
@@ -103,7 +115,7 @@ $(document).ready(function () {
                 dialog.remove();
             },           
             width: '800px',   
-            draggable: false,
+            draggable: true,
             //heigth: 'auto',
             resizable: false,
             modal: true,
@@ -181,7 +193,19 @@ $(document).ready(function () {
     $(".configureExistingOffer").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("id").toString();
-        var dialog = $('<div style="display:none" class="loading dialog"></div>').appendTo('body');
+        var dialog = $('<div id="progressbar" class="loading dialog"></div>').appendTo('body');
+        
+        $('#progressbar').progressbar();
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('#progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('#progressbar').progressbar({value: pCnt});
+            }
+        },10);
         //var posy = $(document).height() / 8;
         //var posx = $(document).width() / 4;
         
@@ -193,7 +217,7 @@ $(document).ready(function () {
                 // remove div with all data and events
                 dialog.remove();
             },           
-            draggable: false,
+            draggable: true,
             width: 'auto',          
             resizable: false,
             modal: true,
@@ -219,7 +243,19 @@ $(document).ready(function () {
     $(".configureVDC").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("id").toString();
-        var dialog = $('<div style="display:none" class="loading dialog"></div>').appendTo('body');
+       var dialog = $('<div id="progressbar" class="loading dialog"></div>').appendTo('body');
+        
+        $('#progressbar').progressbar();
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('#progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('#progressbar').progressbar({value: pCnt});
+            }
+        },10);
         //var posy = $(document).height() / 8;
         //var posx = $(document).width() / 4;
         
@@ -233,7 +269,7 @@ $(document).ready(function () {
             },
             width: 'auto',          
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [{             
                 text: "Cancel",
@@ -257,7 +293,19 @@ $(document).ready(function () {
     $(".disableOffer").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("id").toString();
-        var dialog = $('<div style="display:none" class="loading dialog"></div>').appendTo('body');
+        var dialog = $('<div id="progressbar" class="loading dialog"></div>').appendTo('body');
+        
+        $('#progressbar').progressbar();
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('#progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('#progressbar').progressbar({value: pCnt});
+            }
+        },10);
                
         // load remote content
         dialog.load(
@@ -284,7 +332,13 @@ $(document).ready(function () {
     $(".listVM").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("id").toString();
-        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;"><div class="bar" style="width: 100%"></div>').appendTo('body');       
+        var dialog = $('<div style="margin-bottom: 9px;">' +
+                        '<div><div><h3><i class="icon-tasks"></i>Loading</h3></div><br />Please Wait...<br /></div>' +
+                        '<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');
+        
+        $('.progressbar').progressbar({value: 100});
+        
+
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
         
@@ -299,7 +353,7 @@ $(document).ready(function () {
             },
             modal: true,
             resizable: false,
-            draggable: false,
+            draggable: true,
             width: '800px',          
             buttons: [{             
                 text: "Close",
@@ -333,7 +387,12 @@ $(document).ready(function () {
     $(".publishMarketplace").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
-        var dialog = $('<div style="display:none" class="loading dialog"></div>').appendTo('body');
+       var dialog = $('<div style="margin-bottom: 9px;">' +
+                '<div><div><h3><i class="icon-tasks"></i>Loading</h3></div><br />Please Wait...<br /></div>' +
+                '<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');
+        
+        $('.progressbar').progressbar({value: 100});
+
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
         
@@ -347,7 +406,7 @@ $(document).ready(function () {
             },         	
             width: 'auto',          
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [{             
                 text: "Cancel",
@@ -371,9 +430,11 @@ $(document).ready(function () {
     $(".enableMarketplace").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
-        var dialog = $('<div style="display:none" class="loading dialog"></div>').appendTo('body');
-        //var posy = $(document).height() / 8;
-        //var posx = $(document).width() / 4;
+        var dialog = $('<div style="margin-bottom: 9px;">' +
+                '<div><div><h3><i class="icon-tasks"></i>Loading</h3></div><br />Please Wait...<br /></div>' +
+                '<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');
+        
+        $('.progressbar').progressbar({value: 100});
         
         dialog.dialog({
         	autoOpen: false,
@@ -388,7 +449,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: 'auto',
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [{             
                 text: "Cancel",
@@ -411,10 +472,14 @@ $(document).ready(function () {
     $(".purchaseConfirm").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
-        var dialog = $('<div style="display:none" class="loading dialog"></div>').appendTo('body');
+        var dialog = $('<div style="margin-bottom: 9px;">' +
+                '<div><div><h3><i class="icon-tasks"></i>Loading</h3></div><br />Please Wait...<br /></div>' +
+                '<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');
+        
+        $('.progressbar').progressbar({value: 100});
+
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
-        
         dialog.dialog({
         	autoOpen: false,
         	position: [posx,posy],
@@ -428,7 +493,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',   
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [{             
                 text: "Cancel",
@@ -456,22 +521,34 @@ $(document).ready(function () {
         url = url + "&new_lease_period=" + $('.input-deploy-date').attr('value').toString();
         
         if ($(this).is('.extend')) {
-        	var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+        	var dialog = $('<div style="margin-bottom: 9px;">' +
     				'<div><div><h3><i class="icon-tasks"></i>Extending Lease Period</h3></div><br />Please Wait...<br /></div>' +
-                    '<div id="progressbar" class="ui-progressbar ui-progressbar-value" style="width: 100%"></div></div>').appendTo('body');
+                    '<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');
 
         } else {
-        	var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+        	var dialog = $('<div style="margin-bottom: 9px;">' +
     				'<div><div><h3><i class="icon-tasks"></i>Deploying Offer</h3></div><br />Please Wait...<br /></div>' +
-    				'<div id="progressbar" class="ui-progressbar ui-progressbar-value" style="width: 100%"></div></div>').appendTo('body');
+    				'<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');
         }
+        
+        $('.progressbar').progressbar();
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('.progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('.progressbar').progressbar({value: pCnt});
+            }
+        },10);
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
         
         dialog.dialog({
-        	autoOpen: true,
-        	position: [posx,posy],
-            // add a close listener to prevent adding multiple divs to the document                	
+            autoOpen: true,
+            position: [posx,posy],
+            // add a close listener to prevent adding multiple divs to the document                 
             close: function(event, ui) {
                 // remove div with all data and events
                 dialog.remove();
@@ -481,39 +558,29 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [{             
                 text: "Close",
                 class: "btn btn-danger",
                 click: function() {
-                	$( ".ui-dialog-content" ).dialog( "close" );
+                    $( ".ui-dialog-content" ).dialog( "close" );
                 }
             }]
         });
-        var pGress = setInterval(function() {
-            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
-            var pVal = $('#progressbar').progressbar('option', 'value');
-            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
-            if (pCnt > 100) {
-                clearInterval(pGress);
-            } else {
-                $('#progressbar').progressbar({value: pCnt});
-            }
-        },10);
         // load remote content
         dialog.load(
             url, function (responseText, textStatus, XMLHttpRequest) {
                 // remove the loading class
                 dialog.removeClass('progress progress-warning progress-striped active');
-                console.dir(responseText);                
+                
             }
-        );               
-        return false;    
+        );       
+        return false;   
     }); 
     
     $(".deleteConfirm").live('click', function(){
-        //alert($(this).attr("id").toString());
+        //alert($(this).attr("id").toString());        
         var url = $(this).attr("url").toString();
         var dialog = $('<div style="display:none" class="loading dialog"><h3><i class="icon-warning-sign"></i> Are you sure you want to delete this Offer?</h3></div>').appendTo('body');
         var posy = $(document).height() / 8;
@@ -532,7 +599,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',   
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [
                 {             
@@ -564,10 +631,21 @@ $(document).ready(function () {
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
         
-        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+        var dialog = $('<div style="margin-bottom: 9px;">' +
 	    				'<div><div><h3><i class="icon-tasks"></i>Deleting Offer</h3></div><br />Please Wait...<br /></div>' +
-	    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
-
+	    				'<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');   
+        
+        $('.progressbar').progressbar();
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('.progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('.progressbar').progressbar({value: pCnt});
+            }
+        },10);
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
         
@@ -584,7 +662,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [{             
                 text: "Close",
@@ -609,10 +687,21 @@ $(document).ready(function () {
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
         
-        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+        var dialog = $('<div style="margin-bottom: 9px;">' +
 	    				'<div><div><h3><i class="icon-tasks"></i>Pausing Offer</h3></div><br />Please Wait...<br /></div>' +
-	    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
+	    				'<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');
 
+        $('.progressbar').progressbar();
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('.progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('.progressbar').progressbar({value: pCnt});
+            }
+        },10);
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
          
@@ -629,7 +718,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [{             
                 text: "Close",
@@ -653,10 +742,20 @@ $(document).ready(function () {
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
         
-        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+        var dialog = $('<div style="margin-bottom: 9px;">' +
 	    				'<div><div><h3><i class="icon-tasks"></i>Resetting Offer</h3></div><br />Please Wait...<br /></div>' +
-	    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
-
+	    				'<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');
+        $('.progressbar').progressbar();
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('.progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('.progressbar').progressbar({value: pCnt});
+            }
+        },10);
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
          
@@ -673,7 +772,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [{             
                 text: "Close",
@@ -698,10 +797,21 @@ $(document).ready(function () {
         //alert($(this).attr("id").toString());
         var url = $(this).attr("url").toString();
         
-        var dialog = $('<div class="progress progress-warning progress-striped active" style="margin-bottom: 9px;">' +
+        var dialog = $('<div style="margin-bottom: 9px;">' +
 	    				'<div><div><h3><i class="icon-tasks"></i>Resuming Offer</h3></div><br />Please Wait...<br /></div>' +
-	    				'<div class="bar" style="width: 100%"></div></div>').appendTo('body');
+	    				'<div class="progressbar" style="width: 100%"></div></div>').appendTo('body');
 
+        $('.progressbar').progressbar();
+        var pGress = setInterval(function() {
+            //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
+            var pVal = $('.progressbar').progressbar('option', 'value');
+            var pCnt = !isNaN(pVal) ? (pVal + 1) : 1;
+            if (pCnt > 100) {
+                clearInterval(pGress);
+            } else {
+                $('.progressbar').progressbar({value: pCnt});
+            }
+        },10);
         var posy = $(document).height() / 8;
         var posx = $(document).width() / 4;
         
@@ -718,7 +828,7 @@ $(document).ready(function () {
             //show: { effect: 'show'},
             width: '800px',     
             resizable: false,
-            draggable: false,
+            draggable: true,
             modal: true,
             buttons: [{             
                 text: "Close",
@@ -862,7 +972,7 @@ $(document).ready(function () {
 		        //show: { effect: 'show'},
 		        width: 'auto',     
 		        resizable: false,
-                draggable: false,
+                draggable: true,
 		        modal: true,
 		        buttons: [{             
 		            text: "Accept",
@@ -923,7 +1033,7 @@ $(document).ready(function () {
 		        //show: { effect: 'show'},
 		        width: 'auto',     
 		        resizable: false,
-                draggable: false,
+                draggable: true,
 		        modal: true,
 		        buttons: [{             
 		            text: "Accept",
@@ -984,7 +1094,7 @@ $(document).ready(function () {
 		        //show: { effect: 'show'},
 		        width: 'auto',     
 		        resizable: false,
-                draggable: false,
+                draggable: true,
 		        modal: true,
 		        buttons: [{             
 		            text: "Accept",

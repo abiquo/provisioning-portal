@@ -286,7 +286,7 @@ public class Consumer extends Controller {
 	@SuppressWarnings({ "null", "deprecation" })
 	public static void Deploy(final Integer id_datacenter,
 			final Integer vdc_id_param, final Integer sc_offer_id,
-			final String va_param, final String lease_period, @Nullable final String new_name, @Nullable final String new_lease_period) {
+			final String va_param, final String lease_period, @Nullable final String new_name, @Nullable final String new_lease_period, @Nullable final Integer spinner) {
 		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " + id_datacenter
 				+ ", INTEGER VDC_ID_PARAM :: " + vdc_id_param

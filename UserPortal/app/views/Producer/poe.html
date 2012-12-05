@@ -21,23 +21,24 @@
 #{if flash.error}
 <p style="color: #c00">${flash.error}</p>
 #{/if}
-
-<script type="text/javascript">
-
+<script type="text/javascript"> 
+var progressbarDiv = $('<div style="margin-bottom: 9px;"><div id="progressbar" style="width: 100%"></div></div>');
+ $('#progressbar').progressbar({value: 100}); 
  $('#accordionOffers').accordion({
 	   event: "click hoverintent",
 	   clearStyle: true,
 	   autoHeight: false,
 	   create : function(event,ui) {
-	        $('#content').load( $(this).find('a').attr('href') );
+	        $('#content').load( $(this).find('a').attr('href') )
 	   }
  }); 
  $('#accordionOffers').bind('accordioncreate', function(event, ui) {
      var clicked = $('#accordionOffers').find('a').attr('href');
      //ui.load(clicked);
-     console.log(clicked);
  });
  $('#accordionOffers').bind('accordionchange', function(event, ui) {
+ 	 $('#content').load(progressbarDiv);
+ 	 $('#progressbar').progressbar({value: 100});
 	 var clicked = $(ui.newHeader).find('a').attr('href');
 	 ui.newContent.load(clicked);
      //console.log(clicked);
@@ -56,11 +57,10 @@
 	#{list vdc_list, as:'vdc'}
 	<h3>
 		<a class="offerUrl" href="@{Producer.listAllOffers(vdc.id, vdc.name)}">${vdc?.name}</a>
-	</h3>
+	</h3>	
 	<div id="content">
-		<div class="progress progress-warning progress-striped active"
-			style="margin-bottom: 9px;">
-			<div class="bar" style="width: 100%"></div>
+		<div style="margin-bottom: 9px;">
+			<div id="progressbar" style="width: 100%"></div>
 		</div>
 	</div>
 	#{/list}
