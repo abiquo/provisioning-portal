@@ -54,6 +54,7 @@ import org.jclouds.abiquo.domain.enterprise.Enterprise;
 import org.jclouds.abiquo.domain.enterprise.User;
 import org.jclouds.abiquo.domain.infrastructure.Datacenter;
 import org.jclouds.abiquo.domain.network.PrivateNetwork;
+import org.jclouds.abiquo.domain.network.PublicNetwork;
 import org.jclouds.abiquo.domain.task.AsyncTask;
 import org.jclouds.abiquo.features.services.CloudService;
 import org.jclouds.abiquo.monitor.VirtualApplianceMonitor;
@@ -286,7 +287,10 @@ public class Consumer extends Controller {
 	@SuppressWarnings({ "null", "deprecation" })
 	public static void Deploy(final Integer id_datacenter,
 			final Integer vdc_id_param, final Integer sc_offer_id,
-			final String va_param, final String lease_period, @Nullable final String new_name, @Nullable final String new_lease_period, @Nullable final Integer spinner) {
+			final String va_param, final String lease_period, 
+			@Nullable final String new_name, 
+			@Nullable final String new_lease_period, 
+			@Nullable final Integer spinner) {
 		Logger.info("---------INSIDE CONSUMER DEPLOY()---------------");
 		Logger.info(" DEPLOY( INTEGER ID_DATACENTER:: " + id_datacenter
 				+ ", INTEGER VDC_ID_PARAM :: " + vdc_id_param
@@ -359,6 +363,13 @@ public class Consumer extends Controller {
 						.name("192.168.0.0").gateway("192.168.0.1")
 						.address("192.168.0.0").mask(22).build();
 				Logger.info(" Network Built");
+
+				//create public ips
+				/*if (spinner != null) {
+					PublicNetwork publicNetwork = PublicNetwork.builder(context.getApiContext(), datacenter)
+							.name("192.168.0.0").gateway("192.168.0.1")
+							.address("192.168.0.0").mask(22).build();
+				}*/
 
 				vdc_toDeploy = VirtualDatacenter
 						.builder(context.getApiContext(), datacenter, enterprise).name(vdcname)

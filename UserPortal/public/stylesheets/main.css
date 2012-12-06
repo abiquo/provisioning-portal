@@ -122,8 +122,9 @@ tr,td {
 }
 
 .ui-dialog {
-	margin: 58px auto !important;
-	z-index: 1;
+	margin: 0 auto !important;
+	z-index: 1;	
+	top: 58px !important;
 }
 
 .ui-progressbar .ui-progressbar-value {

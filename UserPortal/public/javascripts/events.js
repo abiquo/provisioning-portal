@@ -245,6 +245,7 @@ $(document).ready(function () {
         var url = $(this).attr("id").toString();
        var dialog = $('<div id="progressbar" class="loading dialog"></div>').appendTo('body');
         
+        console.log("hihi");
         $('#progressbar').progressbar();
         var pGress = setInterval(function() {
             //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
@@ -256,8 +257,8 @@ $(document).ready(function () {
                 $('#progressbar').progressbar({value: pCnt});
             }
         },10);
-        //var posy = $(document).height() / 8;
-        //var posx = $(document).width() / 4;
+        var posy = $(document).height() / 8;
+        var posx = $(document).width() / 4;
         
         dialog.dialog({
         	autoOpen: false,
@@ -315,9 +316,9 @@ $(document).ready(function () {
                 //$(this).setContent("Success");
                 //$(this).dialog('open');
                 var url = $( "#accordionOffers" ).find('.ui-state-active').find('.offerUrl').attr('href');
-                console.log(url);
+                //console.log(url);
         		var activeTab = $( "#accordionOffers" ).find('.ui-accordion-content-active');		
-        		 console.log(activeTab);
+        		 //console.log(activeTab);
         		activeTab.load(
                     url, function (responseText, textStatus, XMLHttpRequest) {               
                     	//$("#dialog").dialog("close");
@@ -959,6 +960,8 @@ $(document).ready(function () {
 			var posy = $(document).height() / 8;
 		    var posx = $(document).width() / 4;
 		    
+            console.log("hihihi");
+
 		    dialog.dialog({
 		    	autoOpen: true,
 		    	//position: [posx,posy],
@@ -979,9 +982,9 @@ $(document).ready(function () {
 		            class: "btn btn-warning",
 		            click: function() {
 		                $( this ).dialog( "close" );
-		                if (!$(this).find('#response').is('.error')) {
+		                //if (!$(this).find('#response').is('.error')) {
 		                	$(".dialog").dialog( "close" );
-		                }
+		               // }
 		            }
 		        }]
 		    });
