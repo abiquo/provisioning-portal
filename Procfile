@@ -1,2 +1,2 @@
-web: $WEBSITE_SUBDIR/play run --http.port=$PORT $PLAY_OPT --%heroku
+web: play start --http.port=$PORT $PLAY_OPT --%heroku
 
