@@ -193,9 +193,9 @@ $(document).ready(function () {
     $(".configureExistingOffer").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("id").toString();
-        var dialog = $('<div id="progressbar" class="loading dialog"></div>').appendTo('body');
+        var dialog = $('<div id="dialogConfigureExisting" class="loading dialog" style="display: none"></div>').appendTo('body');
         
-        $('#progressbar').progressbar();
+        /*$('#progressbar').progressbar();
         var pGress = setInterval(function() {
             //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
             var pVal = $('#progressbar').progressbar('option', 'value');
@@ -205,7 +205,7 @@ $(document).ready(function () {
             } else {
                 $('#progressbar').progressbar({value: pCnt});
             }
-        },10);
+        },10);*/
         //var posy = $(document).height() / 8;
         //var posx = $(document).width() / 4;
         
@@ -243,10 +243,9 @@ $(document).ready(function () {
     $(".configureVDC").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("id").toString();
-       var dialog = $('<div id="progressbar" class="loading dialog"></div>').appendTo('body');
-        
-        console.log("hihi");
-        $('#progressbar').progressbar();
+        var dialog = $('<div id="dialogconfigure" class="loading dialog" style="display:none"></div>').appendTo('body');        
+     
+        /*$('#progressbar').progressbar();
         var pGress = setInterval(function() {
             //$('#progressbar').css("background-image","http://jqueryui.com/resources/demos/progressbar/images/pbar-ani.gif");
             var pVal = $('#progressbar').progressbar('option', 'value');
@@ -258,7 +257,7 @@ $(document).ready(function () {
             }
         },10);
         var posy = $(document).height() / 8;
-        var posx = $(document).width() / 4;
+        var posx = $(document).width() / 4;*/
         
         dialog.dialog({
         	autoOpen: false,
@@ -294,7 +293,7 @@ $(document).ready(function () {
     $(".disableOffer").live('click', function(){
         //alert($(this).attr("id").toString());
         var url = $(this).attr("id").toString();
-        var dialog = $('<div id="progressbar" class="loading dialog"></div>').appendTo('body');
+        var dialog = $('<div id="progressbar" class="loading dialog" style="display:none"></div>').appendTo('body');
         
         $('#progressbar').progressbar();
         var pGress = setInterval(function() {
@@ -960,9 +959,7 @@ $(document).ready(function () {
 			var posy = $(document).height() / 8;
 		    var posx = $(document).width() / 4;
 		    
-            console.log("hihihi");
-
-		    dialog.dialog({
+            dialog.dialog({
 		    	autoOpen: true,
 		    	//position: [posx,posy],
 		        // add a close listener to prevent adding multiple divs to the document                	
@@ -983,7 +980,7 @@ $(document).ready(function () {
 		            click: function() {
 		                $( this ).dialog( "close" );
 		                //if (!$(this).find('#response').is('.error')) {
-		                	$(".dialog").dialog( "close" );
+		                	$("#dialogconfigure").dialog( "close" );
 		               // }
 		            }
 		        }]
@@ -1043,7 +1040,7 @@ $(document).ready(function () {
 		            class: "btn btn-warning",
 		            click: function() {
 		                $( this ).dialog( "close" );
-		                $(".dialog").dialog( "close" );
+		                $("#dialogConfigureExisting").dialog( "close" );
 		            }
 		        }]
 		    });
