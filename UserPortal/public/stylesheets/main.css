@@ -130,4 +130,8 @@ tr,td {
 .ui-progressbar .ui-progressbar-value {
  	background-image: url(../images/pbar-ani.gif) !important; 
  }
+
+ input[type='text'], .ui-datepicker-title {
+ 	height: 26 !important;
+ }
 /*body {text-align:center;}*/
