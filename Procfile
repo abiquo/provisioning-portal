@@ -1,2 +1,2 @@
-web: play start --http.port=$PORT $PLAY_OPT --%heroku
+web: play run --http.port=$PORT $PLAY_OPT --%heroku
 

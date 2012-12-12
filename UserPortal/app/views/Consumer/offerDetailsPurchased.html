@@ -102,7 +102,7 @@
 					</center></td>
 				<td><strong><center>${vm.cpu}</center></strong></td>
 				<td><strong><center>${vm.ram} MBytes</center></strong></td>
-				<td><strong><center>${vm.hdInBytes} MBytes</center></strong></td>
+				<td><strong><center>${vm.hdInBytes/1024/1024} MBytes</center></strong></td>
 				<td><strong><center>
 							<a class="btn btn-info vnc" id="page-help"
 								href="@{Consumer.vncConnection(vm.vncAddress,vm.vncPort,vm.password)}">
