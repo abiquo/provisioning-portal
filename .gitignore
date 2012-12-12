@@ -1,3 +1,4 @@
 UserPortal/data/attachments/*
 UserPortal/tmp/*
 UserPortal/*.log
+UserPortal/precompiled/*
