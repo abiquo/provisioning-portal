@@ -3,7 +3,8 @@
 
 	<div data-role="header">
 		<a href="@@{Mobile.login()}" data-icon="home" data-iconpos="notext"
-			data-direction="reverse">Logout</a>
+			data-direction="reverse">Logout</a><a href="#" data-icon="info"
+			data-iconpos="notext" data-direction="reverse">Info</a>
 		<h1>Abiquo Provisioning Portal</h1>
 	</div>
 	<!-- /header -->
@@ -11,11 +12,26 @@
 	<div data-role="content">
 		<ul data-role="listview" data-inset="true" data-filter="true"
 			data-filter-placeholder="Search offer..." data-filter-theme="a"
-			data-theme="a" data-divider-theme="a">
+			data-theme="c" data-divider-theme="a">
 
-			#{list offers, as:'offer'}
-			<li data-role="list-divider">${offer.name}</li>
-			<li><a href="#">Details</a></li> #{/list}
+			<li class="offerUrl" data-role="list-divider" >Offers</li>
+			#{list offers , as:'offer'}
+			<li>
+			<a href="" class="ui-link-inherit">
+				<div class="ui-li ui-li-has-alt">					
+					<div class="ui-btn-text" style="position:relative; padding-left: 1px;" >	
+					<img src="@@{Helper.displayIcon(offer?.id)}"class="ui-li-thumb" style="position:relative;padding-left:10px;">
+						<h3 class="ui-li-heading">${offer?.name}</h3>
+						<p class="ui-li-desc">${offer?.shortDescription}</p>		
+						</span>
+					</div>
+				</div>
+			</a>
+			</li>
+			#{/list} 
+			#{else}
+			<li><a href="#">No offers to purchase</a></li> 
+			#{/else}
 		</ul>
 	</div>
 	<!--/content-primary -->
