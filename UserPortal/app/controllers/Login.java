@@ -45,16 +45,24 @@ import play.cache.Cache;
 import play.data.validation.Required;
 import play.data.validation.Validation;
 import play.mvc.Controller;
+import play.mvc.Http;
 import portal.util.Context;
 import portal.util.CurrentUserContext;
+import portal.util.UAgentInfo;
 
 public class Login extends Controller {
+	
+	public static void login_agent() {
+		Http.Header uaHeader = request.headers.get("user-agent");	
+		UAgentInfo uagentInfo = new UAgentInfo(uaHeader.toString(),null);
+		if(uagentInfo.detectTierTablet() || uagentInfo.detectTierIphone() || uagentInfo.detectWindowsMobile()) Mobile.login();
+		else login_page();
+	}
 
 	public static void login_page() {
 		session.remove("username");
 		session.remove("password");
-		Cache.delete(session.getId());
-
+		Cache.delete(session.getId());			
 		render();
 	}
 
